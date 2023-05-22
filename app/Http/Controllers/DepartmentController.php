@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
- 
+
 
 class DepartmentController extends Controller
 {
     public function index()
     {
         $departments =  Department::get();
-         return view('pages.Department.index',compact('departments'));
+         return view('pages.department.index',compact('departments'));
      }
 
      public function create()
@@ -23,7 +23,7 @@ class DepartmentController extends Controller
            $last_dp_number = $last_dp->id;
         }
         $next_number = "DEP".sprintf("%03d", $last_dp_number+1);
-        return view('pages.Department.create',compact('next_number'));
+        return view('pages.department.create',compact('next_number'));
     }
 
     public function store(Request $request){
@@ -40,7 +40,7 @@ class DepartmentController extends Controller
     public function edit($department_id)
     {
         $response['departments'] = Department::find($department_id);
-        return view('pages.Department.edit')->with($response);
+        return view('pages.department.edit')->with($response);
     }
 
     public function update(Request $request, $department_id)
@@ -69,7 +69,7 @@ class DepartmentController extends Controller
     public function deleted()
     {
        $response['departments'] = Department::onlyTrashed()->get();
-        return view('pages.Department.deleted')->with($response);
+        return view('pages.department.deleted')->with($response);
 
     }
 
