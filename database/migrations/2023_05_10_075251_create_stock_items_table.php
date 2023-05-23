@@ -54,6 +54,7 @@ return new class extends Migration
             $table->foreignId('deleted_by')->nullable()->constrained('users');
             $table->integer('stock_items_status')->default(1);
             $table->SoftDeletes();
+
             $table->timestamps();
 
         });
