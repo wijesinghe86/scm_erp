@@ -226,7 +226,7 @@ class InvoiceController extends ParentController
         // $response['grand_total'] = InvoiceItem::where('invoice_number', $request->invoice_no)->sum('total');
 
 
-        return view('pages.Invoices.components.items_table')->with($response);
+        return view('pages.Invoices.Components.items_table')->with($response);
     }
 
     public function getData(Request $request)
