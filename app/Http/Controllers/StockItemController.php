@@ -30,6 +30,13 @@ class StockItemController extends Controller
 
     public function store(Request $request){
 
+        $this->validate($request,[
+            'stock_number'=> 'required',
+            'description'=> 'required',
+            'unit'=> 'required',
+            'cost_price'=> 'required',
+        ]);
+
         $request['created_by'] = Auth::id();
         StockItem::create($request->all());
 
