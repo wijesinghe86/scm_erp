@@ -15,7 +15,8 @@ class PurchaseOrderMrController extends ParentController
 {
 
     public function index(){
-        return view ('pages.PurchaseOrderMr.index');
+        $lists = MrPurchase::all();
+        return view ('pages.PurchaseOrderMr.index', compact('lists'));
     }
 
     public function getMrfPrfItems(Request $request){
@@ -53,6 +54,7 @@ class PurchaseOrderMrController extends ParentController
         $po->volume_per_unit = $request->volume_per_unit;
         $po->total_weight = $request->total_weight;
         $po->total_volume = $request->total_volume;
+        $po->created_by = request()->user()->id;
         $po->save();
 
         foreach($request->items as $item):
@@ -68,7 +70,7 @@ class PurchaseOrderMrController extends ParentController
         endforeach;
 
         flash("PO created successfully")->success();
-        return redirect()->back();
+        return redirect()->route('purchase_order_mr.index');
 
     }
 
