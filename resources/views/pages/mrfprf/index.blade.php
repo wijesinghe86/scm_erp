@@ -22,14 +22,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            {{-- @foreach ($mrfprfs as $mrfprf)
+                            @foreach ($lists as $list)
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
-                                    <td>{{ $mrfprf->mrfprf_date }}</td>
-                                    <td>{{ $mrfprf->mrfprf_no }}</td>
-                                    <td>{{ $mrfprf->createUser ? $mrfprf->createUser->name : 'User not found' }}</td>
+                                    <td>{{ $list->mrfprf_date }}</td>
+                                    <td>{{ $list->mrfprf_no }}</td>
+                                    <td>{{ $list->createUser ? $list->createUser->name : 'User not found' }}</td>
                                 </tr>
-                            @endforeach --}}
+                            @endforeach
                         </tbody>
                         </table>
                 </div>
@@ -40,9 +40,9 @@
 @endsection
 
 @push('scripts')
-    <script>
+    {{-- <script>
         $(document).ready( function () {
             $('#tbl_mrfprf').DataTable();
         } );
-    </script>
+    </script> --}}
 @endpush
