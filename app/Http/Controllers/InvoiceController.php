@@ -61,7 +61,13 @@ class InvoiceController extends ParentController
     public function store(Request $request)
     {
 
-        // dd($request->all());
+        $this->validate($request, [
+            'po_number' => 'required',
+            'invoice_date' => 'required',
+            'ref_number' => 'required',
+            'customer_id' => 'required',
+            'employee_id' => 'required',
+        ]);
 
         try {
             DB::beginTransaction();
@@ -179,6 +185,11 @@ class InvoiceController extends ParentController
         // }
         // else
         // {
+
+        $this->validate($request, [
+            'location_id' => 'required'
+        ]);
+
         $item = StockItem::find($request->item_id);
         InvoiceItem::create([
             'invoice_number' => $request->invoice_no,
@@ -215,7 +226,7 @@ class InvoiceController extends ParentController
         // $response['grand_total'] = InvoiceItem::where('invoice_number', $request->invoice_no)->sum('total');
 
 
-        return view('pages.Invoices.components.items_table')->with($response);
+        return view('pages.Invoices.Components.items_table')->with($response);
     }
 
     public function getData(Request $request)

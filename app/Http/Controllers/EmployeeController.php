@@ -36,6 +36,14 @@ class EmployeeController extends ParentController
     public function store(Request $request)
     {
 
+        logger($request->all());
+
+        $this->validate($request,[
+            'employee_fullname'=>'required',
+            'gender'=> "required",
+            'civil_status'=> "required",
+            'employee_type'=> "required",
+        ]);
         $request['created_by']=Auth::id();
         Employee::create($request->all());
         // return redirect()->route('employee.all');

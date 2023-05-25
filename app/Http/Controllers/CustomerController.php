@@ -29,7 +29,12 @@ class CustomerController extends ParentController
 
     public function store(Request $request)
     {
-        // dd($request->all());
+        $this->validate($request, [
+            'customer_code'=> 'required',
+            'customer_name'=> 'required',
+            'customer_type_of_customer'=> 'required',
+            'customer_status'=> 'required'
+        ]);
 
         $request['created_by'] = Auth::id();
         Customer::create($request->all());
