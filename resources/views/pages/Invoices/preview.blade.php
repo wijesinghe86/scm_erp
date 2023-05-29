@@ -5,7 +5,7 @@
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        {{-- @include('pages.invoices.pdf') --}}
+                        {{-- @include('pages.Invoices.pdf') --}}
                         {{-- <table class="" style="width: 100%;margin:0px;min-height: 30mm;">
                             <tr align="center">
                                 <td>

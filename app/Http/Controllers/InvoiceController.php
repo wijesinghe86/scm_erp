@@ -168,7 +168,7 @@ class InvoiceController extends ParentController
         if ($invoices == null) {
             return abort(404);
         }
-        $pdf = PDF::loadView('pages.invoices.pdf', compact('invoices'));
+        $pdf = PDF::loadView('pages.Invoices.pdf', compact('invoices'));
         return $pdf->stream('invoice.pdf');
     }
 

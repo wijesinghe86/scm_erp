@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MrfPrfItem;
+
 use App\Models\MrfPrfMain;
 use Illuminate\Http\Request;
 use App\Models\MaterialRequest;
@@ -12,8 +13,8 @@ use App\Models\MaterialRequestItem;
 class MrfPrfController extends ParentController
 {
     public function index()
-    {
-        return view('pages.mrfprf.index');
+    {   $lists = MrfPrfMain::all();
+        return view('pages.mrfprf.index',compact('lists'));
     }
 
     public function create()
@@ -49,6 +50,7 @@ class MrfPrfController extends ParentController
         $mrfprf = new MrfPrfMain;
         $mrfprf->mrfprf_no = $request->mrfprf_no;
         $mrfprf->mrfprf_date = $request->mrfprf_date;
+        $mrfprf->created_by_id = request()->user()->id;
         $mrfprf->save();
 
         foreach ($request->items as $row) {
@@ -65,7 +67,7 @@ class MrfPrfController extends ParentController
     }
 
     flash()->success("Purchase Request created");
-    return redirect()->back();
+    return redirect()->route('mrfprf.index');
 }
 
 
