@@ -15,25 +15,24 @@
                             <thead>
                                 <tr>
                                     <td>No</td>
-                                    <td>Date</td>
-                                    <td>MR No</td>
                                     <td>DF No</td>
-                                    <td>Item No</td>
-                                    <td>Requested By</td>
-                                    <th>DF Qty</th>
+                                    <td>DF Date</td>
+                                    <td>Created By</td>
+                                   
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($demandforecastings as $demandforecasting)
+                                 @foreach ($demandforecastings as $demandforecasting)
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
-                                    <td>{{ $$demandforecasting->df_no }}</td>
+                                    <td>{{ $demandforecasting->df_no }}</td>
                                     <td>{{ $demandforecasting->df_date }}</td>
+                                    <td>{{ $demandforecasting->createUser ? $demandforecasting->createUser->name : 'User not found' }}</td>
 
 
 
                                 </tr>
-                            @endforeach --}}
+                            @endforeach
                             </tbody>
                         </table>
                 </div>

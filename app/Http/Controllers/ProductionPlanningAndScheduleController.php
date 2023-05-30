@@ -14,14 +14,14 @@ use App\Models\DemandForecastingItems;
 class ProductionPlanningAndScheduleController extends Controller
 {
     public function index()
-    {
-         return view('pages.ProductionPlanningAndSchedule.index');
+    {   $productionplanningandschedules = ProductionPlanning::get();
+         return view('pages.ProductionPlanningAndSchedule.index', compact('productionplanningandschedules'));
      }
 
      public function create()
     {
         $df_list = DemandForecasting::get();
-        // $plants = PlantRegistration::get();
+        $plants = PlantRegistration::get();
 
         $last_pps = ProductionPlanning::latest()->first();
         $last_pps_number = 0;
@@ -29,7 +29,7 @@ class ProductionPlanningAndScheduleController extends Controller
         $last_pps_number = $last_pps->id;
         }
         $next_number = "PPS".sprintf("%04d", $last_pps_number+1);
-        return view('pages.ProductionPlanningAndSchedule.create', compact('df_list', 'next_number'));
+        return view('pages.ProductionPlanningAndSchedule.create', compact('df_list', 'next_number', 'plants'));
     }
 
     public function store(Request $request){
@@ -38,6 +38,7 @@ class ProductionPlanningAndScheduleController extends Controller
         $pps = new ProductionPlanning;
         $pps->pps_no = $request->pps_no;
         $pps->pps_date = $request->pps_date;
+        $pps->plant = $request->plant;
         $pps->start_date = $request->start_date;
         $pps->end_date = $request->end_date;
         $pps->save();
@@ -52,6 +53,8 @@ class ProductionPlanningAndScheduleController extends Controller
             $pps_item->weight = $row['weight'];
             $pps_item->df_id = $request->df_id;
             $pps_item->pps_id = $pps->id;
+            $pps_item->created_by = request()->user()->id;
+            $pps_item->updated_by = request()->user()->id;
             $pps_item->save();
 
         flash()->success("New Production Planning created");

@@ -25,6 +25,15 @@
                         <label>PPS Date</label>
                         <input type="date" class="form-control" name="pps_date" id="pps_date" placeholder="PPS Date">
                     </div>
+                    <div class="form-group col-md-4">
+                        <label>Plant</label>
+                        <select class ="form-control plant-select" name="plant" id="plant" placeholder="Plant" >
+                            <option value="" selected disabled>Select Plant</option>
+                                  @foreach ($plants as $plant)
+                                      <option value="{{ $plant->id }}">{{ $plant->plant_name }}</option>
+                                  @endforeach
+                              </select>
+                    </div>
                 </div>
 
                 <hr>
@@ -61,6 +70,14 @@
   @endsection
 
   @push('scripts')
+  
+    <script>
+        $(document).ready(function() {
+            $('.plant-select').select2({
+                placeholder: "Select Plant",
+            });
+        });
+    </script>
     <script>
         $(document).ready(function() {
             // alert("ss");
@@ -76,4 +93,11 @@
         });
 
         </script>
+@endpush
+@push('styles')
+    <style>
+        .select2-container .select-selection--single {
+            height: 46px;
+        }
+    </style>
 @endpush

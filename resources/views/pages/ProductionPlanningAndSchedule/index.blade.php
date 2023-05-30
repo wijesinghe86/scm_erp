@@ -15,52 +15,27 @@
                             <thead>
                                 <tr>
                                     <td>No</td>
-                                    <td>Production Planning Schedule Number</td>
+                                    <td>PPS Number</td>
                                     {{-- <td>Plant Number</td> --}}
-                                    <td>Production Planning Schedule Date</td>
+                                    <td>PPS Date</td>
                                     <td>Production Start Date</td>
                                     <td>Production End Date</td>
-                                    {{-- <td>DF Number</td>
-                                    <td>Stock Number</td>
-                                    <td>PPS Quantity</td>
-                                    <td>Weight</td>
-                                    <td>Created By</td>
-                                    <td>Create Date</td>
-                                    <td>Approved_by</td>
-                                    <td>approved_date</td> --}}
-                                    <td>Action</td>
+                                    
                                 </tr>
                             </thead>
-                            {{-- <tbody>
+                            <tbody>
                                 @foreach ($productionplanningandschedules as $productionplanningandschedule)
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
-                                    <td>{{ $productionplanningandschedule->production_planning_schedule_number}}</td>
-                                    <td>{{ $productionplanningandschedule->plant_number}}</td>
-                                    <td>{{ $productionplanningandschedule->production_planning_schedule_date}}</td>
-                                    <td>{{ $productionplanningandschedule->production_start_date}}</td>
-                                    <td>{{ $productionplanningandschedule->production_end_date}}</td>
-                                    <td>{{ $productionplanningandschedule->df_number}}</td>
-                                    <td>{{ $productionplanningandschedule->stock_number}}</td>
-                                    <td>{{ $productionplanningandschedule->pps_quantity}}</td>
-                                    <td>{{ $productionplanningandschedule->weight}}</td>
-                                    <td>{{ $productionplanningandschedule->created_by}}</td>
-                                    <td>{{ $productionplanningandschedule->create_date}}</td>
-                                    <td>{{ $productionplanningandschedule->approved_by}}</td>
-                                    <td>{{ $productionplanningandschedule->approved_date}}</td>
-                                    <td>
-                                        <a href="{{ route('productionplanningandschedule.edit', $productionplanningandschedule->id) }}">
-                                            <i class="mdi mdi-pencil text-dark"></i></a>
-
-                                        <a href="{{ route('productionplanningandschedule.delete', $productionplanningandschedule->id) }}">
-                                            <i class="mdi mdi-delete text-danger"></i></a>
-
-                                        <a href="{{ route('productionplanningandschedule.view', $productionplanningandschedule->id) }}">
-                                            <i class="mdi mdi-eye text-dark"></i></a>
-                                    </td>
+                                    <td>{{ $productionplanningandschedule->pps_no}}</td>
+                                    {{-- <td>{{ $productionplanningandschedule->plant_number}}</td> --}}
+                                    <td>{{ $productionplanningandschedule->pps_date}}</td>
+                                    <td>{{ $productionplanningandschedule->start_date}}</td>
+                                    <td>{{ $productionplanningandschedule->end_date}}</td>
+                                    
                                 </tr>
                                 @endforeach
-                            </tbody> --}}
+                            </tbody> 
 
                         </table>
                 </div>
