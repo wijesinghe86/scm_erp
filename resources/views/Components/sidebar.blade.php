@@ -105,9 +105,9 @@
                     <li class="nav-item"> <a class="nav-link" href="{{ route('demand-forecasting.index') }}">Demand
                             Forecasting Entry</a>
                     </li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('df_approve.index') }}">Demand
+                    {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('df_approve.index') }}">Demand
                         Forecasting Approve</a>
-                </li>
+                </li> --}}
                 </ul>
             </div>
         </li>
@@ -122,13 +122,12 @@
             </a>
             <div class="collapse" id="ui-procurement">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('mrfprf.index') }}">Material
-                            Request-Purchasing Request Form</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('mrfprf.index') }}">MR-Procurement Request</a></li>
                     <li class="nav-item"> <a class="nav-link"
-                            href="{{ route('purchase_request.index') }}">Purchasing
-                            Request Form</a></li>
+                            href="{{ route('purchase_request.index') }}">Procurement
+                            Request-Optional</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('purchase_order.index') }}">Purchase
-                            Order</a></li>
+                            Order-Optional</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('purchase_order_mr.index') }}">MR
                             Purchase
                             Order</a></li>

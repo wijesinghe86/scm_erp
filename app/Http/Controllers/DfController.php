@@ -13,8 +13,8 @@ use App\Models\DemandForecastingItems;
 class DfController extends ParentController
 {
     public function index(){
-    $demanforecastings = DemandForecasting::get();
-    return view ('pages.DemandForecasting.all');
+    $demandforecastings = DemandForecasting::get();
+    return view ('pages.DemandForecasting.all', compact('demandforecastings'));
     }
 
     public function create()
@@ -54,6 +54,11 @@ class DfController extends ParentController
 
         $df = new DemandForecasting;
         $df->df_no = $request->df_no;
+        $df->df_date = $request->df_date;
+        $df->requested_by = $request->requested_by;
+        $df->required_date = $request->required_date;
+        $df->created_by = request()->user()->id;
+        $df->updated_by = request()->user()->id;
         $df->save();
 
         foreach ($request->items as $row) {
