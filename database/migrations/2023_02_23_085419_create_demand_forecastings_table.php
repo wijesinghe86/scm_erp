@@ -17,7 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string("df_no")->nullable();
             $table->date("df_date")->nullable();
-            $table->bigInteger('df_id')->nullable();
+            $table->unsignedBigInteger('requested_by')->nullabe();
+            $table->date('required_date')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
         });
     }

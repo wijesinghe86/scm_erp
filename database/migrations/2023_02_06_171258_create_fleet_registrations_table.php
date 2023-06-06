@@ -40,10 +40,10 @@ return new class extends Migration
             $table->date('insurance_start_date')->nullable();
             $table->date('insurance_expire_date')->nullable();
             $table->decimal('amount',6,2)->nullable();
-            $table->foreignId('created_by')->nullable()->constrained('users');
-            $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->integer('fleet_registration_status')->default(1);
-            $table->foreignId('deleted_by')->nullable()->constrained('users');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable(); 
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

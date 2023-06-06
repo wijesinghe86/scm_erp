@@ -40,8 +40,8 @@ return new class extends Migration
             $table->string('role')->nullable();
             $table->string('responsibility')->nullable();
             $table->string('fleet_number')->nullable();
-            $table->foreignId('created_by')->nullable()->constrained('users');
-            $table->foreignId('updated_by')->nullable()->constrained('users');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();
             $table->integer('employee_status')->default(1);
             $table->SoftDeletes();

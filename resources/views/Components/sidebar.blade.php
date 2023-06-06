@@ -205,8 +205,8 @@
                     </li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('stockadjustment.index') }}">Stock
                             Adjustment </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('stocklocationchange.index') }}">Stock
-                            Location Change</a></li>
+                    {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('stocklocationchange.index') }}">Stock
+                            Location Change</a></li> --}}
                     <li class="nav-item"> <a class="nav-link" href="{{ route('finishedgoods.index') }}">Finished
                             Goods</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('overshortanddamage.index') }}">Over

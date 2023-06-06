@@ -15,8 +15,9 @@ use App\Models\GoodsReceivedItem;
 class GoodsReceivedController extends Controller
 {
     public function index()
-    {
-        return view('pages.GoodsReceived.index');
+
+    {   $goodsreceiveds = GoodsReceived::get();
+        return view('pages.GoodsReceived.index', compact('goodsreceiveds'));
     }
 
     public function getPoItems(Request $request)
@@ -61,7 +62,7 @@ class GoodsReceivedController extends Controller
         $grn->per_volume = $request->volume_per_unit;
         $grn->tot_volume = $request->total_volume;
         $grn->po_id = $request->po_id;
-        $grn->created_by = $request->user()->id;
+        $grn->created_by = request()->user()->id;
         $grn->supplier_id = $request->supplier;
         $grn->warehouse = $request->warehouse;
         $grn->save();
@@ -81,6 +82,6 @@ class GoodsReceivedController extends Controller
     endforeach;
 
     flash("GRN created successfully")->success();
-    return redirect()->back();
+    return redirect()->route('goodsreceived.index');
     }
 }

@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('goods_issues', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->constrained('customers');
-            $table->string('ref_number');
-            $table->date('issued_date');
-            $table->string('issued_number');
+            $table->unsignedBigInteger('customer_id')->nullable();
+            $table->string('ref_number')->nullable();
+            $table->date('issued_date')->nullable();
+            $table->string('issued_number')->nullable();
             $table->integer('status')->nullable();
-            $table->foreignId('created_by')->constrained('users');
+            $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
         });
     }

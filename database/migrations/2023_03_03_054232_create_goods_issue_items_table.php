@@ -15,15 +15,13 @@ return new class extends Migration
     {
         Schema::create('goods_issue_items', function (Blueprint $table) {
             $table->id();
-            $table->string('issued_number');
-            $table->bigInteger('item_id');
-            $table->string('stock_no');
-            $table->string('description');
-            $table->string('uom');
+            $table->unsignedBigInteger('issued_id')->nullable();
+            $table->unsignedBigInteger('item_id')->nullable();
+            $table->string('stock_no')->nullable();
             $table->decimal('iss_qty',15,2)->default(0);
             $table->decimal('iss_weight',15,2)->default(0);
-            $table->bigInteger('location_id');
-            $table->foreignId('created_by')->constrained('users');
+            $table->unsignedBigInteger('location_id')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
         });
     }

@@ -15,14 +15,11 @@ return new class extends Migration
     {
         Schema::create('miscellaneous_received_items', function (Blueprint $table) {
             $table->id();
-            $table->string('misc_number');
-            $table->bigInteger('item_id');
-            $table->string('stock_no');
-            $table->string('description');
-            $table->string('uom');
+            $table->unsignedBigInteger('misc_id')->nullable();
+            $table->unsignedBigInteger('item_id')->nullable();
             $table->decimal('rec_qty',15,2)->default(0);
             $table->decimal('rec_weight',15,2)->default(0);
-            $table->bigInteger('location_id');
+            $table->unsignedBigInteger('location_id')->nullable();
             $table->timestamps();
         });
     }

@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('goods_receiveds', function (Blueprint $table) {
             $table->id();
             $table->string('grn_no')->nullable();
+            $table->unsignedBigInteger('grn_item_id')->nullable();
             $table->date('grn_date')->nullabe();
             $table->string('type')->nullable();
             $table->unsignedBigInteger('received_by')->nullable();
@@ -31,7 +32,7 @@ return new class extends Migration
             $table->unsignedBigInteger('po_id')->nullable();
             $table->unsignedBigInteger('supplier_id')->nullable();
             $table->string('warehouse')->nullable();
-            $table->unsignedBigInteger('created_by')->nullable;
+            $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
         });
     }

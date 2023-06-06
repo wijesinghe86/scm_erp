@@ -7,8 +7,8 @@
             <th>U/M</th>
             <th>Approved PO Qty</th>
             <th>Received Qty</th>
-            <th>Received Weight</th>
-            <th>Expiry Date</th>
+            <th>Rec Weight</th>
+            <th>Exp Date</th>
             <th>Batch No</th>
             <th></th>
         </tr>
@@ -23,7 +23,7 @@
                 <td><input class="form-control" type="number" value="{{ $row->po_qty }}" readonly></td>
                  <td>
                 <input class="form-control" name="items[{{ $index }}][rec_qty]" type="number"
-                            value="">
+                            value="{{ $row->po_qty }}">
                         <input type="hidden" name="items[{{ $index }}][item_id]" value="{{ $row->item->id }}" />
                     </td>
                     <td>
@@ -39,7 +39,7 @@
                             <td>
                                 <input class="form-control" name="items[{{ $index }}][batch_no]" type="string"
                                             value="">
-                                        <input type="hidden" name="items[{{ $index }}][item_id]" value="{{ $row->item->id }}" />
+                                         <input type="hidden" name="items[{{ $index }}][item_id]" value="{{ $row->item->id }}" />  
                                     </td>
                                     
                     

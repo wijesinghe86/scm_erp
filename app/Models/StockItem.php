@@ -47,6 +47,10 @@ class StockItem extends Model
         'updated_by',
         'deleted_by'
 ];
+
+protected $casts = [
+    'created_at' => 'datetime:Y-m-d',
+];
 public function createUser()
     {
         return $this->hasOne(User::class, 'id', 'created_by');

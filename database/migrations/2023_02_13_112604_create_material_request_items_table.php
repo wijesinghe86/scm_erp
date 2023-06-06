@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('material_request_items', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('mr_id');
-            $table->unsignedBigInteger('stock_item_id');
-            $table->decimal("remaining_qty", '8', '2')->nullable();
-            $table->string('priority');
-            $table->decimal('mrf_qty');
+            $table->unsignedBigInteger('mr_id')->nullable();
+            $table->unsignedBigInteger('stock_item_id')->nullable();
+            $table->decimal('remaining_qty', 8,2)->nullable();
+            $table->string('priority')->nullable();
+            $table->decimal('mrf_qty', 8,2)->nullable();
             $table->timestamps();
         });
     }

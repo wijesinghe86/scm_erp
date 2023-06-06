@@ -6,7 +6,7 @@
             <th>Description</th>
             <th>U/M</th>
             <th>Priority</th>
-            <th>MRF Qty</th>
+            <th>Requested Qty</th>
             <th>Remaining Qty</th>
             <th>Approved/Rejected Qty</th>
             <th>Status</th>

@@ -16,16 +16,16 @@ return new class extends Migration
         Schema::create('warehouses', function (Blueprint $table) {
             $table->id();
             $table->string('warehouse_code')->unique();
-            $table->string('warehouse_name');
+            $table->string('warehouse_name')->nullable();
             $table->string('description')->nullable();
-            $table->decimal('warehouse_height', 5,2);
-            $table->decimal('warehouse_width', 5,2);
-            $table->decimal('warehouse_length', 5,2);
-            $table->decimal('warehouse_floor_area', 8,2);
-            $table->foreignId('created_by')->nullable()->constrained('users');
-            $table->foreignId('updated_by')->nullable()->constrained('users');
+            $table->decimal('warehouse_height', 5,2)->nullable();
+            $table->decimal('warehouse_width', 5,2)->nullable();
+            $table->decimal('warehouse_length', 5,2)->nullable();
+            $table->decimal('warehouse_floor_area', 8,2)->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->integer('warehouse_status')->default(1);
-            $table->foreignId('deleted_by')->nullable()->constrained('users');
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

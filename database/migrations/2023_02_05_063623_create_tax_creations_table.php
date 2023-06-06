@@ -21,10 +21,10 @@ return new class extends Migration
             $table->string('tax_description')->nullable();
             $table->date('start_date')->nullable();;
             $table->date('expire_date')->nullable();;
-            $table->foreignId('created_by')->nullable()->constrained('users');
-            $table->foreignId('updated_by')->nullable()->constrained('users');
-            $table->integer('tax_creation_status')->default(1);
-            $table->foreignId('deleted_by')->nullable()->constrained('users');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->integer('tax_creation_status')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

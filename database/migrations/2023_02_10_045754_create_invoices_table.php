@@ -15,16 +15,16 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->constrained('customers');
-            $table->string('invoice_number');
-            $table->date('invoice_date');
-            $table->bigInteger('employee_id');
-            $table->string('ref_number');
-            $table->string('po_number');
+            $table->unsignedBigInteger('customer_id')->nullable();
+            $table->string('invoice_number')->nullable();
+            $table->date('invoice_date')->nullable();
+            $table->unsignedBigInteger('employee_id')->nullable();
+            $table->string('ref_number')->nullable();
+            $table->string('po_number')->nullable();
             $table->integer('payment_terms')->default(1);
-            $table->integer('category');
-            $table->integer('type');
-            $table->integer('option');
+            $table->integer('category')->nullable();
+            $table->integer('type')->nullable();
+            $table->integer('option')->nullable();
             $table->decimal('sub_total', 15, 2)->default(0);
             $table->decimal('vat_amount', 15, 2)->default(0);
             $table->decimal('net_total', 15, 2)->default(0);
@@ -34,7 +34,7 @@ return new class extends Migration
             $table->decimal('discount',18,2)->nullable();
             $table->decimal('grand_total', 15, 2)->default(0);
             $table->integer('status')->nullable();
-            $table->foreignId('created_by')->constrained('users');
+            $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
         });
     }
