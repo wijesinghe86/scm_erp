@@ -14,10 +14,10 @@ return new class () extends Migration {
     {
         Schema::create('purchasing_request_items', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pr_id');
-            $table->unsignedBigInteger('stock_item_id');
-            $table->string('priority');
-            $table->integer('prf_qty');
+            $table->unsignedBigInteger('pr_id')->nullable();
+            $table->unsignedBigInteger('stock_item_id')->nullable();
+            $table->string('priority')->nullable();
+            $table->decimal('prf_qty', 8,2)->nullable();
             $table->timestamps();
         });
     }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string("mrfprf_no")->nullable();
             $table->date("mrfprf_date")->nullable();
+            $table->unsignedBigInteger('created_by_id')->nullable();
             $table->timestamps();
         });
     }

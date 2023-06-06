@@ -19,7 +19,7 @@
                                     <td>Supplier Code</td>
                                     <td>Purchase Reference Number</td>
                                     <td>Purchase Order Date</td>
-                                    <td>Stock Number</td>
+                                    <td>Created By</td>
                                     <!-- <td>Purchase Order Type</td>
                                     <td>Purchase Order Quantity</td>
                                     <td>Weight Per Unit</td>

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('invoice_type')->default(1);
             $table->integer('invoice_category')->nullable();
             $table->integer('invoice_option')->default(0);
-            $table->foreignId('updated_by')->nullable()->constrained('users');
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
         });
     }

@@ -16,12 +16,12 @@ return new class extends Migration
         Schema::create('location_bay_designs', function (Blueprint $table) {
             $table->id();
             $table->string('warehouse_code')->unique();
-            $table->string('bay_number');
+            $table->string('bay_number')->unique();
             $table->string('bay_description')->nullable();
-            $table->decimal('bay_height', 5,2);
-            $table->decimal('bay_width', 5,2);
-            $table->decimal('bay_length', 5,2);
-            $table->decimal('bay_floor_area', 8,2);
+            $table->decimal('bay_height', 5,2)->nullable();
+            $table->decimal('bay_width', 5,2)->nullable();
+            $table->decimal('bay_length', 5,2)->nullable();
+            $table->decimal('bay_floor_area', 8,2)->nullable();
             $table->integer('locationbaydesign_status')->default(1);
             $table->bigInteger('created_by')->nullable();
             $table->bigInteger('updated_by')->nullable();

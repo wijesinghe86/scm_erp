@@ -23,10 +23,10 @@ return new class extends Migration
             $table->string('equipment_description')->nullable();
             $table->integer('equipment_type')->default(1);
             $table->integer('power_source')->default(1);
-            $table->foreignId('created_by')->nullable()->constrained('users');
-            $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->integer('equipment_registration_status')->default(1);
-            $table->foreignId('deleted_by')->nullable()->constrained('users');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

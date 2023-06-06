@@ -39,6 +39,10 @@ class Supplier extends Model
         'updated_by',
         'deleted_by'
     ];
+    
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d',
+    ];
 
     public function createUser()
     {

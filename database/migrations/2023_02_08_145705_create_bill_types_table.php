@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('bill_types', function (Blueprint $table) {
             $table->id();
             $table->string('billtype_code')->unique();
-            $table->string('billtype_description');
+            $table->string('billtype_description')->nullable();
             // $table->text('invoice_no')->nullable();
-            $table->foreignId('created_by')->constrained('users');
+            $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
         });
     }

@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('content')
-    <div class="content-wrapper">
+    <div class="content-wrapper"> 
         <div class="row">
-            <div class="col-12 grid-margin stretch-card">
-                <div class="card">
-                    <div class="card-body">
+          <div class="col-12 grid-margin stretch-card"> 
+                <div class="card">  
+                    <div class="card-body"> 
                         <h4 class="card-title">Goods Received Note Entry</h4>
                         <form class="forms-sample" method="POST" action="{{ route('goodsreceived.store') }}">
                             @csrf
@@ -100,7 +100,7 @@
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-3">
                                     <label>PO Number</label>
                                     <select class="form-control po_input" name="po_id" id="po_id" onchange="itemOnChange(this)" >
                                         <option value="" selected disabled>Select PO No</option>
@@ -109,11 +109,15 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label>Supplier</label>
+                                <div class="form-group col-md-2">
+                                    <label>Supplier Id</label>
                                     <input type="text" readonly class="form-control" name="supplier" id="supplier" >
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-3">
+                                    <label>Supplier Name</label>
+                                    <input type="text" readonly class="form-control" name="supplier_name" id="supplier_name" >
+                                </div>
+                                <div class="form-group col-md-3">
                                     <label>Warehouse</label>
                                     <select class="form-control" name="warehouse" id="warehouse">
                                         <option value="" selected> Select </option>
@@ -153,7 +157,8 @@
 
           console.log("selected po",selectedPo);
 
-          document.getElementById("supplier").value = selectedPo.get_supplier.supplier_name;
+          document.getElementById("supplier").value = selectedPo.get_supplier.id;
+          document.getElementById("supplier_name").value = selectedPo.get_supplier.supplier_name;
             }
         </script>
 

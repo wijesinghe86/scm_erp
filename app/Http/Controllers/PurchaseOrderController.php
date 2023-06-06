@@ -45,6 +45,7 @@ class PurchaseOrderController extends Controller
         $po->total_weight = $request->total_weight;
         $po->total_volume = $request->total_volume;
         $po->pr_id = $request->pr_id;
+        $po->created_by = request()->user()->id;
         $po->save();
 
         foreach($request->items as $item):

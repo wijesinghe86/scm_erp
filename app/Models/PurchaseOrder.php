@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class PurchaseOrder extends Model
 {
     use HasFactory;
+
+    public function createUser()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by');
+    }
 }

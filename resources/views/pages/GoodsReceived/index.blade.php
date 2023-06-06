@@ -16,69 +16,31 @@
                                 <tr>
                                     <tr>
                                         <td>No</td>
-                                        <td>Supplier Code</td>
-                                        <td>Purchase Order Number</td>
+                                        <td>Supplier </td>
+                                        <td>PO Number</td>
                                         {{-- <td>Batch Number</td> --}}
-                                        <td>Goods Received Number</td>
-                                        <td>Goods Received Date</td>
-                                        {{-- <td>Goods Received Type</td>
-                                        <td>Warehouse Code</td> --}}
-                                        <td>Stock Number</td>
-                                        {{-- <td>Expire Date</td>
-                                        <td>Purchase Order Quantity</td>
-                                        <td>Received Quantity</td>
-                                        <td>Received Date</td>
-                                        <td>Over Shortage Damage Report Number</td>
-                                        <td>Weight Per Unit</td>
-                                        <td>Total Weight</td>
-                                        <td>Volume Per Unit</td>
-                                        <td>Total Volume</td>
-                                        <td>Received By</td>
-                                        <td>Received Date</td>
-                                        <td>Inspected By</td>
-                                        <td>Inspected Date</td>
-                                        <td>Verified By</td>
-                                        <td>Verified Date</td>
-                                        <td>Approved By</td>
-                                        <td>Approved Date</td> --}}
-                                        <td>Action</td>
+                                        <td>GRN No</td>
+                                        <td>GRN Date</td>
+                                        {{-- <td>Description</td> --}}
+                                       <td>Created By</td>
                                     </tr>
                                 </tr>
                             </thead>
-                            {{-- <tbody>
+                             <tbody>
                                 @foreach ($goodsreceiveds as $goodsreceived)
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
-                                    <td>{{ $goodsreceived->supplier_code}}</td>
-                                    <td>{{ $goodsreceived->po_number }}</td>
-                                    <td>{{ $goodsreceived->batch_number }}</td>
-                                    <td>{{ $goodsreceived->grn_number }}</td>
+                                    <td>{{ $goodsreceived->supplierDetails->supplier_name}}</td>
+                                    <td>{{ $goodsreceived->poDetails->po_no}}</td>
+                                    <td>{{ $goodsreceived->grn_no }}</td>
                                     <td>{{ $goodsreceived->grn_date}}</td>
-                                    <td>{{ $goodsreceived->type_of_received }}</td>
-                                    <td>{{ $goodsreceived->warehouse_code }}</td>
-                                    <td>{{ $goodsreceived->stock_number}}</td>
-                                    <td>{{ $goodsreceived->expire_date }}</td>
-                                    <td>{{ $goodsreceived->po_quantity}}</td>
-                                    <td>{{ $goodsreceived->received_quantity }}</td>
-                                    <td>{{ $goodsreceived->received_date }}</td>
-                                    <td>{{ $goodsreceived->over_shortage_damage_report_number }}</td>
-                                    <td>{{ $goodsreceived->weight_per_unit}}</td>
-                                    <td>{{ $goodsreceived->total_weight }}</td>
-                                    <td>{{ $goodsreceived->volume_per_unit }}</td>
-                                    <td>{{ $goodsreceived->total_volume}}</td>
-                                    <td>{{ $goodsreceived->received_by }}</td>
-                                    <td>{{ $goodsreceived->received_date }}</td>
-                                    <td>{{ $goodsreceived->inspected_by}}</td>
-                                    <td>{{ $goodsreceived->inspected_date }}</td>
-                                    <td>{{ $goodsreceived->verified_by }}</td>
-                                    <td>{{ $goodsreceived->verified_date }}</td>
-                                    <td>{{ $goodsreceived->approved_by}}</td>
-                                    <td>{{ $goodsreceived->approved_date }}</td> -->
+                                    {{-- <td>{{ $goodsreceived->grnItems->item->description }} --}}
+                                    <td>{{ $goodsreceived->createUser ? $goodsreceived->createUser->name : 'User not found' }}</td>
 
 
                                 </tr>
                                 @endforeach
-                            </tbody> --}}
+                            </tbody>
 
                         </table>
                     </div>

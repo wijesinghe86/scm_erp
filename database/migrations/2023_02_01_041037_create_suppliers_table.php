@@ -29,8 +29,8 @@ return new class extends Migration
             $table->string('supplier_svat_number')->nullable();
             $table->string('supplier_fixedphone_number')->nullable();
             $table->string('supplier_email')->nullable();
-            $table->integer('supplier_type')->default(1);
-            $table->integer('supplier_status')->default(1);
+            $table->integer('supplier_type')->nullable();
+            $table->integer('supplier_status')->nullable();
             $table->string('supplier_contact_person_name')->nullable();
             $table->string('supplier_contact_person_designation')->nullable();
             $table->string('supplier_contact_person_mobile_number')->nullable();
@@ -38,9 +38,9 @@ return new class extends Migration
             $table->string('supplier_bank_name')->nullable();
             $table->string('supplier_bank_branch')->nullable();
             $table->string('supplier_bank_account_number')->nullable();
-            $table->foreignId('created_by')->nullable()->constrained('users');
-            $table->foreignId('updated_by')->nullable()->constrained('users');
-            $table->foreignId('deleted_by')->nullable()->constrained('users');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
