@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('stock_item_id')->nullable();
             $table->unsignedBigInteger('df_id')->nullable();
             $table->unsignedBigInteger('pps_id')->nullable();
-            $table->decimal('pps_qty','8','2')->nullable();
-            $table->decimal('weight','8','2')->nullable();
+            $table->decimal('pps_qty','15','2')->nullable();
+            $table->decimal('weight','15','2')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

@@ -17,7 +17,7 @@ return new class () extends Migration {
             $table->unsignedBigInteger('pr_id')->nullable();
             $table->unsignedBigInteger('stock_item_id')->nullable();
             $table->string('priority')->nullable();
-            $table->decimal('prf_qty', 8,2)->nullable();
+            $table->decimal('prf_qty', 15,2)->nullable();
             $table->timestamps();
         });
     }

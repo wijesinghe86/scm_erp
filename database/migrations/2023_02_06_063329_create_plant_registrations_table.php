@@ -40,8 +40,8 @@ return new class extends Migration
             $table->unsignedBigInteger('warehouse_code')->nullable();
             $table->string('condition')->nullable();
             $table->string('tag_number')->nullable();
-            $table->decimal('size', 8,2)->nullable();
-            $table->decimal('weight', 8,2)->nullable();
+            $table->decimal('size', 12,2)->nullable();
+            $table->decimal('weight', 12,2)->nullable();
             $table->string('output')->nullable();
             $table->integer('plant_registration_status')->default(1);
             $table->unsignedBigInteger('created_by')->nullable();

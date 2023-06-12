@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('vat_rate')->nullable();
             $table->string('discount_type')->nullable();
             $table->decimal('discount_amount',18,2)->nullable();
-            $table->decimal('discount',18,2)->nullable();
+            $table->decimal('discount',15,2)->nullable();
             $table->decimal('grand_total', 15, 2)->default(0);
             $table->integer('status')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();

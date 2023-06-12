@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('stock_item_id')->nullable();
             $table->unsignedBigInteger('mr_id')->nullable();
-            $table->decimal("qty",'8','2')->nullable();
+            $table->decimal("qty",'15','2')->nullable();
             $table->unsignedBigInteger('df_id')->nullable();
             $table->timestamps();
         });

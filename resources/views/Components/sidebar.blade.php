@@ -21,7 +21,17 @@
                     <li class="nav-item"> <a class="nav-link" href="{{ route('stockitem.all') }}">Stock Item</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('customer.index') }}">Customer</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('supplier.all') }}">Supplier</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('department.index') }}">Department</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('section.index') }}">Section</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('fleetregistration.index') }}">Fleet
+                        Registration</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('employee.all') }}">Employee</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('taxcreation.index') }}">TaxCreation</a>
+                    </li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('PlantRegistration.index') }}">Plant
+                        Registration</a></li>
+                <li class="nav-item"> <a class="nav-link"
+                        href="{{ route('equipmentregistration.index') }}">EquipmentRegistration</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('warehouse.index') }}">Warehouse</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('locationbaydesign.index') }}">Location Bay
                             Design</a></li>
@@ -31,17 +41,7 @@
                             Rack Design</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('locationshelfdesign.index') }}">Location
                             Shelf Design</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('PlantRegistration.index') }}">Plant
-                            Registration</a></li>
-                    <li class="nav-item"> <a class="nav-link"
-                            href="{{ route('equipmentregistration.index') }}">EquipmentRegistration</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('department.index') }}">Department</a>
-                    </li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('section.index') }}">Section</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('taxcreation.index') }}">TaxCreation</a>
-                    </li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('fleetregistration.index') }}">Fleet
-                            Registration</a></li>
+
                     <li class="nav-item"> <a class="nav-link" href="">Users</a></li>
                 </ul>
             </div>

@@ -2,13 +2,13 @@
     <thead>
         <tr>
             <th></th>
-            <th>Stock No</th>
-            <th>Description</th>
+            <th>S/No</th>
+            <th>Des</th>
             <th>U/M</th>
             <th>Priority</th>
             <th>Requested Qty</th>
-            <th>Remaining Qty</th>
-            <th>Approved/Rejected Qty</th>
+            <th>Rem Qty</th>
+            <th>Approved Qty</th>
             <th>Status</th>
             <th>Approved For</th>
             <th></th>
