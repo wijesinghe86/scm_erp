@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('mr_item_id')->nullable();
             $table->unsignedBigInteger('mr_id')->nullable();
             $table->unsignedBigInteger('item_id')->nullable();
-            $table->decimal('qty', 8, 2)->nullable();
-            $table->decimal('remaining_qty', 8, 2)->nullable();
+            $table->decimal('qty', 15, 2)->nullable();
+            $table->decimal('remaining_qty', 15, 2)->nullable();
             $table->string('status')->nullable();
             $table->string('approved_for')->nullable();
             $table->text('remark')->nullable();

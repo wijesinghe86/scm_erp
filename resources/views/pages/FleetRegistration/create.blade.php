@@ -25,7 +25,7 @@
 
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label>Fleet Model Manufacture</label>
+                        <label>Fleet Manufacturer</label>
                         <input type="text" class="form-control" name="fleet_model_manufacture" placeholder="Fleet Model Manufacture">
                     </div>
                     <div class="form-group col-md-4">

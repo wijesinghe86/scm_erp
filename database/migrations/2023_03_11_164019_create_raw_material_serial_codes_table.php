@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('grn_id')->nullable();
             $table->unsignedBigInteger('grn_item_id')->nullable();
             $table->string('serial_no')->nullable();
-            $table->decimal('qty', 8,2)->nullable();
+            $table->decimal('qty', 15,2)->nullable();
             $table->string('supplier_code')->nullable();
             $table->unsignedBigInteger('warehouse_code')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();

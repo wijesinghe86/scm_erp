@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('item_id')->nullable();
             $table->unsignedBigInteger('po_id')->nullable();
-            $table->decimal('po_qty',16,2)->nullable();
+            $table->decimal('po_qty',15,2)->nullable();
             $table->timestamps();
         });
     }

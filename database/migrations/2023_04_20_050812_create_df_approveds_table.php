@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('df_item_id')->nullable();
             $table->unsignedBigInteger('df_id')->nullable();
             $table->unsignedBigInteger('item_id')->nullable();
-            $table->decimal('approved_qty', 8, 2)->nullable();
+            $table->decimal('approved_qty', 15, 2)->nullable();
             $table->text('remark')->nullable();
             $table->string('action')->nullable();
             $table->unsignedBigInteger('df_created_user_id')->nullable();

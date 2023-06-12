@@ -20,10 +20,10 @@ return new class extends Migration
             $table->string('row_number')->nullable();
             $table->string('rack_number')->unique();
             $table->string('rack_description')->nullable();
-            $table->decimal('rack_height', 5,2)->nullable();
-            $table->decimal('rack_width', 5,2)->nullable();
-            $table->decimal('rack_length', 5,2)->nullable();
-            $table->decimal('rack_floor_area', 8,2)->nullable();
+            $table->decimal('rack_height', 12,2)->nullable();
+            $table->decimal('rack_width', 12,2)->nullable();
+            $table->decimal('rack_length', 12,2)->nullable();
+            $table->decimal('rack_floor_area', 12,2)->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->integer('location_rack_design_status')->default(1);

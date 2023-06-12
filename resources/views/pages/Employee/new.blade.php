@@ -20,12 +20,12 @@
                                     <input type="text" class="form-control" name="employee_epf_no" placeholder="EPF No">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label>Fullname</label>
+                                    <label>Fullname *</label>
                                     <input type="text" class="form-control" name="employee_fullname"
                                         placeholder="Employee Fullname">
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <label>Name with Initials</label>
+                                    <label>Name with Initials *</label>
                                     <input type="text" class="form-control" name="employee_name_with_intial"
                                         placeholder="Employee Name with Initials">
                                 </div>
@@ -154,17 +154,33 @@
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>Role</label>
-                                    <input type="text" class="form-control" name="role" placeholder="Role">
-                                </div>
+                                    <select class="form-control" name="role">
+                                        <option value="">Select Type</option>
+                                        <option value="1">Super Admin</option>
+                                        <option value="2">Admin</option>
+                                        <option value="3">Manager</option>
+                                        <option value="4">Department Head</option>
+                                        <option value="5">Section Head</option>
+                                        <option value="6">Supervisor</option>
+                                        <option value="7">Executive</option>
+                                        <option value="8">Non-Executive</option>
+                                        <option value="9">Data Entry</option>
+                                        <option value="10">Labour</option>
+
+                                    </select>
+                                    </div>
                                 <div class="form-group col-md-3">
                                     <label>Responsibility</label>
                                     <input type="text" class="form-control" name="responsibility"
                                         placeholder="Responsibility">
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <label>Fleet Number</label>
-                                    <input type="text" class="form-control" name="fleet_number"
-                                        placeholder="Fleet Number">
+                                    <label>Fleet Registration Number</label>
+                                    <select class="form-control item-select" name="fleet_number">
+                                        @foreach ($fleets as $fleet)
+                                            <option value="{{ $fleet->id }}">{{ $fleet->fleet_registration_number }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>Status</label>
