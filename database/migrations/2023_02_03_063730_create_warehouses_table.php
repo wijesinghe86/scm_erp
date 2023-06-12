@@ -18,10 +18,10 @@ return new class extends Migration
             $table->string('warehouse_code')->unique();
             $table->string('warehouse_name')->nullable();
             $table->string('description')->nullable();
-            $table->decimal('warehouse_height', 5,2)->nullable();
-            $table->decimal('warehouse_width', 5,2)->nullable();
-            $table->decimal('warehouse_length', 5,2)->nullable();
-            $table->decimal('warehouse_floor_area', 8,2)->nullable();
+            $table->decimal('warehouse_height', 12,2)->nullable();
+            $table->decimal('warehouse_width', 12,2)->nullable();
+            $table->decimal('warehouse_length', 12,2)->nullable();
+            $table->decimal('warehouse_floor_area', 12,2)->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->integer('warehouse_status')->default(1);

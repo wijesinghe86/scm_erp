@@ -27,9 +27,9 @@ return new class extends Migration
             $table->string('part_number')->nullable();
             $table->string('model')->nullable();
             $table->string('make')->nullable();
-            $table->decimal('minimum_qty', 6,2)->nullable();
-            $table->decimal('maximum_qty', 6,2)->nullable();
-            $table->decimal('re_order_level', 6,2)->nullable();
+            $table->decimal('minimum_qty', 15,2)->nullable();
+            $table->decimal('maximum_qty', 15,2)->nullable();
+            $table->decimal('re_order_level', 15,2)->nullable();
             $table->string('substitute_stock_number')->nullable();
             $table->bigInteger('enduser')->nullable();
             $table->foreignId('created_by')->nullable()->constrained('users');
@@ -42,9 +42,9 @@ return new class extends Migration
             $table->string('stock_item_mech_ys')->nullable();
             $table->string('stock_item_mech_ts')->nullable();
             $table->string('stock_item_mech_ei')->nullable();
-            $table->decimal('stock_item_physical_weight', 8,2)->nullable();
-            $table->string('stock_item_physical_width', 8,2)->nullable();
-            $table->string('stock_item_physical_thickness', 8,2)->nullable();
+            $table->decimal('stock_item_physical_weight', 12,2)->nullable();
+            $table->string('stock_item_physical_width', 12,2)->nullable();
+            $table->string('stock_item_physical_thickness', 12,2)->nullable();
             $table->date('stock_item_date_of_mfr')->nullable();
             $table->date('stock_item_date_of_expiry')->nullable();
             $table->text('stock_item_special_ins')->nullable();

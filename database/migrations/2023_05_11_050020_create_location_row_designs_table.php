@@ -19,10 +19,10 @@ return new class extends Migration
             $table->string('bay_number')->nullable();
             $table->string('row_number')->unique();
             $table->string('row_description')->nullable();
-            $table->decimal('row_height', 5,2)->nullable();
-            $table->decimal('row_width', 5,2)->nullable();
-            $table->decimal('row_length', 5,2)->nullable();
-            $table->decimal('row_floor_area', 8,2)->nullable();
+            $table->decimal('row_height', 12,2)->nullable();
+            $table->decimal('row_width', 12,2)->nullable();
+            $table->decimal('row_length', 12,2)->nullable();
+            $table->decimal('row_floor_area', 12,2)->nullable();
             $table->bigInteger('created_by')->nullable();
             $table->bigInteger('updated_by')->nullable();
             $table->integer('locationrowdesign_status')->default(1);

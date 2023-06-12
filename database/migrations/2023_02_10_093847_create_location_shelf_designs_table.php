@@ -21,10 +21,10 @@ return new class extends Migration
             $table->string('rack_number')->nullable();
             $table->string('shelf_number')->unique();
             $table->string('shelf_description')->nullable();
-            $table->decimal('shelf_height', 5,2)->nullable();
-            $table->decimal('shelf_width', 5,2)->nullable();
-            $table->decimal('shelf_length', 5,2)->nullable();
-            $table->decimal('shelf_floor_area', 8,2)->nullable();
+            $table->decimal('shelf_height', 12,2)->nullable();
+            $table->decimal('shelf_width', 12,2)->nullable();
+            $table->decimal('shelf_length', 12,2)->nullable();
+            $table->decimal('shelf_floor_area', 12,2)->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->integer('location_shelf_design_status')->default(1);

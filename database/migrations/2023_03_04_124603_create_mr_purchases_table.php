@@ -22,10 +22,10 @@ return new class extends Migration
             $table->bigInteger('supplier_id')->nullable();
             $table->bigInteger('customer_id')->nullable();
             $table->integer('po_type')->nullable();
-            $table->decimal('weight_per_unit', 8,2)->nullable();
-            $table->decimal('volume_per_unit', 8,2)->nullable();
-            $table->decimal('total_weight', 8,2)->nullable();
-            $table->decimal('total_volume', 8,2)->nullable();
+            $table->decimal('weight_per_unit', 15,2)->nullable();
+            $table->decimal('volume_per_unit', 15,2)->nullable();
+            $table->decimal('total_weight', 15,2)->nullable();
+            $table->decimal('total_volume', 15,2)->nullable();
             $table->bigInteger('created_by')->nullable();
             $table->bigInteger('edited_by')->nullable();
             $table->timestamps();

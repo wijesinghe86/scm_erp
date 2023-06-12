@@ -15,26 +15,26 @@
                                         placeholder="Customer Code" value="{{$next_number}}">
                                 </div>
                                 <div class="form-group col-md-5">
-                                    <label>Customer Name</label>
+                                    <label>Customer Name *</label>
                                     <input type="text" class="form-control" name="customer_name"
                                         placeholder="Customer Name">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="">Business Registration Number</label>
+                                    <label for="">Business Registration Number *</label>
                                     <input type="text" class="form-control" id="" placeholder="Business Registration Number" name="business_registration_number">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-4">
-                                    <label>Vat Number</label>
+                                    <label>Vat Number *</label>
                                     <input type="text" class="form-control" name="customer_vat_number" placeholder="Vat Number">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>S Vat Number</label>
+                                    <label>SVat Number</label>
                                     <input type="text" class="form-control" name="customer_svat_number" placeholder="SVat Number">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Customer Type</label>
+                                    <label>Customer Type *</label>
                                     <select class="form-control" name="customer_type_of_customer">
                                         <option value="">Select type</option>
                                         <option value="1">Cash</option>
@@ -47,21 +47,21 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label>Address Line 1</label>
+                                    <label>Address Line 1 *</label>
                                     <input type="text" class="form-control" name="customer_address_line1"
                                         placeholder="Address Line 1">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label>Address Line2</label>
+                                    <label>Address Line2 *</label>
                                     <input type="text" class="form-control" name="customer_address_line2"
                                         placeholder="Address Line2">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-3">
-                                    <label>Mobile Phone Number</label>
+                                    <label>Mobile Phone Number *</label>
                                     <input type="text" class="form-control" name="customer_mobile_number"
                                         placeholder="Mobile Number">
                                 </div>
@@ -79,7 +79,7 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-4">
-                                    <label>Payment Terms</label>
+                                    <label>Payment Terms *</label>
                                     <select class="form-control" name="customer_payment_terms">
                                         <option value="">Select type</option>
                                         <option value="1">Cash</option>
@@ -87,7 +87,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Credit Limit</label>
+                                    <label>Credit Limit </label>
                                     <input type="text" class="form-control" name="customer_credit_limit"
                                         placeholder="Customer Credit Limit">
                                 </div>

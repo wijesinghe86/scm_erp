@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('grn_id')->nullable();
             $table->unsignedBigInteger('stock_item_id')->nullable();
-            $table->decimal('rec_qty')->nullable();
-            $table->decimal('rec_weight')->nullable();
+            $table->decimal('rec_qty', 15,2)->nullable();
+            $table->decimal('rec_weight', 15, 2)->nullable();
             $table->string('batch_no')->nullable();
             $table->date('expiry_date')->nullable();
             $table->timestamps();

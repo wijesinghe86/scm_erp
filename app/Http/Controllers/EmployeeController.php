@@ -6,6 +6,7 @@ use App\Models\Section;
 use App\Models\Employee;
 use App\Models\Department;
 use Illuminate\Http\Request;
+use App\Models\FleetRegistration;
 use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends ParentController
@@ -14,6 +15,7 @@ class EmployeeController extends ParentController
     {
         $response['departments'] = Department::all();
         $response['sections'] = Section::all();
+        $response['fleets'] = FleetRegistration::all();
 
         $last_em = Employee::latest()->first();
         $last_em_number = 0;

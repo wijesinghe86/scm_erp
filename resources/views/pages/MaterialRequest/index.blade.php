@@ -16,15 +16,26 @@
                                 <td>No</td>
                                 <td>MRF Date</td>
                                 <td>MRF No</td>
-                                <td>Requested By</td>
+                                <td>S/No</td>
+                                <td>Descrition</td>
+                                <td>U/M</td>
+                                <td>Qty</td>
+                                <td>Created_by</td>
                                </tr>
                         </thead>
                         <tbody>
                             @foreach ($lists as $materialrequest)
                             <tr>
-                                <td>{{$materialrequest->iteration}}</td>
+                            <td>{{$loop->iteration}}</td>
                             <td>{{ $materialrequest->mrf_date }}</td>
                             <td>{{ $materialrequest->mrf_no }}</td>
+                            @foreach ($materialrequest->request_items as $material_request_item)
+                         <td>{{$material_request_item->item->stock_number  }}</td>
+                         <td>{{$material_request_item->item->description  }}</td>
+                        <td>{{$material_request_item->item->unit  }}</td>
+                        <td>{{$material_request_item->mrf_qty  }}</td>
+                                    @endforeach
+                                </td>
                             <td>{{ $materialrequest->createUser ? $materialrequest->createUser->name : 'User not found' }}
                             </td>
                             </tr>

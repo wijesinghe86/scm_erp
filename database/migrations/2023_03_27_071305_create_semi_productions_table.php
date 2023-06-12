@@ -26,8 +26,8 @@ return new class extends Migration
             $table->decimal('raw_mat_serial_actual_qty', 15,2)->nullable();
             $table->decimal('raw_mat_seriala_qty_dif', 15,2)->nullable();
             $table->decimal('tot_raw_mat_qty', 15,2)->nullable();
-            $table->decimal('tot_raw material_qty')->nullable();
-            $table->decimal('diff_raw_mat_qty')->nullable();
+            $table->decimal('tot_raw material_qty', 15,2)->nullable();
+            $table->decimal('diff_raw_mat_qty', 15,2)->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
         });
