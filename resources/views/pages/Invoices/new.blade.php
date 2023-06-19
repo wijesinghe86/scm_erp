@@ -120,7 +120,7 @@
                                     <label>Description</label>
                                     <select class="form-control item-select" name="item_id" id="item_id"
                                         onchange="getStockItem()">
-                                        <option selected disabled>Select Item</option>
+                                        <option value="" selected disabled>Select Item</option>
                                         @foreach ($stockItems as $stockItem)
                                             <option value="{{ $stockItem->id }}">
                                                 {{ $stockItem->description }}
@@ -399,15 +399,17 @@
                 data: data,
                 success: function(response) {
                     fetchInvoiceTotal();
-                    // if (response.status == 0) {
-                    //     alertDanger(response.message);
-                    // } else {
-                    //     ('#item_id').val();
-                    //     ('#quantity').val();
-                    //     ('#unit_price').val();
-                    //     ('#item_discount').val();
-                    //     ('#location_id').val();
-                    // }
+                    if (response.status == 0) {
+                        alertDanger(response.message);
+                    } else {
+                        $('#stock_no').val("");
+                        $('#uom').val("");
+                        $('#item_id').val("");
+                        $('#quantity').val("");
+                        $('#unit_price').val("");
+                        $('#item_discount').val("");
+                        $('#location_id').val("");
+                    }
                     getItemsTable();
                 }
             });

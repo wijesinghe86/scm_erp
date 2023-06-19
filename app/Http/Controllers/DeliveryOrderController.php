@@ -14,8 +14,11 @@ use App\Models\DeliveryOrder;
 use App\Models\StockItem;
 use App\Models\BalanceOrderItem;
 use App\Models\DeliveryOrderItem;
+use App\Models\Stock;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use PDF;
+
 
 class DeliveryOrderController extends ParentController
 {
@@ -39,7 +42,7 @@ class DeliveryOrderController extends ParentController
         if ($delivery_order == null || $delivery_order->issued_date != null) {
             abort(404);
         }
-        
+
         return view('pages.DeliveryOrder.issue', compact('delivery_order'));
     }
 
@@ -60,10 +63,17 @@ class DeliveryOrderController extends ParentController
 
             foreach ($request->items as $key => $item) {
                 $delivery_order_item = DeliveryOrderItem::where('id', $key)->first();
+
                 $delivery_order_item->issued_qty = $delivery_order_item->issued_qty + $item['issue_quantity'];
-                $delivery_order_item->available_qty = $item['issue_quantity'] > 0 ? $delivery_order_item->qty - $delivery_order_item->issued_qty : 0;
+                // $delivery_order_item->available_qty = $item['issue_quantity'] > 0 ? $delivery_order_item->qty - $delivery_order_item->issued_qty : 0;
+                $delivery_order_item->available_qty = $delivery_order_item->qty - $delivery_order_item->issued_qty;
                 $delivery_order_item->issued_date = now();
                 $delivery_order_item->save();
+
+                //stock reduce 
+                $stock = Stock::where('stock_item_id', $delivery_order_item->item_id)->where('warehouse_id', $delivery_order->location_id)->first();
+                $stock->qty = $stock->qty - $item['issue_quantity'];
+                $stock->save();
 
 
                 $is_existing_balance_order_item = BalanceOrderItem::where('delivery_order_item_id', $delivery_order_item->id)->first();
@@ -71,7 +81,9 @@ class DeliveryOrderController extends ParentController
                     $is_existing_balance_order_item->delete();
                 }
 
-                if ($item['issue_quantity'] != 0 &&  $delivery_order_item->issued_qty < $delivery_order_item->qty) {
+
+                // if ($item['issue_quantity'] != 0 &&  $delivery_order_item->issued_qty < $delivery_order_item->qty) {
+                if ($delivery_order_item->issued_qty < $delivery_order_item->qty) {
                     $is_existing_balance_order = BalanceOrder::where('delivery_order_id', $delivery_order->id)->first();
                     if ($is_existing_balance_order == null) {
                         $balance_order->save();
@@ -79,7 +91,7 @@ class DeliveryOrderController extends ParentController
 
                     $balance_order_item = new BalanceOrderItem;
                     $balance_order_item->delivery_order_id  = $delivery_order->id;
-                    $balance_order_item->balance_order_id  = $is_existing_balance_order == null? $balance_order->id: $is_existing_balance_order->id;
+                    $balance_order_item->balance_order_id  = $is_existing_balance_order == null ? $balance_order->id : $is_existing_balance_order->id;
                     $balance_order_item->delivery_order_item_id  = $delivery_order_item->id;
                     $balance_order_item->item_id  = $delivery_order_item->item_id;
                     $balance_order_item->invoice_id  =  $delivery_order_item->invoice_id;
@@ -126,8 +138,8 @@ class DeliveryOrderController extends ParentController
         // dd($request->all());
         $request['created_by'] = Auth::id();
 
-        $deliveryorders = DeliveryOrder::create($request->all());
-        return redirect()->route('invoices.preview', $invoice->id);
+        $delivery_order = DeliveryOrder::create($request->all());
+        return redirect()->route('invoices.preview', $delivery_order->id);
     }
 
     public function getInvoiceItems(Request $request)
@@ -137,5 +149,17 @@ class DeliveryOrderController extends ParentController
             ->where('invoice_number', $request->invoice_no)
             ->get();
         return view('pages.DeliveryOrder.items_table', compact('invoiceitems'));
+    }
+
+
+    public function print($delivery_order_id)
+    {
+        $delivery_order = DeliveryOrder::with(['items', 'customer','location'])->find($delivery_order_id);
+        // $response[''] = InvoiceItem::where('invoice_number', $invoice_id)->get();
+        if ($delivery_order == null) {
+            return abort(404);
+        }
+        $pdf = PDF::loadView('pages.DeliveryOrder.pdf', compact('delivery_order'));
+        return $pdf->stream('delivery_order.pdf');
     }
 }

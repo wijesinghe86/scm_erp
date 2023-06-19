@@ -34,7 +34,7 @@
                                         </td>
                                         <td>
                                             <select value="{{ $item->location_id }}" class="form-control item-select"
-                                                name="location_id" id="location_id-{{$key}}">
+                                                name="location_id" id="location_id-{{ $key }}">
                                                 @foreach ($warehouses as $warehouse)
                                                     <option value="{{ $warehouse->id }}">
                                                         {{ $warehouse->warehouse_name }}
@@ -98,7 +98,7 @@
                 total: parseFloat(item.unit_price) * parseFloat(qunantity),
             }
 
-            const quantitySum = cart.reduce((acc, curr) => {
+            const quantitySum = cart.filter(row => row?.id == item?.id).reduce((acc, curr) => {
                 return acc + parseFloat(curr.qty)
             }, 0)
             if (qunantity == 0) {

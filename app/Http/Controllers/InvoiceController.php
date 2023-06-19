@@ -136,8 +136,6 @@ class InvoiceController extends ParentController
                     $delivery_order_item->total  = data_get($item, 'total');
                     $delivery_order_item->save();
 
-
-                    // TODO:Reduce Stock
                 }
             }
             DB::commit();
