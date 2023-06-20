@@ -35,6 +35,24 @@ class Invoice extends Model
         'created_by'
     ];
 
+    public function getInvoiceTypeNameAttribute()
+    {
+        switch ($this->type) {
+            case 1:
+                return 'Non Tax Invoice';
+                break;
+            case 2:
+                return 'Tax Invoice';
+                break;
+            case 3:
+                return 'Suspended Tax Invoice';
+                break;
+            default:
+                return 'N/A';
+                break;
+        }
+    }
+
 
     protected $payment_terms = [
         [

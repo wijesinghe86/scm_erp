@@ -62,9 +62,9 @@ class InvoiceController extends ParentController
     {
 
         $this->validate($request, [
-            'po_number' => 'required',
+            // 'po_number' => 'required',
             'invoice_date' => 'required',
-            'ref_number' => 'required',
+            // 'ref_number' => 'required',
             'customer_id' => 'required',
             'employee_id' => 'required',
         ]);

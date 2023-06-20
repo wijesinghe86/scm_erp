@@ -15,7 +15,7 @@ class BalanceOrder extends Model
         $invoice_count = self::get()->count();
         return "BO" . sprintf('%06d', $invoice_count + 1);
     }
-    
+
     public function deliveryOrder()
     {
         return $this->hasOne(DeliveryOrder::class, 'id', 'delivery_order_id');
@@ -29,5 +29,10 @@ class BalanceOrder extends Model
     public function items()
     {
         return $this->hasMany(BalanceOrderItem::class, 'balance_order_id', 'id');
+    }
+
+    public function location()
+    {
+        return $this->hasOne(Warehouse::class, 'id', 'location_id');
     }
 }

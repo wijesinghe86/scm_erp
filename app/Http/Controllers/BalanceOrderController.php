@@ -82,7 +82,7 @@ class BalanceOrderController extends Controller
 
     public function print($balance_order_id)
     {
-        $balance_order = DeliveryOrder::with(['items', 'customer','location'])->find($balance_order_id);
+        $balance_order = BalanceOrder::find($balance_order_id);
         // $response[''] = InvoiceItem::where('invoice_number', $invoice_id)->get();
         if ($balance_order == null) {
             return abort(404);

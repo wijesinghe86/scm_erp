@@ -5,27 +5,10 @@
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        {{-- @include('pages.Invoices.pdf') --}}
-                        {{-- <table class="" style="width: 100%;margin:0px;min-height: 30mm;">
-                            <tr align="center">
-                                <td>
-                                    <h1>ABC</h1>
-                                    <hr style="width: 50%;">
-                                </td>
-                            </tr>
-                            <tr align="center">
-                                <td>
-                                    <div class="mb-2">MANUFACTURER</div>
-                                    <small>Industrial Village,</small><br>
-                                    <small>Tel: oXXXXXXXXX</small><br>
-                                    <small>E-mail</small><br>
-                                </td>
-                            </tr>
-                        </table> --}}
                         <div class="card-title">Invoice {{ $invoices->invoice_number }}</div>
                         <table class="table" style="width: 100%;min-height: 25mm;height: 25mm;margin:0px; padding:0;">
                             <tr class="border">
-                                <td class="info-td border" rowspan="3">
+                                <td class="border" rowspan="3">
                                     <div style="display: flex; gap:10px;">
                                         <div>Invoice To : </div>
                                         <div>
@@ -60,7 +43,7 @@
                                 </td>
                             </tr>
                         </table>
-                        <table style="height: 114.2mm">
+                        <table style="height: 114.2mm; font-size: 14px">
                             <tr>
                                 <td class="info-td border">
                                     <table>
@@ -103,20 +86,43 @@
                                                     {{ $item->uom }}</td>
                                                 <td align="right" class="border"
                                                     style="height: 6mm;min-height:6mm; max-height:6mm; width: 11mm;padding:0 10px">
-                                                    {{ $item->unit_price }}</td>
+                                                    {{ money($item->unit_price) }}</td>
                                                 <td align="right" class="border"
                                                     style="height: 6mm;min-height:6mm; max-height:6mm; width: 11mm;padding:0 10px">
-                                                    {{ $item->sub_total }}</td>
+                                                    {{ money($item->sub_total) }}</td>
                                             </tr>
                                         @endforeach
                                         <tr>
                                             <td colspan="5"></td>
                                             <td align="right" class="border"
-                                                style="height: 26mm;min-height:26mm; max-height:26mm; width: 11mm; padding:0 10px; background-color: darkgray">
-                                                {{ $invoices->items->sum('unit_price') }}</td>
+                                                style="height: 26mm;min-height:26mm; max-height:26mm; width: 11mm; padding:10px 10px; background-color: lightgray">
+                                                <div style="height:7px" >Total(Rs.)</div></br>
+                                                @if ($invoices->type != 1 && $invoices->option == 1)
+                                                    <div style="height:7px" >Ex. Of Vat(Rs.)</div></br>
+                                                @endif
+                                                @if ($invoices->type != 1)
+                                                    <div style="height:7px">Vat x%</div></br>
+                                                @endif
+                                                @if ($invoices->discount)
+                                                    <div style="height:7px">Dicount(Rs.)</div></br>
+                                                @endif
+                                                <div style="height:7px">Grand Total(Rs.)</div></br>
+
+                                            </td>
                                             <td align="right" class="border"
-                                                style="height: 26mm;min-height:26mm; max-height:26mm; width: 11mm;padding:0 10px">
-                                                {{ $invoices->items->sum('sub_total') }}</td>
+                                                style="height: 26mm;min-height:26mm; max-height:26mm; width: 11mm;padding:10px 10px">
+                                                <div style="height:7px">{{ money($invoices->sub_total) }}</div></br>
+                                                @if ($invoices->type != 1 && $invoices->option == 1)
+                                                    <div style="height:7px">{{ money($invoices->vat_amount) }}</div></br>
+                                                @endif
+                                                @if ($invoices->type != 1)
+                                                    <div style="height:7px">{{ $invoices->vat_rate }}</div></br>
+                                                @endif
+                                                @if ($invoices->discount)
+                                                    <div style="height:7px">{{ money($invoices->dicount) }}</div></br>
+                                                @endif
+                                                <div style="height:7px">{{ money($invoices->grand_total) }}</div></br>
+                                            </td>
                                         </tr>
                                     </table>
                                 </td>
@@ -159,12 +165,12 @@
         }
 
         /* tr {
-                                            border: 1px solid blue !important;
-                                        }
+                                                                                                                    border: 1px solid blue !important;
+                                                                                                                }
 
-                                        td {
-                                            border: 1px solid red !important;
-                                        } */
+                                                                                                                td {
+                                                                                                                    border: 1px solid red !important;
+                                                                                                                } */
 
         .info-td {
             vertical-align: top !important;
