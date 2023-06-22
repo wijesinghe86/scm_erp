@@ -11,7 +11,7 @@ class Stock extends Model
 
     public function warehouse()
     {
-        return $this->hasOne(Warehouse::class,'warehouse_id','id');
+        return $this->hasOne(Warehouse::class,'id','warehouse_id');
     }
     
     public function item()

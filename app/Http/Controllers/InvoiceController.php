@@ -185,7 +185,12 @@ class InvoiceController extends ParentController
         // {
 
         $this->validate($request, [
-            'location_id' => 'required'
+            'item_id'=>'required',
+            'unit_price'=> 'required',
+            'quantity'=>'required',
+            'location_id' => 'required',
+        ],[
+            'item_id.required'=> 'The item is required'
         ]);
 
         $item = StockItem::find($request->item_id);

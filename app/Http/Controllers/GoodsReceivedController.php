@@ -101,4 +101,18 @@ class GoodsReceivedController extends Controller
         flash("GRN created successfully")->success();
         return redirect()->route('goodsreceived.index');
     }
+
+    public function getGrnList(Request $request)
+    {
+        if (!$request->date && !$request->warehouse) {
+            return [];
+        }
+        $grn_data = GoodsReceived::when($request->date, function ($q) use ($request) {
+            return $q->whereDate('created_at', $request->date);
+        })
+            ->when($request->date, function ($q) use ($request) {
+                return $q->where('warehouse', $request->warehouse);
+            });;
+        return $grn_data;
+    }
 }

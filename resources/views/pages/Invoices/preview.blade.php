@@ -69,8 +69,7 @@
                                         </tr>
                                         @foreach ($invoices->items as $key => $item)
                                             <tr class="border">
-                                                <td align="center" class="border"
-                                                    style="height: 6mm;min-height:6mm; max-height:6mm; width: 11mm;">
+                                                <td align="center" class="border" style="padding:1rem 0">
                                                     {{ $key + 1 }}</td>
                                                 <td align="center" class="border"
                                                     style="height: 6mm;min-height:6mm; max-height:6mm; width: 11mm;">
@@ -96,12 +95,12 @@
                                             <td colspan="5"></td>
                                             <td align="right" class="border"
                                                 style="height: 26mm;min-height:26mm; max-height:26mm; width: 11mm; padding:10px 10px; background-color: lightgray">
-                                                <div style="height:7px" >Total(Rs.)</div></br>
+                                                <div style="height:7px">Total(Rs.)</div></br>
                                                 @if ($invoices->type != 1 && $invoices->option == 1)
-                                                    <div style="height:7px" >Ex. Of Vat(Rs.)</div></br>
+                                                    <div style="height:7px">Ex. Of Vat(Rs.)</div></br>
                                                 @endif
                                                 @if ($invoices->type != 1)
-                                                    <div style="height:7px">Vat x%</div></br>
+                                                    <div style="height:7px">Vat {{ $invoices->vat_rate }}</div></br>
                                                 @endif
                                                 @if ($invoices->discount)
                                                     <div style="height:7px">Dicount(Rs.)</div></br>
@@ -111,12 +110,14 @@
                                             </td>
                                             <td align="right" class="border"
                                                 style="height: 26mm;min-height:26mm; max-height:26mm; width: 11mm;padding:10px 10px">
-                                                <div style="height:7px">{{ money($invoices->sub_total) }}</div></br>
+                                                <div style="height:7px">
+                                                    {{ $invoices->type == 1 ? money($invoices->grand_total) : money($invoices->sub_total) }}
+                                                </div></br>
                                                 @if ($invoices->type != 1 && $invoices->option == 1)
-                                                    <div style="height:7px">{{ money($invoices->vat_amount) }}</div></br>
+                                                    <div style="height:7px">{{ money($invoices->sub_total) }}</div></br>
                                                 @endif
                                                 @if ($invoices->type != 1)
-                                                    <div style="height:7px">{{ $invoices->vat_rate }}</div></br>
+                                                    <div style="height:7px">{{ money($invoices->vat_amount) }}</div></br>
                                                 @endif
                                                 @if ($invoices->discount)
                                                     <div style="height:7px">{{ money($invoices->dicount) }}</div></br>
@@ -165,12 +166,12 @@
         }
 
         /* tr {
-                                                                                                                    border: 1px solid blue !important;
-                                                                                                                }
+                                                                                                                        border: 1px solid blue !important;
+                                                                                                                    }
 
-                                                                                                                td {
-                                                                                                                    border: 1px solid red !important;
-                                                                                                                } */
+                                                                                                                    td {
+                                                                                                                        border: 1px solid red !important;
+                                                                                                                    } */
 
         .info-td {
             vertical-align: top !important;

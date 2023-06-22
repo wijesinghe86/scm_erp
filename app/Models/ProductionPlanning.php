@@ -10,4 +10,9 @@ class ProductionPlanning extends Model
 {
     use HasFactory;
 
+    public function items()
+    {
+        return $this->hasMany(ProductionPlaningItem::class,'pps_id','id');
+    }
+
 }

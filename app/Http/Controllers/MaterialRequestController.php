@@ -15,7 +15,6 @@ class MaterialRequestController extends Controller
     public function index()
     {
         $lists =  MaterialRequest::with ('request_items.item')->get();
-        logger($lists);
         return view('pages.MaterialRequest.index',compact('lists'));
 
     }

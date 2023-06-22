@@ -56,6 +56,7 @@ use App\Http\Controllers\ProductionPlanningAndScheduleController;
 use App\Http\Controllers\RawMaterialIssueForProductionController;
 use App\Http\Controllers\SemiFinishedGoodsSerialCodeAssigningController;
 use App\Http\Controllers\OperationMachanismProductionAndTimeManagementController;
+use App\Http\Controllers\ProductionPlanningApprovalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -467,6 +468,7 @@ Route::prefix('goodsreceived')->group(function () {
     Route::get('/create', [App\Http\Controllers\GoodsReceivedController::class, 'create'])->name('goodsreceived.create');
     Route::post('/create', [App\Http\Controllers\GoodsReceivedController::class, 'store'])->name('goodsreceived.store');
     Route::get('/get-items', [App\Http\Controllers\GoodsReceivedController::class, 'getPoItems'])->name('goodsreceived.getPoItems');
+    Route::get('/get-list', [App\Http\Controllers\GoodsReceivedController::class, 'getGrnList'])->name('goodsreceived.getGrnList');
 });
 
 Route::prefix('MaterialsReturnByCustomer')->group(function () {
@@ -486,6 +488,18 @@ Route::prefix('ProductionPlanningAndSchedule')->group(function () {
     Route::get('/create', [App\Http\Controllers\ProductionPlanningAndScheduleController::class, 'create'])->name('productionplanningandschedule.create');
     Route::post('/create', [App\Http\Controllers\ProductionPlanningAndScheduleController::class, 'store'])->name('productionplanningandschedule.store');
     Route::get('/get-items', [App\Http\Controllers\ProductionPlanningAndScheduleController::class, 'getDfItems'])->name('productionplanningandschedule.getDfItems');
+
+    Route::get('approvals', [ProductionPlanningAndScheduleController::class, 'indexApproval'])->name('productionplanningandschedule.indexApproval');
+    Route::get('approvals/create', [ProductionPlanningAndScheduleController::class, 'storeApprovalIndex'])->name('productionplanningandschedule.storeApprovalIndex');
+    Route::post('approvals/create', [ProductionPlanningAndScheduleController::class, 'storeApproval'])->name('productionplanningandschedule.storeApproval');
+
+});
+
+Route::prefix('production-planning-and-schedule-approval')->group(function () {
+    Route::get('', [ProductionPlanningApprovalController::class, 'index'])->name('production_planning_and_schedule_approval.index');
+    Route::get('/create', [ProductionPlanningApprovalController::class, 'create'])->name('production_planning_and_schedule_approval.create');
+    Route::post('/create', [ProductionPlanningApprovalController::class, 'store'])->name('production_planning_and_schedule_approval.store');
+    Route::get('/get-items', [ProductionPlanningApprovalController::class, 'getItems'])->name('production_planning_and_schedule_approval.getItems');
 });
 
 Route::prefix('rawmaterialsserialcodeassigning')->group(function () {

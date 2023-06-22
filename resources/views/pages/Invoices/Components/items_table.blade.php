@@ -12,10 +12,10 @@
                 <th>Item Amount</th>
                 <th>Item Total</th>
                 <th>Location</th>
-                <th>Action</th>
+                <th align="right" >Action</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="table-warning" >
             @foreach ($items as $key => $item)
                 <tr>
                     <td>{{ ++$key }}</td>
@@ -28,8 +28,8 @@
                     <td>{{ $item->item_discount_amount }}</td>
                     <td>{{ $item->total }}</td>
                     <td>{{ $item->location ? $item->location->warehouse_name : 'N/A' }}</td>
-                    <td>
-                        <a onclick="removeFromCart({{$item}})" class="h4" >
+                    <td align="right" >
+                        <a onclick="removeFromCart({{$item}})" class="h4 cursor-pointer" style="cursor: pointer;" >
                             <i class="mdi mdi-delete text-danger"></i>
                         </a>
                     </td>

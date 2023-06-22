@@ -9,99 +9,114 @@
                         <br>
                         <form action="{{ route('invoices.store') }}" method="POST">
                             @csrf
-                            {{-- Customer Selection Start here --}}
-                            <div class="row">
-                                <div class="form-group col-md-2">
-                                    <label>Customer Code</label>
-                                    <input type="text" class="form-control" id="cus_code" name="cus_code"
-                                        placeholder="Customer Code" disabled>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label>Customer Name</label>
-                                    <select class="form-control item-select" name="customer_id" id="customer_id"
-                                        onchange="getCustomer()">
-                                        <option selected disabled>Select Customer</option>
-                                        @foreach ($customers as $customer)
-                                            <option value="{{ $customer->id }}">{{ $customer->customer_name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label>Customer Address</label>
-                                    <input type="text" class="form-control" id="cus_address" name="cus_address"
-                                        placeholder="Customer Address" disabled>
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label>Customer VAT Number</label>
-                                    <input type="text" class="form-control" id="cus_vat_no" name="cus_vat_no"
-                                        placeholder="Customer VAT Number" disabled>
-                                </div>
-                            </div>
-                            {{-- Customer Selection End here --}}
+                            <div style="position: relative;">
+                                <div style="display:none; position: absolute; bottom:0; right:0;" id="stockView">
+                                    <table class="table table-striped">
+                                        <thead style="background-color: lightgray">
+                                            <tr>
+                                                <th>Warehouse</th>
+                                                <th align="right">Avilable Qty</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="stockViewItems">
 
-                            {{-- Invoice Section Start here --}}
-                            <div class="row">
-                                <div class="form-group col-md-3">
-                                    <label>Invoice No</label>
-                                    <input type="text" class="form-control" value="{{ $invoice_number }}"
-                                        name="invoice_number", id="invoice_number" readonly>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div class="form-group col-md-3">
-                                    <label>Invoice Category</label>
-                                    <input type="text" class="form-control" value="{{ $invoiceOption }}" readonly>
+                                {{-- Customer Selection Start here --}}
+                                <div class="row">
+                                    <div class="form-group col-md-2">
+                                        <label>Customer Code</label>
+                                        <input type="text" class="form-control" id="cus_code" name="cus_code"
+                                            placeholder="Customer Code" disabled>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Customer Name</label>
+                                        <select class="form-control item-select" name="customer_id" id="customer_id"
+                                            onchange="getCustomer()">
+                                            <option selected disabled>Select Customer</option>
+                                            @foreach ($customers as $customer)
+                                                <option value="{{ $customer->id }}">{{ $customer->customer_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Customer Address</label>
+                                        <input type="text" class="form-control" id="cus_address" name="cus_address"
+                                            placeholder="Customer Address" disabled>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Customer VAT Number</label>
+                                        <input type="text" class="form-control" id="cus_vat_no" name="cus_vat_no"
+                                            placeholder="Customer VAT Number" disabled>
+                                    </div>
                                 </div>
-                                {{-- <div class="form-group col-md-3">
+                                {{-- Customer Selection End here --}}
+
+                                {{-- Invoice Section Start here --}}
+                                <div class="row">
+                                    <div class="form-group col-md-3">
+                                        <label>Invoice No</label>
+                                        <input type="text" class="form-control" value="{{ $invoice_number }}"
+                                            name="invoice_number", id="invoice_number" readonly>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Invoice Category</label>
+                                        <input type="text" class="form-control" value="{{ $invoiceOption }}" readonly>
+                                    </div>
+                                    {{-- <div class="form-group col-md-3">
                                     <label>Tax</label></label>
                                     <input type="text" class="form-control" value="{{ $tax }}" name="tax",
                                         id="invoice_number" readonly>
                                 </div> --}}
 
-                                <div class="form-group col-md-3">
-                                    <label>Date</label>
-                                    <input type="date" class="form-control" name="invoice_date" id="invoice_date"
-                                        {{ now()->format('Y-m-d') }}>
+                                    <div class="form-group col-md-3">
+                                        <label>Date</label>
+                                        <input type="date" class="form-control" name="invoice_date" id="invoice_date"
+                                            {{ now()->format('Y-m-d') }}>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-3">
-                                    <label>PO No</label>
-                                    <input type="text" class="form-control" name="po_number", id="po_number">
+                                <div class="row">
+                                    <div class="form-group col-md-3">
+                                        <label>PO No</label>
+                                        <input type="text" class="form-control" name="po_number", id="po_number">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Reference No</label>
+                                        <input type="text" class="form-control" name="ref_number", id="ref_number">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Term</label>
+                                        <select name="payment_terms" class="form-control item-select" id="payment_terms">
+                                            <option selected disabled>Select Terms</option>
+                                            <option value="1">Cash</option>
+                                            <option value="2">Credit</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-3">
-                                    <label>Reference No</label>
-                                    <input type="text" class="form-control" name="ref_number", id="ref_number">
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label>Term</label>
-                                    <select name="payment_terms" class="form-control item-select" id="payment_terms">
-                                        <option selected disabled>Select Terms</option>
-                                        <option value="1">Cash</option>
-                                        <option value="2">Credit</option>
-                                    </select>
-                                </div>
-                            </div>
-                            {{-- Invoice Section End here --}}
+                                {{-- Invoice Section End here --}}
 
-                            {{-- Sales Staff Selection Start here --}}
-                            <div class="row">
-                                <div class="form-group col-md-2">
-                                    <label>Sales Staff Code</label>
-                                    <input type="text" class="form-control" id="employee_reg_no" name="employee_reg_no"
-                                        placeholder="Customer Code" disabled>
+                                {{-- Sales Staff Selection Start here --}}
+                                <div class="row">
+                                    <div class="form-group col-md-2">
+                                        <label>Sales Staff Code</label>
+                                        <input type="text" class="form-control" id="employee_reg_no"
+                                            name="employee_reg_no" placeholder="Customer Code" disabled>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Sales Staff Name</label>
+                                        <select class="form-control item-select" name="employee_id" id="employee_id"
+                                            onchange="getEmployee()">
+                                            <option selected disabled>Select Sales Staff</option>
+                                            @foreach ($employees as $employee)
+                                                <option value="{{ $employee->id }}">
+                                                    {{ $employee->employee_fullname }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label>Sales Staff Name</label>
-                                    <select class="form-control item-select" name="employee_id" id="employee_id"
-                                        onchange="getEmployee()">
-                                        <option selected disabled>Select Sales Staff</option>
-                                        @foreach ($employees as $employee)
-                                            <option value="{{ $employee->id }}">
-                                                {{ $employee->employee_fullname }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                {{-- Sales Staff Selection Start here --}}
                             </div>
-                            {{-- Sales Staff Selection Start here --}}
                             <hr>
                             <br>
                             {{-- Invoice Items Start here --}}
@@ -118,7 +133,7 @@
                                 </div>
                                 <div class="form-group col-md-7">
                                     <label>Description</label>
-                                    <select class="form-control item-select" name="item_id" id="item_id"
+                                    <select class="form-control item-select clear-qty" name="item_id" id="item_id"
                                         onchange="getStockItem()">
                                         <option value="" selected disabled>Select Item</option>
                                         @foreach ($stockItems as $stockItem)
@@ -148,7 +163,7 @@
                                 <div class="form-group col-md-2">
                                     <label>Discount</label>
                                     <input type="number" class="form-control"
-                                        name="item_discount_percentage"onkeypress="getTotal()" min="0"
+                                        name="item_discount_percentage"onkeyup="getTotal()" min="0"
                                         step="0.01" id="item_discount_percentage" placeholder="Discount">
                                 </div>
                                 <div class="form-group col-md-3">
@@ -158,7 +173,8 @@
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label>Location</label>
-                                    <select class="form-control item-select" name="location_id" id="location_id">
+                                    <select class="form-control item-select clear-qty" name="location_id"
+                                        id="location_id">
                                         @foreach ($warehouses as $warehouse)
                                             <option value="{{ $warehouse->id }}">
                                                 {{ $warehouse->warehouse_name }}
@@ -245,9 +261,7 @@
 
 
                             <div class="text-right">
-                                <button type="submit" class="btn btn-info btn-fill btn-wd">Complete &
-                                    View</button>
-                                <button type="button" class="btn btn-info btn-fill btn-wd">Print</button>
+                                <button type="submit" class="btn btn-info btn-fill btn-wd">Create & View</button>
                             </div>
                         </form>
                     </div>
@@ -260,11 +274,29 @@
 
 @push('scripts')
     <script>
+        let selectedItemData = {};
         // get the Customer Details from Customer Table
         $(document).ready(function() {
             getItemsTable();
             fetchInvoiceTotal();
         });
+
+        $('.clear-qty').on('change', function() {
+            $('#quantity').val("")
+        })
+
+        $('#quantity').on('change', function() {
+            const warehouse = $('#location_id').val();
+            let quantity = $(this).val();
+            if (Object.keys(selectedItemData)?.length > 0) {
+                const filterCurrentStockData = selectedItemData?.stocks?.find(row => row?.warehouse?.id ==
+                    warehouse)
+                if (parseFloat(quantity) > parseFloat(filterCurrentStockData?.qty)) {
+                    $(this).val(filterCurrentStockData?.qty)
+                }
+            }
+
+        })
 
         function fetchInvoiceTotal() {
             $.ajax({
@@ -280,7 +312,6 @@
                     option: "{{ $invoiceOption }}"
                 },
                 success: function(response) {
-                    console.log(response);
                     $(".js_subtotal").val(response.subtotal);
                     $(".js_vatRate").val(response.vatRate)
                     $(".js_vat").val(response.vat)
@@ -305,7 +336,6 @@
         // get the Customer Details from Customer Table
         function getCustomer() {
             var customer_id = $('#customer_id').val();
-            console.log(customer_id);
             var data = {
                 customer_id: customer_id
             };
@@ -317,7 +347,6 @@
                 type: "GET",
                 data: data,
                 success: function(response) {
-                    console.log(response);
                     $('#cus_code').val(response.customer_code);
                     $('#cus_address').val(response.customer_address_line1);
                     $('#cus_vat_no').val(response.customer_vat_number);
@@ -328,7 +357,6 @@
         // get the Employee Details from Employee Table
         function getEmployee() {
             var employee_id = $('#employee_id').val();
-            console.log(employee_id);
             var data = {
                 employee_id: employee_id
             };
@@ -340,7 +368,6 @@
                 type: "GET",
                 data: data,
                 success: function(response) {
-                    console.log(response);
                     $('#employee_reg_no').val(response.employee_reg_no);
                 }
             });
@@ -349,7 +376,6 @@
         // get the Stock Item Details from StockItem Table
         function getStockItem() {
             var item_id = $('#item_id').val();
-            console.log(item_id);
             var data = {
                 item_id: item_id
             };
@@ -361,16 +387,27 @@
                 type: "GET",
                 data: data,
                 success: function(response) {
-                    console.log(response);
-                    $('#stock_no').val(response.stock_number);
-                    $('#uom').val(response.unit);
+                    $('#stock_no').val(response?.stock_number);
+                    $('#uom').val(response?.unit);
+                    $('#stockView').hide();
+
+                    selectedItemData = response
+
+                    if (response?.stocks?.length > 0) {
+                        $('#stockViewItems').find('tr').remove().end()
+                        response?.stocks.forEach(element => {
+                            $('#stockViewItems').append(
+                                `<tr><td>${element?.warehouse?.warehouse_name}</td><td align="right" >${element?.qty}</td></tr>`
+                            )
+                        })
+                        $('#stockView').show();
+                    }
                 }
             });
         }
 
         // get the Location Details from Warehouse Table
         function addInvoiceItem(invoice_no) {
-            // console.log(invoice_no);
 
             //passing the value to Item table
             var item_id = $('#item_id').val();
@@ -398,6 +435,7 @@
                 type: "POST",
                 data: data,
                 success: function(response) {
+                    console.log(response);
                     fetchInvoiceTotal();
                     if (response.status == 0) {
                         alertDanger(response.message);
@@ -411,6 +449,11 @@
                         $('#location_id').val("");
                     }
                     getItemsTable();
+                },
+                error: function(data) {
+                    $.each(data.responseJSON?.errors, function(key, value) {
+                        alertDanger(value);
+                    });
                 }
             });
         }
@@ -420,7 +463,6 @@
             var data = {
                 invoice_no: invoice_no
             };
-            console.log(data);
             $.ajax({
                 url: "{{ route('invoices.item.table') }}",
                 headers: {
@@ -429,7 +471,6 @@
                 type: "GET",
                 data: data,
                 success: function(response) {
-                    console.log(response);
                     $('#items-table').html(response);
                 }
             });
@@ -437,13 +478,16 @@
 
         //get item discount amount
         function getTotal() {
-            var unit_price = document.getElementById("unit_price").value;
-            var quantity = document.getElementById("quantity").value;
-            var item_discount_percentage = document.getElementById("item_discount_percentage").value;
+            var unit_price = $("#unit_price").val();
+            var quantity = $("#quantity").val();
+            var item_discount_percentage = $("#item_discount_percentage").val();
 
             if (unit_price && quantity && item_discount_percentage) {
-                var item_discount_amount = (quantity * unit_price) * (item_discount_percentage / 100);
-                document.getElementById("item_discount_amount").value = item_discount_amount;
+                let price = parseFloat(quantity * unit_price);
+                console.log({price});
+                console.log({item_discount_percentage});
+                var item_discount_amount = parseFloat((price*item_discount_percentage)/ 100)?.toFixed(2);
+                $("#item_discount_amount").val(item_discount_amount)
             }
         }
 
@@ -467,6 +511,7 @@
         $(document).ready(function() {
             $('.item-select').select2({
                 placeholder: "Select Item",
+                // theme: 'bootstrap4',
             });
         });
     </script>
@@ -474,8 +519,8 @@
 
 @push('styles')
     <style>
-        .select2-container .select-selection--single {
+        /* .select2-container .select-selection--single {
             height: 46px;
-        }
+        } */
     </style>
 @endpush

@@ -23,7 +23,7 @@
             border: 1px solid black;
         }
     </style>
-    <title>{{ $invoices->invoice_number}} | {{$invoices->getInvoiceTypeNameAttribute()}}</title>
+    <title>{{ $invoices->invoice_number }} | {{ $invoices->getInvoiceTypeNameAttribute() }}</title>
 </head>
 
 <body>
@@ -99,7 +99,7 @@
                     <div style="height:7px">Ex. Of Vat(Rs.)</div></br>
                 @endif
                 @if ($invoices->type != 1)
-                    <div style="height:7px">Vat x%</div></br>
+                    <div style="height:7px">Vat {{ $invoices->vat_rate }}%</div></br>
                 @endif
                 @if ($invoices->discount)
                     <div style="height:7px">Dicount(Rs.)</div></br>
@@ -107,9 +107,10 @@
                 <div style="height:7px">Grand Total(Rs.)</div></br>
             </td>
             <td style="height:26mm;width:32mm">
-                <div style="height:7px">{{ money($invoices->sub_total) }}</div></br>
+                <div style="height:7px">
+                    {{ $invoices->type == 1 ? money($invoices->grand_total) : money($invoices->sub_total) }}</div></br>
                 @if ($invoices->type != 1 && $invoices->option == 1)
-                    <div style="height:7px">{{ money($invoices->vat_amount) }}</div></br>
+                    <div style="height:7px">{{ money($invoices->sub_total) }}</div></br>
                 @endif
                 @if ($invoices->type != 1)
                     <div style="height:7px">{{ $invoices->vat_rate }}</div></br>

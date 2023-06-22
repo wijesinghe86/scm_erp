@@ -63,10 +63,16 @@
         });
         $(".mr_input").change(function() {
             var id = $(this).val();
-            // alert("Handler for .change() called." + id);
-
-            $(".items_table").load('/demand-forecasting/get-items?mr_id=' + id, function() {
-
+            $.ajax({
+                url: "{{ route('demand-forecasting.getMrfItems') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "GET",
+                data: {mr_id: id},
+                success: function(response) {
+                    $('.items_table').html(response);
+                }
             });
         });
 

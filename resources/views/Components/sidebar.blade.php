@@ -148,6 +148,9 @@
                     <li class="nav-item"> <a class="nav-link"
                             href="{{ route('productionplanningandschedule.index') }}">Production Planning And <br>
                             Schedule</a></li>
+                            <li class="nav-item"> <a class="nav-link"
+                                href="{{ route('production_planning_and_schedule_approval.index') }}">Production Planning And <br>
+                                Schedule Approval</a></li>
                     <li class="nav-item"> <a class="nav-link"
                             href="{{ route('rawmaterialsserialcodeassigning.index') }}">Raw Materials Serial Code <br>
                             Assigning</a></li>

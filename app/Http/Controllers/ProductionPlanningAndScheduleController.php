@@ -14,26 +14,28 @@ use App\Models\DemandForecastingItems;
 class ProductionPlanningAndScheduleController extends Controller
 {
     public function index()
-    {   $productionplanningandschedules = ProductionPlanning::get();
-         return view('pages.ProductionPlanningAndSchedule.index', compact('productionplanningandschedules'));
-     }
+    {
+        $productionplanningandschedules = ProductionPlanning::get();
+        return view('pages.ProductionPlanningAndSchedule.index', compact('productionplanningandschedules'));
+    }
 
-     public function create()
+    public function create()
     {
         $df_list = DemandForecasting::get();
         $plants = PlantRegistration::get();
 
         $last_pps = ProductionPlanning::latest()->first();
         $last_pps_number = 0;
-        if($last_pps != null){
-        $last_pps_number = $last_pps->id;
+        if ($last_pps != null) {
+            $last_pps_number = $last_pps->id;
         }
-        $next_number = "PPS".sprintf("%04d", $last_pps_number+1);
+        $next_number = "PPS" . sprintf("%04d", $last_pps_number + 1);
         return view('pages.ProductionPlanningAndSchedule.create', compact('df_list', 'next_number', 'plants'));
     }
 
-    public function store(Request $request){
-       // dd($request->all());
+    public function store(Request $request)
+    {
+        // dd($request->all());
 
         $pps = new ProductionPlanning;
         $pps->pps_no = $request->pps_no;
@@ -44,7 +46,7 @@ class ProductionPlanningAndScheduleController extends Controller
         $pps->save();
 
         foreach ($request->items as $row) {
-            if(!isset($row['is_selected'])){
+            if (!isset($row['is_selected'])) {
                 continue;
             }
             $pps_item = new ProductionPlaningItem();
@@ -56,21 +58,16 @@ class ProductionPlanningAndScheduleController extends Controller
             $pps_item->created_by = request()->user()->id;
             $pps_item->updated_by = request()->user()->id;
             $pps_item->save();
-
+        }
         flash()->success("New Production Planning created");
         return redirect()->back();
-        }
-
-
-
-
     }
 
     public function getDfItems(request $request)
     {
         $lists = DemandForecastingItems::with('item')
-               ->where('df_id', $request->df_id)
-               ->get();
-               return view('pages.ProductionPlanningAndSchedule.df_table', compact('lists'));
+            ->where('df_id', $request->df_id)
+            ->get();
+        return view('pages.ProductionPlanningAndSchedule.df_table', compact('lists'));
     }
 }
