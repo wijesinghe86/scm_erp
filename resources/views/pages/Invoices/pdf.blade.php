@@ -82,7 +82,7 @@
                 <td style="width:16mm">{{ $item->quantity }}</td>
                 <td style="width:20mm">{{ $item->uom }}</td>
                 <td style="width:22.5mm">{{ $item->unit_price }}</td>
-                <td style="width:32mm">{{ $item->sub_total }}</td>
+                <td style="width:32mm">{{ $item->total }}</td>
             </tr>
         @endforeach
     </table>
@@ -95,13 +95,13 @@
             <td style="width:20mm"></td>
             <td style="height:26mm;width:22.5mm">
                 <div style="height:7px">Total(Rs.)</div></br>
-                @if ($invoices->type != 1 && $invoices->option == 1)
+                @if ($invoices->type != 1 && in_array($invoices->option, [1, 2]))
                     <div style="height:7px">Ex. Of Vat(Rs.)</div></br>
                 @endif
                 @if ($invoices->type != 1)
                     <div style="height:7px">Vat {{ $invoices->vat_rate }}%</div></br>
                 @endif
-                @if ($invoices->discount)
+                @if ($invoices->discount_amount > 0)
                     <div style="height:7px">Dicount(Rs.)</div></br>
                 @endif
                 <div style="height:7px">Grand Total(Rs.)</div></br>
@@ -112,11 +112,14 @@
                 @if ($invoices->type != 1 && $invoices->option == 1)
                     <div style="height:7px">{{ money($invoices->sub_total) }}</div></br>
                 @endif
+                @if ($invoices->type != 1 && $invoices->option == 2)
+                    <div style="height:7px">{{ money($invoices->sub_total - $invoices->vat_amount) }}</div></br>
+                @endif
                 @if ($invoices->type != 1)
                     <div style="height:7px">{{ $invoices->vat_rate }}</div></br>
                 @endif
-                @if ($invoices->discount)
-                    <div style="height:7px">{{ money($invoices->dicount) }}</div></br>
+                @if ($invoices->discount_amount > 0)
+                    <div style="height:7px">{{ money($invoices->discount_amount) }}</div></br>
                 @endif
                 <div style="height:7px">{{ money($invoices->grand_total) }}</div></br>
             </td>

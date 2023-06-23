@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
+use Cart;
 use Exception;
 use App\Models\Invoice;
+// use App\Models\Item;
 use App\Models\Customer;
 use App\Models\Employee;
-// use App\Models\Item;
+use App\Models\StockItem;
 use App\Models\Warehouse;
 use App\Models\InvoiceItem;
 use App\Models\TaxCreation;
 use Illuminate\Http\Request;
 use App\Models\DeliveryOrder;
 use App\Models\InvoiceSetting;
-use App\Models\StockItem;
 use App\Models\DeliveryOrderItem;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use PDF;
 
 
 class InvoiceController extends ParentController
@@ -30,18 +31,18 @@ class InvoiceController extends ParentController
 
     public function new()
     {
-        $invoiceSettings =   InvoiceSetting::first();
-        $response['vatRates'] = TaxCreation::where('tax_code', '=', 'VAT')->first();
-        $response['customers'] = Customer::all();
-        $response['employees'] = Employee::all();
-        $response['stockItems'] = StockItem::all();
-        $response['warehouses'] = Warehouse::all();
-        $response['setting'] = $invoiceSettings;
-        $response['invoice_number'] = $this->generateInvoiceNumber();
-        $response['invoiceOption'] = $invoiceSettings->InvoiceOption($response['invoice_number']);
-        // $response['invoiceData'] =  $this->getInvoiceTotal($request);
+        $customer = new Customer;
+        $setting =   InvoiceSetting::first();
+        $vatRates = TaxCreation::where('tax_code', '=', 'VAT')->first();
+        $customers = Customer::all();
+        $employees = Employee::all();
+        $stockItems = StockItem::all();
+        $warehouses = Warehouse::all();
+        $invoice_number = $this->generateInvoiceNumber();
+        $invoiceOption = $setting->InvoiceOption($invoice_number);
+        Cart::session(request()->user()->id)->clear();
 
-        return view('pages.Invoices.new')->with($response);
+        return view('pages.Invoices.new', compact('customer', 'vatRates', 'customers', 'employees', 'stockItems', 'warehouses', 'setting', 'invoice_number', 'invoiceOption'));
     }
 
     public function generateInvoiceNumber()
@@ -60,7 +61,6 @@ class InvoiceController extends ParentController
 
     public function store(Request $request)
     {
-
         $this->validate($request, [
             // 'po_number' => 'required',
             'invoice_date' => 'required',
@@ -71,6 +71,18 @@ class InvoiceController extends ParentController
 
         try {
             DB::beginTransaction();
+
+            $customerObject = new Customer;
+            $customer = Customer::find($request->customer_id);
+            $subTotal = Cart::session(request()->user()->id)->getSubTotal();
+            if (
+                $customer && $customer->customer_payment_terms == $customerObject::$PAYMENT_TERM_CREDIT &&
+                $request->payment_terms == $customerObject::$PAYMENT_TERM_CREDIT
+            ) {
+                $customer->customer_credit_limit = (float) $customer->customer_credit_limit - (float) $subTotal;
+                $customer->save();
+            }
+
             $request['created_by'] = Auth::id();
 
             $setting = InvoiceSetting::first();
@@ -100,8 +112,32 @@ class InvoiceController extends ParentController
                 throw new Exception("Customer Credit Limit Exceeded");
             }
 
-            $invoice = Invoice::create($data);
+            // TODO::USE ON THE DUPLICATION
+            $isInvoiceNumberTaken = Invoice::where('invoice_number',  $data['invoice_number'])->first();
+            if ($isInvoiceNumberTaken) {
+                $data['invoice_number'] = $this->generateInvoiceNumber();
+            }
 
+
+            $invoice = Invoice::create($data);
+            $items =  Cart::session(request()->user()->id)->getContent();
+            foreach ($items as $key => $item) {
+                InvoiceItem::create([
+                    'invoice_number' => $invoice->invoice_number,
+                    'item_id' => $item->id,
+                    'stock_no' => $item->attributes->stock_no,
+                    'description' => $item->name,
+                    'uom' => $item->attributes->uom,
+                    'location_id' => $item->attributes->location_id,
+                    'quantity' => $item->quantity,
+                    'unit_price' => $item->price,
+                    'sub_total' => $item->attributes->sub_total,
+                    'item_discount_type' => $item->attributes->item_discount_type,
+                    'item_discount_value' => $item->attributes->item_discount_value,
+                    'item_discount_amount' => $item->attributes->item_discount_amount,
+                    'total' => $item->attributes->total,
+                ]);
+            }
             $items_grouped_by_location = InvoiceItem::where('invoice_number', $invoice->invoice_number)->get()->groupBy('location_id')->toArray();
 
             foreach ($items_grouped_by_location as $location_id => $items) {
@@ -113,7 +149,6 @@ class InvoiceController extends ParentController
                 $delivery_order->invoice_date = $invoice->invoice_date;
                 $delivery_order->created_by = $request['created_by'];
                 $delivery_order->save();
-
 
                 foreach ($items as $item) {
                     $invoice_item = InvoiceItem::where('id', $item['id'])->first();
@@ -135,9 +170,9 @@ class InvoiceController extends ParentController
                     $delivery_order_item->sub_total  = data_get($item, 'sub_total');
                     $delivery_order_item->total  = data_get($item, 'total');
                     $delivery_order_item->save();
-
                 }
             }
+            Cart::session(request()->user()->id)->clear();
             DB::commit();
             return redirect()->route('invoices.preview', $invoice->id);
         } catch (Exception $error) {
@@ -185,12 +220,12 @@ class InvoiceController extends ParentController
         // {
 
         $this->validate($request, [
-            'item_id'=>'required',
-            'unit_price'=> 'required',
-            'quantity'=>'required',
+            'item_id' => 'required',
+            'unit_price' => 'required',
+            'quantity' => 'required',
             'location_id' => 'required',
-        ],[
-            'item_id.required'=> 'The item is required'
+        ], [
+            'item_id.required' => 'The item is required'
         ]);
 
         $item = StockItem::find($request->item_id);
@@ -222,14 +257,12 @@ class InvoiceController extends ParentController
 
     public function itemsTable(Request $request)
     {
-        $response['items'] = InvoiceItem::where('invoice_number', $request->invoice_no)->get();
-        // $response['item_count'] = InvoiceItem::where('invoice_number', $request->invoice_no)->count();
-        // $response['total_qty'] = InvoiceItem::where('invoice_number', $request->invoice_no)->sum('quantity');
-        // $response['total_amount'] = InvoiceItem::where('invoice_number', $request->invoice_no)->sum('total');
-        // $response['grand_total'] = InvoiceItem::where('invoice_number', $request->invoice_no)->sum('total');
+        $cartCollection =  Cart::session(request()->user()->id)->getContent();
+        $items = $cartCollection->sortBy(function ($product, $key) {
+            return $key;
+        });
 
-
-        return view('pages.Invoices.Components.items_table')->with($response);
+        return view('pages.Invoices.Components.items_table', compact('items'));
     }
 
     public function getData(Request $request)
@@ -243,15 +276,10 @@ class InvoiceController extends ParentController
         $this->validate($request, [
             'invoice_no' => 'required'
         ]);
-        $option =  $request->option ?? "Option A";
+        $option =  $request->option;
         $discount_amount =  $request->discount_amount ?? 0;
         $discount_type =  $request->discount_type ?? "fixed";
 
-        return (new Invoice)->calculateTotal(
-            $request->invoice_no,
-            $option,
-            $discount_amount,
-            $discount_type
-        );
+        return (new Invoice)->calculateTotal($request->invoice_no, $option, $discount_amount, $discount_type);
     }
 }

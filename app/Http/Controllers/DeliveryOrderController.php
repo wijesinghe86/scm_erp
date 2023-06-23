@@ -107,7 +107,8 @@ class DeliveryOrderController extends ParentController
                 }
             }
             DB::commit();
-            return redirect()->route('deliveryorders.view', $delivery_order->id);
+            return view('pages.DeliveryOrder.issue', compact('delivery_order'));
+            // return redirect()->route('deliveryorders.view', $delivery_order->id);
         } catch (Exception $th) {
             logger($th);
             DB::rollback();

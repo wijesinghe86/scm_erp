@@ -7,6 +7,7 @@ use App\Models\Employee;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Cart;
 
 class Invoice extends Model
 {
@@ -54,16 +55,27 @@ class Invoice extends Model
     }
 
 
-    protected $payment_terms = [
+    protected $payment_terms_list = [
         [
-            'value'=> "1",
-            'label'=> "Cash",
+            'value' => "1",
+            'label' => "Cash",
         ],
         [
-            'value'=> "2",
-            'label'=> "Credit",
+            'value' => "2",
+            'label' => "Credit",
         ],
     ];
+
+    public function getPaymentTerm()
+    {
+        $payment_term_data = collect($this->payment_terms_list)->filter(function ($payment_term) {
+            return $payment_term['value'] == $this->payment_terms;
+        });
+        if (count($payment_term_data) > 0) {
+            return $payment_term_data[0]['label'];
+        }
+        return "";
+    }
 
 
     public function createUser()
@@ -90,60 +102,74 @@ class Invoice extends Model
     {
         return $this->hasMany(InvoiceItem::class, 'invoice_number', 'invoice_number');
     }
-/**
- * Calculate Discount
- *
- * @param [type] $netTotal
- * @param [type] $discount_type
- * @param [type] $discount_value
- * @return void
- */
-    public function calculateDiscount($netTotal,$discount_type,$discount_value){
+    /**
+     * Calculate Discount
+     *
+     * @param [type] $netTotal
+     * @param [type] $discount_type
+     * @param [type] $discount_value
+     * @return void
+     */
+    public function calculateDiscount($netTotal, $discount_type, $discount_value)
+    {
         $netTotal = (float) $netTotal;
         $discount_value = (float) $discount_value;
 
-        if($discount_value== 0){
+        if ($discount_value == 0) {
             return 0;
         }
-        if($discount_type == "fixed"){
+        if ($discount_type == "fixed") {
             return $discount_value;
         }
-
-        return  ( ($netTotal/100) * $discount_value );
+        return (($netTotal / 100) * $discount_value);
     }
 
-    public function calculateTotal($invoice_number, $option, $discount_value = 0, $discount_type){
-       $items = InvoiceItem::where('invoice_number', $invoice_number)->get();
+    public function calculateTotal($invoice_number, $option, $discount_value = 0, $discount_type)
+    {
+        $cartCollection =  Cart::session(request()->user()->id)->getContent();
+        $items = $cartCollection->sortBy(function ($product, $key) {
+            return $key;
+        });
 
-       $vatRate = 15; //TODO: need to make it dynamic later
-       $subtotal = $items->sum('total');
-       $vat = $subtotal * ($vatRate/100);
-       $exclude_vat = 0;
-       if($option == "Option B"){
-         $exclude_vat = $subtotal / ((100+$vatRate)/100);
-         $vat = $exclude_vat * ($vatRate/100);
-         $total = $subtotal;
-       }
-       if($exclude_vat > 0){
+        $total_item_discount = $items->sum('attributes.item_discount_amount');
+
+
+        $vatRate = 15; //TODO: need to make it dynamic later
+        //    $subtotal = $items->sum('total');
+        $subtotal = Cart::session(request()->user()->id)->getSubTotal() - $total_item_discount;
+        $vat = $subtotal * ($vatRate / 100);
+        $exclude_vat = 0;
+
+        if ($option == "None" || $option == 0) {
             $total = $subtotal;
-       }else {
+            $vat = 0;
+            $vatRate = 0;
+        }
+
+        if ($option == "Option B" || $option == 2) {
+            $exclude_vat = $subtotal / ((100 + $vatRate) / 100);
+            $vat = $exclude_vat * ($vatRate / 100);
+            $total = $subtotal;
+        }
+        if ($exclude_vat > 0) {
+            $total = $subtotal;
+        } else {
             $total = $subtotal + $vat;
-       }
+        }
 
-       $discount  = $this->calculateDiscount($total,$discount_type,$discount_value);
-       $netTotal = $total;
-       $grandTotal = $netTotal  - $discount;
+        $discount  = $this->calculateDiscount($total, $discount_type, $discount_value);
+        $netTotal = $total;
+        $grandTotal = $netTotal  - (float) $discount;
 
-       return [
-        "items"=> $items,
-        'exclude_vat'=>  number_format((float)$exclude_vat, 2, '.', ''),
-        "vatRate"=> $vatRate."%",
-        "vat"=>  number_format((float)$vat, 2, '.', ''),
-        "subtotal"=>  number_format((float)$subtotal, 2, '.', ''),
-        "netTotal"=> number_format((float)$netTotal, 2, '.', ''),
-        "discount"=>  number_format((float)$discount, 2, '.', ''),
-        "grandTotal"=> number_format((float)$grandTotal, 2, '.', ''),
-       ];
-
+        return [
+            "items" => $items,
+            'exclude_vat' =>  number_format((float)$exclude_vat, 2, '.', ''),
+            "vatRate" => $vatRate . "%",
+            "vat" =>  number_format((float)$vat, 2, '.', ''),
+            "subtotal" =>  number_format((float)$subtotal, 2, '.', ''),
+            "netTotal" => number_format((float)$netTotal, 2, '.', ''),
+            "discount" =>  number_format((float)$discount, 2, '.', ''),
+            "grandTotal" => number_format((float)$grandTotal, 2, '.', ''),
+        ];
     }
 }

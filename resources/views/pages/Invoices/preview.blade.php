@@ -21,6 +21,7 @@
                                     </div>
                                 </td>
                                 <td class="info-td border" style="height: 8mm">
+                                    <small>Vat No : {{ $invoices->customer->customer_vat_number }}</small>
                                 </td>
                                 <td class="info-td border" style="height: 8mm">
                                     <small>Date : {{ $invoices->invoice_date }}</small>
@@ -28,7 +29,7 @@
                             </tr>
                             <tr>
                                 <td class="info-td border" style="height: 8mm">
-                                    <small>Terms : {{ $invoices->payment_terms }}</small>
+                                    <small>Terms : {{ $invoices->getPaymentTerm() }}</small>
                                 </td>
                                 <td class="info-td border" style="">
                                     <small>Invoice No. {{ $invoices->invoice_number }}</small>
@@ -36,7 +37,7 @@
                             </tr>
                             <tr>
                                 <td class="info-td border" style="height: 8mm">
-                                    <small>Purchase Order No. {{ $invoices->payment_terms }}</small>
+                                    <small>Purchase Order No. {{ $invoices->po_number }}</small>
                                 </td>
                                 <td class="info-td border" style="">
                                     <small>D. N. NO. {{ $invoices->invoice_date }}</small>
@@ -56,12 +57,15 @@
                                             <td align="center" class="border"
                                                 style="height: 6mm;min-height:6mm; max-height:6mm; width: 14mm;">U/M</td>
                                             <td align="center" class="border"
+                                                style="height: 6mm;min-height:6mm; max-height:6mm; width: 20mm;">Weight</td>
+                                            <td align="center" class="border"
                                                 style="height: 6mm;min-height:6mm; max-height:6mm; width: 16mm;">Ord. Qty.
                                             </td>
                                             <td align="center" class="border"
-                                                style="height: 6mm;min-height:6mm; max-height:6mm; width: 20mm;">Weight</td>
-                                            <td align="center" class="border"
                                                 style="height: 6mm;min-height:6mm; max-height:6mm; width: 22.5mm;">Unit Rate
+                                                (Rs.)</td>
+                                            <td align="center" class="border"
+                                                style="height: 6mm;min-height:6mm; max-height:6mm; width: 22.5mm;">Discount
                                                 (Rs.)</td>
                                             <td align="center" class="border"
                                                 style="height: 6mm;min-height:6mm; max-height:6mm; width: 32mm;">Amount
@@ -79,30 +83,34 @@
                                                     {{ $item->uom }}</td>
                                                 <td align="center" class="border"
                                                     style="height: 6mm;min-height:6mm; max-height:6mm; width: 11mm;">
-                                                    {{ $item->quantity }}</td>
+                                                    {{ $item->uom }}</td>
                                                 <td align="center" class="border"
                                                     style="height: 6mm;min-height:6mm; max-height:6mm; width: 11mm;">
-                                                    {{ $item->uom }}</td>
+                                                    {{ $item->quantity }}</td>
                                                 <td align="right" class="border"
                                                     style="height: 6mm;min-height:6mm; max-height:6mm; width: 11mm;padding:0 10px">
                                                     {{ money($item->unit_price) }}</td>
                                                 <td align="right" class="border"
                                                     style="height: 6mm;min-height:6mm; max-height:6mm; width: 11mm;padding:0 10px">
-                                                    {{ money($item->sub_total) }}</td>
+                                                    {{ money($item->item_discount_amount) }}</td>
+                                                <td align="right" class="border"
+                                                    style="height: 6mm;min-height:6mm; max-height:6mm; width: 11mm;padding:0 10px">
+                                                    {{ money($item->total) }}</td>
                                             </tr>
                                         @endforeach
                                         <tr>
-                                            <td colspan="5"></td>
+                                            <td colspan="6"></td>
                                             <td align="right" class="border"
                                                 style="height: 26mm;min-height:26mm; max-height:26mm; width: 11mm; padding:10px 10px; background-color: lightgray">
                                                 <div style="height:7px">Total(Rs.)</div></br>
-                                                @if ($invoices->type != 1 && $invoices->option == 1)
+                                                @if ($invoices->type != 1 && in_array($invoices->option, [1, 2]))
                                                     <div style="height:7px">Ex. Of Vat(Rs.)</div></br>
                                                 @endif
+
                                                 @if ($invoices->type != 1)
                                                     <div style="height:7px">Vat {{ $invoices->vat_rate }}</div></br>
                                                 @endif
-                                                @if ($invoices->discount)
+                                                @if ($invoices->discount_amount > 0)
                                                     <div style="height:7px">Dicount(Rs.)</div></br>
                                                 @endif
                                                 <div style="height:7px">Grand Total(Rs.)</div></br>
@@ -116,11 +124,16 @@
                                                 @if ($invoices->type != 1 && $invoices->option == 1)
                                                     <div style="height:7px">{{ money($invoices->sub_total) }}</div></br>
                                                 @endif
+                                                @if ($invoices->type != 1 && $invoices->option == 2)
+                                                    <div style="height:7px">
+                                                        {{ money($invoices->sub_total - $invoices->vat_amount) }}</div></br>
+                                                @endif
                                                 @if ($invoices->type != 1)
                                                     <div style="height:7px">{{ money($invoices->vat_amount) }}</div></br>
                                                 @endif
-                                                @if ($invoices->discount)
-                                                    <div style="height:7px">{{ money($invoices->dicount) }}</div></br>
+                                                @if ($invoices->discount_amount > 0)
+                                                    <div style="height:7px">{{ money($invoices->discount_amount) }}</div>
+                                                    </br>
                                                 @endif
                                                 <div style="height:7px">{{ money($invoices->grand_total) }}</div></br>
                                             </td>
@@ -166,12 +179,12 @@
         }
 
         /* tr {
-                                                                                                                        border: 1px solid blue !important;
-                                                                                                                    }
+                                                                                                                                            border: 1px solid blue !important;
+                                                                                                                                        }
 
-                                                                                                                    td {
-                                                                                                                        border: 1px solid red !important;
-                                                                                                                    } */
+                                                                                                                                        td {
+                                                                                                                                            border: 1px solid red !important;
+                                                                                                                                        } */
 
         .info-td {
             vertical-align: top !important;

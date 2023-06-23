@@ -7,7 +7,7 @@
                     <div class="card-body">
                         <h4 class="title">New {{ $setting->invoice_type_name }} Creation</h4>
                         <br>
-                        <form action="{{ route('invoices.store') }}" method="POST">
+                        <form id="invoiceCreateForm" action="{{ route('invoices.store') }}" method="POST">
                             @csrf
                             <div style="position: relative;">
                                 <div style="display:none; position: absolute; bottom:0; right:0;" id="stockView">
@@ -50,6 +50,12 @@
                                         <input type="text" class="form-control" id="cus_vat_no" name="cus_vat_no"
                                             placeholder="Customer VAT Number" disabled>
                                     </div>
+                                    <div id="customer_credit_limit_wrapper" style="display:none;"
+                                        class="form-group col-md-3">
+                                        <label>Customer Credit Limit</label>
+                                        <input type="text" class="form-control" id="customer_credit_limit"
+                                            placeholder="Customer Credit Limit" disabled>
+                                    </div>
                                 </div>
                                 {{-- Customer Selection End here --}}
 
@@ -73,7 +79,7 @@
                                     <div class="form-group col-md-3">
                                         <label>Date</label>
                                         <input type="date" class="form-control" name="invoice_date" id="invoice_date"
-                                            {{ now()->format('Y-m-d') }}>
+                                            value="{{ now()->format('Y-m-d') }}">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -87,10 +93,15 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Term</label>
-                                        <select name="payment_terms" class="form-control item-select" id="payment_terms">
-                                            <option selected disabled>Select Terms</option>
-                                            <option value="1">Cash</option>
-                                            <option value="2">Credit</option>
+                                        <select name="payment_terms" class="form-control" id="payment_terms">
+                                            <option selected value="" disabled>Select Terms</option>
+                                            @foreach ($customer::$PAYMENT_TERMS as $item)
+                                                <option value="{{ $item['value'] }}">
+                                                    {{ $item['label'] }}
+                                                </option>
+                                            @endforeach
+                                            {{-- <option value="1">Cash</option>
+                                            <option value="2">Credit</option> --}}
                                         </select>
                                     </div>
                                 </div>
@@ -135,7 +146,7 @@
                                     <label>Description</label>
                                     <select class="form-control item-select clear-qty" name="item_id" id="item_id"
                                         onchange="getStockItem()">
-                                        <option value="" selected disabled>Select Item</option>
+                                        <option value="" selected>Select Item</option>
                                         @foreach ($stockItems as $stockItem)
                                             <option value="{{ $stockItem->id }}">
                                                 {{ $stockItem->description }}
@@ -151,20 +162,33 @@
                                 <div class="form-group col-md-2">
                                     <label>Order Qty</label>
                                     <input type="number" class="form-control" name="quantity"
-                                        id="quantity"onkeypress="getTotal()" min="0" step="0.01"
+                                        id="quantity"onkeypress="getItemDiscount()" min="0" step="0.01"
                                         placeholder="Order Qty">
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label>Unit Rate (Rs.)</label>
                                     <input type="number" class="form-control" name="unit_price" id="unit_price"
-                                        onkeypress="getTotal()" min="0" step="0.01"
+                                        onkeypress="getItemDiscount()" min="0" step="0.01"
                                         placeholder="Unit Rate (Rs.)" onchange="calculateUnitPrice(this)">
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label>Discount</label>
-                                    <input type="number" class="form-control"
-                                        name="item_discount_percentage"onkeyup="getTotal()" min="0"
-                                        step="0.01" id="item_discount_percentage" placeholder="Discount">
+                                    {{-- <input type="number" class="form-control"
+                                        name="item_discount_percentage"onkeyup="getItemDiscount()" min="0"
+                                        step="0.01" id="item_discount_percentage" placeholder="Discount"> --}}
+                                    <div class="input-group mb-3">
+                                        <input type="number" class="form-control"
+                                            name="item_discount_value"onkeyup="getItemDiscount()" min="0"
+                                            step="0.01" id="item_discount_value" placeholder="Discount">
+                                        <span class="input-group-text" id="basic-addon2" style="margin:0;padding:0;">
+                                            <select name="item_discount_type" id="item_discount_type"
+                                                class="form-control form-control-lg" style="height:100%;"
+                                                onchange="getItemDiscount()">
+                                                <option value="fixed">RS</option>
+                                                <option value="percentage">%</option>
+                                            </select>
+                                        </span>
+                                    </div>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>Item Discount Amount</label>
@@ -233,8 +257,8 @@
                                         id="Total_discount_percentage" id="Total_discount_percentage"> --}}
 
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control js_discount_amount"
-                                            name="discount_amount" value="" placeholder="Discount"
+                                        <input type="number" class="form-control js_discount_amount"
+                                            name="discount_amount" value="0" placeholder="Discount"
                                             onchange="fetchInvoiceTotal()">
                                         <span class="input-group-text" id="basic-addon2" style="margin:0;padding:0;">
                                             <select name="discount_type"
@@ -261,7 +285,8 @@
 
 
                             <div class="text-right">
-                                <button type="submit" class="btn btn-info btn-fill btn-wd">Create & View</button>
+                                <button type="button" onclick="onCreateAndViewClick()"
+                                    class="btn btn-info btn-fill btn-wd">Create & View</button>
                             </div>
                         </form>
                     </div>
@@ -274,12 +299,47 @@
 
 @push('scripts')
     <script>
+        let customerData = {};
+        let stockItems = <?php echo json_encode($stockItems); ?>;
+        let warehouses = <?php echo json_encode($warehouses); ?>;
+        let cartData = [];
+
         let selectedItemData = {};
         // get the Customer Details from Customer Table
         $(document).ready(function() {
             getItemsTable();
             fetchInvoiceTotal();
         });
+
+        function onCreateAndViewClick() {
+            let paymentTerm = $("#payment_terms").val()
+            let currentSubTotal = $('#sub_total').val()
+            var employee_id = $('#employee_id').val();
+
+            let errorList = [];
+
+            if (Object?.keys(customerData)?.length == 0) {
+                errorList.push('The customer field is required')
+            }
+
+            if(employee_id == "" || employee_id == null){
+                errorList.push('The sales staff name is required')
+            }
+
+            if (customerData?.customer_payment_terms == '{{ $customer::$PAYMENT_TERM_CREDIT }}' &&
+                currentSubTotal > customerData?.customer_credit_limit && paymentTerm ==
+                '{{ $customer::$PAYMENT_TERM_CREDIT }}') {
+                errorList.push('Customer credit limit exeeded')
+            }
+
+            if(errorList?.length>0){
+                errorList.forEach(error => {
+                    alertDanger(error)
+                });
+                return 
+            }
+            $('#invoiceCreateForm').submit()
+        }
 
         $('.clear-qty').on('change', function() {
             $('#quantity').val("")
@@ -299,6 +359,7 @@
         })
 
         function fetchInvoiceTotal() {
+            let paymentTerm = $("#payment_terms").val()
             $.ajax({
                 url: "{{ route('invoices.get.total') }}",
                 headers: {
@@ -312,12 +373,16 @@
                     option: "{{ $invoiceOption }}"
                 },
                 success: function(response) {
+                    if (customerData?.customer_payment_terms == '{{ $customer::$PAYMENT_TERM_CREDIT }}' &&
+                        response.subtotal > customerData?.customer_credit_limit && paymentTerm ==
+                        '{{ $customer::$PAYMENT_TERM_CREDIT }}') {
+                        alertDanger("Customer Credit Limit exeeded")
+                    }
                     $(".js_subtotal").val(response.subtotal);
                     $(".js_vatRate").val(response.vatRate)
                     $(".js_vat").val(response.vat)
                     $(".js_netTotal").val(response.netTotal)
                     $(".js_grandTotal").val(response.grandTotal)
-
                 }
             });
         }
@@ -347,9 +412,20 @@
                 type: "GET",
                 data: data,
                 success: function(response) {
+                    customerData = response;
                     $('#cus_code').val(response.customer_code);
                     $('#cus_address').val(response.customer_address_line1);
                     $('#cus_vat_no').val(response.customer_vat_number);
+                    if (response?.customer_payment_terms == '{{ $customer::$PAYMENT_TERM_CREDIT }}') {
+                        $("#payment_terms").find(':not(:selected)').prop('disabled', false);
+                        $('#customer_credit_limit_wrapper').css('display', 'block')
+                        $('#customer_credit_limit').val(response?.customer_credit_limit)
+                        $('#payment_terms').val("")
+                        return
+                    }
+                    $('#customer_credit_limit_wrapper').css('display', 'none')
+                    $('#payment_terms').val('cash')
+                    $("#payment_terms").find(':not(:selected)').prop('disabled', true);
                 }
             });
         }
@@ -408,46 +484,90 @@
 
         // get the Location Details from Warehouse Table
         function addInvoiceItem(invoice_no) {
-
             //passing the value to Item table
             var item_id = $('#item_id').val();
             var quantity = $('#quantity').val();
             var unit_price = $('#unit_price').val();
-            var item_discount_amount = $('#item_discount_amount').val();
-            var item_discount_percentage = $('#item_discount_percentage').val();
+            var item_discount_amount = $('#item_discount_amount').val() || 0;
+            var item_discount_type = $('#item_discount_type').val();
+            var item_discount_value = $('#item_discount_value').val() || 0;
             var location_id = $('#location_id').val();
             // var customer_id = $('#customer_id').val();
-            var data = {
-                item_id: item_id,
-                quantity: quantity,
-                unit_price: unit_price,
-                item_discount_amount: item_discount_amount,
-                item_discount_percentage: item_discount_percentage,
-                location_id: location_id,
-                invoice_no: invoice_no,
-                // customer_id: customer_id,
-            };
+
+            let paymentTerm = $("#payment_terms").val()
+
+            let currentSubTotal = $('#sub_total').val()
+            let newSubTotal = parseFloat((unit_price * quantity) - parseFloat(item_discount_amount)) + parseFloat(
+                currentSubTotal)
+
+
+            if (customerData?.customer_payment_terms == '{{ $customer::$PAYMENT_TERM_CREDIT }}' &&
+                newSubTotal > customerData?.customer_credit_limit && paymentTerm ==
+                '{{ $customer::$PAYMENT_TERM_CREDIT }}') {
+                alertDanger("Customer Credit Limit exeeded")
+                return
+            }
+
+            let errorArray = [];
+
+            if (item_id == null || item_id == "") {
+                errorArray.push("The description field is required")
+            }
+            if (quantity == "") {
+                errorArray.push("The quantiry field is required")
+            }
+            if (unit_price == "") {
+                errorArray.push("The unit price field is required")
+            }
+            if (location_id == "") {
+                errorArray.push("The warehouse field is required")
+            }
+            if (errorArray?.length > 0) {
+                errorArray.forEach(error => {
+                    alertDanger(error);
+                });
+                return
+            }
+
+            const stockItem = stockItems?.find(row => row?.id == item_id)
+            const warehouse = warehouses?.find(row => row?.id == location_id)
+            let subTotal = parseFloat(unit_price * quantity)
+
+            let data = {
+                id: item_id,
+                name: stockItem?.description,
+                price: unit_price,
+                quantity,
+                attributes: {
+                    stock_no: stockItem?.stock_number,
+                    uom: stockItem?.unit,
+                    item_discount_type,
+                    item_discount_value,
+                    item_discount_amount,
+                    warehouse_name: warehouse?.warehouse_name,
+                    location_id: location_id,
+                    sub_total: subTotal,
+                    total: subTotal - parseFloat(item_discount_amount),
+                },
+            }
+
             $.ajax({
-                url: "{{ route('invoices.item.store') }}",
+                url: "{{ route('cart.store') }}",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "POST",
-                data: data,
+                data: {
+                    item_data: data
+                },
                 success: function(response) {
-                    console.log(response);
                     fetchInvoiceTotal();
-                    if (response.status == 0) {
-                        alertDanger(response.message);
-                    } else {
-                        $('#stock_no').val("");
-                        $('#uom').val("");
-                        $('#item_id').val("");
-                        $('#quantity').val("");
-                        $('#unit_price').val("");
-                        $('#item_discount').val("");
-                        $('#location_id').val("");
-                    }
+                    $('#stock_no').val("");
+                    $('#uom').val("");
+                    $('#item_id').val(null);
+                    $('#quantity').val("");
+                    $('#unit_price').val("");
+                    $('#js_discount_amount').val("");
                     getItemsTable();
                 },
                 error: function(data) {
@@ -456,20 +576,17 @@
                     });
                 }
             });
+
         }
 
         function getItemsTable() {
-            var invoice_no = '{{ $invoice_number }}';
-            var data = {
-                invoice_no: invoice_no
-            };
             $.ajax({
                 url: "{{ route('invoices.item.table') }}",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "GET",
-                data: data,
+                data: {},
                 success: function(response) {
                     $('#items-table').html(response);
                 }
@@ -477,32 +594,41 @@
         }
 
         //get item discount amount
-        function getTotal() {
+        function getItemDiscount() {
             var unit_price = $("#unit_price").val();
             var quantity = $("#quantity").val();
-            var item_discount_percentage = $("#item_discount_percentage").val();
+            // var item_discount_percentage = $("#item_discount_percentage").val();
+            let itemDiscountType = $('#item_discount_type').val();
+            let itemDiscountValue = $('#item_discount_value').val();
 
-            if (unit_price && quantity && item_discount_percentage) {
-                let price = parseFloat(quantity * unit_price);
-                console.log({price});
-                console.log({item_discount_percentage});
-                var item_discount_amount = parseFloat((price*item_discount_percentage)/ 100)?.toFixed(2);
-                $("#item_discount_amount").val(item_discount_amount)
+            if (unit_price && quantity && itemDiscountValue) {
+                let price = unit_price * quantity;
+                if (itemDiscountType == "fixed") {
+                    $("#item_discount_amount").val(parseFloat(itemDiscountValue)?.toFixed(2))
+                    return
+                }
+
+                if (itemDiscountType == "percentage") {
+                    let discountAmount = (price * itemDiscountValue) / 100
+                    $("#item_discount_amount").val(parseFloat(discountAmount)?.toFixed(2))
+                    return
+                }
+                $("#item_discount_amount").val("")
             }
         }
 
         function removeFromCart(item) {
-            let data = {
-                cartData: item
-            }
             $.ajax({
-                url: "{{ route('invoices.item.delete') }}",
+                url: "{{ route('cart.remove') }}",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "POST",
-                data: data,
+                data: {
+                    id: item?.id
+                },
                 success: function(response) {
+                    fetchInvoiceTotal();
                     getItemsTable()
                 }
             });
@@ -511,7 +637,6 @@
         $(document).ready(function() {
             $('.item-select').select2({
                 placeholder: "Select Item",
-                // theme: 'bootstrap4',
             });
         });
     </script>
@@ -519,8 +644,6 @@
 
 @push('styles')
     <style>
-        /* .select2-container .select-selection--single {
-            height: 46px;
-        } */
+
     </style>
 @endpush

@@ -30,6 +30,7 @@
                                             <td>
                                                 <table class="table table-striped">
                                                     <tr>
+                                                        <th scope="col" >#</th>
                                                         <th scope="col" >S/No</th>
                                                         <th scope="col" >Descrition</th>
                                                         <th scope="col" >U/M</th>
@@ -37,6 +38,7 @@
                                                     </tr>
                                                     @foreach ($materialrequest->request_items as $material_request_item)
                                                         <tr>
+                                                            <td>{{$loop->iteration}}</td>
                                                             <td>{{ $material_request_item->item->stock_number }}</td>
                                                             <td>{{ $material_request_item->item->description }}</td>
                                                             <td>{{ $material_request_item->item->unit }}</td>

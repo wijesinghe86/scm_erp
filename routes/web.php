@@ -8,6 +8,7 @@ use App\Http\Controllers\ReturnController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\BillTypeController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DispatchController;
 use App\Http\Controllers\DisposalController;
@@ -77,6 +78,13 @@ Auth::routes();
 // Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 Route::get('/', [HomeController::class, 'index'])->name('dashboard');
+
+
+Route::get('cart', [CartController::class, 'cartList'])->name('cart.list');
+Route::post('cart', [CartController::class, 'addToCart'])->name('cart.store');
+Route::post('cart/update', [CartController::class, 'updateCart'])->name('cart.update');
+Route::post('cart/remove', [CartController::class, 'removeCart'])->name('cart.remove');
+Route::get('cart/clear', [CartController::class, 'clearAllCart'])->name('cart.clear');
 
 // Master Files-------
 /* .....CREATING ROUTE FOR Customer Creation ....... */

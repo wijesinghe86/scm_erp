@@ -10,23 +10,20 @@ class InvoiceSettingsController extends ParentController
 {
     public function all()
     {
-        $response['categories'] = BillType::all();
-        $response['setting'] = InvoiceSetting::first();
-        return view('pages.InvoiceSettings.new')->with ($response);
+        $categories = BillType::all();
+        $setting = InvoiceSetting::first();
+        return view('pages.InvoiceSettings.new', compact('categories', 'setting'));
     }
 
     public function update(Request $request)
     {
-        $response['categories']=BillType::all();
+        $categories = BillType::all();
         $setting = InvoiceSetting::first();
-        if ($setting)
-        {
+        if ($setting) {
             $setting->update($request->all());
-        }
-        else
-        {
+        } else {
             InvoiceSetting::create($request->all());
         }
-        return redirect()->route('invoices.new');
+        return redirect()->route('invoices.new',['categories'=> $categories]);
     }
 }
