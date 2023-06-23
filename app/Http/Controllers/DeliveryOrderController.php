@@ -39,10 +39,12 @@ class DeliveryOrderController extends ParentController
 
     public function issueIndex(DeliveryOrder $delivery_order)
     {
+        $delivery_order->loadMissing('items.stock_item.stocks');
+        $delivery_order->loadMissing('items.warehouse');
         if ($delivery_order == null || $delivery_order->issued_date != null) {
             abort(404);
         }
-
+        // return $delivery_order;
         return view('pages.DeliveryOrder.issue', compact('delivery_order'));
     }
 
@@ -107,8 +109,7 @@ class DeliveryOrderController extends ParentController
                 }
             }
             DB::commit();
-            return view('pages.DeliveryOrder.issue', compact('delivery_order'));
-            // return redirect()->route('deliveryorders.view', $delivery_order->id);
+            return redirect()->route('deliveryorders.view', $delivery_order->id);
         } catch (Exception $th) {
             logger($th);
             DB::rollback();
