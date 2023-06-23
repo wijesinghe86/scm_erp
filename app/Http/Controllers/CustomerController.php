@@ -47,6 +47,7 @@ class CustomerController extends ParentController
         Customer::create($request->all());
 
 
+
         $response['alert-success'] = 'New Customer created successfully!';
         return redirect()->route('customer.index')->with($response);
     }
