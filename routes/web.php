@@ -41,6 +41,7 @@ use App\Http\Controllers\LocationRowDesignController;
 use App\Http\Controllers\PlantRegistrationController;
 use App\Http\Controllers\ProductionWastageController;
 use App\Http\Controllers\LocationRackDesignController;
+use App\Http\Controllers\RawMaterialRequestController;
 use App\Http\Controllers\LocationShelfDesignController;
 use App\Http\Controllers\MiscellaneousIssuedController;
 use App\Http\Controllers\PlantTimeManagementController;
@@ -433,6 +434,13 @@ Route::prefix('material_request')->group(function () {
     Route::get('/create', [App\Http\Controllers\MaterialRequestController::class, 'create'])->name('material_request.create');
     Route::post('/create', [App\Http\Controllers\MaterialRequestController::class, 'store'])->name('material_request.store');
     Route::get('material_request/delete/{index}', [MaterialRequestController::class, 'deleteSessionItem'])->name('material_request.delete_item');
+});
+
+Route::prefix('raw_material_request')->group(function () {
+    Route::get('/', [App\Http\Controllers\RawMaterialRequestController::class, 'index'])->name('raw_material_request.index');
+    Route::get('/create', [App\Http\Controllers\RawMaterialRequestController::class, 'create'])->name('raw_material_request.create');
+    Route::post('/create', [App\Http\Controllers\RawMaterialRequestController::class, 'store'])->name('raw_material_request.store');
+   
 });
 
 Route::prefix('purchase_order')->group(function () {

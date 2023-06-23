@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
 use Illuminate\Http\Request;
+use App\Models\PlantRegistration;
+use App\Models\ProductionPlanning;
 
 
 class JobOrderCreationController extends Controller
@@ -15,19 +18,11 @@ class JobOrderCreationController extends Controller
 
      public function create()
     {
-
-        return view('pages.JobOrderCreation.create');
+        $pps = ProductionPlanning::get();
+        $plants = PlantRegistration::get();
+        $employees = Employee::get();
+        return view('pages.JobOrderCreation.create', compact('pps', 'plants', 'employees'));
     }
 
-    public function store(Request $request){
-        // dd($request->all());
-        // Supplier::create($request->all());
 
-        // $request['created_by'] = Auth::id();
-
-        JobOrderCreation::create($request->all());
-
-        $response['alert-success'] = 'JobOrderCreation created successfully!';
-        return redirect()->route('jobordercreation.index')->with($response);
-    }
 }

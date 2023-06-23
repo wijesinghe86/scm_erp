@@ -56,8 +56,11 @@ class EmployeeController extends ParentController
 
     public function edit($employee_id)
     {
+        $departments = Department::get();
+        $sections = Section::get();
+        $fleets = FleetRegistration::get();
         $response['employees'] = Employee::find($employee_id);
-        return view('pages.Employee.edit')->with($response);
+        return view('pages.Employee.edit', compact('departments','sections','fleets'))->with($response);
     }
 
     public function update(Request $request, $employee_id)
