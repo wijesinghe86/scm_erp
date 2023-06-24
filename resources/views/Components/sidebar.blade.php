@@ -60,8 +60,9 @@
                             Request Form</a>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('mr_request_approve.index') }}">Material
                             Request Approval</a>
-                            <li class="nav-item"> <a class="nav-link" href="{{ route('raw_material_request.index') }}">Raw Material
-                                Request Form</a>
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('raw_material_request.index') }}">Raw MaterialRequest Form</a>
+                                <li class="nav-item"> <a class="nav-link" href="{{ route('raw_material_request_approve.index') }}">Raw Material
+                                    Request Approve Form</a>
                 </ul>
             </div>
         </li>
