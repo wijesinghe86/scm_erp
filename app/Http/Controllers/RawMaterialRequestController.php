@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
 use Illuminate\Http\Request;
 
 class RawMaterialRequestController extends Controller
@@ -13,6 +14,7 @@ class RawMaterialRequestController extends Controller
 
     public function create()
     {
-        return view('pages.RawMaterialRequest.create');
+       $employees = Employee::get();
+        return view('pages.RawMaterialRequest.create', compact('employees'));
     }
 }

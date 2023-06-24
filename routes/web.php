@@ -53,6 +53,7 @@ use App\Http\Controllers\ManAndEquipmentSafetyController;
 use App\Http\Controllers\MiscellaneousReceivedController;
 use App\Http\Controllers\OverShortageAndDamageController;
 use App\Http\Controllers\MaterialsReturnByCustomerController;
+use App\Http\Controllers\RawMaterialRequestApproveController;
 use App\Http\Controllers\OperationMechanismByProductController;
 use App\Http\Controllers\ProductionPlanningAndScheduleController;
 use App\Http\Controllers\RawMaterialIssueForProductionController;
@@ -451,7 +452,13 @@ Route::prefix('raw_material_request')->group(function () {
     Route::get('/', [App\Http\Controllers\RawMaterialRequestController::class, 'index'])->name('raw_material_request.index');
     Route::get('/create', [App\Http\Controllers\RawMaterialRequestController::class, 'create'])->name('raw_material_request.create');
     Route::post('/create', [App\Http\Controllers\RawMaterialRequestController::class, 'store'])->name('raw_material_request.store');
-   
+
+});
+Route::prefix('raw_material_request_approve')->group(function () {
+    Route::get('/', [App\Http\Controllers\RawMaterialRequestApproveController::class, 'index'])->name('raw_material_request_approve.index');
+    Route::get('/create', [App\Http\Controllers\RawMaterialRequestApproveController::class, 'create'])->name('raw_material_request_approve.create');
+    Route::post('/create', [App\Http\Controllers\RawMaterialRequestApproveController::class, 'store'])->name('raw_material_request_approve.store');
+
 });
 
 Route::prefix('purchase_order')->group(function () {
