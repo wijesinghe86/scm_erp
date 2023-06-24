@@ -19,7 +19,8 @@ class SemiProductionController extends Controller
 {
     public function index()
     {
-        return view('pages.SemiProduction.index');
+        $semi_productions = SemiProduction::get();
+        return view('pages.SemiProduction.index', compact('semi_productions'));
     }
 
     public function create()
@@ -44,7 +45,10 @@ class SemiProductionController extends Controller
     }
     public function loadSerial(Request $request)
     {
-        $list =  RawMaterialSerialCode::with('grn')->where('stock_item_id', $request->item_id)->get();
+        $list =  RawMaterialSerialCode::with(['grn','semi_production_items'])
+        ->where('stock_item_id', $request->item_id)
+        ->whereDoesntHave('semi_production_items')
+        ->get();
         return $list;
     }
 
