@@ -11,7 +11,7 @@ class DfApproved extends Model
 {
     use HasFactory;
 
-    public function demandforecastid()
+    public function demand_forecast()
     {
         return $this->belongsTo(DemandForecasting::class, 'df_id', 'id');
     }
@@ -21,9 +21,6 @@ class DfApproved extends Model
     }
     public function approved_by()
     {
-        return $this->belongsTo(Employee::class,'requested_employee_id','id');
+        return $this->belongsTo(User::class,'approved_user_id','id');
     }
-
-    
-
 }

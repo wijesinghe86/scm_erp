@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 
 
+use App\Models\Stock;
+use App\Models\StockItem;
+use App\Models\Warehouse;
 use App\Models\Department;
 use Illuminate\Http\Request;
-use App\Models\StockItem;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -38,7 +40,17 @@ class StockItemController extends Controller
         ]);
 
         $request['created_by'] = Auth::id();
-        StockItem::create($request->all());
+        $stock_item =  StockItem::create($request->all());
+
+        //create Stock
+        $warehouses = Warehouse::get();
+        foreach ($warehouses as $key => $warehouse) {
+            $stock = new Stock;
+            $stock->stock_item_id = $stock_item->id;
+            $stock->warehouse_id = $warehouse->id;
+            $stock->qty = 0;
+            $stock->save();
+        }
 
         $response['alert-success'] = 'Stock Item Details created successfully!';
         return redirect()->route('stockitem.all')->with($response);

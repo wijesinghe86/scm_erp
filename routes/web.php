@@ -49,6 +49,7 @@ use App\Http\Controllers\PlantTimeManagementController;
 use App\Http\Controllers\StockLocationChangeController;
 use App\Http\Controllers\WarehouseAreaDesignController;
 use App\Http\Controllers\EquipmentRegistrationController;
+use App\Http\Controllers\JobOrderApprovalController;
 use App\Http\Controllers\ManAndEquipmentSafetyController;
 use App\Http\Controllers\MiscellaneousReceivedController;
 use App\Http\Controllers\OverShortageAndDamageController;
@@ -536,13 +537,24 @@ Route::prefix('SemiProduction')->group(function () {
     Route::get('/create', [App\Http\Controllers\SemiProductionController::class, 'create'])->name('semiproduction.create');
     Route::post('/create', [App\Http\Controllers\SemiProductionController::class, 'store'])->name('semiproduction.store');
     Route::get('/loadSerial', [App\Http\Controllers\SemiProductionController::class, 'loadSerial'])->name('semiproduction.loadserial');
-    Route::get('/delete/{index}', [App\Http\Controllers\SemiProductionController::class, 'deleteSessionItem'])->name('semiproduction.delete_item');
+    Route::post('/delete', [App\Http\Controllers\SemiProductionController::class, 'deleteSessionItem'])->name('semiproduction.delete_item');
+    Route::post('/addSemiProducts', [App\Http\Controllers\SemiProductionController::class, 'addSemiProducts'])->name('semiproduction.addSemiProducts');
+    Route::get('/view-cart-table', [App\Http\Controllers\SemiProductionController::class, 'viewCartTable'])->name('semiproduction.viewCartTable');
+    Route::get('/get_next_semi_product_serial_no', [App\Http\Controllers\SemiProductionController::class, 'getNextSemiProductSerialNumber'])->name('semiproduction.getNextSemiProductSerialNumber');
 });
 
 Route::prefix('JobOrderCreation')->group(function () {
     Route::get('JobOrderCreation', [JobOrderCreationController::class, 'index'])->name('jobordercreation.index');
     Route::get('/create', [App\Http\Controllers\JobOrderCreationController::class, 'create'])->name('jobordercreation.create');
     Route::post('/create', [App\Http\Controllers\JobOrderCreationController::class, 'store'])->name('jobordercreation.store');
+    Route::get('/get-items', [App\Http\Controllers\JobOrderCreationController::class, 'getItems'])->name('jobordercreation.getItems');
+});
+
+Route::prefix('job-order-approval')->group(function () {
+    Route::get('', [JobOrderApprovalController::class, 'index'])->name('joborderapproval.index');
+    Route::get('/create', [JobOrderApprovalController::class, 'create'])->name('joborderapproval.create');
+    Route::post('/create', [JobOrderApprovalController::class, 'store'])->name('joborderapproval.store');
+    Route::get('/get-items', [JobOrderApprovalController::class, 'getItems'])->name('joborderapproval.getItems');
 });
 
 Route::prefix('ProductionWastage')->group(function () {
@@ -582,6 +594,7 @@ Route::prefix('demand-forecast-approve')->group(function () {
     Route::get('/create', [App\Http\Controllers\DfApprovalController::class, 'create'])->name('df_approve.create');
     Route::post('/create', [App\Http\Controllers\DfApprovalController::class, 'store'])->name('df_approve.store');
     Route::get('/get-items', [App\Http\Controllers\DfApprovalController::class, 'getDfApprovedItems'])->name('df_approve.getDfApprovedItems');
+    Route::get('/get-df', [App\Http\Controllers\DfApprovalController::class, 'getDfData'])->name('df_approve.getDfData');
 });
 
 

@@ -50,3 +50,26 @@ if (!function_exists('mask_account_number')) {
         return $mask_number;
     }
 }
+
+if (!function_exists('assignLetterToNumber')) {
+    function assignLetterToNumber($number)
+    {
+        if (!is_int($number) || $number < 1) {
+            return null;
+        }
+
+        if ($number > 26) {
+            $firstLetterIndex = intval(($number - 1) / 26);
+            $asciiValueOfFirstLetter = ord('A') + $firstLetterIndex - 1;
+            $firstLetter = chr($asciiValueOfFirstLetter);
+            $secondLetterIndex = ($number - 1) % 26 + 1;
+            $asciiValueOfSecondLetter = ord('A') + $secondLetterIndex - 1;
+            $secondLetter = chr($asciiValueOfSecondLetter);
+            return $firstLetter . $secondLetter;
+        }
+
+        $asciiValueOfLetter = ord('A') + $number - 1;
+        $letter = chr($asciiValueOfLetter);
+        return $letter;
+    }
+}

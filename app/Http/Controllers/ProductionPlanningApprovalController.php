@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProductionPlaningItem;
-use App\Models\ProductionPlanning;
 use Illuminate\Http\Request;
+use App\Models\ProductionPlanning;
+use App\Models\ProductionPlaningItem;
+use Illuminate\Validation\ValidationException;
 
 class ProductionPlanningApprovalController extends Controller
 {
     public function index()
     {
-        $list = ProductionPlaningItem::where('approval_status', "approved")->latest()->get();
+        $list = ProductionPlaningItem::where('approval_status', '!=', "pending")->latest()->get();
         return view('pages.ProductionPlanningAndScheduleApproval.index', compact('list'));
     }
 
@@ -29,9 +30,13 @@ class ProductionPlanningApprovalController extends Controller
 
     public function store(Request $request)
     {
+        $filter_is_selected = collect($request->items)->filter(function ($row) {
+            return isset($row['is_selected']);
+        });
+        if (count($filter_is_selected) == 0) {
+            throw ValidationException::withMessages(['items' => "At least select one item to approve"]);
+        }
         foreach ($request->items as $key => $item) {
-            logger($item);
-
             if (!isset($item['is_selected'])) {
                 continue;
             }

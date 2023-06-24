@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DfApproved;
 use Illuminate\Http\Request;
 use App\Models\DemandForecasting;
 use App\Models\PlantRegistration;
 use App\Models\ProductionPlanning;
 use App\Models\ProductionPlaningItem;
 use App\Models\DemandForecastingItems;
+use Illuminate\Validation\ValidationException;
+
 // use App\Models\ProductionPlanningItem;
 
 
@@ -21,7 +24,13 @@ class ProductionPlanningAndScheduleController extends Controller
 
     public function create()
     {
-        $df_list = DemandForecasting::get();
+        $df_list = DemandForecasting::with(['approvals' => function ($item) {
+            return $item->where('action', 'approved');
+        }])
+            ->whereHas('approvals', function ($q) {
+                return $q->where('action', 'approved');
+            })
+            ->get();
         $plants = PlantRegistration::get();
 
         $last_pps = ProductionPlanning::latest()->first();
@@ -35,15 +44,21 @@ class ProductionPlanningAndScheduleController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
-
         $pps = new ProductionPlanning;
         $pps->pps_no = $request->pps_no;
         $pps->pps_date = $request->pps_date;
         $pps->plant = $request->plant;
         $pps->start_date = $request->start_date;
         $pps->end_date = $request->end_date;
+        $pps->df_id = $request->df_id;
         $pps->save();
+
+        $filter_is_selected = collect($request->items)->filter(function ($row) {
+            return isset($row['is_selected']);
+        });
+        if (count($filter_is_selected) == 0) {
+            throw ValidationException::withMessages(['items' => "The items list cannot be empty"]);
+        }
 
         foreach ($request->items as $row) {
             if (!isset($row['is_selected'])) {
@@ -65,8 +80,8 @@ class ProductionPlanningAndScheduleController extends Controller
 
     public function getDfItems(request $request)
     {
-        $lists = DemandForecastingItems::with('item')
-            ->where('df_id', $request->df_id)
+        $lists = DfApproved::where('df_id', $request->df_id)
+            ->where('action', 'approved')
             ->get();
         return view('pages.ProductionPlanningAndSchedule.df_table', compact('lists'));
     }

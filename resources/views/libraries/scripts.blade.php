@@ -28,7 +28,7 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"
      integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA=="
      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
      integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
      crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
@@ -36,13 +36,13 @@
      integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
      crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
 
-     {{--  --}}
+ {{--  --}}
  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/dataTables.bootstrap4.min.js" integrity="sha512-OQlawZneA7zzfI6B1n1tjUuo3C5mtYuAWpQdg+iI9mkDoo7iFzTqnQHf+K5ThOWNJ9AbXL4+ZDwH7ykySPQc+A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/dataTables.bootstrap.min.js" integrity="sha512-F0E+jKGaUC90odiinxkfeS3zm9uUT1/lpusNtgXboaMdA3QFMUez0pBmAeXGXtGxoGZg3bLmrkSkbK1quua4/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
  <script>
      $(document).ready(function() {
          //Javascript method's body can be found in assets/assets-for-demo/js/demo.js --}}
-        //  demo.initChartsPages();
+         //  demo.initChartsPages();
      });
 
      $(document).ready(function() {
@@ -81,7 +81,7 @@
              loader: true,
              loaderBg: '#fff',
              showHideTransition: 'slide',
-             hideAfter: 6000,
+             hideAfter: 3000,
              position: 'top-right'
          });
      }
@@ -94,9 +94,9 @@
              loader: true,
              loaderBg: '#fff',
              showHideTransition: 'slide',
-             hideAfter: 2000,
+             hideAfter: 3000,
              allowToastClose: false,
-             position: 'top-center',
+             position: 'top-right',
          })
      }
 
@@ -108,9 +108,9 @@
              loader: true,
              loaderBg: '#fff',
              showHideTransition: 'slide',
-             hideAfter: 6000,
+             hideAfter: 3000,
              allowToastClose: false,
-             position: 'bottom-right',
+             position: 'top-right',
          })
      }
 
@@ -122,9 +122,9 @@
              loader: true,
              loaderBg: '#fff',
              showHideTransition: 'slide',
-             hideAfter: 6000,
+             hideAfter: 3000,
              allowToastClose: false,
-             position: 'bottom-right',
+             position: 'top-right',
          })
      }
 

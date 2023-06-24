@@ -66,7 +66,8 @@
 
                             <button type="submit" class="btn btn-success me-2">Complete Production Planning And
                                 Schedule</button>
-                                <a class="btn btn-secondary" href="{{route('productionplanningandschedule.index')}}" >Cancel</a>
+                            <a class="btn btn-secondary"
+                                href="{{ route('productionplanningandschedule.index') }}">Cancel</a>
                         </form>
                     </div>
                 </div>
@@ -96,6 +97,17 @@
 
             });
         });
+
+
+        function onItemQtyChange(e, availableQty, index) {
+            console.log(e.value);
+            console.log(availableQty);
+            if (e.value > availableQty) {
+                alertDanger(`DF Available Quantity exceeded on item ${index+1}`)
+                e.value = availableQty;
+                return
+            }
+        }
     </script>
 @endpush
 @push('styles')

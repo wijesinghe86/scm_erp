@@ -92,7 +92,7 @@ class GoodsReceivedController extends Controller
                 $stock->stock_item_id = $item['item_id'];
                 $stock->warehouse_id = $request->warehouse;
                 $stock->qty = $item['rec_qty'];
-                $stock->grn_id = $grn->id;
+                // $stock->grn_id = $grn->id;
                 $stock->save();
             }
 

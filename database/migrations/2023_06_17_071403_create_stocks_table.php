@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('stock_item_id')->nullable();
             $table->unsignedBigInteger('warehouse_id')->nullable();
-            $table->unsignedBigInteger('grn_id')->nullable();
+            // $table->unsignedBigInteger('grn_id')->nullable();
             $table->decimal('qty', 15,2)->nullable();
             $table->timestamps();
         });

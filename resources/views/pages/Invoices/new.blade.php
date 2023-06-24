@@ -197,8 +197,9 @@
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label>Location</label>
-                                    <select class="form-control item-select clear-qty" name="location_id"
+                                    <select class="form-control select2-location clear-qty" name="location_id"
                                         id="location_id">
+                                        <option value="" selected>Select Location</option>
                                         @foreach ($warehouses as $warehouse)
                                             <option value="{{ $warehouse->id }}">
                                                 {{ $warehouse->warehouse_name }}
@@ -322,7 +323,7 @@
                 errorList.push('The customer field is required')
             }
 
-            if(employee_id == "" || employee_id == null){
+            if (employee_id == "" || employee_id == null) {
                 errorList.push('The sales staff name is required')
             }
 
@@ -332,11 +333,11 @@
                 errorList.push('Customer credit limit exeeded')
             }
 
-            if(errorList?.length>0){
+            if (errorList?.length > 0) {
                 errorList.forEach(error => {
                     alertDanger(error)
                 });
-                return 
+                return
             }
             $('#invoiceCreateForm').submit()
         }
@@ -564,10 +565,11 @@
                     fetchInvoiceTotal();
                     $('#stock_no').val("");
                     $('#uom').val("");
-                    $('#item_id').val(null);
+                    $('#item_id').val("").trigger('change');
                     $('#quantity').val("");
                     $('#unit_price').val("");
                     $('#js_discount_amount').val("");
+                    $('#location_id').val("").trigger('change');
                     getItemsTable();
                 },
                 error: function(data) {
@@ -638,6 +640,12 @@
             $('.item-select').select2({
                 placeholder: "Select Item",
             });
+
+            $('.select2-location').select2({
+                placeholder: "Select Location",
+            });
+
+            
         });
     </script>
 @endpush
