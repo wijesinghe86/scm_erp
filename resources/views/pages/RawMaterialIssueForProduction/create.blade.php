@@ -109,23 +109,4 @@
 </div>
   @endsection
 
-  @push('scripts')
-<script>
-    $(document).ready(function(){
-        $('.item-select').select2(
-            {
-                placeholder: "Select Item",
-            });
-    });
 
-</script>
-@endpush
-
-@push('styles')
-<style>
-    .select2-container .select-selection--single{
-        height: 46px;
-    }
-    </style>
-
-@endpush
