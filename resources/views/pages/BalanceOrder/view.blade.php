@@ -8,7 +8,7 @@
                     <div class="card-header">
                         <h4 class="title"> Balance Order {{ $balance_order->balance_order_no }} </h4>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body ">
                         <div class="row">
                             <div class="form-group col-md-6 info-item">
                                 <div>Delivery Order Number :</div>
@@ -26,7 +26,7 @@
                             </div>
                             <div class="form-group col-md-6 info-item">
                                 <div>Is Delivery Order Created :</div>
-                                <div>{{ $balance_order->is_issued? "YES" : "NO" }}</div>
+                                <div>{{ $balance_order->is_issued ? 'YES' : 'NO' }}</div>
                             </div>
                         </div>
                         @if (!$balance_order->is_issued)
@@ -57,6 +57,11 @@
                                 @endforeach
                             </tbody>
                         </table>
+                    </div>
+                    <div class="col-md-4">
+                        <a target="_blank"
+                            href="{{ route('balanceorder.print', ['balance_order_id' => $balance_order->id]) }}"
+                            class="btn btn-secondary mr-5"> Print</a>
                     </div>
                 </div>
             </div>

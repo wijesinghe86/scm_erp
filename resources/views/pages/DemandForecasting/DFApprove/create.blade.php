@@ -11,77 +11,82 @@
 
                             <div class="row">
                                 <div class="form-group col-md-2">
-                                  <label>Demand Forecast No</label>
-                                  <select class ="form-control df_input" name="df_no" id="df_no" placeholder="DF No" onchange="itemOnChange(this)">
-                                     <option value="" selected disabled>Select DF No</option>
+                                    <label>Demand Forecast No</label>
+                                    <select class="form-control df_input" name="df_no" id="df_no" placeholder="DF No">
+                                        <option value="" selected disabled>Select DF No</option>
                                         @foreach ($df_list as $row)
                                             <option value="{{ $row->id }}">{{ $row->df_no }}</option>
                                         @endforeach
                                     </select>
                                 </div>
+                                <input type="hidden" readonly class="form-control" name="requested_by_id"
+                                    id="requested_by_id">
                                 <div class="form-group col-md-5">
                                     <label>Requested By</label>
-                                    <input type="text" readonly class="form-control" name="requested_by" id="requested_by" >
-                                  </div>
-                                  <div class="form-group col-md-3">
+                                    <input type="text" readonly class="form-control" name="requested_by"
+                                        id="requested_by">
+                                </div>
+                                <div class="form-group col-md-3">
                                     <label>Required Date</label>
-                                    <input type="date" readonly class="form-control" name="required_date" id="required_date">
-                                  </div>
+                                    <input type="date" readonly class="form-control" name="required_date"
+                                        id="required_date">
+                                </div>
                             </div>
 
                             <div class="items_table"></div>
 
 
                             <button type="submit" class="btn btn-success me-2">Approved</button>
-                            <button class="btn btn-danger">Cancel</button>
+                            <a href="{{ route('df_approve.index') }}" class="btn btn-danger">Cancel</a>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 @endsection
 @push('scripts')
-{{-- <script type="application/javascript">
-    var df_list = '{!! $df_list->toJson()!!}';
-    df_list = JSON.parse(df_list);
-
-    function itemOnChange(elem) {
-
-      var selectedDf = df_list.filter((row)=>{
-        return row.id == elem.value;
-      })
-
-      if(selectedDf.length == 0){
-        return;
-      }
-
-      selectedDf = selectedDf[0];
-
-      console.log("selected df",selectedDf);
-
-      document.getElementById("requested_by").value = selectedMr.requested_by.employee_fullname;
-      document.getElementById("required_date").value = selectedMr.required_date;
-
-    }
-    </script> --}}
     <script>
-        $(document).ready(function() {
-            // alert("ss");
-            // $('.items_table');
-        });
+        $(document).ready(function() {});
 
         $(".df_input").change(function() {
             var id = $(this).val();
-            // alert("Handler for .change() called." + id);
-
-            $(".items_table").load('/demand-forecast-approve/get-items?df_id=' + id, function() {
-
+            $.ajax({
+                url: "{{ route('df_approve.getDfData') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "GET",
+                data: {
+                    df_id: id
+                },
+                success: function(response) {
+                    $('#requested_by_id').val(response?.create_user?.id)
+                    $('#requested_by').val(response?.create_user?.name)
+                    $('#required_date').val(response?.required_date)
+                }
+            });
+            $.ajax({
+                url: "{{ route('df_approve.getDfApprovedItems') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "GET",
+                data: {
+                    df_id: id
+                },
+                success: function(response) {
+                    $('.items_table').html(response);
+                }
             });
         });
 
-
-
+        function onItemQtyChange(e, availableQty, index) {
+            if (e.value > availableQty) {
+                alertDanger(`DF Available Quantity exceeded on item ${index+1}`)
+                e.value = availableQty;
+                return
+            }
+        }
     </script>
 @endpush

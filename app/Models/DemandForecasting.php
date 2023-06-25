@@ -10,8 +10,17 @@ class DemandForecasting extends Model
 {
     use HasFactory;
     public function createUser()
-{
-    return $this->hasOne(User::class, 'id', 'created_by');
-}
+    {
+        return $this->hasOne(User::class, 'id', 'created_by');
+    }
 
+    public function items()
+    {
+        return $this->hasMany(DemandForecastingItems::class,'df_id','id');
+    }
+
+    public function approvals()
+    {
+        return $this->hasMany(DfApproved::class,'df_id','id');
+    }
 }

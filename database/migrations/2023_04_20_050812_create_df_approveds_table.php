@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('item_id')->nullable();
             $table->decimal('approved_qty', 15, 2)->nullable();
             $table->text('remark')->nullable();
-            $table->string('action')->nullable();
+            $table->string('action')->default('pending');
             $table->unsignedBigInteger('df_created_user_id')->nullable();
             $table->unsignedBigInteger('approved_user_id')->nullable();
             $table->timestamps();

@@ -1,4 +1,4 @@
-<table class="table bordered">
+<table class="table table-bordered">
     <thead>
         <tr>
            <th>#</th>
@@ -16,7 +16,7 @@
                 <td>{{$row->supplier_code}}</td>
                 <td>{{$row->qty}}</td>
                 <td>
-                <button type="button" class="btn btn-danger btn-sm" onclick="onDeleteSerialCode('{{$row->id}}')">D</button>
+                <button type="button" class="btn btn-danger btn-sm" onclick="onDeleteSerialCode('{{$row->id}}')">Delete</button>
                 </td>
             </tr>
             @endforeach

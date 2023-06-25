@@ -21,12 +21,12 @@ return new class extends Migration
             $table->unsignedBigInteger('warehouse_id')->nullable();
             $table->unsignedBigInteger('raw_material_stock_no')->nullable();
             $table->unsignedBigInteger('raw_material_serial_no')->nullable();
-            $table->unsignedBigInteger('grn_no')->nullable();
+            $table->string('grn_no')->nullable();
             $table->decimal('raw_mat_serial_grn_qty', 15,2)->nullable();
             $table->decimal('raw_mat_serial_actual_qty', 15,2)->nullable();
-            $table->decimal('raw_mat_seriala_qty_dif', 15,2)->nullable();
-            $table->decimal('tot_raw_mat_qty', 15,2)->nullable();
-            $table->decimal('tot_raw material_qty', 15,2)->nullable();
+            $table->decimal('raw_mat_serial_qty_dif', 15,2)->nullable();
+            $table->decimal('tot_semi_product_qty', 15,2)->nullable();
+            $table->decimal('tot_raw_material_qty', 15,2)->nullable();
             $table->decimal('diff_raw_mat_qty', 15,2)->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
