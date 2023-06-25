@@ -154,8 +154,8 @@
                     <li class="nav-item"> <a class="nav-link"
                             href="{{ route('rawmaterialsserialcodeassigning.index') }}">Raw Materials Serial Code <br>
                             Assigning</a></li>
-                    {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('rawmaterialissueforproduction.index') }}">Raw Material Issue For Production</a>
-        </li> --}}
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('rawmaterialissueforproduction.index') }}">Raw Material Issue For Production</a>
+        </li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('semiproduction.index') }}">Semi
                             Production </a></li>
                     <li class="nav-item"> <a class="nav-link"
