@@ -60,6 +60,9 @@
                             Request Form</a>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('mr_request_approve.index') }}">Material
                             Request Approval</a>
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('raw_material_request.index') }}">Raw MaterialRequest Form</a>
+                                <li class="nav-item"> <a class="nav-link" href="{{ route('raw_material_request_approve.index') }}">Raw Material
+                                    Request Approve Form</a>
                 </ul>
             </div>
         </li>
@@ -151,8 +154,8 @@
                     <li class="nav-item"> <a class="nav-link"
                             href="{{ route('rawmaterialsserialcodeassigning.index') }}">Raw Materials Serial Code <br>
                             Assigning</a></li>
-                    {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('rawmaterialissueforproduction.index') }}">Raw Material Issue For Production</a>
-        </li> --}}
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('rawmaterialissueforproduction.index') }}">Raw Material Issue For Production</a>
+        </li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('semiproduction.index') }}">Semi
                             Production </a></li>
                     <li class="nav-item"> <a class="nav-link"
