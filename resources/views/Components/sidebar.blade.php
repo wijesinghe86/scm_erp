@@ -144,52 +144,52 @@
             </ul>
         </div>
     </li>
-        {{-- Production Planning and Scheduling --}}
-        <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#ui-pps" aria-expanded="false"
-                aria-controls="ui-pps">
-                <span class="menu-title">Production Planning and <br> Scheduling</span>
-                {{-- <i class="menu-arrow"></i> --}}
-                <i class="mdi mdi-contacts menu-icon"></i>
-            </a>
-            <div class="collapse" id="ui-pps">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link"
-                            href="{{ route('productionplanningandschedule.index') }}">Production Planning And <br>
-                            Schedule</a></li>
-                    <li class="nav-item"> <a class="nav-link"
-                            href="{{ route('rawmaterialsserialcodeassigning.index') }}">Raw Materials Serial Code <br>
-                            Assigning</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('rawmaterialissueforproduction.index') }}">Raw Material Issue For Production</a>
-        </li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('semiproduction.index') }}">Semi
-                            Production </a></li>
-                    <li class="nav-item"> <a class="nav-link"
-                            href="{{ route('semifinishedgoodsserialcodeassigning.index') }}">Semi Finished Goods
-                            Serial <br> Code Assigning</a></li>
-                    <li class="nav-item"> <a class="nav-link"
-                            href="{{ route('finishedgoodsserialcodeassigning.index') }}">Finished Goods Serial
-                            <br>Code
-                            Assigning </a></li>
-                    <li class="nav-item"> <a class="nav-link"
-                            href="{{ route('productionwastage.index') }}">Production Wastage</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('jobordercreation.index') }}">Job Order
-                            Creation</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('dispatch.index') }}">Dispatch</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('productioncost.index') }}">Production
-                            Cost</a></li>
-                    <li class="nav-item"> <a class="nav-link"
-                            href="{{ route('operationmachanismproductionandtimemanagement.index') }}">Operation
-                            Machanism <br>Production And Time <br>Management</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('planttimemanagement.index') }}">Plant
-                            Time Management</a></li>
-                    <li class="nav-item"> <a class="nav-link"
-                            href="{{ route('operationmechanismbyproduct.index') }}">Operation Mechanism <br>By
-                            Product</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
+    {{-- Production Planning and Scheduling --}}
+    {{-- <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="collapse" href="#ui-pps" aria-expanded="false" aria-controls="ui-pps">
+            <span class="menu-title">Production Planning and <br> Scheduling</span>
+            <i class="mdi mdi-contacts menu-icon"></i>
+        </a>
+        <div class="collapse" id="ui-pps">
+            <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link"
+                        href="{{ route('productionplanningandschedule.index') }}">Production Planning And <br>
+                        Schedule</a></li>
+                <li class="nav-item"> <a class="nav-link"
+                        href="{{ route('rawmaterialsserialcodeassigning.index') }}">Raw Materials Serial Code <br>
+                        Assigning</a></li>
+                <li class="nav-item"> <a class="nav-link"
+                        href="{{ route('rawmaterialissueforproduction.index') }}">Raw Material Issue For
+                        Production</a>
+                </li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('semiproduction.index') }}">Semi
+                        Production </a></li>
+                <li class="nav-item"> <a class="nav-link"
+                        href="{{ route('semifinishedgoodsserialcodeassigning.index') }}">Semi Finished Goods
+                        Serial <br> Code Assigning</a></li>
+                <li class="nav-item"> <a class="nav-link"
+                        href="{{ route('finishedgoodsserialcodeassigning.index') }}">Finished Goods Serial
+                        <br>Code
+                        Assigning </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('productionwastage.index') }}">Production
+                        Wastage</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('jobordercreation.index') }}">Job Order
+                        Creation</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('dispatch.index') }}">Dispatch</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('productioncost.index') }}">Production
+                        Cost</a></li>
+                <li class="nav-item"> <a class="nav-link"
+                        href="{{ route('operationmachanismproductionandtimemanagement.index') }}">Operation
+                        Machanism <br>Production And Time <br>Management</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('planttimemanagement.index') }}">Plant
+                        Time Management</a></li>
+                <li class="nav-item"> <a class="nav-link"
+                        href="{{ route('operationmechanismbyproduct.index') }}">Operation Mechanism <br>By
+                        Product</a>
+                </li>
+            </ul>
+        </div>
+    </li> --}}
     {{-- Production Planning and Scheduling --}}
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-pps" aria-expanded="false" aria-controls="ui-pps">
@@ -209,8 +209,10 @@
                 <li class="nav-item"> <a class="nav-link"
                         href="{{ route('rawmaterialsserialcodeassigning.index') }}">Raw Materials Serial Code <br>
                         Assigning</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('rawmaterialissueforproduction.index') }}">Raw Material Issue For Production</a>
-        </li> 
+                <li class="nav-item"> <a class="nav-link"
+                        href="{{ route('rawmaterialissueforproduction.index') }}">Raw Material Issue For
+                        Production</a>
+                </li>
                 <li class="nav-item"> <a class="nav-link" href="{{ route('semiproduction.index') }}">Semi
                         Production </a></li>
                 <li class="nav-item"> <a class="nav-link"
@@ -489,7 +491,8 @@
                     </a></li>
                 {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('rawmaterialissueforproduction.index') }}">Raw Material Issue For Production</a>
     </li> --}}
-                <li class="nav-item"> <a class="nav-link" href="{{ route('semiproduction.index') }}">Department-wise
+                <li class="nav-item"> <a class="nav-link"
+                        href="{{ route('semiproduction.index') }}">Department-wise
                         Demand<br>Forecasted Stock
                         Items
                     </a></li>
