@@ -154,13 +154,11 @@
                     <li class="nav-item"> <a class="nav-link"
                             href="{{ route('rawmaterialsserialcodeassigning.index') }}">Raw Materials Serial Code <br>
                             Assigning</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('rawmaterialissueforproduction.index') }}">Raw Material Issue For Production</a>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('rawmaterialissueforproduction.index') }}">Raw Material Issue <br>For Production</a>
         </li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('semiproduction.index') }}">Semi
-                            Production </a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('semiproduction.index') }}">Semi Production </a></li>
                     <li class="nav-item"> <a class="nav-link"
-                            href="{{ route('semifinishedgoodsserialcodeassigning.index') }}">Semi Finished Goods
-                            Serial <br> Code Assigning</a></li>
+                            href="{{ route('semifinishedgoodsserialcodeassigning.index') }}">Semi Finished Goods Serial <br> Code Assigning</a></li>
                     <li class="nav-item"> <a class="nav-link"
                             href="{{ route('finishedgoodsserialcodeassigning.index') }}">Finished Goods Serial
                             <br>Code
