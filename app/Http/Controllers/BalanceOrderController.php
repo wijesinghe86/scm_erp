@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Models\DeliveryOrder;
 use App\Models\DeliveryOrderItem;
 use Illuminate\Support\Facades\DB;
+use PDF;
+
 
 class BalanceOrderController extends Controller
 {
@@ -75,5 +77,17 @@ class BalanceOrderController extends Controller
             logger($error);
             DB::rollBack();
         }
+    }
+
+
+    public function print($balance_order_id)
+    {
+        $balance_order = BalanceOrder::find($balance_order_id);
+        // $response[''] = InvoiceItem::where('invoice_number', $invoice_id)->get();
+        if ($balance_order == null) {
+            return abort(404);
+        }
+        $pdf = PDF::loadView('pages.BalanceOrder.pdf', compact('balance_order'));
+        return $pdf->stream('balance_order.pdf');
     }
 }

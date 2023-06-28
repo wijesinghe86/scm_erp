@@ -22,7 +22,6 @@
                                     <td>Weight</td>
                                    <td>Location</td>
                                    <td>Issued by</td>
-
                                 </tr>
                             </thead>
 

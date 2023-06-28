@@ -5,139 +5,123 @@
 
 <head>
     <style>
-        @page {
-            margin-bottom: 0px;
-        }
-
-        .select-none {
-            color: transparent;
-            user-select: none;
-        }
-
-        .w-fit {
-            width: fit-content;
-        }
-
         table {
             width: 100%;
-            table-layout: fixed;
-            /* border: 1px solid black; */
+            /* border-collapse: collapse; */
+            border: 1px solid black;
+            margin: 0;
+            padding: 0;
+            font-size: 10px;
         }
 
-        /* tr {
-            border: 1px solid blue !important;
+        th {
+            text-align: left;
         }
 
-        td {
-            border: 1px solid red !important;
-        } */
-
-        .info-td {
-            vertical-align: top !important;
-        }
-
-        .mb-2 {
-            margin-bottom: 1rem;
+        td,
+        th {
+            border: 1px solid black;
         }
     </style>
-    <title>{{$invoices->invoice_number}}</title>
+    <title>{{ $invoices->invoice_number }} | {{ $invoices->getInvoiceTypeNameAttribute() }}</title>
 </head>
 
 <body>
-    <table class="" style="width: 100%;margin:0px;min-height: 30mm;">
-        {{-- <tr align="center">
-            <td>
-                <h1>ABC</h1>
-                <hr style="width: 50%;">
-            </td>
-        </tr>
-        <tr align="center">
-            <td>
-                <div class="mb-2">MANUFACTURER</div>
-                <small>Industrial Village,</small><br>
-                <small>Tel: oXXXXXXXXX</small><br>
-                <small>E-mail</small><br>
-            </td>
-        </tr> --}}
-    </table>
-    <table class="table" style="width: 100%;min-height: 25mm;height: 25mm;margin:0px; padding:0;">
+    <table style="height: 30mm">
         <tr>
-            <td class="info-td" rowspan="3" style="padding-left: 25mm">
-                <div>{{ $invoices->customer->customer_name }}</div>
-                <small>{{ $invoices->customer->customer_address_line1 }}</small><br>
-                <small>{{ $invoices->customer->customer_address_line1 }}</small><br>
-                <small>{{ $invoices->customer->customer_mobile_number }}</small><br>
-                <small>{{ $invoices->customer->customer_email }}</small><br>
-            </td>
-            <td class="info-td" style="height: 8mm">
-            </td>
-            <td class="info-td " style="padding-left: 23mm; height: 8mm">
-                <small>{{ $invoices->invoice_date }}</small>
-            </td>
-        </tr>
-        <tr>
-            <td class="info-td " style="padding-left: 23mm; height: 8mm">
-                <small>{{ $invoices->payment_terms }}</small>
-            </td>
-            <td class="info-td " style="padding-left: 23mm">
-                <small>{{ $invoices->invoice_number }}</small>
-            </td>
-        </tr>
-        <tr>
-            <td class="info-td " style="padding-left: 23mm; height: 8mm">
-                <small>{{ $invoices->payment_terms }}</small>
-            </td>
-            <td class="info-td " style="padding-left: 23mm">
-                <small>{{ $invoices->invoice_date }}</small>
-            </td>
+            <td></td>
+            <td></td>
         </tr>
     </table>
-    <table style="height: 114.2mm">
+    <table style="height: 25mm">
         <tr>
-            <td class="info-td ">
-                <table>
-                    <tr>
-                        <td align="center" class="select-none"
-                            style="height: 6mm;min-height:6mm; max-height:6mm; width: 11mm;">No.</td>
-                        <td align="center" class="select-none"
-                            style="height: 6mm;min-height:6mm; max-height:6mm; width: 86mm;">Description</td>
-                        <td align="center" class="select-none"
-                            style="height: 6mm;min-height:6mm; max-height:6mm; width: 14mm;">U/M</td>
-                        <td align="center" class="select-none"
-                            style="height: 6mm;min-height:6mm; max-height:6mm; width: 16mm;">Ord. Qty.</td>
-                        <td align="center" class="select-none"
-                            style="height: 6mm;min-height:6mm; max-height:6mm; width: 20mm;">Weight</td>
-                        <td align="center" class="select-none"
-                            style="height: 6mm;min-height:6mm; max-height:6mm; width: 22.5mm;">Unit Rate (Rs.)</td>
-                        <td align="center" class="select-none"
-                            style="height: 6mm;min-height:6mm; max-height:6mm; width: 32mm;">Amount (Rs.)</td>
-                    </tr>
-                    @foreach ($invoices->items as $key => $item)
-                        <tr>
-                            <td align="center" style="height: 6mm;min-height:6mm; max-height:6mm; width: 11mm;">
-                                {{ $key + 1 }}</td>
-                            <td align="center" style="height: 6mm;min-height:6mm; max-height:6mm; width: 11mm;">
-                                {{ $item->description }}</td>
-                            <td align="center" style="height: 6mm;min-height:6mm; max-height:6mm; width: 11mm;">
-                                {{ $item->uom }}</td>
-                            <td align="center" style="height: 6mm;min-height:6mm; max-height:6mm; width: 11mm;">
-                                {{ $item->quantity }}</td>
-                            <td align="center" style="height: 6mm;min-height:6mm; max-height:6mm; width: 11mm;">
-                                {{ $item->uom }}</td>
-                            <td align="right" style="height: 6mm;min-height:6mm; max-height:6mm; width: 11mm;padding:0 10px">
-                                {{ $item->unit_price }}</td>
-                            <td align="right" style="height: 6mm;min-height:6mm; max-height:6mm; width: 11mm;padding:0 10px">
-                                {{ $item->sub_total }}</td>
-                        </tr>
-                    @endforeach
-                    <tr>
-                        <td colspan="5"></td>
-                        <td align="right" style="height: 26mm;min-height:26mm; max-height:26mm; width: 11mm; padding:0 10px">
-                            {{ $invoices->items->sum('unit_price') }}</td>
-                        <td align="right" style="height: 26mm;min-height:26mm; max-height:26mm; width: 11mm;padding:0 10px">
-                            {{ $invoices->items->sum('sub_total') }}</td>
-                    </tr>
-                </table>
+            <td rowspan="3">
+                <div style="margin-left: 18mm">
+                    <div>{{ $invoices->customer->customer_name }}</div>
+                    <small>{{ $invoices->customer->customer_address_line1 }}</small><br>
+                    <small>{{ $invoices->customer->customer_address_line2 }}</small><br>
+                    <small>{{ $invoices->customer->customer_mobile_number }}</small><br>
+                    <small>{{ $invoices->customer->customer_email }}</small><br>
+                </div>
+            </td>
+            <td style="height: 8mm; width:26mm">Vat No</td>
+            <td style="height: 8mm; width:36mm">{{ $invoices->customer->customer_vat_number }}</td>
+            <td style="height: 8mm; width:22.5mm">Date</td>
+            <td style="height: 8mm; width:32mm">{{ $invoices->invoice_date }}</td>
+        </tr>
+        <tr>
+            <td style="height: 8mm; width:26mm">Terms</td>
+            <td style="height: 8mm; width:36mm">{{ $invoices->payment_terms }}</td>
+            <td style="height: 8mm; width:22.5mm">Invoice No.</td>
+            <td style="height: 8mm; width:32mm">{{ $invoices->invoice_number }}</td>
+        </tr>
+        <tr>
+            <td style="height: 8mm; width:26mm">Purchanse Order No.</td>
+            <td style="height: 8mm; width:36mm">{{ $invoices->po_number }}</td>
+            <td style="height: 8mm; width:22.5mm">D. N. No.</td>
+            <td style="height: 8mm; width:32mm">{{ $invoices->po_number }}</td>
+        </tr>
+    </table>
+    <table style="height: 6mm">
+        <tr>
+            <th style="width:11mm">No.</th>
+            <th style="width:86mm">Description</th>
+            <th style="width:14mm">U/M</th>
+            <th style="width:16mm">Ord, Qty.</th>
+            <th style="width:20mm">Weight</th>
+            <th style="width:22.5mm">Unit Rate(Rs.)</th>
+            <th style="width:32mm">Amount(Rs)</th>
+        </tr>
+    </table>
+    <table style="height:105mm;">
+        @foreach ($invoices->items as $key => $item)
+            <tr>
+                <td style="width:11mm">{{ $key + 1 }}</td>
+                <td style="width:86mm">{{ $item->description }}</td>
+                <td style="width:14mm">{{ $item->uom }}</td>
+                <td style="width:16mm">{{ $item->quantity }}</td>
+                <td style="width:20mm">{{ $item->uom }}</td>
+                <td style="width:22.5mm">{{ $item->unit_price }}</td>
+                <td style="width:32mm">{{ $item->total }}</td>
+            </tr>
+        @endforeach
+    </table>
+    <table>
+        <tr>
+            <td style="width:11mm"></td>
+            <td style="width:86mm"></td>
+            <td style="width:14mm"></td>
+            <td style="width:16mm"></td>
+            <td style="width:20mm"></td>
+            <td style="height:26mm;width:22.5mm">
+                <div style="height:7px">Total(Rs.)</div></br>
+                @if ($invoices->type != 1 && in_array($invoices->option, [1, 2]))
+                    <div style="height:7px">Ex. Of Vat(Rs.)</div></br>
+                @endif
+                @if ($invoices->type != 1)
+                    <div style="height:7px">Vat {{ $invoices->vat_rate }}%</div></br>
+                @endif
+                @if ($invoices->discount_amount > 0)
+                    <div style="height:7px">Dicount(Rs.)</div></br>
+                @endif
+                <div style="height:7px">Grand Total(Rs.)</div></br>
+            </td>
+            <td style="height:26mm;width:32mm">
+                <div style="height:7px">
+                    {{ $invoices->type == 1 ? money($invoices->grand_total) : money($invoices->sub_total) }}</div></br>
+                @if ($invoices->type != 1 && $invoices->option == 1)
+                    <div style="height:7px">{{ money($invoices->sub_total) }}</div></br>
+                @endif
+                @if ($invoices->type != 1 && $invoices->option == 2)
+                    <div style="height:7px">{{ money($invoices->sub_total - $invoices->vat_amount) }}</div></br>
+                @endif
+                @if ($invoices->type != 1)
+                    <div style="height:7px">{{ $invoices->vat_rate }}</div></br>
+                @endif
+                @if ($invoices->discount_amount > 0)
+                    <div style="height:7px">{{ money($invoices->discount_amount) }}</div></br>
+                @endif
+                <div style="height:7px">{{ money($invoices->grand_total) }}</div></br>
             </td>
         </tr>
     </table>

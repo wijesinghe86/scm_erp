@@ -11,6 +11,7 @@ use App\Models\DeliveryOrder;
 use App\Models\InvoiceReturn;
 use App\Models\DeliveryOrderItem;
 use App\Models\InvoiceReturnItem;
+use App\Models\Stock;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\In;
 
@@ -99,6 +100,13 @@ class ReturnController extends Controller
                     $invoice_return_item->total = data_get($item, 'total');
                     $invoice_return_item->sub_total = data_get($item, 'sub_total');
                     $invoice_return_item->save();
+
+                    //stock restore
+                    $stock = Stock::where('stock_item_id', data_get($item, 'item_id'))
+                        ->where('warehouse_id', data_get($item, 'location_id'))
+                        ->first();
+                    $stock->qty = $stock->qty + data_get($item, 'qty');
+                    $stock->save();
                 }
             }
             $delivery_order->returned_ids = json_encode($returnIds);

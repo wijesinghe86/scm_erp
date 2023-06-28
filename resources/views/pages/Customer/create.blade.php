@@ -1,18 +1,18 @@
 @extends('layouts.app')
 @section('content')
-<div class="content-wrapper">
-    <div class="row">
-        <div class="col-12 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Customer Profile Creation</h4>
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Customer Profile Creation</h4>
                         <form class="forms-sample" method="POST" action="{{ route('customer.store') }}">
                             @csrf
                             <div class="row">
                                 <div class="form-group col-md-3">
                                     <label>Customer Code</label>
                                     <input type="text" class="form-control" name="customer_code"
-                                        placeholder="Customer Code" value="{{$next_number}}">
+                                        placeholder="Customer Code" value="{{ $next_number }}">
                                 </div>
                                 <div class="form-group col-md-5">
                                     <label>Customer Name *</label>
@@ -21,27 +21,30 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="">Business Registration Number *</label>
-                                    <input type="text" class="form-control" id="" placeholder="Business Registration Number" name="business_registration_number">
+                                    <input type="text" class="form-control" id=""
+                                        placeholder="Business Registration Number" name="business_registration_number">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-4">
                                     <label>Vat Number *</label>
-                                    <input type="text" class="form-control" name="customer_vat_number" placeholder="Vat Number">
+                                    <input type="text" class="form-control" name="customer_vat_number"
+                                        placeholder="Vat Number">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>SVat Number</label>
-                                    <input type="text" class="form-control" name="customer_svat_number" placeholder="SVat Number">
+                                    <input type="text" class="form-control" name="customer_svat_number"
+                                        placeholder="SVat Number">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Customer Type *</label>
                                     <select class="form-control" name="customer_type_of_customer">
                                         <option value="">Select type</option>
-                                        <option value="1">Cash</option>
-                                        <option value="2">Credit</option>
-                                        <option value="3">Distributor</option>
-                                        <option value="4">Debtor</option>
-                                        <option value="3">Fleet Owner</option>
+                                        @foreach ($customer::$CUSTOMER_TYPE_LIST as $item)
+                                            <option value="{{ $item['value'] }}">
+                                                {{ $item['label'] }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -82,8 +85,11 @@
                                     <label>Payment Terms *</label>
                                     <select class="form-control" name="customer_payment_terms">
                                         <option value="">Select type</option>
-                                        <option value="1">Cash</option>
-                                        <option value="2">Credit</option>
+                                        @foreach ($customer::$PAYMENT_TERMS as $item)
+                                            <option value="{{ $item['value'] }}">
+                                                {{ $item['label'] }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group col-md-4">
@@ -95,9 +101,10 @@
                                     <label>Credit Period</label>
                                     <select class="form-control" name="customer_credit_period">
                                         <option value="">Select</option>
-                                        <option value="1">30 Days</option>
-                                        <option value="2">60 Days</option>
-                                        <option value="3">90 Days</option>
+                                        @foreach ($customer::$CREDIT_PERIODS as $item)
+                                            <option value="{{ $item['value'] }}">{{ $item['label'] }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -123,7 +130,7 @@
                                     <label>Customer Status</label>
                                     <select class="form-control" name="customer_status">
                                         <option value="">Select</option>
-                                        <option value="1">Active</option>
+                                        <option selected value="1">Active</option>
                                         <option value="2">In-Active</option>
                                     </select>
                                 </div>
@@ -139,9 +146,8 @@
                                     </div>
                                 </div>
                             </div>
-
                             <button type="submit" class="btn btn-success me-2">Submit</button>
-
+                            <a href="{{ route('customer.index') }}" class="btn btn-primary me-2"> Cancel </a>
                         </form>
                     </div>
                 </div>

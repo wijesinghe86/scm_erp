@@ -10,46 +10,48 @@ use Illuminate\Http\Request;
 use App\Models\GoodsReceived;
 use App\Models\MrPurchaseItem;
 use App\Models\GoodsReceivedItem;
-
+use App\Models\Stock;
 
 class GoodsReceivedController extends Controller
 {
     public function index()
 
-    {   $goodsreceiveds = GoodsReceived::get();
+    {
+        $goodsreceiveds = GoodsReceived::get();
         return view('pages.GoodsReceived.index', compact('goodsreceiveds'));
     }
 
     public function getPoItems(Request $request)
     {
         $lists = MrPurchaseItem::with('item')
-                ->where('po_id', $request->po_id)
-                ->get();
-        return view('pages.GoodsReceived.po_table', compact('lists') );
+            ->where('po_id', $request->po_id)
+            ->get();
+        return view('pages.GoodsReceived.po_table', compact('lists'));
     }
 
     public function create()
-    {   $warehouses = Warehouse::get();
+    {
+        $warehouses = Warehouse::get();
         $suppliers = Supplier::get();
         $employees = Employee::get();
         $po_list = MrPurchase::with('get_supplier')->get();
 
         $last_grn =  GoodsReceived::latest()->first();
         $last_grn_number = 0;
-        if($last_grn != null){
-        $last_grn_number = $last_grn->id;
+        if ($last_grn != null) {
+            $last_grn_number = $last_grn->id;
         }
 
-        $next_number = "GRN".sprintf("%07d", $last_grn_number+1);
+        $next_number = "GRN" . sprintf("%07d", $last_grn_number + 1);
         return view('pages.GoodsReceived.create', compact('warehouses', 'suppliers', 'employees', 'po_list', 'next_number'));
     }
 
     public function store(Request $request)
     {
-        //dd($request->all());
+        // dd($request->all());
         $grn = new GoodsReceived;
         $grn->grn_no = $request->grn_number;
-        $grn->grn_date =$request->grn_date;
+        $grn->grn_date = $request->grn_date;
         $grn->type = $request->type_of_received;
         $grn->received_by = $request->received_by;
         $grn->received_date = $request->received_date;
@@ -67,21 +69,50 @@ class GoodsReceivedController extends Controller
         $grn->warehouse = $request->warehouse;
         $grn->save();
 
-        foreach($request->items as $item):
-            if(!isset($item['is_selected'])){
+        foreach ($request->items as $item) :
+            if (!isset($item['is_selected'])) {
                 continue;
             }
-        $grn_item = new GoodsReceivedItem();
-        $grn_item->grn_id = $grn->id;
-        $grn_item->stock_item_id = $item['item_id'];
-        $grn_item->rec_qty = $item['rec_qty'];
-        $grn_item->rec_weight = $item['rec_weight'];
-        $grn_item->batch_no = $item['batch_no'];
-        $grn_item->expiry_date = $item['expiry_date'];
-        $grn_item->save();
-    endforeach;
+            $grn_item = new GoodsReceivedItem();
+            $grn_item->grn_id = $grn->id;
+            $grn_item->stock_item_id = $item['item_id'];
+            $grn_item->rec_qty = $item['rec_qty'];
+            $grn_item->rec_weight = $item['rec_weight'];
+            $grn_item->batch_no = $item['batch_no'];
+            $grn_item->expiry_date = $item['expiry_date'];
+            $grn_item->save();
 
-    flash("GRN created successfully")->success();
-    return redirect()->route('goodsreceived.index');
+            $is_stock_existing = Stock::where('stock_item_id', $item['item_id'])->where('warehouse_id', $request->warehouse)->first();
+            if ($is_stock_existing) {
+                $is_stock_existing->qty = $is_stock_existing->qty + $item['rec_qty'];
+                $is_stock_existing->save();
+            }
+            if (!$is_stock_existing) {
+                $stock = new Stock;
+                $stock->stock_item_id = $item['item_id'];
+                $stock->warehouse_id = $request->warehouse;
+                $stock->qty = $item['rec_qty'];
+                // $stock->grn_id = $grn->id;
+                $stock->save();
+            }
+
+        endforeach;
+
+        flash("GRN created successfully")->success();
+        return redirect()->route('goodsreceived.index');
+    }
+
+    public function getGrnList(Request $request)
+    {
+        if (!$request->date && !$request->warehouse) {
+            return [];
+        }
+        $grn_data = GoodsReceived::when($request->date, function ($q) use ($request) {
+            return $q->whereDate('created_at', $request->date);
+        })
+            ->when($request->date, function ($q) use ($request) {
+                return $q->where('warehouse', $request->warehouse);
+            });;
+        return $grn_data;
     }
 }

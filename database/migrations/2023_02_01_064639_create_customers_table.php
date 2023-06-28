@@ -21,22 +21,22 @@ return new class extends Migration
             $table->string('customer_svat_number')->nullable();
             $table->string('customer_address_line1')->nullable();
             $table->string('customer_address_line2')->nullable();
-            $table->integer('customer_type_of_customer')->nullable();
+            $table->string('customer_type_of_customer')->nullable();
             $table->string('customer_mobile_number')->nullable();
             $table->string('customer_fixed_phone_number')->nullable();
             $table->string('customer_email')->nullable();
-            $table->integer('customer_payment_terms')->nullable;
+            $table->string('customer_payment_terms')->nullable();
             $table->decimal('customer_credit_limit', 15,2)->nullable();
-            $table->integer('customer_credit_period')->nullable();
+            $table->string('customer_credit_period')->nullable();
             $table->string('customer_contact_person_name')->nullable();
             $table->string('customer_contact_person_mobile_number')->nullable();
             $table->string('customer_contact_person_email')->nullable();
-            $table->integer('customer_status')->nullable();
+            $table->boolean('customer_status')->default(true);
             $table->string('br_image')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();
-            $table->SoftDeletes();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

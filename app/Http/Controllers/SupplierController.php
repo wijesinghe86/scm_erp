@@ -13,21 +13,28 @@ class SupplierController extends Controller
     {
         $last_su =  Supplier::latest()->first();
         $last_su_number = 0;
-        if($last_su != null){
-           $last_su_number = $last_su->id;
+        if ($last_su != null) {
+            $last_su_number = $last_su->id;
         }
-        $next_number = "SUP".sprintf("%05d", $last_su_number+1);
+        $next_number = "SUP" . sprintf("%05d", $last_su_number + 1);
         return view('pages.Supplier.new', compact('next_number'));
     }
 
-    public function all(){
+    public function all()
+    {
         $suppliers = Supplier::get();
         return view('pages.Supplier.all', compact('suppliers'));
-
     }
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'supplier_name' => 'required',
+            'supplier_registration_type' => 'required',
+            'supplier_type' => 'required'
+        ]);
+
+
         $request['created_by'] = Auth::id();
         Supplier::create($request->all());
 
@@ -46,7 +53,7 @@ class SupplierController extends Controller
         $suppliers = Supplier::find($supplier_id);
         $suppliers->update($request->all());
 
-        $request['updated_by']=Auth::id();
+        $request['updated_by'] = Auth::id();
         Supplier::find($supplier_id)->update($request->all());
 
         $response['alert-success'] = 'Supplier updated successfully';
@@ -117,5 +124,4 @@ class SupplierController extends Controller
         $suppliers = Supplier::find($request->supplier_id);
         return $suppliers;
     }
-
 }

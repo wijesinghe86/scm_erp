@@ -13,7 +13,6 @@ class RawMaterialsSerialCodeAssigningController extends ParentController
 {
     public function index()
     {
-
          return view('pages.RawMaterialsSerialCodeAssigning.index');
      }
 

@@ -18,7 +18,7 @@ return [
         ["id"=>"purchase","name"=>"Purchase"],
     ],
     'df_action' => [
-        ["id"=>"app","name"=>"Approved"],
-        ["id"=>"rej","name"=>"Rejected"],
+        ["id"=>"approved","name"=>"Approved"],
+        ["id"=>"rejected","name"=>"Rejected"],
      ],
 ];

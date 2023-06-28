@@ -15,19 +15,19 @@
             <i class="mdi mdi-home"></i>Home
           </a>
         </li>
-        <li class="nav-item d-none d-lg-block full-screen-link">
+        {{-- <li class="nav-item d-none d-lg-block full-screen-link">
           <a class="nav-link">
             <i class="mdi mdi-file-document"></i>Docs
           </a>
-        </li>
-        <li class="nav-item d-none d-lg-block full-screen-link">
+        </li> --}}
+        {{-- <li class="nav-item d-none d-lg-block full-screen-link">
           <a class="nav-link">
             <i class="mdi mdi-fullscreen"></i>Demo
           </a>
-        </li>
+        </li> --}}
         <li class="nav-item d-none d-lg-block full-screen-link">
           <a class="nav-link">
-            <i class="mdi mdi-calendar-clock"></i>Date
+            <i style="margin-right: 5px;" class="mdi mdi-calendar-clock"></i> {{date("Y-m-d")}}
           </a>
         </li>
         <li class="nav-item nav-profile dropdown">
