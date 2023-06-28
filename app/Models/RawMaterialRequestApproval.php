@@ -18,4 +18,10 @@ class RawMaterialRequestApproval extends Model
     {
         return $this->hasOne(RawMaterialRequestItem::class, 'id', 'rmr_item_id');
     }
+
+
+    public function approvedBy()
+    {
+        return $this->hasOne(User::class, 'id', 'approved_by');
+    }
 }

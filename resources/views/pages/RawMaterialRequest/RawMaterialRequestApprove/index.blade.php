@@ -39,7 +39,7 @@
                                             <td>{{ $rmr_approval->raw_material_request_item->req_weight }}</td>
                                             <td>{{ $rmr_approval->approved_qty }}</td>
                                             <td>{{ $rmr_approval->approved_weight }}</td>
-                                            <td>{{ $rmr_approval->raw_material_request->requestedBy->employee_fullname }}
+                                            <td>{{ $rmr_approval->approvedBy->name }}
                                             </td>
                                         </tr>
                                     @endforeach
