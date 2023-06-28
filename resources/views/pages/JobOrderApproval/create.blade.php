@@ -12,20 +12,17 @@
                             @csrf
                             <div class="row">
                                 <div class="form-group col-md-2">
-                                    <label>Production Planing No</label>
+                                    <label>Job Order No</label>
                                     <select class="form-control pps_select" name="pps_no" id="pps_no"
                                         placeholder="PPS No">
-                                        <option value="" selected disabled>Select PPS No</option>
+                                        <option value="" selected disabled>Select Jo No</option>
                                         @foreach ($job_orders as $row)
                                             <option value="{{ $row->id }}">{{ $row->job_order_no }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-
                             <div class="items_table"></div>
-
-
                             <button type="submit" class="btn btn-success me-2">Approved</button>
                             <a href="{{route('production_planning_and_schedule_approval.index')}}" class="btn btn-danger">Cancel</a>
                         </form>

@@ -453,12 +453,16 @@ Route::prefix('raw_material_request')->group(function () {
     Route::get('/', [App\Http\Controllers\RawMaterialRequestController::class, 'index'])->name('raw_material_request.index');
     Route::get('/create', [App\Http\Controllers\RawMaterialRequestController::class, 'create'])->name('raw_material_request.create');
     Route::post('/create', [App\Http\Controllers\RawMaterialRequestController::class, 'store'])->name('raw_material_request.store');
-
+    Route::post('/add-item', [App\Http\Controllers\RawMaterialRequestController::class, 'addItem'])->name('raw_material_request.addItem');
+    Route::post('/delete-item', [App\Http\Controllers\RawMaterialRequestController::class, 'deleteItem'])->name('raw_material_request.deleteItem');
+    Route::get('/view-table', [App\Http\Controllers\RawMaterialRequestController::class, 'viewCartTable'])->name('raw_material_request.viewCartTable');
 });
 Route::prefix('raw_material_request_approve')->group(function () {
     Route::get('/', [App\Http\Controllers\RawMaterialRequestApproveController::class, 'index'])->name('raw_material_request_approve.index');
     Route::get('/create', [App\Http\Controllers\RawMaterialRequestApproveController::class, 'create'])->name('raw_material_request_approve.create');
     Route::post('/create', [App\Http\Controllers\RawMaterialRequestApproveController::class, 'store'])->name('raw_material_request_approve.store');
+    Route::get('/view-table', [App\Http\Controllers\RawMaterialRequestApproveController::class, 'viewCartTable'])->name('raw_material_request_approve.viewCartTable');
+
 
 });
 
