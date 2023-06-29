@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
 use Illuminate\Http\Request;
- 
+use App\Models\FleetRegistration;
+
 
 class DispatchController extends Controller
 {
@@ -15,7 +17,9 @@ class DispatchController extends Controller
 
      public function create()
     {
-        return view('pages.Dispatch.create');
+        $employees = Employee::get();
+        $fleets = FleetRegistration::get();
+        return view('pages.Dispatch.create', compact('employees', 'fleets'));
     }
 
     public function store(Request $request){
