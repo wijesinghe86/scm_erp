@@ -15,6 +15,11 @@ class RawMaterialRequest extends Model
         return $this->hasOne(JobOrder::class, 'id', 'job_order_no');
     }
 
+    public function plant()
+    {
+        return $this->hasOne(PlantRegistration::class, 'plant_number', 'plant_id');
+    }
+
     public function items()
     {
         return $this->hasMany(RawMaterialRequestItem::class, 'rmr_no', 'id');

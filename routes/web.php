@@ -61,6 +61,7 @@ use App\Http\Controllers\RawMaterialIssueForProductionController;
 use App\Http\Controllers\SemiFinishedGoodsSerialCodeAssigningController;
 use App\Http\Controllers\OperationMachanismProductionAndTimeManagementController;
 use App\Http\Controllers\ProductionPlanningApprovalController;
+use App\Http\Controllers\RawMaterialReceivedController;
 
 /*
 |--------------------------------------------------------------------------
@@ -398,8 +399,6 @@ Route::prefix('deliveryorders')->group(function () {
     Route::post('/{delivery_order}/issue_delivery_order', [DeliveryOrderController::class, 'issueStore'])->name('deliveryorders.issueStore');
     Route::get('/{delivery_order}/get', [DeliveryOrderController::class, 'getById'])->name('deliveryorders.getById');
     Route::get('/{delivery_order_id}/print', [DeliveryOrderController::class, 'print'])->name('deliveryorders.print');
-
-
 });
 
 Route::prefix('returns')->group(function () {
@@ -410,7 +409,6 @@ Route::prefix('returns')->group(function () {
 
     Route::get('/approval', [ReturnController::class, 'approvalIndex'])->name('returns.approvalIndex');
     Route::post('{invoice_return}/approval', [ReturnController::class, 'approval'])->name('returns.approval');
-
 });
 
 // Inventory Control
@@ -462,8 +460,6 @@ Route::prefix('raw_material_request_approve')->group(function () {
     Route::get('/create', [App\Http\Controllers\RawMaterialRequestApproveController::class, 'create'])->name('raw_material_request_approve.create');
     Route::post('/create', [App\Http\Controllers\RawMaterialRequestApproveController::class, 'store'])->name('raw_material_request_approve.store');
     Route::get('/view-table', [App\Http\Controllers\RawMaterialRequestApproveController::class, 'viewCartTable'])->name('raw_material_request_approve.viewCartTable');
-
-
 });
 
 Route::prefix('purchase_order')->group(function () {
@@ -520,7 +516,6 @@ Route::prefix('ProductionPlanningAndSchedule')->group(function () {
     Route::get('approvals', [ProductionPlanningAndScheduleController::class, 'indexApproval'])->name('productionplanningandschedule.indexApproval');
     Route::get('approvals/create', [ProductionPlanningAndScheduleController::class, 'storeApprovalIndex'])->name('productionplanningandschedule.storeApprovalIndex');
     Route::post('approvals/create', [ProductionPlanningAndScheduleController::class, 'storeApproval'])->name('productionplanningandschedule.storeApproval');
-
 });
 
 Route::prefix('production-planning-and-schedule-approval')->group(function () {
@@ -541,6 +536,17 @@ Route::prefix('RawMaterialIssueForProduction')->group(function () {
     Route::get('RawMaterialIssueForProduction', [RawMaterialIssueForProductionController::class, 'index'])->name('rawmaterialissueforproduction.index');
     Route::get('/create', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'create'])->name('rawmaterialissueforproduction.create');
     Route::post('/create', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'store'])->name('rawmaterialissueforproduction.store');
+    Route::get('/get-semi-product-serials', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'getSemiProductSerials'])->name('rawmaterialissueforproduction.getSemiProductSerials');
+    Route::post('/add-item', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'addItem'])->name('rawmaterialissueforproduction.addItem');
+    Route::post('/delete-item', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'deleteItem'])->name('rawmaterialissueforproduction.deleteItem');
+    Route::get('/view-table', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'viewCartTable'])->name('rawmaterialissueforproduction.viewCartTable');
+});
+
+Route::prefix('RawMaterialReceivedForProduction')->group(function () {
+    Route::get('RawMaterialReceivedForProduction', [RawMaterialReceivedController::class, 'index'])->name('rawmaterial_received_for_production.index');
+    Route::get('/create', [RawMaterialReceivedController::class, 'create'])->name('rawmaterial_received_for_production.create');
+    Route::post('/create', [RawMaterialReceivedController::class, 'store'])->name('rawmaterial_received_for_production.store');
+    Route::get('/get-item-list', [RawMaterialReceivedController::class, 'getItemList'])->name('rawmaterial_received_for_production.getItemList');
 });
 
 Route::prefix('SemiProduction')->group(function () {

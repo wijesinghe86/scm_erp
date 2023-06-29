@@ -211,6 +211,12 @@
                         Assigning</a></li>
                 <li class="nav-item"> <a class="nav-link"
                         href="{{ route('rawmaterialissueforproduction.index') }}">Raw Material Issue For
+                        <br>
+                        Production</a>
+                </li>
+                <li class="nav-item"> <a class="nav-link"
+                        href="{{ route('rawmaterial_received_for_production.index') }}">Raw Material Received For
+                        <br>
                         Production</a>
                 </li>
                 <li class="nav-item"> <a class="nav-link" href="{{ route('semiproduction.index') }}">Semi
@@ -491,8 +497,7 @@
                     </a></li>
                 {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('rawmaterialissueforproduction.index') }}">Raw Material Issue For Production</a>
     </li> --}}
-                <li class="nav-item"> <a class="nav-link"
-                        href="{{ route('semiproduction.index') }}">Department-wise
+                <li class="nav-item"> <a class="nav-link" href="{{ route('semiproduction.index') }}">Department-wise
                         Demand<br>Forecasted Stock
                         Items
                     </a></li>

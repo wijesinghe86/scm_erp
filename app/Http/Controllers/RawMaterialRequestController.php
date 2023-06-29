@@ -33,7 +33,13 @@ class RawMaterialRequestController extends Controller
         session(['rmr.items' => []]);
         $employees = Employee::get();
         $next_number = $this->generateNextNumber();
-        $job_orders = JobOrder::with(['plant', 'items.stock_item'])->get();
+        $job_orders =  JobOrder::with(['plant','items.stock_item','items' => function ($item) {
+            return $item->where('approval_status', 'approved');
+        }])
+            ->whereHas('items', function ($q) {
+                return $q->where('approval_status', 'approved');
+            })
+            ->get();
         $stock_items = StockItem::with('stocks')->get();
         return view('pages.RawMaterialRequest.create', compact('employees', 'next_number', 'job_orders', 'stock_items'));
     }
