@@ -14,67 +14,15 @@
                         <table class="table table-bordered" id="tbl_dispatch">
                             <thead>
                                 <tr>
-                                    <td>No</td>
                                     <td>Dispatch Number</td>
                                     <td>Dispatched Date</td>
-                                    <td>Batch Number</td>
+                                    <td>FGRN No</td>
                                     <td>From Location</td>
                                     <td>To Location</td>
-                                    {{-- <td>Stock Number</td>
-                                    <td>Finished Goods Number</td>
-                                    <td>Finish Goods Serial Range</td>
-                                    <td>Each Quantity</td>
-                                    <td>Each Weight</td>
-                                    <td>Total Quantity</td>
-                                    <td>Total Weight</td>
-                                    <td>Remarks</td>
                                     <td>Dispatched By</td>
-                                    <td>Dispatched Date</td>
-                                    <td>Inspected By</td>
-                                    <td>Inspected Date</td>
-                                    <td>Approved By</td>
-                                    <td>Approved Date</td> --}}
                                     <td>Action</td>
                                 </tr>
                             </thead>
-                            {{-- <tbody>
-                                @foreach ($dispatchs as $dispatch)
-                                <tr>
-                                    <td>{{$loop->iteration}}</td>
-                                    <td>{{ $dispatch->dispatch_number}}</td>
-                                    <td>{{ $dispatch->dispatched_date}}</td>
-                                    <td>{{ $dispatch->batch_number}}</td>
-                                    <td>{{ $dispatch->from_location}}</td>
-                                    <td>{{ $dispatch->to_location}}</td>
-                                    <td>{{ $dispatch->stock_number}}</td>
-                                    <td>{{ $dispatch->finished_goods_number}}</td>
-                                    <td>{{ $dispatch->finish_goods_serial_range}}</td>
-                                    <td>{{ $dispatch->each_quantity}}</td>
-                                    <td>{{ $dispatch->each_weight}}</td>
-                                    <td>{{ $dispatch->total_quantity}}</td>
-                                    <td>{{ $dispatch->total_weight}}</td>
-                                    <td>{{ $dispatch->remarks}}</td>
-                                    <td>{{ $dispatch->dispatched_by}}</td>
-                                    <td>{{ $dispatch->dispatched_date}}</td>
-                                    <td>{{ $dispatch->inspected_by}}</td>
-                                    <td>{{ $dispatch->inspected_date}}</td>
-                                    <td>{{ $dispatch->approved_by}}</td>
-                                    <td>{{ $dispatch->approved_date}}</td>
-
-
-                                    <td>
-                                        <a href="{{ route('dispatch.edit', $dispatch->id) }}">
-                                            <i class="mdi mdi-pencil text-dark"></i></a>
-
-                                        <a href="{{ route('dispatch.delete', $dispatch->id) }}">
-                                            <i class="mdi mdi-delete text-danger"></i></a>
-
-                                        <a href="{{ route('dispatch.view', $dispatch->id) }}">
-                                            <i class="mdi mdi-eye text-dark"></i></a>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody> --}}
 
                         </table>
                 </div>
