@@ -11,6 +11,7 @@ use App\Models\PlantRegistration;
 use App\Models\ProductionPlanning;
 use Illuminate\Support\Facades\DB;
 use App\Models\ProductionPlaningItem;
+use Illuminate\Validation\ValidationException;
 
 
 class JobOrderCreationController extends Controller
@@ -60,6 +61,11 @@ class JobOrderCreationController extends Controller
             'items'=>'required|array',
             'items.*.jo_qty'=>'required_if:items.*.is_selected,on',
         ]);
+
+        if (count($request->items) == 0) {
+            throw ValidationException::withMessages(['items' => 'please add raw material item']);
+        }
+
         try {
             DB::beginTransaction();
 

@@ -103,11 +103,11 @@
                             <div class="row">
                                 <div class="form-group col-md-4">
                                     <label>Qty</label>
-                                    <input type="number" class="form-control" id="issue_qty" placeholder="">
+                                    <input type="number" class="form-control" readonly id="issue_qty" placeholder="">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Weight</label>
-                                    <input type="number" class="form-control" id="issue_weight" placeholder="">
+                                    <input type="number" class="form-control" readonly id="issue_weight" placeholder="">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Remark</label>
@@ -198,6 +198,8 @@
                 const semiProductItem = selectedSemiProductItems.find(row => row?.id == semiProductItemId)
                 $('#semi_product_item_qty').val(semiProductItem?.semi_pro_qty);
                 $('#semi_product_item_weight').val(semiProductItem?.semi_pro_weight);
+                $('#issue_qty').val(semiProductItem?.semi_pro_qty);
+                $('#issue_weight').val(semiProductItem?.semi_pro_weight);
             })
 
             function onAddItemClick() {
@@ -212,7 +214,10 @@
                 let issue_weight = $('#issue_weight').val();
                 let issue_remark = $('#issue_remark').val();
 
+                const semiProductItem = selectedSemiProductItems.find(row => row?.id == semi_product_item_id)
+
                 let data = {
+                    semi_pro_serial_no: semiProductItem?.semi_pro_serial_no,
                     req_item_stock_number,
                     req_item_id,
                     req_item_qty,

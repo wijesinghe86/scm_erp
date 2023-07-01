@@ -64,7 +64,7 @@
                             <br>
 
                             <button type="submit" class="btn btn-success me-2">Submit</button>
-                            <button class="btn btn-danger">Cancel</button>
+                            <a href="{{route('rawmaterial_received_for_production.index')}}" class="btn btn-danger">Cancel</a>
                         </form>
                     </div>
                 </div>
@@ -84,6 +84,7 @@
 
             $('#rmi_no').on('change', function() {
                 let rmi_no = $(this).val();
+                console.log(rmiData);
                 const rmiItem = rmiData?.find(row => row?.rmi_no == rmi_no);
                 $('#issued_by').val(rmiItem?.created_by?.name);
                 $('#issued_warehouse').val(rmiItem?.warehouse?.warehouse_name);

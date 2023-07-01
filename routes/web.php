@@ -49,6 +49,7 @@ use App\Http\Controllers\PlantTimeManagementController;
 use App\Http\Controllers\StockLocationChangeController;
 use App\Http\Controllers\WarehouseAreaDesignController;
 use App\Http\Controllers\EquipmentRegistrationController;
+use App\Http\Controllers\FinishedGoodsApprovalController;
 use App\Http\Controllers\JobOrderApprovalController;
 use App\Http\Controllers\ManAndEquipmentSafetyController;
 use App\Http\Controllers\MiscellaneousReceivedController;
@@ -473,6 +474,23 @@ Route::prefix('FinishedGoods')->group(function () {
     Route::get('FinishedGoods', [App\Http\Controllers\FinishedGoodsController::class, 'index'])->name('finishedgoods.index');
     Route::get('/create', [FinishedGoodsController::class, 'create'])->name('finishedgoods.create');
     Route::post('/create', [App\Http\Controllers\FinishedGoodsController::class, 'store'])->name('finishedgoods.store');
+
+    Route::get('/get-rmi-items', [App\Http\Controllers\FinishedGoodsController::class, 'getRmiItems'])->name('finishedgoods.getRmiItems');
+    Route::post('/add-to-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'addToFinishGoodTable'])->name('finishedgoods.addToFinishGoodTable');
+    Route::post('/remove-from-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'removeFromFinishGoodTable'])->name('finishedgoods.removeFromFinishGoodTable');
+    Route::get('/get-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'getFinishGoodTable'])->name('finishedgoods.getFinishGoodTable');
+
+    Route::post('/add-to-wastage-table', [App\Http\Controllers\FinishedGoodsController::class, 'addToWastageTable'])->name('finishedgoods.addToWastageTable');
+    Route::post('/remove-from-wastage-table', [App\Http\Controllers\FinishedGoodsController::class, 'removeFromWastageTable'])->name('finishedgoods.removeFromWastageTable');
+    Route::get('/get-wastage-table', [App\Http\Controllers\FinishedGoodsController::class, 'getWastageTable'])->name('finishedgoods.getWastageTable');
+
+    Route::get('/get-total-calculations', [App\Http\Controllers\FinishedGoodsController::class, 'getTotalCalculations'])->name('finishedgoods.getTotalCalculations');
+});
+
+Route::prefix('FinishedGoodsApproval')->group(function () {
+    Route::get('FinishedGoodsApproval', [FinishedGoodsApprovalController::class, 'index'])->name('finished_goods_approval.index');
+    Route::get('/inspect/{finished_good}', [FinishedGoodsApprovalController::class, 'create'])->name('finished_goods_approval.create');
+    Route::post('/inspect/{finished_good}', [FinishedGoodsApprovalController::class, 'store'])->name('finished_goods_approval.store');
 });
 
 Route::prefix('Disposal')->group(function () {
@@ -584,6 +602,8 @@ Route::prefix('Dispatch')->group(function () {
     Route::get('Dispatch', [DispatchController::class, 'index'])->name('dispatch.index');
     Route::get('/create', [App\Http\Controllers\DispatchController::class, 'create'])->name('dispatch.create');
     Route::post('/create', [App\Http\Controllers\DispatchController::class, 'store'])->name('dispatch.store');
+
+    Route::get('/get-fgrn-items', [App\Http\Controllers\DispatchController::class, 'getFgrnItems'])->name('dispatch.getFgrnItems');
 });
 Route::prefix('FinishedGoodsSerialCodeAssigning')->group(function () {
     Route::get('FinishedGoodsSerialCodeAssigning', [App\Http\Controllers\FinishedGoodsSerialCodeAssigningController::class, 'index'])->name('finishedgoodsserialcodeassigning.index');

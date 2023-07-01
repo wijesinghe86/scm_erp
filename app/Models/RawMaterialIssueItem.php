@@ -24,4 +24,9 @@ class RawMaterialIssueItem extends Model
     {
         return $this->hasOne(RawMaterialRequestItem::class, 'id', 'issued_item_no');
     }
+
+    public function received()
+    {
+        return $this->hasOne(RawMaterialReceivedItem::class, 'serial_no', 'semi_product_serial_no');
+    }
 }

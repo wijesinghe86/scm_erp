@@ -32,7 +32,7 @@ class RawMaterialIssueForProductionController extends Controller
 
     public function create()
     {
-        // session(['rmi.items' => []]);
+        session(['rmi.items' => []]);
         $job_orders =  JobOrder::with(['items' => function ($item) {
             return $item->where('approval_status', 'approved');
         }])
@@ -40,8 +40,9 @@ class RawMaterialIssueForProductionController extends Controller
                 return $q->where('approval_status', 'approved');
             })
             ->get();
-        $rmr_list = RawMaterialRequest::with(['requestedBy', 'plant', 'job_order', 'items.stock_item', 'items.approval'])
+        $rmr_list = RawMaterialRequest::with(['items.issued', 'requestedBy', 'plant', 'job_order', 'items.stock_item', 'items.approval'])
             ->whereHas('items.approval')
+            ->whereDoesntHave('items.issued')
             ->get();
         $warehouses = Warehouse::get();
         $next_number = $this->generateNextNumber();
@@ -123,6 +124,7 @@ class RawMaterialIssueForProductionController extends Controller
 
     public function addItem(Request $request)
     {
+
         $this->validate($request, [
             'req_item_id' => 'required',
             'semi_product_item_id' => 'required',
@@ -136,10 +138,14 @@ class RawMaterialIssueForProductionController extends Controller
         ]);
 
         $items = session('rmi.items') ?? [];
-
+        $result = collect($items)->where('semi_pro_serial_no', $request->semi_pro_serial_no)->first();
+        if ($result != null) {
+            throw ValidationException::withMessages(['items' => "The items already exist"]);
+        }
         $semiProduct = SemiProductionItem::find($request->semi_product_item_id);
 
         $items[] = [
+            'semi_pro_serial_no' => $request->semi_pro_serial_no,
             'semi_product_item_id' => $request->semi_product_item_id,
             'req_item_stock_number' => $request->req_item_stock_number,
             'req_item_qty' => $request->req_item_qty,
