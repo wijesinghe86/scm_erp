@@ -9,6 +9,11 @@ class Dispatch extends Model
 {
     use HasFactory;
 
+    public function items()
+    {
+        return $this->hasMany(DispatchItem::class, 'dispatch_no', 'dispatch_no');
+    }
+
     public function finished_good()
     {
         return $this->hasOne(FinishGood::class, 'id', 'fgrn_no');

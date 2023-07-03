@@ -235,6 +235,8 @@
                 <li class="nav-item"> <a class="nav-link" href="{{ route('joborderapproval.index') }}">Job Order
                         Approval</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ route('dispatch.index') }}">Dispatch</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('dispatch_approval.index') }}">Dispatch
+                        Approval</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ route('productioncost.index') }}">Production
                         Cost</a></li>
                 <li class="nav-item"> <a class="nav-link"
@@ -271,8 +273,8 @@
                 </li>
                 <li class="nav-item"> <a class="nav-link" href="{{ route('stockadjustment.index') }}">Stock
                         Adjustment </a></li>
-                {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('stocklocationchange.index') }}">Stock
-                            Location Change</a></li> --}}
+                <li class="nav-item"> <a class="nav-link" href="{{ route('stocklocationchange.index') }}">Stock
+                        Location Change</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ route('finishedgoods.index') }}">Finished
                         Goods</a></li>
                 <li class="nav-item"> <a class="nav-link"
@@ -500,7 +502,8 @@
                     </a></li>
                 {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('rawmaterialissueforproduction.index') }}">Raw Material Issue For Production</a>
     </li> --}}
-                <li class="nav-item"> <a class="nav-link" href="{{ route('semiproduction.index') }}">Department-wise
+                <li class="nav-item"> <a class="nav-link"
+                        href="{{ route('semiproduction.index') }}">Department-wise
                         Demand<br>Forecasted Stock
                         Items
                     </a></li>
