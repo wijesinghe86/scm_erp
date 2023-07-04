@@ -204,6 +204,7 @@
             const filterItem = rawMaterialCodes.find(row => row?.id == serial_number_id);
             $('#grn_no').val(filterItem?.grn.grn_no)
             $('#qty').val(filterItem?.qty)
+            $('#actual_weight').val("")
             getNextSerialNumber(filterItem?.serial_no)
         })
 
@@ -232,10 +233,11 @@
 
 
         function onAddItemClick() {
-
+            let serial_number_picker = $('#serial_number_picker').val();
+            const filterItem = rawMaterialCodes.find(row => row?.id == serial_number_picker);
             let actual_weight = $('#actual_weight').val();
 
-
+            
             let stock_no = $('#stock_no').val();
             let stock_item_id = $('#stock_item_id').val();
             let serial = $('#serial_number_picker').val();
@@ -246,6 +248,7 @@
             let semi_serial_no = $('#semi_serial_no').val();
 
             let data = {
+                serial_number_picker:filterItem?.serial_no ,
                 actual_weight,
                 stock_no,
                 stock_item_id,

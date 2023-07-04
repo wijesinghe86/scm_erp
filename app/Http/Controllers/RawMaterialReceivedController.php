@@ -32,7 +32,8 @@ class RawMaterialReceivedController extends Controller
     public function create()
     {
         $next_number = $this->generateNextNumber();
-        $rmi_data = RawMaterialIssue::with(['warehouse', 'createdBy'])->get();
+        $rmi_data  = RawMaterialIssue::with(['warehouse', 'createdBy', 'items.received'])
+            ->get();
         $employees = Employee::get();
         $warehouses = Warehouse::get();
         return view('pages.RawMaterialReceivedForProduction.create', compact('next_number', 'rmi_data', 'employees', 'warehouses'));
@@ -40,6 +41,12 @@ class RawMaterialReceivedController extends Controller
 
     public function store(Request $request)
     {
+        $filter_is_selected = collect($request->items)->filter(function ($row) {
+            return isset($row['is_selected']);
+        });
+        if (count($filter_is_selected) == 0) {
+            throw ValidationException::withMessages(['items' => "At least one item need to be checked"]);
+        }
         try {
             DB::beginTransaction();
 
@@ -50,13 +57,6 @@ class RawMaterialReceivedController extends Controller
             $rma->received_by = $request->received_by;
             $rma->received_date_time = $request->received_date_time;
             $rma->save();
-
-            $filter_is_selected = collect($request->items)->filter(function ($row) {
-                return isset($row['is_selected']);
-            });
-            if (count($filter_is_selected) == 0) {
-                throw ValidationException::withMessages(['items' => "At least one item need to be checked"]);
-            }
 
             foreach ($request->items as $key => $row) {
                 if (!isset($row['is_selected'])) {
@@ -92,7 +92,10 @@ class RawMaterialReceivedController extends Controller
 
     public function getItemList(Request $request)
     {
-        $items = RawMaterialIssueItem::with(['semi_product_item.semi_product_stock_item'])->where('rmi_no', $request->rmi_no)->get();
+        $items = RawMaterialIssueItem::with(['received', 'semi_product_item.semi_product_stock_item'])
+            ->where('rmi_no', $request->rmi_no)
+            ->whereDoesntHave('received')
+            ->get();
         return view('pages.RawMaterialReceivedForProduction.item_list', compact('items'));
     }
 }

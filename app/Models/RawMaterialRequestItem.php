@@ -24,4 +24,9 @@ class RawMaterialRequestItem extends Model
     {
         return $this->hasOne(RawMaterialRequestApproval::class,'rmr_item_id','id');
     }
+
+    public function issued()
+    {
+        return $this->hasOne(RawMaterialIssueItem::class,'issued_item_no','id');
+    }
 }

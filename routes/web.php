@@ -23,6 +23,7 @@ use App\Http\Controllers\DfApprovalController;
 use App\Http\Controllers\StorageAreaController;
 use App\Http\Controllers\TaxCreationController;
 use App\Http\Controllers\DeliveryOrderController;
+use App\Http\Controllers\DispatchApprovalController;
 use App\Http\Controllers\FinishedGoodsController;
 use App\Http\Controllers\GoodsReceivedController;
 use App\Http\Controllers\PurchaseOrderController;
@@ -49,6 +50,7 @@ use App\Http\Controllers\PlantTimeManagementController;
 use App\Http\Controllers\StockLocationChangeController;
 use App\Http\Controllers\WarehouseAreaDesignController;
 use App\Http\Controllers\EquipmentRegistrationController;
+use App\Http\Controllers\FinishedGoodsApprovalController;
 use App\Http\Controllers\JobOrderApprovalController;
 use App\Http\Controllers\ManAndEquipmentSafetyController;
 use App\Http\Controllers\MiscellaneousReceivedController;
@@ -163,7 +165,7 @@ Route::prefix('warehouse')->group(function () {
 Route::prefix('StockAdjustment')->group(function () {
     Route::get('/', [StockAdjustmentController::class, 'index'])->name('stockadjustment.index');
     Route::get('/create', [StockAdjustmentController::class, 'create'])->name('stockadjustment.create');
-    Route::post('/create', [App\Http\Controllers\StockAdjustmentController::class, 'store'])->name('stockadjustment.store');
+    Route::post('/create', [StockAdjustmentController::class, 'store'])->name('stockadjustment.store');
     Route::post('/item/store', [StockAdjustmentController::class, 'storeItem'])->name('stockadjustment.item.store');
     Route::get('/get/items/table', [StockAdjustmentController::class, 'itemsTable'])->name('stockadjustment.item.table');
 });
@@ -434,10 +436,11 @@ Route::prefix('miscissued')->group(function () {
 /* .....CREATING ROUTE FOR Stock Location Change ....... */
 Route::prefix('StockLocationChange')->group(function () {
     Route::get('/', [StockLocationChangeController::class, 'index'])->name('stocklocationchange.index');
-    Route::get('/create', [App\Http\Controllers\StockLocationChangeController::class, 'create'])->name('stocklocationchange.create');
-    Route::post('/create', [App\Http\Controllers\StockLocationChangeController::class, 'store'])->name('stocklocationchange.store');
-    Route::post('/item/store', [StockLocationChangeController::class, 'storeItem'])->name('stocklocationchange.item.store');
-    Route::get('/get/items/table', [StockLocationChangeController::class, 'itemsTable'])->name('stocklocationchange.item.table');
+    Route::get('/create', [StockLocationChangeController::class, 'create'])->name('stocklocationchange.create');
+    Route::post('/create', [StockLocationChangeController::class, 'store'])->name('stocklocationchange.store');
+    Route::post('/add-to-table', [StockLocationChangeController::class, 'addItemToTable'])->name('stocklocationchange.addItemToTable');
+    Route::post('/remove-from-table', [StockLocationChangeController::class, 'removeItemFromTable'])->name('stocklocationchange.removeItemFromTable');
+    Route::get('/view-table', [StockLocationChangeController::class, 'getItemTable'])->name('stocklocationchange.getItemTable');
 });
 
 Route::prefix('material_request')->group(function () {
@@ -473,6 +476,23 @@ Route::prefix('FinishedGoods')->group(function () {
     Route::get('FinishedGoods', [App\Http\Controllers\FinishedGoodsController::class, 'index'])->name('finishedgoods.index');
     Route::get('/create', [FinishedGoodsController::class, 'create'])->name('finishedgoods.create');
     Route::post('/create', [App\Http\Controllers\FinishedGoodsController::class, 'store'])->name('finishedgoods.store');
+
+    Route::get('/get-rmi-items', [App\Http\Controllers\FinishedGoodsController::class, 'getRmiItems'])->name('finishedgoods.getRmiItems');
+    Route::post('/add-to-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'addToFinishGoodTable'])->name('finishedgoods.addToFinishGoodTable');
+    Route::post('/remove-from-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'removeFromFinishGoodTable'])->name('finishedgoods.removeFromFinishGoodTable');
+    Route::get('/get-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'getFinishGoodTable'])->name('finishedgoods.getFinishGoodTable');
+
+    Route::post('/add-to-wastage-table', [App\Http\Controllers\FinishedGoodsController::class, 'addToWastageTable'])->name('finishedgoods.addToWastageTable');
+    Route::post('/remove-from-wastage-table', [App\Http\Controllers\FinishedGoodsController::class, 'removeFromWastageTable'])->name('finishedgoods.removeFromWastageTable');
+    Route::get('/get-wastage-table', [App\Http\Controllers\FinishedGoodsController::class, 'getWastageTable'])->name('finishedgoods.getWastageTable');
+
+    Route::get('/get-total-calculations', [App\Http\Controllers\FinishedGoodsController::class, 'getTotalCalculations'])->name('finishedgoods.getTotalCalculations');
+});
+
+Route::prefix('FinishedGoodsApproval')->group(function () {
+    Route::get('FinishedGoodsApproval', [FinishedGoodsApprovalController::class, 'index'])->name('finished_goods_approval.index');
+    Route::get('/inspect/{finished_good}', [FinishedGoodsApprovalController::class, 'create'])->name('finished_goods_approval.create');
+    Route::post('/inspect/{finished_good}', [FinishedGoodsApprovalController::class, 'store'])->name('finished_goods_approval.store');
 });
 
 Route::prefix('Disposal')->group(function () {
@@ -584,7 +604,16 @@ Route::prefix('Dispatch')->group(function () {
     Route::get('Dispatch', [DispatchController::class, 'index'])->name('dispatch.index');
     Route::get('/create', [App\Http\Controllers\DispatchController::class, 'create'])->name('dispatch.create');
     Route::post('/create', [App\Http\Controllers\DispatchController::class, 'store'])->name('dispatch.store');
+
+    Route::get('/get-fgrn-items', [App\Http\Controllers\DispatchController::class, 'getFgrnItems'])->name('dispatch.getFgrnItems');
 });
+
+Route::prefix('Dispatch-approval')->group(function () {
+    Route::get('/', [DispatchApprovalController::class, 'index'])->name('dispatch_approval.index');
+    Route::get('/create/{dispatch_item}', [DispatchApprovalController::class, 'create'])->name('dispatch_approval.create');
+    Route::post('/create', [DispatchApprovalController::class, 'store'])->name('dispatch_approval.store');
+});
+
 Route::prefix('FinishedGoodsSerialCodeAssigning')->group(function () {
     Route::get('FinishedGoodsSerialCodeAssigning', [App\Http\Controllers\FinishedGoodsSerialCodeAssigningController::class, 'index'])->name('finishedgoodsserialcodeassigning.index');
     Route::get('/create', [App\Http\Controllers\FinishedGoodsSerialCodeAssigningController::class, 'create'])->name('finishedgoodsserialcodeassigning.create');

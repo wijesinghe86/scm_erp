@@ -147,7 +147,7 @@ class SemiProductionController extends Controller
 
         $items = session('semi.items') ?? [];
 
-        if (collect($items)->sum('semi_qty') + $request->semi_qty > $request->actual_weight) {
+        if (collect($items)->where('serial_number_picker', $request->serial_number_picker)->sum('semi_qty') + $request->semi_qty > $request->actual_weight) {
             throw ValidationException::withMessages(['actual_weight' => 'The semi product weight exceeding actual weight']);
         }
 
@@ -155,6 +155,7 @@ class SemiProductionController extends Controller
         $stock_item_semi = StockItem::find($request->semi_stock_item_id);
 
         $items[] = [
+            'serial_number_picker'=> $request->serial_number_picker,
             'stock_no' => $request->stock_no,
             'stock_item_id' => $request->stock_item_id,
             'raw_description' => $stock_item->description,
@@ -198,7 +199,10 @@ class SemiProductionController extends Controller
     public function getNextSemiProductSerialNumber(Request $request)
     {
         $items =  session('semi.items') ?? [];
-        $letter = assignLetterToNumber((int) count($items) + 1);
+        $result = collect($items)->filter(function($item) use($request) {
+            return $item['serial_number_picker'] == $request->serial_no;
+        });
+        $letter = assignLetterToNumber((int) count($result) + 1);
         $next_smp_sno = $request->serial_no . "_" . $letter;
         return $next_smp_sno;
     }

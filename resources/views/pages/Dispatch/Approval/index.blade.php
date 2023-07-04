@@ -1,16 +1,12 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="content-wrapper">
         <div class="row">
-            <div class="col-lg-12 grid-margin stretch-card">
+            <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4><a href="{{ route('dashboard') }}"><i class="mdi mdi-home"></i></a>Dispatch List</h2>
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <a href="{{ route('dispatch.create') }}" class="btn btn-success float-end mb-2"> Add New </a>
-                                {{-- <a href="{{ route('dispatch.deleted') }}" class="btn btn-success float-end mb-2"> Deleted </a> --}}
-                            </div>
+                        <h4><a href="{{ route('dashboard') }}"><i class="mdi mdi-home"></i></a>Dispatch Approval List</h2>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end"></div>
                             <table class="table table-bordered" id="tbl_dispatch">
                                 <thead>
                                     <tr>
@@ -22,10 +18,11 @@
                                         <td>Driver Name</td>
                                         <td>Dispatched By</td>
                                         <td>Inspected By</td>
+                                        <td></td>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($dispatches as $dispatch)
+                                    @foreach ($dispatch_list as $dispatch)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $dispatch->dispatch_no }}</td>
@@ -35,6 +32,12 @@
                                             <td>{{ $dispatch->driver_name }}</td>
                                             <td>{{ $dispatch->dispatchedBy->employee_fullname }}</td>
                                             <td>{{ $dispatch->inspectedBy->employee_fullname }}</td>
+                                            {{-- @if (count($dispatch->items) > 0) --}}
+                                                <td>
+                                                    <a href="{{ route('dispatch_approval.create', $dispatch->id) }}"
+                                                        class="btn btn-primary">View</a>
+                                                </td>
+                                            {{-- @endif --}}
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -46,11 +49,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        $(document).ready(function() {
-            $('#tbl_dispatch').DataTable();
-        });
-    </script>
-@endpush

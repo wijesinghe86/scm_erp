@@ -29,4 +29,5 @@ class RawMaterialRequest extends Model
     {
         return $this->hasOne(Employee::class,'id','requested_by');
     }
+    
 }
