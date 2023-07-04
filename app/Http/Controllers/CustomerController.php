@@ -41,6 +41,7 @@ class CustomerController extends ParentController
             'customer_name' => 'required',
             'customer_type_of_customer' => 'required',
             'customer_status' => 'required'
+       
         ]);
 
         $request['created_by'] = Auth::id();

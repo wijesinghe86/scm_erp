@@ -10,7 +10,7 @@
                                 <div class="row">
                                     <div class="form-group col-md-4">
                                         <label>Stock Number</label>
-                                        <input type="text" class="form-control" name="stock_number"
+                                        <input type="text" class="form-control" name="stock_number" required
                                             placeholder="Stock Number">
                                     </div>
                                 </div>
@@ -20,7 +20,7 @@
                                 <div class="row">
                                     <div class="form-group col-md-12">
                                         <label>Description</label>
-                                        <input type="text" class="form-control" name="description" placeholder="Description">
+                                        <input type="text" class="form-control" name="description" placeholder="Description" required>
                                     </div>
                                 </div>
 
