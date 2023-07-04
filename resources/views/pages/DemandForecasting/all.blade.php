@@ -11,14 +11,15 @@
                         <a href="{{ route('demand-forecasting.create') }}" class="btn btn-success float-end mb-2"> Add New </a>
                         {{-- <a href="{{ route('department.deleted') }}" class="btn btn-success float-end mb-2"> Deleted </a> --}}
                     </div>
-                        <table class="table table-bordered" id="tbl_demandforecasting">
+                    <div class="table-responsive">
+                     <table class="table table-bordered" id="tbl_demandforecasting">
                             <thead>
                                 <tr>
                                     <td>No</td>
                                     <td>DF No</td>
                                     <td>DF Date</td>
                                     <td>Created By</td>
-                                   
+
                                 </tr>
                             </thead>
                             <tbody>

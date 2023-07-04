@@ -15,7 +15,7 @@
                                     <input type="date" class="form-control" name="mrf_date" value="{{ old('mrf_date') }}"
                                         placeholder="MRF date">
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-3">
                                     <label>MRF No</label>
                                     <input type="text" class="form-control" name="mrf_no" placeholder="MRF No"
                                         value="{{ $next_number }}">
@@ -32,7 +32,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-3">
                                     <label>Required Date</label>
                                     <input type="date" class="form-control" name="required_date"
                                         value="{{ old('required_date') }}" id="required_date">

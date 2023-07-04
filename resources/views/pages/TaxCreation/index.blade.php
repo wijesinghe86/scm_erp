@@ -17,7 +17,7 @@
                                     <td>No</td>
                                     <td>Tax Code</td>
                                     <td>Tax Name</td>
-                                    <td>Tax Description</td>
+                                    <td>Tax Rate</td>
                                     {{-- <td>Start Date</td>
                                     <td>Expire Date</td> --}}
                                     <td>Created By</td>
@@ -31,7 +31,7 @@
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{ $taxcreation->tax_code}}</td>
                                     <td>{{ $taxcreation->tax_name}}</td>
-                                    <td>{{ $taxcreation->tax_description}}</td>
+                                    <td>{{ $taxcreation->tax_rate}}</td>
                                     {{-- <td>{{ $taxcreation->start_date}}</td>
                                     <td>{{ $taxcreation->expire_date}}</td> --}}
                                     <td>{{ $taxcreation->createUser ? $taxcreation->createUser->name : 'User not found' }}</td>

@@ -30,6 +30,13 @@ class DepartmentController extends Controller
         // dd($request->all());
         // Supplier::create($request->all());
 
+        $this->validate($request, [
+            'department_name' => 'required',
+            'department_description' => 'required',
+
+        ]);
+
+
         $request['created_by'] = Auth::id();
         Department::create($request->all());
 

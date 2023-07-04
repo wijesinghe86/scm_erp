@@ -14,13 +14,13 @@
                         <input type="text" class="form-control" name="department_number" placeholder="Department Number" value="{{$next_number}}">
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Department Name</label>
+                        <label>Department Name *</label>
                         <input type="text" class="form-control" name="department_name" placeholder="Department Name">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label>Department Description</label>
+                        <label>Department Description *</label>
                         <input type="text" class="form-control" name="department_description" placeholder="Department Description">
                     </div>
 
@@ -31,7 +31,7 @@
                         <input type="text" class="form-control" name="remark" placeholder="Remarks">
                     </div>
                 </div>
-                
+
                 <button type="submit" class="btn btn-success me-2">Submit</button>
             </form>
         </div>

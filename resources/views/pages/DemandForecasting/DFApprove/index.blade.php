@@ -10,6 +10,8 @@
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                 <a href="{{ route('df_approve.create') }}" class="btn btn-success float-end mb-2"> Approve</a>
                             </div>
+                            <div class="table-responsive">
+                                <table class="table bordered form-group">
                             <table class="table table-bordered" id="tbl_dfapprove">
                                 <thead>
                                     <tr>

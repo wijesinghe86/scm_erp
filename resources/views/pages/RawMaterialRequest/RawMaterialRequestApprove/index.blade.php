@@ -12,6 +12,8 @@
                                 <a href="{{ route('raw_material_request_approve.create') }}"
                                     class="btn btn-success float-end mb-2"> Approve </a>
                             </div>
+                            <div class="table-responsive">
+                                <table class="table bordered form-group">
                             <table class="table table-bordered" id="tbl_mrapprove">
                                 <thead>
                                     <tr>
