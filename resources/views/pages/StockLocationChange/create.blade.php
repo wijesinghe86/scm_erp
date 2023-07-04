@@ -19,11 +19,53 @@
                                     <label>SLC Date</label>
                                     <input type="date" value="{{ date('Y-m-d') }}" class="form-control" name="slc_date">
                                 </div>
+                                <div class="form-group col-md-3">
+                                    <label>Issued Date</label>
+                                    <input type="date" class="form-control" name="issued_date">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Issued by</label>
+                                    <select class="form-control item-select" name="issued_by">
+                                        <option value="">Select Employee</option>
+                                        @foreach ($employees as $employee)
+                                            <option value="{{ $employee->id }}">
+                                                {{ $employee->employee_fullname }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>From Location</label>
+                                    <select class="form-control" name="from_location">
+                                        <option value="">Select Location</option>
+                                        @foreach ($warehouses as $warehouse)
+                                            <option value="{{ $warehouse->id }}">
+                                                {{ $warehouse->warehouse_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>To Location</label>
+                                    <select class="form-control" name="to_location">
+                                        <option value="">Select Location</option>
+                                        @foreach ($warehouses as $warehouse)
+                                            <option value="{{ $warehouse->id }}">
+                                                {{ $warehouse->warehouse_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Remarks</label>
+                                    <input type="text" class="form-control" name="remarks">
+                                </div>
                             </div>
                             {{-- </div> --}}
                             <hr>
                             {{-- Invoice Items Start here --}}
-                            <div class="row">
+                            <div style="position: relative;" class="row">
                                 <div class="form-group col-md-2">
                                     <label>Stock No</label>
                                     <input type="text" readonly class="form-control" id="stock_no"
@@ -49,10 +91,24 @@
                                     <input type="number" class="form-control" id="issue_qty" min="0" step="0.01"
                                         placeholder="Issued Qty">
                                 </div>
-                                <div class="form-group col-md-3">
+                                {{-- <div class="form-group col-md-3">
                                     <label>Revd Qty</label>
                                     <input type="number" class="form-control" id="revd_qty" min="0" step="0.01"
                                         placeholder="Revd Qty">
+                                </div> --}}
+
+                                <div style="display:none; position: absolute; bottom:-20px; right:0; width: 400px;" id="stockView">
+                                    <table class="table table-striped">
+                                        <thead style="background-color: lightgray">
+                                            <tr>
+                                                <th>Warehouse</th>
+                                                <th align="right">Avilable Qty</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="stockViewItems">
+
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                             {{-- Invoice Items End here --}}
@@ -61,90 +117,6 @@
                             <hr>
                             <br>
                             <div id="item_list"></div>
-                            <div class="row">
-                                <div class="form-group col-md-4">
-                                    <label>Issued by</label>
-                                    <select class="form-control item-select" name="issued_by">
-                                        <option value="">Select Location</option>
-                                        @foreach ($employees as $employee)
-                                            <option value="{{ $employee->id }}">
-                                                {{ $employee->employee_fullname }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label>Issued Date</label>
-                                    <input type="date" class="form-control" name="issued_date">
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label>From Location</label>
-                                    <select class="form-control item-select" name="from_location">
-                                        <option value="">Select Location</option>
-                                        @foreach ($warehouses as $warehouse)
-                                            <option value="{{ $warehouse->id }}">
-                                                {{ $warehouse->warehouse_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label>Revd by</label>
-                                    <select class="form-control item-select" name="received_by">
-                                        <option value="">Select Location</option>
-                                        @foreach ($employees as $employee)
-                                            <option value="{{ $employee->id }}">
-                                                {{ $employee->employee_fullname }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label>Revd Date</label>
-                                    <input type="date" class="form-control" name="received_date">
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label>To Location</label>
-                                    <select class="form-control item-select" name="to_location">
-                                        <option value="">Select Location</option>
-                                        @foreach ($warehouses as $warehouse)
-                                            <option value="{{ $warehouse->id }}">
-                                                {{ $warehouse->warehouse_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label>Delivered by</label>
-                                    <select class="form-control item-select" name="delivered_by" id="delivered_by">
-                                        <option value="">Select Location</option>
-                                        @foreach ($employees as $employee)
-                                            <option value="{{ $employee->id }}">
-                                                {{ $employee->employee_fullname }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label>Delivered Date</label>
-                                    <input type="date" class="form-control" name="delivered_date" id="delivered_date">
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label>Fleet No</label>
-                                    <select class="form-control item-select" name="fleet_id" id="fleet_id">
-                                        <option value="">Select Location</option>
-                                        @foreach ($fleets as $fleet)
-                                            <option value="{{ $fleet->id }}">
-                                                {{ $fleet->fleet_number }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label>Remarks</label>
-                                    <input type="text" class="form-control" name="remarks">
-                                </div>
-                            </div>
                             <div class="text-right">
                                 <button type="submit" class="btn btn-success me-2">Complete Stock Location
                                     Change</button>
@@ -173,6 +145,18 @@
                 let stockItem = stockItems?.find(row => row?.id == stockItemId);
                 $('#stock_no').val(stockItem?.stock_number)
                 $('#uom').val(stockItem?.unit)
+
+                $('#stockView').hide();
+
+                if (stockItem?.stocks?.length > 0) {
+                        $('#stockViewItems').find('tr').remove().end()
+                        stockItem?.stocks.forEach(element => {
+                            $('#stockViewItems').append(
+                                `<tr><td>${element?.warehouse?.warehouse_name}</td><td align="right" >${element?.qty}</td></tr>`
+                            )
+                        })
+                        $('#stockView').show();
+                    }
             })
 
             function onAddClick() {
@@ -198,6 +182,7 @@
                         $('#issue_qty').val("");
                         $('#revd_qty').val("");
                         viewItemTable();
+                        $('#stockView').hide();
                     },
                     error: function(data) {
                         $.each(data.responseJSON?.errors, function(key, value) {
