@@ -10,99 +10,83 @@
               @csrf
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label>Stock Adjustment Number</label>
-                        <input type="text" class="form-control" name="stock_adjustment_number" placeholder="Stock Adjustment Number">
+                        <label>SA No</label>
+                        <input type="text" class="form-control" name="sa_number" placeholder="SA_No">
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Stock Adjustment Date</label>
+                        <label>SA Date</label>
                         <input type="date" class="form-control" name="stock_adjustment_date " placeholder="Stock Adjustment Date">
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Type</label>
-                        <input type="text" class="form-control" name="type " placeholder="Type">
-                    </div>
-                </div>
-
-                <hr>
-
-                <div class="row">
-                    <div class="form-group col-md-4">
-                        <label>From Stock Number</label>
-                        <input type="text" class="form-control" name="from_stock_number" placeholder="From Stock Number">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>Transfer To Stock Number</label>
-                        <input type="text" class="form-control" name="transfer_to_stock_number" placeholder="Transfer To Stock Number">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>Quantity</label>
-                        <input type="text" class="form-control" name="quantity" placeholder="Quantity">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-md-4">
-                        <label>Weight</label>
-                        <input type="text" class="form-control" name="weight" placeholder="Weight">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>Transfered Warehouse Code</label>
-                        <select class="form-control item-select" name="warehouse_code">
+                        <label>Warehouse</label>
+                        <select class="form-control" name="warehouse_name">
                             @foreach ($warehouses as $warehouse )
-                            <option value="{{ $warehouse->id }}">{{ $warehouse->warehouse_code }}</option>
+                            <option value="{{ $warehouse->id }}">{{ $warehouse->warehouse_name }}</option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label>Justification</label>
-                        <input type="text" class="form-control" name="justification" placeholder="Justification">
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-2">
+                        <label>Excess</label>
+                        <input type="checkbox" class="form-control" name="Excess" placeholder="Excess">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Short</label>
+                        <input type="checkbox" class="form-control" name="short" placeholder="Short">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Transfer</label>
+                        <input type="checkbox" class="form-control" name="transfer" placeholder="transfer">
                     </div>
                 </div>
-
-                <button type="submit" class="btn btn-success me-2">ADD</button>
-
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label>Reason</label>
+                        <input type="text" class="form-control" name="reason" placeholder="reason">
+                    </div>
+                </div>
                 <hr>
-
-                <table class="table table-bordered" id="tbl_goodsreceiveds">
+                <div class="row">
+                    <div class="form-group col-md-2">
+                        <label>Stock No</label>
+                        <input type="checkbox" class="form-control" name="Excess" placeholder="Excess">
+                    </div>
+                    <div class="form-group col-md-8">
+                        <label>Description</label>
+                        <input type="checkbox" class="form-control" name="short" placeholder="Short">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>U/M</label>
+                        <input type="checkbox" class="form-control" name="transfer" placeholder="transfer">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label>On hand Balance</label>
+                        <input type="checkbox" class="form-control" name="Excess" placeholder="Excess">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Qty to be Adjusted</label>
+                        <input type="checkbox" class="form-control" name="short" placeholder="Short">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>On Hand Balance After Adjustment</label>
+                        <input type="checkbox" class="form-control" name="transfer" placeholder="transfer">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success me-2">ADD</button>
+                <table class="table" id="tbl_goodsreceiveds">
                     <thead>
                         <tr>
-                            <td>From Stock Number</td>
-                            <td>Transfer To Stock Number</td>
-                            <td>Quantity</td>
-                            <td>Weight</td>
-                            <td>Transfered Warehouse Code</td>
-                            <td>Justification</td>
+                            <td>Stock Number</td>
+                            <td>Description</td>
+                            <td>U/M</td>
+                            <td>Qty</td>
                          </tr>
                     </thead>
-
-                    <tbody>
-
-                    </tbody>
-
                 </table>
-
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label>Created By</label>
-                        <input type="text" class="form-control" name="created_by" placeholder="Created By">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>Created Date</label>
-                        <input type="date" class="form-control" name="created_date" placeholder="Created Date">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label>Approved By</label>
-                        <input type="text" class="form-control" name="approved_by" placeholder="Approved By">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>Approved Date</label>
-                        <input type="date" class="form-control" name="approved_date" placeholder="Approved Date">
-                    </div>
-                </div>
-
+                <br>
                 <button type="submit" class="btn btn-success me-2">Complete Stock Adjustment</button>
             </form>
         </div>

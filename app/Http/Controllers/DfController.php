@@ -48,6 +48,10 @@ class DfController extends ParentController
     public function store(Request $request)
     {
         //dd($request->all());
+        $this->validate($request, [
+            'requested_by'=> 'required',
+        ]);
+
 
         $df = new DemandForecasting;
         $df->df_no = $request->df_no;

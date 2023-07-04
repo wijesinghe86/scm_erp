@@ -11,6 +11,8 @@
                                     New </a>
                                 {{-- <a href="{{ route('warehouse.deleted') }}" class="btn btn-success float-end mb-2"> Deleted </a> --}}
                             </div>
+                            <div class="table-responsive">
+                            <table class="table bordered form-group">
                             <table class="table table-bordered" id="tbl_materialrequest">
                                 <thead>
                                     <tr>

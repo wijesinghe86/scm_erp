@@ -13,40 +13,40 @@
                                     class="btn btn-success float-end mb-2"> Approve </a>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="tbl_mrapprove">
-                                    <thead>
+                                <table class="table bordered form-group">
+                            <table class="table table-bordered" id="tbl_mrapprove">
+                                <thead>
+                                    <tr>
+                                        <td>Date</td>
+                                        <td>Item No</td>
+                                        <td>RMR No</td>
+                                        <td>Requested By</td>
+                                        <td>Requested Qty</td>
+                                        <td>Requested Weight</td>
+                                        <td>Approved Qty</td>
+                                        <td>Approved Weight</td>
+                                        <td>Approved By</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($rmr_approvals as $rmr_approval)
                                         <tr>
-                                            <td>Date</td>
-                                            <td>Item No</td>
-                                            <td>RMR No</td>
-                                            <td>Requested By</td>
-                                            <td>Requested Qty</td>
-                                            <td>Requested Weight</td>
-                                            <td>Approved Qty</td>
-                                            <td>Approved Weight</td>
-                                            <td>Approved By</td>
+                                            <td>{{ $rmr_approval->raw_material_request->req_date }}</td>
+                                            <td>{{ $rmr_approval->raw_material_request_item->stock_item->stock_number }}
+                                            </td>
+                                            <td>{{ $rmr_approval->raw_material_request->rmr_no }}</td>
+                                            <td>{{ $rmr_approval->raw_material_request->requestedBy->employee_fullname }}
+                                            </td>
+                                            <td>{{ $rmr_approval->raw_material_request_item->req_qty }}</td>
+                                            <td>{{ $rmr_approval->raw_material_request_item->req_weight }}</td>
+                                            <td>{{ $rmr_approval->approved_qty }}</td>
+                                            <td>{{ $rmr_approval->approved_weight }}</td>
+                                            <td>{{ $rmr_approval->approvedBy->name }}
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($rmr_approvals as $rmr_approval)
-                                            <tr>
-                                                <td>{{ $rmr_approval->raw_material_request->req_date }}</td>
-                                                <td>{{ $rmr_approval->raw_material_request_item->stock_item->stock_number }}
-                                                </td>
-                                                <td>{{ $rmr_approval->raw_material_request->rmr_no }}</td>
-                                                <td>{{ $rmr_approval->raw_material_request->requestedBy->employee_fullname }}
-                                                </td>
-                                                <td>{{ $rmr_approval->raw_material_request_item->req_qty }}</td>
-                                                <td>{{ $rmr_approval->raw_material_request_item->req_weight }}</td>
-                                                <td>{{ $rmr_approval->approved_qty }}</td>
-                                                <td>{{ $rmr_approval->approved_weight }}</td>
-                                                <td>{{ $rmr_approval->approvedBy->name }}
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                    @endforeach
+                                </tbody>
+                            </table>
                     </div>
                 </div>
             </div>
