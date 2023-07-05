@@ -44,7 +44,8 @@ class SupplierController extends Controller
         $this->validate($request, [
             'supplier_code'=>'required',
             'supplier_name' => 'required',
-            'supplier_type' => 'required'
+            'supplier_type' => 'required',
+            'supplier_registration_type'=>'required'
         ]);
         $isSupExist = Supplier::where('supplier_code', $request->supplier_code)->first();
             if ($isSupExist) {

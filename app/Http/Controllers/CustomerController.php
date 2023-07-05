@@ -46,7 +46,7 @@ class CustomerController extends ParentController
             'customer_code' => 'required',
             'customer_name' => 'required',
             'customer_type_of_customer' => 'required',
-            'customner_vat_number'=>'required',
+            'customer_vat_number'=>'required',
             'customer_payment_terms' => 'required',
             'customer_address_line1'=>'required',
             'customer_address_line2'=>'required',

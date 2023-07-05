@@ -1,3 +1,5 @@
+<div class="table-responsive">
+    <table class="table bordered form-group">
 <table class="table bordered">
     <thead>
         <tr>
