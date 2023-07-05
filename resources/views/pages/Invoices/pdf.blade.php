@@ -27,6 +27,7 @@
 </head>
 
 <body>
+  {{-- header --}}
     <table style="height: 30mm">
         <tr>
             <td></td>
@@ -34,6 +35,7 @@
         </tr>
     </table>
     <table style="height: 25mm">
+        {{-- invoice to --}}
         <tr>
             <td rowspan="3">
                 <div style="margin-left: 18mm">
@@ -73,6 +75,7 @@
             <th style="width:32mm">Amount(Rs)</th>
         </tr>
     </table>
+     {{-- item table hieght --}}
     <table style="height:105mm;">
         @foreach ($invoices->items as $key => $item)
             <tr>
@@ -88,8 +91,27 @@
     </table>
     <table>
         <tr>
-            <td style="width:11mm"></td>
-            <td style="width:86mm"></td>
+            <td style="width:97mm">
+                <table>
+                    <tr>
+                        <td class="align-top" style="width: " >Prepared By<td>
+                        <td>test user<td>
+                            <td>Created by<td>
+                                <td>test user<td>
+                                    <td>Created by<td>
+                                        <td>test user<td>
+                    </tr>
+                    {{-- <tr>
+                        <td>Created by<td>
+                        <td>test user<td>
+                    </tr>
+                    <tr>
+                        <td>created at<td>
+                        <td>test user<td>
+                    </tr> --}}
+
+                </table>
+            </td>
             <td style="width:14mm"></td>
             <td style="width:16mm"></td>
             <td style="width:20mm"></td>

@@ -10,6 +10,13 @@ use Illuminate\Support\Facades\Auth;
 
 class SectionController extends Controller
 {
+    public function generateNextNumber()
+    {
+        $count  = Section::get()->count();
+        return "SEC" . sprintf('%03d', $count + 1);
+    }
+
+
     public function index()
     {
         $response['sections'] = Section::all();
@@ -22,19 +29,33 @@ class SectionController extends Controller
     {
         $departments = Department::get();
 
-        $last_se =  Section::latest()->first();
-        $last_se_number = 0;
-        if($last_se != null){
-           $last_se_number = $last_se->id;
-        }
-        $next_number = "SEC".sprintf("%03d", $last_se_number+1);
-        return view ('pages.Section.create', compact('departments', 'next_number'));
+        // $last_se =  Section::latest()->first();
+        // $last_se_number = 0;
+        // if($last_se != null){
+        //    $last_se_number = $last_se->id;
+        // }
+        // $next_number = "SEC".sprintf("%03d", $last_se_number+1);
+        // return view ('pages.Section.create', compact('departments', 'next_number'));
+        $section = new Section;
+        $next_number = $this->generateNextNumber();
+        return view('pages.Section.create', compact('departments', 'next_number', 'section'));
+
+
 
     }
 
     public function store(Request $request){
         // dd($request->all());
         // Supplier::create($request->all());
+        $this->validate($request, [
+            'section_number'=>'required',
+            'section_name' => 'required'
+        ]);
+        $isSecExist = Section::where('section_number', $request->section_number)->first();
+            if ($isSecExist) {
+                $data['section_number'] = $this->generateNextNumber();
+            }
+
 
         $request['created_by'] = Auth::id();
         Section::create($request->all());

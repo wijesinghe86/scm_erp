@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Auth;
 
 class FleetRegistrationController extends Controller
 {
+    public function generateNextNumber()
+    {
+        $count  = FleetRegistration::get()->count();
+        return "FLT" . sprintf('%04d', $count + 1);
+    }
+
     public function index()
     {
         $fleetregistrations = FleetRegistration::get();
@@ -18,13 +24,15 @@ class FleetRegistrationController extends Controller
 
      public function create()
     {
-        $last_fr =  FleetRegistration::latest()->first();
-        $last_fr_number = 0;
-        if($last_fr != null){
-           $last_fr_number = $last_fr->id;
-        }
-        $next_number = "FLT".sprintf("%04d", $last_fr_number+1);
-        return view('pages.FleetRegistration.create',compact('next_number'));
+        // $last_fr =  FleetRegistration::latest()->first();
+        // $last_fr_number = 0;
+        // if($last_fr != null){
+        //    $last_fr_number = $last_fr->id;
+        // }
+        // $next_number = "FLT".sprintf("%04d", $last_fr_number+1);
+        $fleets = new FleetRegistration;
+        $next_number = $this->generateNextNumber();
+        return view('pages.FleetRegistration.create',compact('next_number', 'fleets'));
     }
 
     public function store(Request $request){
@@ -32,6 +40,16 @@ class FleetRegistrationController extends Controller
         // Supplier::create($request->all());
 
         // $request['created_by'] = Auth::id();
+        $this->validate($request, [
+            'fleet_number'=>'required',
+            'fleet_name' => 'required',
+            'fleet_registration_number'=>'required'
+        ]);
+        $isFleetExist = FleetRegistration::where('fleet_number', $request->fleet_number)->first();
+            if ($isFleetExist) {
+                $data['fleet_number'] = $this->generateNextNumber();
+            }
+
         $request['created_by'] = Auth::id();
         FleetRegistration::create($request->all());
 

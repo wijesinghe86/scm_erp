@@ -36,11 +36,14 @@ class StockItemController extends Controller
             'stock_number' => 'required',
             'description' => 'required',
             'unit' => 'required',
-            'cost_price' => 'required',
+            'keyword' => 'required',
+            'group'=>'required',
+            'class'=>'required'
+
 
 
         ]);
-        
+
 
         $request['created_by'] = Auth::id();
         $stock_item =  StockItem::create($request->all());

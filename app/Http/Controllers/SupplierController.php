@@ -9,15 +9,28 @@ use Illuminate\Support\Facades\Auth;
 
 class SupplierController extends Controller
 {
+    public function generateNextNumber()
+    {
+        $count  = Supplier::get()->count();
+        return "SUP" . sprintf('%05d', $count + 1);
+    }
+
     public function new()
     {
-        $last_su =  Supplier::latest()->first();
-        $last_su_number = 0;
-        if ($last_su != null) {
-            $last_su_number = $last_su->id;
+        // $last_su =  Supplier::latest()->first();
+        // $last_su_number = 0;
+        // if ($last_su != null) {
+        //     $last_su_number = $last_su->id;
+        // }
+        // $next_number = "SUP" . sprintf("%05d", $last_su_number + 1);
+        // return view('pages.Supplier.new', compact('next_number'));
+        {
+            $supplier = new Supplier;
+            $next_number = $this->generateNextNumber();
+            return view('pages.Supplier.new', compact('next_number', 'supplier'));
         }
-        $next_number = "SUP" . sprintf("%05d", $last_su_number + 1);
-        return view('pages.Supplier.new', compact('next_number'));
+
+
     }
 
     public function all()
@@ -29,10 +42,15 @@ class SupplierController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+            'supplier_code'=>'required',
             'supplier_name' => 'required',
-            'supplier_registration_type' => 'required',
             'supplier_type' => 'required'
         ]);
+        $isSupExist = Supplier::where('supplier_code', $request->supplier_code)->first();
+            if ($isSupExist) {
+                $data['supplier_code'] = $this->generateNextNumber();
+            }
+
 
 
         $request['created_by'] = Auth::id();
