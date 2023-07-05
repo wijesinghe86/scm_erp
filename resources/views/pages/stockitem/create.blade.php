@@ -9,8 +9,8 @@
                         <form class="forms-sample" method="POST" action="{{ route('stockitem.store') }}">
                                 <div class="row">
                                     <div class="form-group col-md-4">
-                                        <label>Stock Number</label>
-                                        <input type="text" class="form-control" name="stock_number" required
+                                        <label>Stock Number *</label>
+                                        <input type="text" class="form-control" name="stock_number"
                                             placeholder="Stock Number">
                                     </div>
                                 </div>
@@ -19,14 +19,14 @@
                                 <b><p class="card-description"> Description Details </p><b>
                                 <div class="row">
                                     <div class="form-group col-md-12">
-                                        <label>Description</label>
-                                        <input type="text" class="form-control" name="description" placeholder="Description" required>
+                                        <label>Description *</label>
+                                        <input type="text" class="form-control" name="description" placeholder="Description" >
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="form-group col-md-4">
-                                        <label>Unit of Measure</label>
+                                        <label>Unit of Measure *</label>
                                         <input type="text" class="form-control" name="unit" placeholder="Unit of Measure">
                                     </div>
                                     <div class="form-group col-md-4">
@@ -42,18 +42,18 @@
 
                                 <div class="row">
                                     <div class="form-group col-md-12">
-                                        <label>Keyword</label>
+                                        <label>Keyword *</label>
                                         <input type="text" class="form-control" name="keyword" placeholder="Keyword">
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="form-group col-md-4">
-                                        <label>Group</label>
+                                        <label>Group *</label>
                                         <input type="text" class="form-control" name="group" placeholder="Group">
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Class</label>
+                                        <label>Class *</label>
                                         <input type="text" class="form-control" name="class" placeholder="Class">
                                     </div>
                                     <div class="form-group col-md-4">

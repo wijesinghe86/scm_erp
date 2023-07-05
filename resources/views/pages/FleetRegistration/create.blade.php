@@ -10,15 +10,15 @@
               @csrf
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label>Fleet Number</label>
+                        <label>Fleet Number *</label>
                         <input type="text" class="form-control" name="fleet_number" placeholder="Fleet Number" value="{{$next_number}}">
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Fleet Name</label>
+                        <label>Fleet Name *</label>
                         <input type="text" class="form-control" name="fleet_name" placeholder="Fleet Name">
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Fleet Registration Number</label>
+                        <label>Fleet Registration Number *</label>
                         <input type="text" class="form-control" name="fleet_registration_number" placeholder="Fleet Registration Number">
                     </div>
                 </div>

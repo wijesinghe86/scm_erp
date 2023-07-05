@@ -43,7 +43,7 @@ return new class extends Migration
             $table->decimal('size', 12,2)->nullable();
             $table->decimal('weight', 12,2)->nullable();
             $table->string('output')->nullable();
-            $table->integer('plant_registration_status')->default(1);
+            $table->integer('plant_registration_status')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();

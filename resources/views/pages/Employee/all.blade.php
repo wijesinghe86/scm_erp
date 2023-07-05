@@ -12,10 +12,13 @@
                                 <a href="{{ route('employee.new') }}" class="btn btn-success mb-2"> Add New </a>
                                 <a href="{{ route('employee.deleted') }}" class="btn btn-danger mb-2"> Delete </a>
                             </div>
+                            <div class="table-responsive">
+                            <table class="table boardered forn-group">
                             <table class="table table-bordered" id="tbl_employee">
                                 <thead>
                                     <tr>
                                         <td>No</td>
+                                        <td>Employee Number</td>
                                         <td>Employee Name</td>
                                         <td>Employee Name with Initial</td>
                                         <td>NIC No</td>
@@ -28,6 +31,7 @@
                                     @foreach ($employees as $employee)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
+                                            <td>{{ $employee->employee_reg_no }}</td>
                                             <td>{{ $employee->employee_fullname }}</td>
                                             <td>{{ $employee->employee_name_with_intial }}</td>
                                             <td>{{ $employee->employee_nic_no }}</td>

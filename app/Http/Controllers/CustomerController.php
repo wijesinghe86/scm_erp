@@ -10,16 +10,22 @@ use App\Http\Controllers\ParentController;
 
 class CustomerController extends ParentController
 {
-
-    public function getNextCustomerNumber()
+    public function generateNextNumber()
     {
-        $last_cu =  Customer::latest()->first();
-        $last_cu_number = 0;
-        if ($last_cu != null) {
-            $last_cu_number = $last_cu->id;
-        }
-        return "CUS" . sprintf("%05d", $last_cu_number + 1);
+        $count  = Customer::get()->count();
+        return "CUS" . sprintf('%05d', $count + 1);
     }
+
+
+    // public function getNextCustomerNumber()
+    // {
+    //     $last_cu =  Customer::latest()->first();
+    //     $last_cu_number = 0;
+    //     if ($last_cu != null) {
+    //         $last_cu_number = $last_cu->id;
+    //     }
+    //     return "CUS" . sprintf("%05d", $last_cu_number + 1);
+    // }
 
     public function index()
     {
@@ -30,7 +36,7 @@ class CustomerController extends ParentController
     public function create()
     {
         $customer = new Customer;
-        $next_number = $this->getNextCustomerNumber();
+        $next_number = $this->generateNextNumber();
         return view('pages.Customer.create', compact('next_number', 'customer'));
     }
 
@@ -40,9 +46,17 @@ class CustomerController extends ParentController
             'customer_code' => 'required',
             'customer_name' => 'required',
             'customer_type_of_customer' => 'required',
-            'customer_status' => 'required'
-       
+            'customner_vat_number'=>'required',
+            'customer_payment_terms' => 'required',
+            'customer_address_line1'=>'required',
+            'customer_address_line2'=>'required',
+            'customer_mobile_number'=>'required',
+
         ]);
+            $isCusExist = Customer::where('customer_code', $request->customer_code)->first();
+            if ($isCusExist) {
+                $data['customer_code'] = $this->generateNextNumber();
+            }
 
         $request['created_by'] = Auth::id();
         Customer::create($request->all());
@@ -51,7 +65,11 @@ class CustomerController extends ParentController
 
         $response['alert-success'] = 'New Customer created successfully!';
         return redirect()->route('customer.index')->with($response);
-    }
+
+        }
+
+
+
 
     public function edit($customer_id)
     {

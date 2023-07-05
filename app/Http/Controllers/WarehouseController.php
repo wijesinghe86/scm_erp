@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class WarehouseController extends Controller
 {
+    public function generateNextNumber()
+    {
+        $count  = Warehouse::get()->count();
+        return "WHS" . sprintf('%03d', $count + 1);
+    }
+
     public function index()
     {
         $warehouses = Warehouse::get();
@@ -16,17 +22,29 @@ class WarehouseController extends Controller
 
     public function create()
     {
-        $last_wh =  Warehouse::latest()->first();
-        $last_wh_number = 0;
-        if($last_wh != null){
-           $last_wh_number = $last_wh->id;
-        }
-        $next_number = "WHS".sprintf("%03d", $last_wh_number+1);
-        return view ('pages.Warehouse.create', compact('next_number'));
+        // $last_wh =  Warehouse::latest()->first();
+        // $last_wh_number = 0;
+        // if($last_wh != null){
+        //    $last_wh_number = $last_wh->id;
+        // }
+        // $next_number = "WHS".sprintf("%03d", $last_wh_number+1);
+        $warehouse = new Warehouse;
+        $next_number = $this->generateNextNumber();
+        return view ('pages.Warehouse.create', compact('next_number', 'warehouse'));
     }
 
     public function store(Request $request)
-    {
+    {   $this->validate($request,[
+        'warehouse_code'=>'required',
+        'warehouse_name'=>'required',
+    ]);
+
+    $isWhsExist = Warehouse::where('warehouse_code', $request->warehouse_code)->first();
+            if ($isWhsExist) {
+                $data['warehouse_code'] = $this->generateNextNumber();
+            }
+
+
 
         $request['created_by'] = Auth::id();
         Warehouse::create($request->all());
