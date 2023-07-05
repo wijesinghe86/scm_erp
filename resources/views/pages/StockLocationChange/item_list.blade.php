@@ -7,7 +7,6 @@
                 <th>Description</th>
                 <th>U/M</th>
                 <th>Issue Qty</th>
-                <th>Revd Qty</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -19,7 +18,6 @@
                         <td>{{ $item['description'] }}</td>
                         <td>{{ $item['uom'] }}</td>
                         <td>{{ $item['issue_qty'] }}</td>
-                        <td>{{ $item['revd_qty'] }}</td>
                         <td><button type="button" onclick="onRemoveclick(this,{{ $index }})"
                                 class="btn btn-danger">Delete</button></td>
                     </tr>

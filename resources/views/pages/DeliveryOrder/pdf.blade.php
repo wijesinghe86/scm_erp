@@ -6,7 +6,7 @@
 <head>
     <style>
         table {
-            width: 103mm;
+            width: 100%;
             /* border-collapse: collapse; */
             border: 1px solid black;
             margin: 0;
@@ -35,55 +35,59 @@
     </table>
     <table>
         <tr>
-            <td style="height:9mm;width: 13mm;">Date:</td>
-            <td style="height:9mm;width: 100%;">{{ date('Y-m-d', strtotime($delivery_order->created_at)) }}</td>
-            <td style="height:9mm;">Location</td>
-            <td style="height:9mm;width: 12mm;">{{ $delivery_order->location->warehouse_name }}</td>
-        </tr>
-    </table>
-    <table>
-        <tr>
-            <td style="width: 13mm;">
-                Customer:
-            </td>
-            <td colspan="5">
-                {{ $delivery_order->invoice->customer->customer_name }}</br>
-                {{ $delivery_order->invoice->customer->customer_mobile_number }}</br>
-                {{ $delivery_order->invoice->customer->customer_email }}</br>
+            <td colspan="4">
+                <div style="margin-left: 20px">
+                    {{ optional(optional(optional($delivery_order)->invoice)->customer)->customer_name }}
+                </div>
             </td>
         </tr>
         <tr>
             <td>
-                Invoice No.
+                <div style="margin-left: 20px">{{ $delivery_order->invoice->invoice_date }}</div>
             </td>
-            <td>{{ $delivery_order->invoice_number }}</td>
-            <td>DO No.</td>
-            <td>{{ $delivery_order->delivery_order_no }}</td>
-            <td>BO No.</td>
-            <td>{{ $delivery_order->delivery_order_no }}</td>
+            <td>
+                <div style="margin-left: 20px">{{ $delivery_order->invoice->invoice_number }}</div>
+            </td>
+            <td>
+                <div style="margin-left: 20px">{{ $delivery_order->delivery_order_no }}</div>
+            </td>
+            <td>
+                <div style="margin-left: 20px">{{ $delivery_order->location->warehouse_name }}</div>
+            </td>
         </tr>
     </table>
-    <table style="height: 83mm;">
-        <tr>
-            <th style="width: 7mm;">No.</th>
-            <th style="width: 19mm;">Stock No</th>
-            <th style="width: 44mm;">Description</th>
-            <th style="width: 13mm;">U/M</th>
-            <th style="width: 20mm;">Quantity</th>
-        </tr>
-        @foreach ($delivery_order->items as $key => $item)
+    <table style="height: 8mm">
+        <tr></tr>
+    </table>
+    <table style="height:105mm">
+        @foreach ($delivery_order->items as $item)
             <tr>
-                <td style="width: 7mm;">{{ $key + 1 }}</td>
-                <td style="width: 19mm;">{{ $item->stock_no }}</td>
-                <td style="width: 44mm;">{{ $item->description }}</td>
-                <td style="width: 13mm;">{{ $item->uom }}</td>
-                <td style="width: 20mm;">{{ $item->qty }}</td>
+                <td style="width:9mm"></td>
+                <td style="width:18mm">{{ $item->stock_no }}</td>
+                <td style="width:96mm">{{ $item->description }}</td>
+                <td style="width:15mm">{{ $item->uom }}</td>
+                <td style="width:20mm">{{ $item->qty }}</td>
+                <td style="width:22mm">{{ $item->issued_qty }}</td>
+                <td style="width:21mm">{{ $item->available_qty }}</td>
             </tr>
         @endforeach
     </table>
+    <table style="height: 6mm">
+        <tr>
+            <td>
+                <div style="margin-left: 33mm">{{ $delivery_order->invoice->invoice_date }}</div>
+            </td>
+
+            <td>
+                <div style="margin-left: 33mm">{{ $delivery_order->invoice->invoice_date }}</div>
+            </td>
+        </tr>
+    </table>
     <table>
         <tr>
-            <td>{{ $delivery_order->created_by }}</td>
+            <td style="width:100%"></td>
+            <td style="width:100px" >{{ $delivery_order->createdBy->name }}</td>
+            <td style="width:100px" >{{ date('Y-m-d H:s', strtotime($delivery_order->created_at)) }}</td>
         </tr>
     </table>
 </body>

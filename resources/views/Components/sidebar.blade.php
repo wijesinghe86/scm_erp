@@ -276,6 +276,10 @@
                         Adjustment </a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ route('stocklocationchange.index') }}">Stock
                         Location Change</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('stocklocationchange_approvals.index') }}">Stock
+                        Location Change <br> Approval</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('stocklocationchange_received.index') }}">Stock
+                        Location Change <br> Recived</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ route('finishedgoods.index') }}">Finished
                         Goods</a></li>
                 <li class="nav-item"> <a class="nav-link"

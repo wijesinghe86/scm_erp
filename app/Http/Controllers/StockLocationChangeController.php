@@ -17,6 +17,8 @@ use App\Models\StockLocationChangeIssued;
 use App\Models\StockLocationChangeReceived;
 use Illuminate\Validation\ValidationException;
 
+use function PHPSTORM_META\type;
+
 class StockLocationChangeController extends Controller
 {
 
@@ -34,7 +36,7 @@ class StockLocationChangeController extends Controller
 
     public function create()
     {
-        $stockItems = StockItem::get();
+        $stockItems = StockItem::with('stocks.warehouse')->get();
         $warehouses = Warehouse::get();
         $employees = Employee::get();
         $fleets = FleetRegistration::get();
@@ -46,17 +48,13 @@ class StockLocationChangeController extends Controller
     public function store(Request $request)
     {
         $items = session('slc.items') ?? [];
+
         $this->validate($request, [
             'slc_date' => 'required|date',
             'issued_by' => 'required',
             'issued_date' => 'required',
             'from_location' => 'required',
-            'received_by' => 'required',
-            'received_date' => 'required',
             'to_location' => 'required',
-            'delivered_by' => 'required',
-            'delivered_date' => 'required',
-            'fleet_id' => 'required',
         ]);
 
         if (count($items) == 0) {
@@ -71,12 +69,7 @@ class StockLocationChangeController extends Controller
             $slc->issued_by = $request->issued_by;
             $slc->issued_date = $request->issued_date;
             $slc->from_location = $request->from_location;
-            $slc->received_by = $request->received_by;
-            $slc->received_date = $request->received_date;
             $slc->to_location = $request->to_location;
-            $slc->delivered_by = $request->delivered_by;
-            $slc->delivered_date = $request->delivered_date;
-            $slc->fleet_id = $request->fleet_id;
             $slc->created_by = request()->user()->id;
             $slc->remarks = $request->remarks;
             $slc->save();
@@ -88,17 +81,16 @@ class StockLocationChangeController extends Controller
                 $slc_item->to_location = $slc->to_location;
                 $slc_item->stock_item_id = $item['stock_item_id'];
                 $slc_item->qty = $item['issue_qty'];
-                $slc_item->revd_qty = $item['revd_qty'];
                 $slc_item->save();
 
                 //stock 
-                $stock_from = Stock::where('stock_item_id', $item['stock_item_id'])->where('warehouse_id', $slc->from_location)->first();
-                $stock_from->qty = $stock_from->qty - $item['issue_qty'];
-                $stock_from->save();
+                // $stock_from = Stock::where('stock_item_id', $item['stock_item_id'])->where('warehouse_id', $slc->from_location)->first();
+                // $stock_from->qty = $stock_from->qty - $item['issue_qty'];
+                // $stock_from->save();
 
-                $stock_to = Stock::where('stock_item_id', $item['stock_item_id'])->where('warehouse_id', $slc->to_location)->first();
-                $stock_to->qty = $stock_to->qty + $item['issue_qty'];
-                $stock_to->save();
+                // $stock_to = Stock::where('stock_item_id', $item['stock_item_id'])->where('warehouse_id', $slc->to_location)->first();
+                // $stock_to->qty = $stock_to->qty + $item['issue_qty'];
+                // $stock_to->save();
             }
             DB::commit();
             session(['slc.items' => []]);
@@ -117,12 +109,10 @@ class StockLocationChangeController extends Controller
             [
                 'stock_item_id' => 'required',
                 'issue_qty' => 'required',
-                'revd_qty' => 'required',
             ],
             [
                 'stock_item_id.required' => 'The description field is required',
                 'issue_qty.required' => 'The issued qty field is required',
-                'revd_qty.required' => 'The revd qty field is required',
             ]
         );
 
@@ -144,7 +134,6 @@ class StockLocationChangeController extends Controller
             'description' => $stock_item->description,
             'uom' => $stock_item->unit,
             'issue_qty' => $request->issue_qty,
-            'revd_qty' => $request->revd_qty,
         ];
 
         session(['slc.items' => $items]);
@@ -170,5 +159,79 @@ class StockLocationChangeController extends Controller
     {
         $items =  session('slc.items') ?? [];
         return view('pages.StockLocationChange.item_list', compact('items'));
+    }
+
+
+    public function approvalIndex()
+    {
+        $stock_location_changes =  StockLocationChange::get();
+
+        return view('pages.StockLocationChange.Approval.index', compact('stock_location_changes'));
+    }
+    public function approvalCreateIndex(StockLocationChange $slc)
+    {
+        $employees = Employee::get();
+        return view('pages.StockLocationChange.Approval.create', compact('slc', 'employees'));
+    }
+
+    public function approvalStore(Request $request, StockLocationChange $slc)
+    {
+        $this->validate($request, [
+            'approved_date' => 'required|date',
+            'approved_by' => 'required',
+            'approved_status' => 'required',
+        ]);
+
+        $slc->approved_date = $request->approved_date;
+        $slc->approved_by = $request->approved_by;
+        $slc->approved_status = $request->approved_status;
+        $slc->approved_remark = $request->approved_remark;
+        $slc->save();
+
+        if ($request->approved_status == "approved") {
+            //stock 
+            foreach ($slc->items as $key => $item) {
+                $stock_from = Stock::where('stock_item_id', $item['stock_item_id'])->where('warehouse_id', $slc->from_location)->first();
+                $stock_from->qty = $stock_from->qty - $item['qty'];
+                $stock_from->save();
+            }
+        }
+
+        flash()->success('Stock Location Change Updated successfully!');
+        return redirect()->route('stocklocationchange_approvals.index');
+    }
+
+    public function receivedIndex()
+    {
+        $stock_location_changes =  StockLocationChange::where('approved_status', 'approved')->get();
+        return view('pages.StockLocationChange.Received.index', compact('stock_location_changes'));
+    }
+    public function receivedCreateIndex(StockLocationChange $slc)
+    {
+        $employees = Employee::get();
+        return view('pages.StockLocationChange.Received.create', compact('employees', 'slc'));
+    }
+
+    public function receivedStore(Request $request, StockLocationChange $slc)
+    {
+        $this->validate($request, [
+            'received_date' => 'required|date',
+            'received_by' => 'required',
+        ]);
+
+        $slc->received_by = $request->received_by;
+        $slc->received_date = $request->received_date;
+        $slc->received_remark = $request->received_remark;
+        $slc->save();
+
+        //stock 
+        foreach ($slc->items as $key => $item) {
+            $stock_to = Stock::where('stock_item_id', $item['stock_item_id'])->where('warehouse_id', $slc->to_location)->first();
+            $stock_to->qty = $stock_to->qty + $item['qty'];
+            $stock_to->save();
+        }
+
+        flash()->success('Stock Location Change Updated successfully!');
+        return redirect()->route('stocklocationchange_received.index');
     }
 }

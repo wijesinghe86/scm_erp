@@ -166,8 +166,14 @@ Route::prefix('StockAdjustment')->group(function () {
     Route::get('/', [StockAdjustmentController::class, 'index'])->name('stockadjustment.index');
     Route::get('/create', [StockAdjustmentController::class, 'create'])->name('stockadjustment.create');
     Route::post('/create', [StockAdjustmentController::class, 'store'])->name('stockadjustment.store');
-    Route::post('/item/store', [StockAdjustmentController::class, 'storeItem'])->name('stockadjustment.item.store');
-    Route::get('/get/items/table', [StockAdjustmentController::class, 'itemsTable'])->name('stockadjustment.item.table');
+
+    Route::post('/add-to-table', [StockAdjustmentController::class, 'addToTable'])->name('stockadjustment.addToTable');
+    Route::post('/remove-from-table', [StockAdjustmentController::class, 'removeFromTable'])->name('stockadjustment.removeFromTable');
+    Route::get('/view-table', [StockAdjustmentController::class, 'viewTable'])->name('stockadjustment.viewTable');
+
+    Route::get('/approval/{stock_adjustment}', [StockAdjustmentController::class, 'approvalIndex'])->name('stockadjustment.approvalIndex');
+    Route::post('/approval/{stock_adjustment}', [StockAdjustmentController::class, 'approval'])->name('stockadjustment.approval');
+
 });
 
 /* .....CREATING ROUTE FOR Location Bay Design ....... */
@@ -441,6 +447,15 @@ Route::prefix('StockLocationChange')->group(function () {
     Route::post('/add-to-table', [StockLocationChangeController::class, 'addItemToTable'])->name('stocklocationchange.addItemToTable');
     Route::post('/remove-from-table', [StockLocationChangeController::class, 'removeItemFromTable'])->name('stocklocationchange.removeItemFromTable');
     Route::get('/view-table', [StockLocationChangeController::class, 'getItemTable'])->name('stocklocationchange.getItemTable');
+
+
+    Route::get('/approvals', [StockLocationChangeController::class, 'approvalIndex'])->name('stocklocationchange_approvals.index');
+    Route::get('/approvals/{slc}/create', [StockLocationChangeController::class, 'approvalCreateIndex'])->name('stocklocationchange_approvals.create');
+    Route::post('/approvals/{slc}/create', [StockLocationChangeController::class, 'approvalStore'])->name('stocklocationchange_approvals.store');
+
+    Route::get('/received', [StockLocationChangeController::class, 'receivedIndex'])->name('stocklocationchange_received.index');
+    Route::get('/received/{slc}/create', [StockLocationChangeController::class, 'receivedCreateIndex'])->name('stocklocationchange_received.create');
+    Route::post('/received/{slc}/create', [StockLocationChangeController::class, 'receivedStore'])->name('stocklocationchange_received.store');
 });
 
 Route::prefix('material_request')->group(function () {
