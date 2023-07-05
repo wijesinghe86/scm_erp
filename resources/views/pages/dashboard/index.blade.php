@@ -55,7 +55,7 @@
         <div class="card">
           <div class="card-body">
             <div class="clearfix">
-              <h4 class="card-title float-left">Visit And Sales Statistics</h4>
+              <h4 class="card-title float-left"> </h4>
             </div>
           </div>
         </div>
@@ -63,7 +63,7 @@
       <div class="col-md-5 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Traffic Sources</h4>
+            <h4 class="card-title"> </h4>
           </div>
         </div>
       </div>
@@ -72,7 +72,7 @@
       <div class="col-12 grid-margin">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Recent Tickets</h4>
+            <h4 class="card-title"> </h4>
             <div class="table-responsive">
 
             </div>
@@ -84,15 +84,15 @@
       <div class="col-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Recent Updates</h4>
+            <h4 class="card-title"> </h4>
             <div class="d-flex">
               <div class="d-flex align-items-center me-4 text-muted font-weight-light">
-                <i class="mdi mdi-account-outline icon-sm me-2"></i>
-                <span>jack Menqu</span>
+                {{-- <i class="mdi mdi-account-outline icon-sm me-2"></i> --}}
+                <span></span>
               </div>
               <div class="d-flex align-items-center text-muted font-weight-light">
-                <i class="mdi mdi-clock icon-sm me-2"></i>
-                <span>October 3rd, 2018</span>
+                {{-- <i class="mdi mdi-clock icon-sm me-2"></i> --}}
+                <span></span>
               </div>
             </div>
 
@@ -106,7 +106,7 @@
       <div class="col-md-7 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Project Status</h4>
+            <h4 class="card-title"> </h4>
             <div class="table-responsive">
 
             </div>

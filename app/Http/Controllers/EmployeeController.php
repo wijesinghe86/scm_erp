@@ -11,19 +11,27 @@ use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends ParentController
 {
+    public function generateNextNumber()
+    {
+        $count  = Employee::get()->count();
+        return "EMP" . sprintf('%05d', $count + 1);
+    }
+
     public function new()
     {
         $response['departments'] = Department::all();
         $response['sections'] = Section::all();
         $response['fleets'] = FleetRegistration::all();
 
-        $last_em = Employee::latest()->first();
-        $last_em_number = 0;
-        if($last_em != null){
-           $last_em_number = $last_em->id;
-        }
-        $next_number = "EMP".sprintf("%05d", $last_em_number+1);
-        return view('pages.Employee.new',compact('next_number'))->with($response);
+        // $last_em = Employee::latest()->first();
+        // $last_em_number = 0;
+        // if($last_em != null){
+        //    $last_em_number = $last_em->id;
+        // }
+        // $next_number = "EMP".sprintf("%05d", $last_em_number+1);
+        $employee = new Employee;
+        $next_number = $this->generateNextNumber();
+        return view('pages.Employee.new',compact('next_number', 'employee'))->with($response);
     }
 
     public function all()
@@ -42,10 +50,17 @@ class EmployeeController extends ParentController
 
         $this->validate($request,[
             'employee_fullname'=>'required',
-            'gender'=> "required",
-            'civil_status'=> "required",
-            'employee_type'=> "required",
+            'gender'=>'required',
+            'civil_status'=> 'required',
+            'employee_type'=> 'required',
+            'role'=>'required'
         ]);
+
+        $isEmpExist = Employee::where('employee_reg_no', $request->employee_reg_no)->first();
+            if ($isEmpExist) {
+                $data['employee_reg_no'] = $this->generateNextNumber();
+            }
+
         $request['created_by']=Auth::id();
         Employee::create($request->all());
         // return redirect()->route('employee.all');

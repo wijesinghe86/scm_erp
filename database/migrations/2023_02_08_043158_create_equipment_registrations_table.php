@@ -21,9 +21,9 @@ return new class extends Migration
             $table->string('po_number')->nullable();
             $table->string('grn_number')->nullable();
             $table->string('equipment_description')->nullable();
-            $table->integer('equipment_type')->default(1);
-            $table->integer('power_source')->default(1);
-            $table->integer('equipment_registration_status')->default(1);
+            $table->integer('equipment_type')->nullable();
+            $table->integer('power_source')->nullable();
+            $table->integer('equipment_registration_status')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();

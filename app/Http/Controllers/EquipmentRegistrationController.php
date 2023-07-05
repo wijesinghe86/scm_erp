@@ -10,6 +10,13 @@ use App\Models\EquipmentRegistration;
 
 class EquipmentRegistrationController extends Controller
 {
+    public function generateNextNumber()
+    {
+        $count  = EquipmentRegistration::get()->count();
+        return "EQP" . sprintf('%05d', $count + 1);
+    }
+
+
     public function index()
     {
         $equipmentregistrations = EquipmentRegistration::get();
@@ -18,14 +25,15 @@ class EquipmentRegistrationController extends Controller
 
      public function create()
     {
-        $last_er =  EquipmentRegistration::latest()->first();
-        $last_er_number = 0;
-        if($last_er != null){
-           $last_er_number = $last_er->id;
-        }
-        $next_number = "EQP".sprintf("%05d", $last_er_number+1);
-
-        return view('pages.EquipmentRegistration.create',compact('next_number'));
+        // $last_er =  EquipmentRegistration::latest()->first();
+        // $last_er_number = 0;
+        // if($last_er != null){
+        //    $last_er_number = $last_er->id;
+        // }
+        // $next_number = "EQP".sprintf("%05d", $last_er_number+1);
+        $equipment = new EquipmentRegistration;
+        $next_number = $this->generateNextNumber();
+        return view('pages.EquipmentRegistration.create',compact('next_number', 'equipment'));
     }
 
     public function store(Request $request){
@@ -33,6 +41,11 @@ class EquipmentRegistrationController extends Controller
         // Supplier::create($request->all());
 
         // $request['created_by'] = Auth::id();
+
+        $isEqpExist = EquipmentRegistration::where('equipment_code', $request->equipment_code)->first();
+        if ($isEqpExist) {
+            $data['equipment_code'] = $this->generateNextNumber();
+        }
         $request['created_by'] = Auth::id();
         EquipmentRegistration::create($request->all());
 

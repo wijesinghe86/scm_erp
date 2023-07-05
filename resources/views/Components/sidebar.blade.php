@@ -44,7 +44,7 @@
                     <li class="nav-item"> <a class="nav-link" href="{{ route('locationshelfdesign.index') }}">Location
                             Shelf Design</a></li>
 
-                    <li class="nav-item"> <a class="nav-link" href="">Users</a></li>
+                    {{-- <li class="nav-item"> <a class="nav-link" href="">Users</a></li> --}}
                 </ul>
             </div>
         </li>
@@ -72,56 +72,7 @@
             </div>
         </li>
 
-        {{-- Sales and Marketing --}}
-        <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#ui-sale" aria-expanded="false" aria-controls="ui-sale">
-                <span class="menu-title">Sales and Marketing</span>
-                {{-- <i class="menu-arrow"></i> --}}
-                <i class="mdi mdi-contacts menu-icon"></i>
-            </a>
-            <div class="collapse" id="ui-sale">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('billtypes.all') }}">Bill Type
-                            Creations</a>
-                    </li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('invoicesettings.all') }}">Invoice
-                            Setting</a>
-                    </li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('invoices.all') }}">Invoice</a>
-                    </li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('deliveryorders.all') }}">Delivery
-                            Order</a>
-                    </li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('balanceorder.index') }}">Balance
-                            Order</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('returns.all') }}">Return</a></li>
-        </li>
-        <li class="nav-item"> <a class="nav-link" href="{{ route('returns.approvalIndex') }}">Return Approval</a>
-        </li>
-        </li>
-    </ul>
-    </div>
-    </li>
-
-    {{-- Demand Forecasting --}}
-    <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="collapse" href="#ui-df" aria-expanded="false" aria-controls="ui-df">
-            <span class="menu-title">Demand Forecasting</span>
-            {{-- <i class="menu-arrow"></i> --}}
-            <i class="mdi mdi-contacts menu-icon"></i>
-        </a>
-        <div class="collapse" id="ui-df">
-            <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{ route('demand-forecasting.index') }}">Demand
-                        Forecasting Entry</a>
-                </li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('df_approve.index') }}">Demand
-                        Forecasting Approve</a>
-                </li>
-            </ul>
-        </div>
-    </li>
-
+     
     {{-- Procurement --}}
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-procurement" aria-expanded="false"
@@ -132,18 +83,40 @@
         </a>
         <div class="collapse" id="ui-procurement">
             <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{ route('mrfprf.index') }}">MR-Procurement
+                <li class="nav-item"> <a class="nav-link" href="{{ route('mrfprf.index') }}">Procurement
                         Request</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('purchase_request.index') }}">Procurement
-                        Request-Optional</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('purchase_order.index') }}">Purchase
-                        Order-Optional</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('purchase_order_mr.index') }}">MR
-                        Purchase
-                        Order</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('purchase_order_mr.index') }}">Purchase
+                            Order</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('purchase_request.index') }}">Sundry Procurement
+                    <br>Request-Optional</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('purchase_order.index') }}">Sundry Purchase
+                    <br>Order-Optional</a></li>
+
             </ul>
         </div>
     </li>
+     {{-- Sales and Marketing --}}
+     <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="collapse" href="#ui-sale" aria-expanded="false" aria-controls="ui-sale">
+            <span class="menu-title">Sales and Marketing</span>
+            {{-- <i class="menu-arrow"></i> --}}
+            <i class="mdi mdi-contacts menu-icon"></i>
+        </a>
+        <div class="collapse" id="ui-sale">
+            <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{{ route('billtypes.all') }}">Bill Type
+                        Creations</a>
+                </li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('invoicesettings.all') }}">Invoice
+                        Setting</a>
+                </li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('invoices.all') }}">Invoice</a>
+                </li>
+                
+    
+</ul>
+</div>
+</li>
     {{-- Production Planning and Scheduling --}}
     {{-- <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-pps" aria-expanded="false" aria-controls="ui-pps">
@@ -190,6 +163,24 @@
             </ul>
         </div>
     </li> --}}
+          {{-- Demand Forecasting --}}
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-df" aria-expanded="false" aria-controls="ui-df">
+                <span class="menu-title">Demand Forecasting</span>
+                {{-- <i class="menu-arrow"></i> --}}
+                <i class="mdi mdi-contacts menu-icon"></i>
+            </a>
+            <div class="collapse" id="ui-df">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('demand-forecasting.index') }}">Demand
+                            Forecasting Entry</a>
+                    </li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('df_approve.index') }}">Demand
+                            Forecasting Approve</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
     {{-- Production Planning and Scheduling --}}
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-pps" aria-expanded="false" aria-controls="ui-pps">
@@ -206,9 +197,15 @@
                         href="{{ route('production_planning_and_schedule_approval.index') }}">Production Planning And
                         <br>
                         Schedule Approval</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('jobordercreation.index') }}">Job Order
+                            Creation</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('joborderapproval.index') }}">Job Order
+                            Approval</a></li>
                 <li class="nav-item"> <a class="nav-link"
                         href="{{ route('rawmaterialsserialcodeassigning.index') }}">Raw Materials Serial Code <br>
                         Assigning</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('semiproduction.index') }}">Semi
+                            Production </a></li>
                 <li class="nav-item"> <a class="nav-link"
                         href="{{ route('rawmaterialissueforproduction.index') }}">Raw Material Issue For
                         <br>
@@ -219,25 +216,20 @@
                         <br>
                         Production</a>
                 </li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('semiproduction.index') }}">Semi
-                        Production </a></li>
-                <li class="nav-item"> <a class="nav-link"
+                {{-- <li class="nav-item"> <a class="nav-link"
                         href="{{ route('semifinishedgoodsserialcodeassigning.index') }}">Semi Finished Goods
-                        Serial <br> Code Assigning</a></li>
-                <li class="nav-item"> <a class="nav-link"
+                        Serial <br> Code Assigning</a></li> --}}
+                {{-- <li class="nav-item"> <a class="nav-link"
                         href="{{ route('finishedgoodsserialcodeassigning.index') }}">Finished Goods Serial
                         <br>Code
-                        Assigning </a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('productionwastage.index') }}">Production
-                        Wastage</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('jobordercreation.index') }}">Job Order
-                        Creation</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('joborderapproval.index') }}">Job Order
-                        Approval</a></li>
+                        Assigning </a></li> --}}
+                {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('productionwastage.index') }}">Production
+                        Wastage</a></li> --}}
+                
                 <li class="nav-item"> <a class="nav-link" href="{{ route('dispatch.index') }}">Dispatch</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ route('dispatch_approval.index') }}">Dispatch
                         Approval</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('productioncost.index') }}">Production
+                {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('productioncost.index') }}">Production
                         Cost</a></li>
                 <li class="nav-item"> <a class="nav-link"
                         href="{{ route('operationmachanismproductionandtimemanagement.index') }}">Operation
@@ -247,30 +239,39 @@
                 <li class="nav-item"> <a class="nav-link"
                         href="{{ route('operationmechanismbyproduct.index') }}">Operation Mechanism <br>By
                         Product</a>
-                </li>
+                </li> --}}
             </ul>
         </div>
     </li>
     {{-- Inventory Control --}}
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-inv" aria-expanded="false" aria-controls="ui-inv">
-            <span class="menu-title">Inventory Control</span>
+            <span class="menu-title">Inventory Management</span>
             {{-- <i class="menu-arrow"></i> --}}
             <i class="mdi mdi-contacts menu-icon"></i>
         </a>
         <div class="collapse" id="ui-inv">
             <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{ route('purchase_order.index') }}">Purchase
-                        Order</a></li>
+                {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('purchase_order.index') }}">Purchase
+                        Order</a></li> --}}
                 <li class="nav-item"> <a class="nav-link" href="{{ route('goodsreceived.index') }}">Goods
                         Received</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('goodsissuenote.index') }}">Goods Issue
-                        Note</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('balanceorder.index') }}">Balance
-                        Order</a></li>
-                <li class="nav-item"> <a class="nav-link"
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('deliveryorders.all') }}">Delivery
+                            Order</a>
+                    </li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('balanceorder.index') }}">Balance
+                            Order</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('returns.all') }}">Customer Return</a></li>
+        </li>
+        <li class="nav-item"> <a class="nav-link" href="{{ route('returns.approvalIndex') }}">Customer Return Approval</a>
+        </li>
+                {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('goodsissuenote.index') }}">Goods Issue
+                        Note</a></li> --}}
+                {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('balanceorder.index') }}">Balance
+                        Order</a></li> --}}
+                {{-- <li class="nav-item"> <a class="nav-link"
                         href="{{ route('materialsreturnbycustomer.index') }}">Materials Return By Customer</a>
-                </li>
+                </li> --}}
                 <li class="nav-item"> <a class="nav-link" href="{{ route('stockadjustment.index') }}">Stock
                         Adjustment </a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ route('stocklocationchange.index') }}">Stock
@@ -280,13 +281,13 @@
                 <li class="nav-item"> <a class="nav-link"
                         href="{{ route('finished_goods_approval.index') }}">Finished
                         Goods Inspect</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('overshortanddamage.index') }}">Over
+                {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('overshortanddamage.index') }}">Over
                         Short And Damage Details Creation</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ route('disposal.index') }}">Disposal</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ route('miscreceived.index') }}">Miscellaneous
                         Received </a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ route('miscissued.index') }}">Miscellaneous
-                        Issued </a></li>
+                        Issued </a></li> --}}
             </ul>
         </div>
     </li>
