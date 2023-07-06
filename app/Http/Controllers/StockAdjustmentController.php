@@ -94,7 +94,7 @@ class StockAdjustmentController extends Controller
                     'to_warehouse' => 'required',
                     'from_stock_id' => 'required',
                     'to_stock_id' => 'required',
-                    'weight' => 'required',
+                    // 'weight' => 'required',
                     'qty' => 'required',
                 ]
             );

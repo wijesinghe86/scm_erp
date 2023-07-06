@@ -27,8 +27,8 @@
                                             <td>{{ $fgrn->fgrn_no }}</td>
                                             <td>{{ $fgrn->rmi->rmi_no }}</td>
                                             <td>{{ $fgrn->status }}</td>
-                                            <td>{{ $fgrn->createdBy->name }}</td>
-                                            <td>{{ $fgrn->inspectedBy->name }}</td>
+                                            <td>{{optional(optional($fgrn)->createdBy)->name }}</td>
+                                            <td>{{optional(optional($fgrn)->inspectedBy)->name }}</td>
                                             <td>{{ date('Y-m-d H:s', strtotime($fgrn->inspected_at)) }}</td>
                                             <td>
                                                 <a href="{{ route('finished_goods_approval.create', $fgrn->id) }}"
