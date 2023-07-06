@@ -20,8 +20,11 @@
                                             <td>Semi Product Number</td>
                                             <td>Goods Receiving Number</td>
                                             <td>Stock Number</td>
+                                            <td>Description</td>
                                             <td>Serial Number</td>
                                             <td>Semi Product Serial Numbers</td>
+                                            <td>Qty</td>
+                                            <td>Weight</td>
                                             <td>Plant Number</td>
                                             <td>Warehouse Code</td>
                                             {{-- <td>Actual Raw Material Serial Weight</td>
@@ -36,18 +39,29 @@
                                                 <td>{{ $semi_production->semi_pro_No }}</td>
                                                 <td>{{ $semi_production->grn_no }}</td>
                                                 <td>{{ $semi_production->raw_material_stock_item->stock_number }}</td>
+                                                <td>{{ $semi_production->raw_material_stock_item->description }}</td>
                                                 <td>{{ $semi_production->raw_material_serial_item->serial_no }}</td>
                                                 <td>
                                                     @foreach ($semi_production->semi_product_items->pluck('semi_pro_serial_no') as $semi_pro_serial_no)
                                                         <div>{{ $semi_pro_serial_no }}</div><br>
                                                     @endforeach
                                                 </td>
+                                                <td>
+                                                    @foreach ($semi_production->semi_product_items->pluck('semi_pro_qty') as $semi_pro_qty)
+                                                        <div>{{ $semi_pro_qty }}</div><br>
+                                                    @endforeach
+                                                </td>
+                                                <td>
+                                                    @foreach ($semi_production->semi_product_items->pluck('semi_pro_weight') as $semi_pro_weight)
+                                                        <div>{{ $semi_pro_weight }}</div><br>
+                                                    @endforeach
+                                                </td>
                                                 <td>{{ $semi_production->plant->plant_number }}</td>
                                                 <td>{{ $semi_production->warehouse->warehouse_code }}</td>
                                                 {{-- <td>{{ $semi_production->tot_raw_material_qty }}</td>
                                                 <td>{{ $semi_production->tot_semi_product_qty }}</td> --}}
-                                                    <td>{{ date('Y-m-d', strtotime($semi_production->created_at)) }}</td>
-                                                    {{-- <td>
+                                                <td>{{ date('Y-m-d', strtotime($semi_production->created_at)) }}</td>
+                                                {{-- <td>
                                                     <a href="{{ route('semiproduction.edit', $semiproduction->id) }}">
                                                     <i class="mdi mdi-pencil text-dark"></i></a>
         

@@ -40,23 +40,25 @@
 
                             <hr>
                             <div id="item_list"></div>
+
                             <div class="row">
                                 <div class="form-group col-md-4">
                                     <label>Total No.of Dispatched Items</label>
                                     <input type="text" class="form-control" name="tot_no_dispatch_items"
-                                        placeholder="Total Items">
+                                        id="tot_no_dispatch_items" placeholder="Total Items">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Total No.of Dispatched Qty</label>
-                                    <input type="text" class="form-control" name="tot_no_dispatch_qty"
-                                        placeholder="Total Qty">
+                                    <input type="number" class="form-control" name="tot_no_dispatch_qty"
+                                        id="tot_no_dispatch_qty" placeholder="Total Qty">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Total No.of Dispatched Weight</label>
-                                    <input type="text" class="form-control" name="tot_no_dispatch_weight"
-                                        placeholder="Total Weight">
+                                    <input type="number" class="form-control" name="tot_no_dispatch_weight"
+                                        id="tot_no_dispatch_weight" placeholder="Total Weight">
                                 </div>
                             </div>
+
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label>Fleet No</label>
@@ -77,7 +79,8 @@
                                     <label>Dispatched By</label>
                                     <select class="form-control" name="dispatched_by">
                                         @foreach ($employees as $employee)
-                                            <option value="{{ $employee->id }}">{{ $employee->employee_fullname }}</option>
+                                            <option value="{{ $employee->id }}">{{ $employee->employee_fullname }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -145,7 +148,51 @@
                         $('#item_list').html(response);
                     }
                 });
+
+                $.ajax({
+                    url: "{{ route('dispatch.getCalculation') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: "GET",
+                    data: {
+                        fgrn_no: finishedGoodItem?.fgrn_no
+                    },
+                    success: function(response) {
+                        $('#tot_no_dispatch_items').val(response?.tot_no_dispatch_items)
+                        $('#tot_no_dispatch_qty').val(response?.tot_no_dispatch_qty)
+                        $('#tot_no_dispatch_weight').val(response?.tot_no_dispatch_weight)
+                    }
+                });
             })
+
+            function onTableItemBlur(e, item, items) {
+                let value = e.value == "" ? 0 : parseFloat(e.value)
+                if (e.value >= item?.pro_qty) {
+                    return e.value = item?.pro_qty
+                }
+
+                const total = items?.reduce((acc, curr) => {
+                    return acc + parseFloat(curr?.pro_qty)
+                }, 0)
+
+
+                $('#tot_no_dispatch_qty').val((total - parseFloat(item?.pro_qty)) + value)
+            }
+
+            function onTableItemWeightBlur(e, item, items) {
+
+                let value = e.value == "" ? 0 : parseFloat(e.value)
+                if (e.value >= item?.pro_weight) {
+                    return e.value = item?.pro_weight
+                }
+
+                const totalWeight = items?.reduce((acc, curr) => {
+                    return acc + parseFloat(curr?.pro_weight)
+                }, 0)
+
+                $('#tot_no_dispatch_weight').val((totalWeight - parseFloat(item?.pro_weight)) + value)
+            }
         </script>
     @endpush
 @endsection

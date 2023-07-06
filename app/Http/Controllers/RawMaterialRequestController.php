@@ -153,4 +153,10 @@ class RawMaterialRequestController extends Controller
         $items =  session('rmr.items') ?? [];
         return view('pages.RawMaterialRequest.cart_table', compact('items'));
     }
+
+    public function getStockItem(Request $request)
+    {
+        $stockitems = StockItem::with(['stocks.warehouse'])->find($request->item_id);
+        return $stockitems;
+    }
 }

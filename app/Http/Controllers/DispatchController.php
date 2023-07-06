@@ -93,4 +93,19 @@ class DispatchController extends Controller
         $warehouses = Warehouse::get();
         return view('pages.Dispatch.item_list', compact('items', 'warehouses'));
     }
+
+    public function getCalculation(Request $request)
+    {
+        $items = FinishGoodItem::where('fgrn_no', $request->fgrn_no)->get();
+        $tot_no_dispatch_items = count($items);
+        $tot_no_dispatch_qty = $items->sum('pro_qty');
+        $tot_no_dispatch_weight = $items->sum('pro_weight');
+
+
+        return [
+            "tot_no_dispatch_items"=>$tot_no_dispatch_items,
+            "tot_no_dispatch_qty"=>$tot_no_dispatch_qty,
+            "tot_no_dispatch_weight"=>$tot_no_dispatch_weight,
+        ];
+    }
 }

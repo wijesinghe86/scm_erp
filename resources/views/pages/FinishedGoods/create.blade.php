@@ -240,7 +240,7 @@
                 let batch_no = $('#batch_no').val();
 
                 $.ajax({
-                    url: "{{ route('finishedgoods.addToFinishGoodTable') }}",
+                    url: "{{ route('finished_goods.addToFinishGoodTable') }}",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },

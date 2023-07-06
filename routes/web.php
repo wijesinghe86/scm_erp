@@ -472,6 +472,9 @@ Route::prefix('raw_material_request')->group(function () {
     Route::post('/add-item', [App\Http\Controllers\RawMaterialRequestController::class, 'addItem'])->name('raw_material_request.addItem');
     Route::post('/delete-item', [App\Http\Controllers\RawMaterialRequestController::class, 'deleteItem'])->name('raw_material_request.deleteItem');
     Route::get('/view-table', [App\Http\Controllers\RawMaterialRequestController::class, 'viewCartTable'])->name('raw_material_request.viewCartTable');
+
+    
+    Route::get('/getStockItem', [App\Http\Controllers\RawMaterialRequestController::class, 'getStockItem'])->name('raw_material_request.getStockItem');
 });
 Route::prefix('raw_material_request_approve')->group(function () {
     Route::get('/', [App\Http\Controllers\RawMaterialRequestApproveController::class, 'index'])->name('raw_material_request_approve.index');
@@ -493,7 +496,7 @@ Route::prefix('FinishedGoods')->group(function () {
     Route::post('/create', [App\Http\Controllers\FinishedGoodsController::class, 'store'])->name('finishedgoods.store');
 
     Route::get('/get-rmi-items', [App\Http\Controllers\FinishedGoodsController::class, 'getRmiItems'])->name('finishedgoods.getRmiItems');
-    Route::post('/add-to-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'addToFinishGoodTable'])->name('finishedgoods.addToFinishGoodTable');
+    Route::post('/add-to-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'addToFinishGoodTable'])->name('finished_goods.addToFinishGoodTable');
     Route::post('/remove-from-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'removeFromFinishGoodTable'])->name('finishedgoods.removeFromFinishGoodTable');
     Route::get('/get-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'getFinishGoodTable'])->name('finishedgoods.getFinishGoodTable');
 
@@ -621,6 +624,7 @@ Route::prefix('Dispatch')->group(function () {
     Route::post('/create', [App\Http\Controllers\DispatchController::class, 'store'])->name('dispatch.store');
 
     Route::get('/get-fgrn-items', [App\Http\Controllers\DispatchController::class, 'getFgrnItems'])->name('dispatch.getFgrnItems');
+    Route::get('/get-calculations', [App\Http\Controllers\DispatchController::class, 'getCalculation'])->name('dispatch.getCalculation');
 });
 
 Route::prefix('Dispatch-approval')->group(function () {

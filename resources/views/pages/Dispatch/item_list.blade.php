@@ -41,8 +41,10 @@
                     {{-- <td><input type="checkbox" name="items[{{ $index }}][is_selected]"></td> --}}
                     <td>
                         {{ $item->stock_item->stock_number }}
-                        <input type="hidden" name="items[{{ $index }}][fgrn_item_id]" value="{{ $item->id }}" />
-                        <input type="hidden" name="items[{{ $index }}][stock_item_id]" value="{{ $item->stock_item->id }}" />
+                        <input type="hidden" name="items[{{ $index }}][fgrn_item_id]"
+                            value="{{ $item->id }}" />
+                        <input type="hidden" name="items[{{ $index }}][stock_item_id]"
+                            value="{{ $item->stock_item->id }}" />
                     </td>
                     <td>{{ $item->stock_item->description }}</td>
                     <td>{{ $item->stock_item->unit }}</td>
@@ -51,17 +53,18 @@
                     <td>{{ $item->pro_weight }}</td>
                     <td>{{ $item->batch_no }}</td>
                     <td>
-                        <input required type="number" class="form-control"
+                        <input onblur="onTableItemBlur(this,{{ $item }},{{ $items }})"
+                            style="width:200px" required type="number" class="form-control"
                             name="items[{{ $index }}][dispatch_qty]" value="{{ $item->pro_qty }}"
                             id="items[{{ $index }}][dispatch_qty]">
                     </td>
                     <td>
-                        <input required type="number" class="form-control"
-                            name="items[{{ $index }}][dispatch_weight]" value="{{ $item->pro_weight }}"
-                            id="items[{{ $index }}][dispatch_weight]">
+                        <input onblur="onTableItemWeightBlur(this,{{ $item }},{{ $items }})" style="width:200px" required
+                            type="number" class="form-control" name="items[{{ $index }}][dispatch_weight]"
+                            value="{{ $item->pro_weight }}" id="items[{{ $index }}][dispatch_weight]">
                     </td>
                     <td style="width: 200px;">
-                        <select required class="form-control item-select"
+                        <select style="width:200px" required class="form-control item-select"
                             name="items[{{ $index }}][dispatch_to]"
                             id="items[{{ $index }}][dispatch_to]">
                             <option value="">Select Warehouse</option>

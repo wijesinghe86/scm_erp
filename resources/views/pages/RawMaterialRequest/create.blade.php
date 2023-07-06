@@ -61,6 +61,19 @@
                                         value="{{ old('plant') }}" placeholder="Plant">
                                 </div>
                             </div>
+                            <div style="display:none; position: absolute; top:20%; right:2;" id="stockView">
+                                <table style="background-color: white" class="table table-striped">
+                                    <thead style="background-color: lightgray">
+                                        <tr>
+                                            <th>Warehouse</th>
+                                            <th align="right">Avilable Qty</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="stockViewItems">
+
+                                    </tbody>
+                                </table>
+                            </div>
                             <hr>
                             <br>
                             <div class="row">
@@ -153,7 +166,35 @@
                 $('#selected_stock_number').val(jobOrderItem?.stock_item?.stock_number);
                 $('#selected_jo_qty').val(jobOrderItem?.jo_qty);
                 $('#selected_jo_item_id').val(jobOrderItem?.id);
+
+                getStockItems(jobOrderItem?.stock_item?.id)
             })
+
+
+            function getStockItems(item_id) {
+                $.ajax({
+                    url: "{{ route('raw_material_request.getStockItem') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: "GET",
+                    data: {
+                        item_id
+                    },
+                    success: function(response) {
+                        $('#stockView').hide();
+                        if (response?.stocks?.length > 0) {
+                            $('#stockViewItems').find('tr').remove().end()
+                            response?.stocks.forEach(element => {
+                                $('#stockViewItems').append(
+                                    `<tr><td>${element?.warehouse?.warehouse_name}</td><td align="right" >${element?.qty}</td></tr>`
+                                )
+                            })
+                            $('#stockView').show();
+                        }
+                    }
+                });
+            }
 
 
             function onAddItemClick() {

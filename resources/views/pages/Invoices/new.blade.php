@@ -137,7 +137,7 @@
                                     <input type="text" class="form-control" id="item_no" placeholder="I/No"
                                         value="1">
                                 </div> --}}
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-3">
                                     <label>Stock No</label>
                                     <input type="text" class="form-control" name="stock_no" id="stock_no"
                                         placeholder="Stock No">
@@ -150,6 +150,18 @@
                                         @foreach ($stockItems as $stockItem)
                                             <option value="{{ $stockItem->id }}">
                                                 {{ $stockItem->description }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>Location</label>
+                                    <select class="form-control select2-location clear-qty" name="location_id"
+                                        id="location_id">
+                                        <option value="" selected>Select Location</option>
+                                        @foreach ($warehouses as $warehouse)
+                                            <option value="{{ $warehouse->id }}">
+                                                {{ $warehouse->warehouse_name }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -171,7 +183,7 @@
                                         onkeypress="getItemDiscount()" min="0" step="0.01"
                                         placeholder="Unit Rate (Rs.)" onchange="calculateUnitPrice(this)">
                                 </div>
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-3">
                                     <label>Discount</label>
                                     {{-- <input type="number" class="form-control"
                                         name="item_discount_percentage"onkeyup="getItemDiscount()" min="0"
@@ -195,19 +207,6 @@
                                     <input type="number" class="form-control" placeholder="Item Amount" disabled
                                         id="item_discount_amount">
                                 </div>
-                                <div class="form-group col-md-2">
-                                    <label>Location</label>
-                                    <select class="form-control select2-location clear-qty" name="location_id"
-                                        id="location_id">
-                                        <option value="" selected>Select Location</option>
-                                        @foreach ($warehouses as $warehouse)
-                                            <option value="{{ $warehouse->id }}">
-                                                {{ $warehouse->warehouse_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
                             </div>
                             {{-- Invoice Items End here --}}
 
@@ -645,7 +644,7 @@
                 placeholder: "Select Location",
             });
 
-            
+
         });
     </script>
 @endpush

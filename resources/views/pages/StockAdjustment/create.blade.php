@@ -67,16 +67,39 @@
                                     <input type="text" class="form-control" id="justification"
                                         placeholder="Justification">
                                 </div>
-                                <div class="form-group col-md-4">
+                            </div>
+
+                            <div style="display: none;" class="main-container row">
+                                <div class="form-group col-md-3">
+                                    <label>From Stock Number</label>
+                                    <input readonly type="text" class="form-control" id="from_stock_number">
+                                </div>
+                                <div class="form-group col-md-3">
                                     <label>From Stock Number</label>
                                     <select style="width: 100%;" class="form-control item-select" id="from_stock_id">
+                                        <option value="">Select Item</option>
                                         @foreach ($stock_items as $stock_item)
                                             <option value="{{ $stock_item->id }}">{{ $stock_item->stock_number }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
-                                <div style="display: none;" class="transfer-show form-group col-md-4">
+                                <div class="form-group col-md-3">
+                                    <label>From Unit</label>
+                                    <input readonly type="text" class="form-control" id="from_stock_unit">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>From Stock in hand</label>
+                                    <input readonly type="text" class="form-control" id="from_stock_stock_qty">
+                                </div>
+                            </div>
+
+                            <div style="display: none;" class="main-container row">
+                                <div class="form-group col-md-3 transfer-show">
+                                    <label>To Stock Number</label>
+                                    <input readonly type="text" class="form-control" id="to_stock_number">
+                                </div>
+                                <div style="display: none;" class="transfer-show form-group col-md-3">
                                     <label>Transfer To Stock Number</label>
                                     <select style="width: 100%;" class="form-control item-select" id="to_stock_id">
                                         @foreach ($stock_items as $stock_item)
@@ -85,13 +108,33 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label>Quantity</label>
-                                    <input type="number" class="form-control" id="qty" placeholder="Quantity">
+                                <div class="form-group col-md-3 transfer-show">
+                                    <label>To Unit</label>
+                                    <input readonly type="text" class="form-control" id="to_stock_unit">
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-3 transfer-show">
+                                    <label>To Stock in hand</label>
+                                    <input readonly type="text" class="form-control" id="to_stock_stock_qty">
+                                </div>
+                            </div>
+                            <div style="display: none;" class="main-container row">
+
+                                <div class="form-group col-md-3">
+                                    <label>Quantity</label>
+                                    <input type="number" onkeyup="onQtykeyUp(this)" class="form-control" id="qty"
+                                        placeholder="Quantity">
+                                </div>
+                                <div class="form-group col-md-3">
                                     <label>Weight</label>
                                     <input type="number" class="form-control" id="weight" placeholder="Weight">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>From After</label>
+                                    <input type="text" class="form-control" readonly id="from_after">
+                                </div>
+                                <div class="form-group col-md-3 transfer-show">
+                                    <label>To After</label>
+                                    <input type="text" class="form-control" readonly id="to_after">
                                 </div>
                             </div>
                             <button type="button" onclick="addToTable()" style="display: none;margin:10px 0;"
@@ -109,6 +152,8 @@
 
 @push('scripts')
     <script>
+        const stockItems = <?php echo json_encode($stock_items); ?>;
+
         $(document).ready(function() {
             // viewItemTable()
             $('.main-container').hide();
@@ -212,6 +257,64 @@
                     $('#item_list').html(response)
                 }
             });
+        }
+
+        $('#from_stock_id').on('change', function() {
+            let stockItemId = $(this).val();
+            let warehouseId = $('#from_warehouse').val();
+
+            const stockItem = stockItems.find(row => row?.id == stockItemId)
+            const stock = stockItem?.stocks?.find(row => row?.stock_item_id == stockItemId && row?.warehouse_id ==
+                warehouseId)
+            $('#from_stock_number').val(stockItem?.stock_number)
+            $('#from_stock_unit').val(stockItem?.unit)
+            $('#from_stock_stock_qty').val(stock?.qty)
+        });
+
+        $('#to_stock_id').on('change', function() {
+            let stockItemId = $(this).val();
+            let warehouseId = $('#to_warehouse').val();
+
+            const stockItem = stockItems.find(row => row?.id == stockItemId)
+            const stock = stockItem?.stocks?.find(row => row?.stock_item_id == stockItemId && row?.warehouse_id ==
+                warehouseId)
+            $('#to_stock_number').val(stockItem?.stock_number)
+            $('#to_stock_unit').val(stockItem?.unit)
+            $('#to_stock_stock_qty').val(stock?.qty)
+        });
+
+        function onQtykeyUp(e) {
+            let qty = e.value;
+            if (qty == "") {
+                qty = 0;
+            }
+            let type = $('#type').val();
+            let from_stock_stock_qty = $('#from_stock_stock_qty').val();
+            let to_stock_stock_qty = $('#to_stock_stock_qty').val();
+            let from_after = $('#from_after').val();
+            let to_after = $('#to_after').val();
+
+
+            if (type == "short") {
+                if (from_stock_stock_qty == "") return
+                $('#from_after').val(parseFloat(from_stock_stock_qty) - parseFloat(qty));
+                return
+            }
+
+            if (type == "excess") {
+                if (from_stock_stock_qty == "") return
+                $('#from_after').val(parseFloat(from_stock_stock_qty) + parseFloat(qty));
+                return
+            }
+
+            if (type == "transfer") {
+                if (from_stock_stock_qty) {
+                    $('#from_after').val(parseFloat(from_stock_stock_qty) - parseFloat(qty));
+                }
+                if (to_stock_stock_qty) {
+                    $('#to_after').val(parseFloat(to_stock_stock_qty) + parseFloat(qty));
+                }
+            }
         }
     </script>
 @endpush
