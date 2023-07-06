@@ -8,10 +8,10 @@
         table {
             width: 100%;
             /* border-collapse: collapse; */
-            border: 1px solid black;
+            /* border: 1px solid black; */
             margin: 0;
             padding: 0;
-            font-size: 10px;
+            font-size: 15px;
         }
 
         th {
@@ -20,7 +20,7 @@
 
         td,
         th {
-            border: 1px solid black;
+            /* border: 1px solid black; */
         }
     </style>
     <title>{{ $invoices->invoice_number }} | {{ $invoices->getInvoiceTypeNameAttribute() }}</title>
@@ -28,7 +28,7 @@
 
 <body>
   {{-- header --}}
-    <table style="height: 30mm">
+    <table style="height: 14mm">
         <tr>
             <td></td>
             <td></td>
@@ -48,25 +48,25 @@
             </td>
             <td style="height: 8mm; width:26mm">Vat No</td>
             <td style="height: 8mm; width:36mm">{{ $invoices->customer->customer_vat_number }}</td>
-            <td style="height: 8mm; width:22.5mm">Date</td>
-            <td style="height: 8mm; width:32mm">{{ $invoices->invoice_date }}</td>
+            {{-- <td style="height: 8mm; width:22.5mm">Date</td> --}}
+            <td style="height: 8mm; width:28mm">{{ $invoices->invoice_date }}</td>
         </tr>
         <tr>
-            <td style="height: 8mm; width:26mm">Terms</td>
+            {{-- <td style="height: 8mm; width:26mm">Terms</td> --}}
             <td style="height: 8mm; width:36mm">{{ $invoices->payment_terms }}</td>
-            <td style="height: 8mm; width:22.5mm">Invoice No.</td>
+            {{-- <td style="height: 8mm; width:22.5mm">Invoice No.</td> --}}
             <td style="height: 8mm; width:32mm">{{ $invoices->invoice_number }}</td>
         </tr>
         <tr>
-            <td style="height: 8mm; width:26mm">Purchanse Order No.</td>
+            {{-- <td style="height: 8mm; width:26mm">Purchanse Order No.</td> --}}
             <td style="height: 8mm; width:36mm">{{ $invoices->po_number }}</td>
-            <td style="height: 8mm; width:22.5mm">D. N. No.</td>
+            {{-- <td style="height: 8mm; width:22.5mm">D. N. No.</td> --}}
             <td style="height: 8mm; width:32mm">{{ $invoices->po_number }}</td>
         </tr>
     </table>
-    <table style="height: 6mm">
+    <table style="height: 6mm">                                                                                                                                                 
         <tr>
-            <th style="width:11mm">No.</th>
+            <th style="width:6mm">No.</th>
             <th style="width:86mm">Description</th>
             <th style="width:14mm">U/M</th>
             <th style="width:16mm">Ord, Qty.</th>
@@ -79,7 +79,7 @@
     <table style="height:105mm;">
         @foreach ($invoices->items as $key => $item)
             <tr>
-                <td style="width:11mm">{{ $key + 1 }}</td>
+                <td style="width:6mm">{{ $key + 1 }}</td>
                 <td style="width:86mm">{{ $item->description }}</td>
                 <td style="width:14mm">{{ $item->uom }}</td>
                 <td style="width:16mm">{{ $item->quantity }}</td>
