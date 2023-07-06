@@ -64,7 +64,7 @@
                                     <label>Fleet No</label>
                                     <select class="form-control" name="fleet_id">
                                         @foreach ($fleets as $fleet)
-                                            <option value="{{ $fleet->id }}">{{ $fleet->fleet_name }}
+                                            <option value="{{ $fleet->id }}">{{ $fleet->fleet_registration_no }}
                                             </option>
                                         @endforeach
                                     </select>

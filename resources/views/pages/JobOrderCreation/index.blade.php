@@ -12,6 +12,8 @@
                                     New </a>
                                 {{-- <a href="{{ route('jobordercreation.deleted') }}" class="btn btn-success float-end mb-2"> Deleted </a> --}}
                             </div>
+                            <div class="table-responsive">
+                                <table class="table bordered form-group">                          
                             <table class="table table-bordered" id="tbl_jobordercreation">
                                 <thead>
                                     <tr>

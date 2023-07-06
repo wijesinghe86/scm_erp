@@ -18,6 +18,7 @@
                                     <td>No</td>
                                     <td>DF No</td>
                                     <td>DF Date</td>
+                                    <td>Items</td>
                                     <td>Created By</td>
 
                                 </tr>
@@ -28,10 +29,28 @@
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{ $demandforecasting->df_no }}</td>
                                     <td>{{ $demandforecasting->df_date }}</td>
+                                    <td>
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th scope="col" >#</th>
+                                            <th scope="col" >S/No</th>
+                                            <th scope="col" >Descrition</th>
+                                            <th scope="col" >U/M</th>
+                                            <th scope="col" >Qty</th>
+                                        </tr>
+                                    @foreach ($demandforecasting->items as $dfItems)
+                                                        <tr>
+                                                            <td>{{$loop->iteration}}</td>
+                                                            <td>{{ $dfItems->item->stock_number }}</td>
+                                                            <td>{{ $dfItems->item->description }}</td>
+                                                            <td>{{ $dfItems->item->unit }}</td>  
+                                                            <td>{{ $dfItems->qty }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                    </table>
+                                            </td>
+                                            </td>
                                     <td>{{ $demandforecasting->createUser ? $demandforecasting->createUser->name : 'User not found' }}</td>
-
-
-
                                 </tr>
                             @endforeach
                             </tbody>
