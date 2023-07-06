@@ -37,7 +37,7 @@
                                 </div>
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <label for="">Supplier Registration Type</label>
+                                    <label for="">Supplier Registration Type *</label>
                                     <select class="form-control" id="" name="supplier_registration_type">
                                         <option value="">Select type</option>
                                         <option value="1">Sole Proprietorship </option>

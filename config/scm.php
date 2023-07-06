@@ -13,7 +13,6 @@ return [
         ["id"=>"pending","name"=>"Pending"],
     ],
     'mr_actions' => [
-        ["id"=>"issuance","name"=>"Raw Material Issuance"],
         ["id"=>"production","name"=>"Production"],
         ["id"=>"purchase","name"=>"Purchase"],
     ],

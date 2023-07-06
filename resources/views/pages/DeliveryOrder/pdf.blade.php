@@ -8,10 +8,10 @@
         table {
             width: 100%;
             /* border-collapse: collapse; */
-            border: 1px solid black;
+            /* border: 1px solid black; */
             margin: 0;
             padding: 0;
-            font-size: 10px;
+            font-size: 14px;
         }
 
         th {
@@ -20,14 +20,14 @@
 
         td,
         th {
-            border: 1px solid black;
+            /* border: 1px solid black; */
         }
     </style>
     <title>{{ $delivery_order->delivery_order_no }}</title>
 </head>
 
 <body>
-    <table style="height: 21mm;">
+    <table style="height: 6mm;">
         <tr>
             <td></td>
             <td></td>

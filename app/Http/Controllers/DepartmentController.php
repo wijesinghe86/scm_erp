@@ -119,7 +119,7 @@ class DepartmentController extends Controller
     public function view($department_id)
     {
         $response['departments'] = Department::find($department_id);
-        return view('pages.Department.view')->with($response);
+        return view('pages.department.view')->with($response);
     }
 
     public function getData(Request $request)

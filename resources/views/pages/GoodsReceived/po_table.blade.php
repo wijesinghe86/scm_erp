@@ -7,11 +7,11 @@
             <th>Stock No</th>
             <th>Description</th>
             <th>U/M</th>
-            <th>Approved PO Qty</th>
-            <th>Received Qty</th>
-            <th>Rec Weight</th>
+            <th>Approved PO Quantity</th>
+            <th>Received Quantity</th>
+            <th>Received Weight</th>
             <th>Exp Date</th>
-            <th>Batch No</th>
+            <th>Batch Number</th>
             <th></th>
         </tr>
     </thead>

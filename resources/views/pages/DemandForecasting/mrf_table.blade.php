@@ -1,3 +1,5 @@
+<div class="table-responsive">
+    <table class="table bordered form-group">
 <table class="table bordered">
     <thead>
         <tr>
@@ -7,8 +9,8 @@
             <th>U/M</th>
             <th>Priority</th>
             <th>Approved Qty</th>
-            <th>MRF Qty</th>
-            <th>DF Qty</th>
+            <th>Material Requested Qty</th>
+            <th>Demanded Qty</th>
             <th></th>
         </tr>
     </thead>
