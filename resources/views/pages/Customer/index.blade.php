@@ -13,6 +13,8 @@
                                 <a href="{{ route('customer.print') }}" target="blank" class="btn btn-primary mb-2"> Print </a>
 
                             </div>
+                            <div class="table-responsive">
+                                <table class="table bordered form-group">
                             <table class="table table-bordered" id='tbl_customer'>
 
                                 <thead>
@@ -63,7 +65,6 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
-
                             </table>
                     </div>
                 </div>
@@ -80,19 +81,19 @@
     </script>
 @endpush
 
-{{-- @push('scripts')
+ {{-- @push('scripts')
     <script>
-        // $(document).ready(function() {
-        //     $('#tbl_customer').DataTable({
-        //         "order": [
-        //             [0, "asc"]
-        //         ],
+        $(document).ready(function() {
+             $('#tbl_customer').DataTable({
+                "order": [
+                    [0, "asc"]
+                 ],
 
-        //         "lenghtMenu":[
-        //         //     [10, 25, 50, -1],
-        //             [100, 150, 200, "All"]
-        //         ],
-        //     });
-        // });
+              "lenghtMenu":[
+                 [10, 25, 50, -1],
+                   [100, 150, 200, "All"]
+               ],
+           });
+         });
     </script>
 @endpush --}}

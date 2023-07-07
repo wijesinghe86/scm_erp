@@ -4,18 +4,20 @@ namespace App\Http\Controllers;
 
 
 
+use App\Models\Stock;
+use App\Models\StockItem;
+use App\Models\Warehouse;
 use App\Models\Department;
 use Illuminate\Http\Request;
-use App\Models\StockItem;
 use Illuminate\Support\Facades\Auth;
- 
+
 
 class StockItemController extends Controller
 {
     public function all()
     {
-     $stockitems =  StockItem::get();
-     return view('pages.stockitem.all',compact('stockitems'));
+        $stockitems =  StockItem::get();
+        return view('pages.stockitem.all', compact('stockitems'));
 
         $response['stockitems'] = StockItem::all();
         return view('pages.stockitem.all')->with($response);
@@ -24,21 +26,37 @@ class StockItemController extends Controller
 
     {
         $departments = Department::get();
-        return view ('pages.stockitem.create', compact('departments'));
-
+        return view('pages.stockitem.create', compact('departments'));
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
-        $this->validate($request,[
-            'stock_number'=> 'required',
-            'description'=> 'required',
-            'unit'=> 'required',
-            'cost_price'=> 'required',
+        $this->validate($request, [
+            'stock_number' => 'required',
+            'description' => 'required',
+            'unit' => 'required',
+            'keyword' => 'required',
+            'group'=>'required',
+            'class'=>'required'
+
+
+
         ]);
 
+
         $request['created_by'] = Auth::id();
-        StockItem::create($request->all());
+        $stock_item =  StockItem::create($request->all());
+
+        //create Stock
+        $warehouses = Warehouse::get();
+        foreach ($warehouses as $key => $warehouse) {
+            $stock = new Stock;
+            $stock->stock_item_id = $stock_item->id;
+            $stock->warehouse_id = $warehouse->id;
+            $stock->qty = 0;
+            $stock->save();
+        }
 
         $response['alert-success'] = 'Stock Item Details created successfully!';
         return redirect()->route('stockitem.all')->with($response);
@@ -55,7 +73,7 @@ class StockItemController extends Controller
         $stockitems = StockItem::find($stockitem_id);
         $stockitems->update($request->all());
 
-        $request['updated_by']=Auth::id();
+        $request['updated_by'] = Auth::id();
         StockItem::find($stockitem_id)->update($request->all());
 
         $response['alert-success'] = 'Stockitem updated successfully';
@@ -77,7 +95,6 @@ class StockItemController extends Controller
     {
         $response['stockitems'] = StockItem::onlyTrashed()->get();
         return view('pages.stockitem.deleted')->with($response);
-
     }
 
     public function restore($stockitem_id)
@@ -108,7 +125,7 @@ class StockItemController extends Controller
 
     public function getData(Request $request)
     {
-        $stockitems = StockItem::find($request->item_id);
+        $stockitems = StockItem::with(['stocks.warehouse'])->find($request->item_id);
         return $stockitems;
     }
 
@@ -129,5 +146,4 @@ class StockItemController extends Controller
         $response['alert-success'] = 'Stockitems deactivated successfully';
         return redirect()->back()->with($response);
     }
-
 }

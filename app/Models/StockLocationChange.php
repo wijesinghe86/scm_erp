@@ -2,52 +2,54 @@
 
 namespace App\Models;
 
-use App\Models\Employee;
-use App\Models\FleetRegistration;
-use Illuminate\Foundation\Auth\User;
-use Illuminate\Database\Eloquent\Model;
-use App\Models\StockLocationChangeIssued;
-use App\Models\StockLocationChangeReceived;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
 class StockLocationChange extends Model
 {
     use HasFactory;
-    protected $fillable =
-    [
-        'ref_number',
-        'slc_date',
-        'slc_number',
-        'delivered_by',
-        'status',
-        'delivered_date',
-        'fleet_id',
-        'remarks',
-        'created_by'
-    ];
 
-    public function createUser()
+
+    public function items()
     {
-        return $this->hasOne(User::class, 'id', 'created_by');
+        return $this->hasMany(StockLocationChangeItem::class, "slc_id", "id");
     }
 
-    public function Employee()
+    public function from_warehouse()
     {
-        return $this->hasOne(Employee::class, 'id', 'delivered_by');
+        return $this->hasOne(Warehouse::class, "id", "from_location");
     }
 
-    public function Fleet()
+    public function to_warehouse()
     {
-        return $this->hasOne(FleetRegistration::class, 'id', 'fleet_id');
+        return $this->hasOne(Warehouse::class, "id", "to_location");
     }
 
-    public function slc_issued_items()
+
+    public function issuedBy()
     {
-        return $this->hasMany(StockLocationChangeIssued::class,'slc_id','id');
+        return $this->hasOne(Employee::class, "id", "issued_by");
     }
 
-    public function slc_received_items()
+
+    public function receivedBy()
     {
-        return $this->hasMany(StockLocationChangeReceived::class,'slc_id','id');
+        return $this->hasOne(Employee::class, "id", "received_by");
+    }
+
+    public function deliveredBy()
+    {
+        return $this->hasOne(Employee::class, "id", "delivered_by");
+    }
+
+    public function createdBy()
+    {
+        return $this->hasOne(User::class, "id", "created_by");
+    }
+
+
+    public function fleet()
+    {
+        return $this->hasOne(FleetRegistration::class, "id", "fleet_id");
     }
 }
-

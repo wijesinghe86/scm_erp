@@ -14,11 +14,11 @@
                       <br>
                       <div class="row">
                         <div class="form-group col-md-4">
-                          <label>Plant Number</label>
+                          <label>Plant Number *</label>
                           <input type="text" class="form-control" name="plant_number" placeholder="Plant Number" value="{{$next_number}}">
                         </div>
                         <div class="form-group col-md-4">
-                          <label>Plant Name</label>
+                          <label>Plant Name *</label>
                           <input type="text" class="form-control" name="plant_name" placeholder="Plant Name">
                         </div>
                         <div class="form-group col-md-4">
@@ -29,11 +29,11 @@
 
                       <div class="row">
                         <div class="form-group col-md-4">
-                          <label>Plant Serial Number </label>
+                          <label>Plant Serial Number * </label>
                           <input type="text" class="form-control" name="plant_serial_number" placeholder="Plant Serial Number">
                         </div>
                         <div class="form-group col-md-4">
-                          <label>Model Number</label>
+                          <label>Model Number *</label>
                           <input type="text" class="form-control" name="model_number" placeholder="Model Number">
                         </div>
                         <div class="form-group col-md-4">

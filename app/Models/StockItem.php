@@ -70,5 +70,10 @@ public function createUser()
         return $this->hasMany(GoodsReceivedItem::class, 'stock_item_id', 'id');
     }
 
+    public function stocks()
+    {
+        return $this->hasMany(Stock::class,'stock_item_id','id');
+    }
+
 
 }

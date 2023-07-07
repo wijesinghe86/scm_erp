@@ -9,24 +9,24 @@
                         <form class="forms-sample" method="POST" action="{{ route('purchase_order_mr.store') }}">
                             @csrf
                             <div class="row">
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-3">
                                     <label>PO NO</label>
                                     <input type="text" class="form-control" name="po_number" value="{{ $next_number }}"
                                         placeholder="PO No" value="">
                                 </div>
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-3">
                                     <label>PO Date</label>
                                     <input type="date" class="form-control" name="po_date"
                                         placeholder="PO Date">
                                 </div>
-                                <div class="form-group col-md-2">
+                                {{-- <div class="form-group col-md-2">
                                     <label>Intended Delivery Date</label>
                                     <input type="date" class="form-control" name="po_delivery_date"
                                         placeholder="Purchase Order Date">
-                                </div>
+                                </div> --}}
                                 <div class="form-group col-md-6">
                                     <label>Supplier Name</label>
-                                    <select class="form-control item-select" name="supplier_id">
+                                    <select class="form-control item-select" name="supplier_id" >
                                         @foreach ($suppliers as $supplier)
                                             <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
                                         @endforeach
@@ -34,15 +34,15 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-md-4">
+                                {{-- <div class="form-group col-md-4">
                                     <label>Ship To:</label>
                                     <select class="form-control item-select" name="customer_id">
                                         @foreach ($customers as $customer)
                                             <option value="{{ $customer->id }}">{{ $customer->customer_name }}</option>
                                         @endforeach
                                     </select>
-                                </div>
-                                <div class="form-group col-md-2">
+                                </div> --}}
+                                <div class="form-group col-md-3">
                                     <label>PO Type</label>
                                     <SELECT name="po_type" class="form-control">
                                         <option value=""> Select </option>
@@ -50,29 +50,29 @@
                                         <option value="2">Import</option>
                                     </SELECT>
                                 </div>
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-3">
                                     <label>Weight Per Unit</label>
                                     <input type="number" class="form-control" name="weight_per_unit"
                                         placeholder="Weight Per Unit">
                                 </div>
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-3">
                                     <label>Volume Per Unit</label>
                                     <input type="number" class="form-control" name="volume_per_unit"
                                         placeholder="Volume Per Unit">
                                 </div>
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-3">
                                     <label>Total Weight</label>
                                     <input type="number" class="form-control" name="total_weight"
                                         placeholder="Total Weight">
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-3">
                                     <label>Total Volume</label>
                                     <input type="number" class="form-control" name="total_volume"
                                         placeholder="Total Volume">
                                 </div>
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-3">
                                     <label>Purchase Reference Number</label>
                                     <select class="form-control item-select  prf_input" name="prf_id">
                                         <option value="" selected disabled>Select</option>

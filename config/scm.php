@@ -13,12 +13,11 @@ return [
         ["id"=>"pending","name"=>"Pending"],
     ],
     'mr_actions' => [
-        ["id"=>"issuance","name"=>"Raw Material Issuance"],
         ["id"=>"production","name"=>"Production"],
         ["id"=>"purchase","name"=>"Purchase"],
     ],
     'df_action' => [
-        ["id"=>"app","name"=>"Approved"],
-        ["id"=>"rej","name"=>"Rejected"],
+        ["id"=>"approved","name"=>"Approved"],
+        ["id"=>"rejected","name"=>"Rejected"],
      ],
 ];

@@ -27,4 +27,14 @@ class DeliveryOrderItem extends Model
         'location',
         'created_by',
     ];
+
+    public function stock_item()
+    {
+        return $this->hasOne(StockItem::class, 'id', 'item_id');
+    }
+
+    public function warehouse()
+    {
+        return $this->hasOne(Warehouse::class, 'id', 'location');
+    }
 }

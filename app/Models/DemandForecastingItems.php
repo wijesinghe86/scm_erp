@@ -18,13 +18,13 @@ class DemandForecastingItems extends Model
         return $this->belongsTo(StockItem::class, 'stock_item_id', 'id');
     }
 
-    public function demandforecastid()
+    public function demand_forecast()
     {
         return $this->belongsTo(DemandForecasting::class, 'df_id', 'id');
     }
 
-    public function approval()
-        {
-        return $this->hasMany(DfApproved::class,'df_item_id','id');
-        }
+    public function approval_items()
+    {
+        return $this->hasMany(DfApproved::class, 'df_item_id', 'id');
+    }
 }

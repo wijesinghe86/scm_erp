@@ -1,12 +1,14 @@
-<table class="table bordered">
+<div class="table-responsive">
+    <table class="table bordered form-group">
+        <table class="table bordered">
     <thead>
         <tr>
             <th></th>
             <th>Stock No</th>
             <th>Description</th>
             <th>U/M</th>
-            <th>PRF Qty</th>
-            <th>PO Qty</th>
+            <th>Requested Qty</th>
+            <th>Order Qty</th>
             <th>Weight</th>
             <th></th>
         </tr>

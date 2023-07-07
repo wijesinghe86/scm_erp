@@ -9,21 +9,21 @@
                         <form class="forms-sample" method="POST" action="{{ route('purchase_order.store') }}">
                             @csrf
                             <div class="row">
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-3">
                                     <label>PO NO</label>
                                     <input type="text" class="form-control" name="po_number"
                                         placeholder="Purchase Order Number" value="{{ $next_number }}">
                                 </div>
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-3">
                                     <label>Purchase Order Date</label>
                                     <input type="date" class="form-control" name="po_date"
                                         placeholder="Purchase Order Date">
                                 </div>
-                                <div class="form-group col-md-2">
+                                {{-- <div class="form-group col-md-2">
                                     <label>Intended Delivery Date</label>
                                     <input type="date" class="form-control" name="po_delivery_date"
                                         placeholder="Purchase Order Date">
-                                </div>
+                                </div> --}}
                                 <div class="form-group col-md-6">
                                     <label>Supplier Name</label>
                                     <select class="form-control item-select" name="supplier_id">

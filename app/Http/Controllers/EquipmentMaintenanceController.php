@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 class EquipmentMaintenanceController extends Controller
 {
+
     public function index()
     {
 

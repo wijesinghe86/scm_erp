@@ -25,7 +25,7 @@
                                         placeholder="Employee Fullname">
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <label>Name with Initials *</label>
+                                    <label>Name with Initials </label>
                                     <input type="text" class="form-control" name="employee_name_with_intial"
                                         placeholder="Employee Name with Initials">
                                 </div>
@@ -61,7 +61,7 @@
                                         placeholder="Date of Birth">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Gender</label>
+                                    <label>Gender *</label>
                                     <select class="form-control" name="gender">
                                         <option value="">Select type</option>
                                         <option value="1">Male</option>
@@ -69,7 +69,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Civil Status</label>
+                                    <label>Civil Status *</label>
                                     <select class="form-control" name="civil_status">
                                         <option value="">Select type</option>
                                         <option value="1">Married</option>
@@ -101,7 +101,7 @@
                                         placeholder="Employee email Address">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Employee Type</label>
+                                    <label>Employee Type *</label>
                                     <select class="form-control item-select" name="employee_type">
                                         <option value="">Select Type</option>
                                         <option value="1">Permanent</option>
@@ -153,7 +153,7 @@
                                     <input type="text" class="form-control" name="remark" placeholder="Remarks">
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <label>Role</label>
+                                    <label>Role *</label>
                                     <select class="form-control" name="role">
                                         <option value="">Select Type</option>
                                         <option value="1">Super Admin</option>

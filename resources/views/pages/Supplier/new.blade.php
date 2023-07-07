@@ -13,11 +13,11 @@
                             <br>
                             <div class="row">
                                 <div class="form-group col-md-3">
-                                    <label for="">Supplier Code</label>
+                                    <label for="">Supplier Code *</label>
                                     <input type="text" class="form-control" id="" placeholder="Supplier Code" name="supplier_code" value="{{$next_number}}">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="">Supplier Name</label>
+                                    <label for="">Supplier Name *</label>
                                     <input type="text" class="form-control" id="" placeholder="Supplier Name" name="supplier_name">
                                 </div>
                                 <div class="form-group col-md-3">
@@ -37,7 +37,7 @@
                                 </div>
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <label for="">Supplier Registration Type</label>
+                                    <label for="">Supplier Registration Type *</label>
                                     <select class="form-control" id="" name="supplier_registration_type">
                                         <option value="">Select type</option>
                                         <option value="1">Sole Proprietorship </option>
@@ -47,7 +47,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <label for="">Supplier Type</label>
+                                    <label for="">Supplier Type *</label>
                                     <select class="form-control" id="" name="supplier_type">
                                         <option value="">Select type</option>
                                         <option value="1">Local </option>

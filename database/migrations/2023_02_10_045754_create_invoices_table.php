@@ -21,7 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('employee_id')->nullable();
             $table->string('ref_number')->nullable();
             $table->string('po_number')->nullable();
-            $table->integer('payment_terms')->default(1);
+            $table->string('payment_terms')->default(1);
             $table->integer('category')->nullable();
             $table->integer('type')->nullable();
             $table->integer('option')->nullable();

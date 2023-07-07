@@ -8,6 +8,7 @@ use App\Http\Controllers\ReturnController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\BillTypeController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DispatchController;
 use App\Http\Controllers\DisposalController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\DfApprovalController;
 use App\Http\Controllers\StorageAreaController;
 use App\Http\Controllers\TaxCreationController;
 use App\Http\Controllers\DeliveryOrderController;
+use App\Http\Controllers\DispatchApprovalController;
 use App\Http\Controllers\FinishedGoodsController;
 use App\Http\Controllers\GoodsReceivedController;
 use App\Http\Controllers\PurchaseOrderController;
@@ -41,21 +43,27 @@ use App\Http\Controllers\LocationRowDesignController;
 use App\Http\Controllers\PlantRegistrationController;
 use App\Http\Controllers\ProductionWastageController;
 use App\Http\Controllers\LocationRackDesignController;
+use App\Http\Controllers\RawMaterialRequestController;
 use App\Http\Controllers\LocationShelfDesignController;
 use App\Http\Controllers\MiscellaneousIssuedController;
 use App\Http\Controllers\PlantTimeManagementController;
 use App\Http\Controllers\StockLocationChangeController;
 use App\Http\Controllers\WarehouseAreaDesignController;
 use App\Http\Controllers\EquipmentRegistrationController;
+use App\Http\Controllers\FinishedGoodsApprovalController;
+use App\Http\Controllers\JobOrderApprovalController;
 use App\Http\Controllers\ManAndEquipmentSafetyController;
 use App\Http\Controllers\MiscellaneousReceivedController;
 use App\Http\Controllers\OverShortageAndDamageController;
 use App\Http\Controllers\MaterialsReturnByCustomerController;
+use App\Http\Controllers\RawMaterialRequestApproveController;
 use App\Http\Controllers\OperationMechanismByProductController;
 use App\Http\Controllers\ProductionPlanningAndScheduleController;
 use App\Http\Controllers\RawMaterialIssueForProductionController;
 use App\Http\Controllers\SemiFinishedGoodsSerialCodeAssigningController;
 use App\Http\Controllers\OperationMachanismProductionAndTimeManagementController;
+use App\Http\Controllers\ProductionPlanningApprovalController;
+use App\Http\Controllers\RawMaterialReceivedController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +84,13 @@ Auth::routes();
 // Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 Route::get('/', [HomeController::class, 'index'])->name('dashboard');
+
+
+Route::get('cart', [CartController::class, 'cartList'])->name('cart.list');
+Route::post('cart', [CartController::class, 'addToCart'])->name('cart.store');
+Route::post('cart/update', [CartController::class, 'updateCart'])->name('cart.update');
+Route::post('cart/remove', [CartController::class, 'removeCart'])->name('cart.remove');
+Route::get('cart/clear', [CartController::class, 'clearAllCart'])->name('cart.clear');
 
 // Master Files-------
 /* .....CREATING ROUTE FOR Customer Creation ....... */
@@ -150,9 +165,15 @@ Route::prefix('warehouse')->group(function () {
 Route::prefix('StockAdjustment')->group(function () {
     Route::get('/', [StockAdjustmentController::class, 'index'])->name('stockadjustment.index');
     Route::get('/create', [StockAdjustmentController::class, 'create'])->name('stockadjustment.create');
-    Route::post('/create', [App\Http\Controllers\StockAdjustmentController::class, 'store'])->name('stockadjustment.store');
-    Route::post('/item/store', [StockAdjustmentController::class, 'storeItem'])->name('stockadjustment.item.store');
-    Route::get('/get/items/table', [StockAdjustmentController::class, 'itemsTable'])->name('stockadjustment.item.table');
+    Route::post('/create', [StockAdjustmentController::class, 'store'])->name('stockadjustment.store');
+
+    Route::post('/add-to-table', [StockAdjustmentController::class, 'addToTable'])->name('stockadjustment.addToTable');
+    Route::post('/remove-from-table', [StockAdjustmentController::class, 'removeFromTable'])->name('stockadjustment.removeFromTable');
+    Route::get('/view-table', [StockAdjustmentController::class, 'viewTable'])->name('stockadjustment.viewTable');
+
+    Route::get('/approval/{stock_adjustment}', [StockAdjustmentController::class, 'approvalIndex'])->name('stockadjustment.approvalIndex');
+    Route::post('/approval/{stock_adjustment}', [StockAdjustmentController::class, 'approval'])->name('stockadjustment.approval');
+
 });
 
 /* .....CREATING ROUTE FOR Location Bay Design ....... */
@@ -385,7 +406,7 @@ Route::prefix('deliveryorders')->group(function () {
     Route::get('/{delivery_order}/issue_delivery_order', [DeliveryOrderController::class, 'issueIndex'])->name('deliveryorders.issueIndex');
     Route::post('/{delivery_order}/issue_delivery_order', [DeliveryOrderController::class, 'issueStore'])->name('deliveryorders.issueStore');
     Route::get('/{delivery_order}/get', [DeliveryOrderController::class, 'getById'])->name('deliveryorders.getById');
-
+    Route::get('/{delivery_order_id}/print', [DeliveryOrderController::class, 'print'])->name('deliveryorders.print');
 });
 
 Route::prefix('returns')->group(function () {
@@ -396,7 +417,6 @@ Route::prefix('returns')->group(function () {
 
     Route::get('/approval', [ReturnController::class, 'approvalIndex'])->name('returns.approvalIndex');
     Route::post('{invoice_return}/approval', [ReturnController::class, 'approval'])->name('returns.approval');
-
 });
 
 // Inventory Control
@@ -422,10 +442,20 @@ Route::prefix('miscissued')->group(function () {
 /* .....CREATING ROUTE FOR Stock Location Change ....... */
 Route::prefix('StockLocationChange')->group(function () {
     Route::get('/', [StockLocationChangeController::class, 'index'])->name('stocklocationchange.index');
-    Route::get('/create', [App\Http\Controllers\StockLocationChangeController::class, 'create'])->name('stocklocationchange.create');
-    Route::post('/create', [App\Http\Controllers\StockLocationChangeController::class, 'store'])->name('stocklocationchange.store');
-    Route::post('/item/store', [StockLocationChangeController::class, 'storeItem'])->name('stocklocationchange.item.store');
-    Route::get('/get/items/table', [StockLocationChangeController::class, 'itemsTable'])->name('stocklocationchange.item.table');
+    Route::get('/create', [StockLocationChangeController::class, 'create'])->name('stocklocationchange.create');
+    Route::post('/create', [StockLocationChangeController::class, 'store'])->name('stocklocationchange.store');
+    Route::post('/add-to-table', [StockLocationChangeController::class, 'addItemToTable'])->name('stocklocationchange.addItemToTable');
+    Route::post('/remove-from-table', [StockLocationChangeController::class, 'removeItemFromTable'])->name('stocklocationchange.removeItemFromTable');
+    Route::get('/view-table', [StockLocationChangeController::class, 'getItemTable'])->name('stocklocationchange.getItemTable');
+
+
+    Route::get('/approvals', [StockLocationChangeController::class, 'approvalIndex'])->name('stocklocationchange_approvals.index');
+    Route::get('/approvals/{slc}/create', [StockLocationChangeController::class, 'approvalCreateIndex'])->name('stocklocationchange_approvals.create');
+    Route::post('/approvals/{slc}/create', [StockLocationChangeController::class, 'approvalStore'])->name('stocklocationchange_approvals.store');
+
+    Route::get('/received', [StockLocationChangeController::class, 'receivedIndex'])->name('stocklocationchange_received.index');
+    Route::get('/received/{slc}/create', [StockLocationChangeController::class, 'receivedCreateIndex'])->name('stocklocationchange_received.create');
+    Route::post('/received/{slc}/create', [StockLocationChangeController::class, 'receivedStore'])->name('stocklocationchange_received.store');
 });
 
 Route::prefix('material_request')->group(function () {
@@ -433,6 +463,24 @@ Route::prefix('material_request')->group(function () {
     Route::get('/create', [App\Http\Controllers\MaterialRequestController::class, 'create'])->name('material_request.create');
     Route::post('/create', [App\Http\Controllers\MaterialRequestController::class, 'store'])->name('material_request.store');
     Route::get('material_request/delete/{index}', [MaterialRequestController::class, 'deleteSessionItem'])->name('material_request.delete_item');
+});
+
+Route::prefix('raw_material_request')->group(function () {
+    Route::get('/', [App\Http\Controllers\RawMaterialRequestController::class, 'index'])->name('raw_material_request.index');
+    Route::get('/create', [App\Http\Controllers\RawMaterialRequestController::class, 'create'])->name('raw_material_request.create');
+    Route::post('/create', [App\Http\Controllers\RawMaterialRequestController::class, 'store'])->name('raw_material_request.store');
+    Route::post('/add-item', [App\Http\Controllers\RawMaterialRequestController::class, 'addItem'])->name('raw_material_request.addItem');
+    Route::post('/delete-item', [App\Http\Controllers\RawMaterialRequestController::class, 'deleteItem'])->name('raw_material_request.deleteItem');
+    Route::get('/view-table', [App\Http\Controllers\RawMaterialRequestController::class, 'viewCartTable'])->name('raw_material_request.viewCartTable');
+
+    
+    Route::get('/getStockItem', [App\Http\Controllers\RawMaterialRequestController::class, 'getStockItem'])->name('raw_material_request.getStockItem');
+});
+Route::prefix('raw_material_request_approve')->group(function () {
+    Route::get('/', [App\Http\Controllers\RawMaterialRequestApproveController::class, 'index'])->name('raw_material_request_approve.index');
+    Route::get('/create', [App\Http\Controllers\RawMaterialRequestApproveController::class, 'create'])->name('raw_material_request_approve.create');
+    Route::post('/create', [App\Http\Controllers\RawMaterialRequestApproveController::class, 'store'])->name('raw_material_request_approve.store');
+    Route::get('/view-table', [App\Http\Controllers\RawMaterialRequestApproveController::class, 'viewCartTable'])->name('raw_material_request_approve.viewCartTable');
 });
 
 Route::prefix('purchase_order')->group(function () {
@@ -446,6 +494,23 @@ Route::prefix('FinishedGoods')->group(function () {
     Route::get('FinishedGoods', [App\Http\Controllers\FinishedGoodsController::class, 'index'])->name('finishedgoods.index');
     Route::get('/create', [FinishedGoodsController::class, 'create'])->name('finishedgoods.create');
     Route::post('/create', [App\Http\Controllers\FinishedGoodsController::class, 'store'])->name('finishedgoods.store');
+
+    Route::get('/get-rmi-items', [App\Http\Controllers\FinishedGoodsController::class, 'getRmiItems'])->name('finishedgoods.getRmiItems');
+    Route::post('/add-to-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'addToFinishGoodTable'])->name('finished_goods.addToFinishGoodTable');
+    Route::post('/remove-from-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'removeFromFinishGoodTable'])->name('finishedgoods.removeFromFinishGoodTable');
+    Route::get('/get-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'getFinishGoodTable'])->name('finishedgoods.getFinishGoodTable');
+
+    Route::post('/add-to-wastage-table', [App\Http\Controllers\FinishedGoodsController::class, 'addToWastageTable'])->name('finishedgoods.addToWastageTable');
+    Route::post('/remove-from-wastage-table', [App\Http\Controllers\FinishedGoodsController::class, 'removeFromWastageTable'])->name('finishedgoods.removeFromWastageTable');
+    Route::get('/get-wastage-table', [App\Http\Controllers\FinishedGoodsController::class, 'getWastageTable'])->name('finishedgoods.getWastageTable');
+
+    Route::get('/get-total-calculations', [App\Http\Controllers\FinishedGoodsController::class, 'getTotalCalculations'])->name('finishedgoods.getTotalCalculations');
+});
+
+Route::prefix('FinishedGoodsApproval')->group(function () {
+    Route::get('FinishedGoodsApproval', [FinishedGoodsApprovalController::class, 'index'])->name('finished_goods_approval.index');
+    Route::get('/inspect/{finished_good}', [FinishedGoodsApprovalController::class, 'create'])->name('finished_goods_approval.create');
+    Route::post('/inspect/{finished_good}', [FinishedGoodsApprovalController::class, 'store'])->name('finished_goods_approval.store');
 });
 
 Route::prefix('Disposal')->group(function () {
@@ -465,6 +530,7 @@ Route::prefix('goodsreceived')->group(function () {
     Route::get('/create', [App\Http\Controllers\GoodsReceivedController::class, 'create'])->name('goodsreceived.create');
     Route::post('/create', [App\Http\Controllers\GoodsReceivedController::class, 'store'])->name('goodsreceived.store');
     Route::get('/get-items', [App\Http\Controllers\GoodsReceivedController::class, 'getPoItems'])->name('goodsreceived.getPoItems');
+    Route::get('/get-list', [App\Http\Controllers\GoodsReceivedController::class, 'getGrnList'])->name('goodsreceived.getGrnList');
 });
 
 Route::prefix('MaterialsReturnByCustomer')->group(function () {
@@ -484,6 +550,17 @@ Route::prefix('ProductionPlanningAndSchedule')->group(function () {
     Route::get('/create', [App\Http\Controllers\ProductionPlanningAndScheduleController::class, 'create'])->name('productionplanningandschedule.create');
     Route::post('/create', [App\Http\Controllers\ProductionPlanningAndScheduleController::class, 'store'])->name('productionplanningandschedule.store');
     Route::get('/get-items', [App\Http\Controllers\ProductionPlanningAndScheduleController::class, 'getDfItems'])->name('productionplanningandschedule.getDfItems');
+
+    Route::get('approvals', [ProductionPlanningAndScheduleController::class, 'indexApproval'])->name('productionplanningandschedule.indexApproval');
+    Route::get('approvals/create', [ProductionPlanningAndScheduleController::class, 'storeApprovalIndex'])->name('productionplanningandschedule.storeApprovalIndex');
+    Route::post('approvals/create', [ProductionPlanningAndScheduleController::class, 'storeApproval'])->name('productionplanningandschedule.storeApproval');
+});
+
+Route::prefix('production-planning-and-schedule-approval')->group(function () {
+    Route::get('', [ProductionPlanningApprovalController::class, 'index'])->name('production_planning_and_schedule_approval.index');
+    Route::get('/create', [ProductionPlanningApprovalController::class, 'create'])->name('production_planning_and_schedule_approval.create');
+    Route::post('/create', [ProductionPlanningApprovalController::class, 'store'])->name('production_planning_and_schedule_approval.store');
+    Route::get('/get-items', [ProductionPlanningApprovalController::class, 'getItems'])->name('production_planning_and_schedule_approval.getItems');
 });
 
 Route::prefix('rawmaterialsserialcodeassigning')->group(function () {
@@ -497,6 +574,17 @@ Route::prefix('RawMaterialIssueForProduction')->group(function () {
     Route::get('RawMaterialIssueForProduction', [RawMaterialIssueForProductionController::class, 'index'])->name('rawmaterialissueforproduction.index');
     Route::get('/create', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'create'])->name('rawmaterialissueforproduction.create');
     Route::post('/create', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'store'])->name('rawmaterialissueforproduction.store');
+    Route::get('/get-semi-product-serials', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'getSemiProductSerials'])->name('rawmaterialissueforproduction.getSemiProductSerials');
+    Route::post('/add-item', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'addItem'])->name('rawmaterialissueforproduction.addItem');
+    Route::post('/delete-item', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'deleteItem'])->name('rawmaterialissueforproduction.deleteItem');
+    Route::get('/view-table', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'viewCartTable'])->name('rawmaterialissueforproduction.viewCartTable');
+});
+
+Route::prefix('RawMaterialReceivedForProduction')->group(function () {
+    Route::get('RawMaterialReceivedForProduction', [RawMaterialReceivedController::class, 'index'])->name('rawmaterial_received_for_production.index');
+    Route::get('/create', [RawMaterialReceivedController::class, 'create'])->name('rawmaterial_received_for_production.create');
+    Route::post('/create', [RawMaterialReceivedController::class, 'store'])->name('rawmaterial_received_for_production.store');
+    Route::get('/get-item-list', [RawMaterialReceivedController::class, 'getItemList'])->name('rawmaterial_received_for_production.getItemList');
 });
 
 Route::prefix('SemiProduction')->group(function () {
@@ -504,13 +592,24 @@ Route::prefix('SemiProduction')->group(function () {
     Route::get('/create', [App\Http\Controllers\SemiProductionController::class, 'create'])->name('semiproduction.create');
     Route::post('/create', [App\Http\Controllers\SemiProductionController::class, 'store'])->name('semiproduction.store');
     Route::get('/loadSerial', [App\Http\Controllers\SemiProductionController::class, 'loadSerial'])->name('semiproduction.loadserial');
-    Route::get('/delete/{index}', [App\Http\Controllers\SemiProductionController::class, 'deleteSessionItem'])->name('semiproduction.delete_item');
+    Route::post('/delete', [App\Http\Controllers\SemiProductionController::class, 'deleteSessionItem'])->name('semiproduction.delete_item');
+    Route::post('/addSemiProducts', [App\Http\Controllers\SemiProductionController::class, 'addSemiProducts'])->name('semiproduction.addSemiProducts');
+    Route::get('/view-cart-table', [App\Http\Controllers\SemiProductionController::class, 'viewCartTable'])->name('semiproduction.viewCartTable');
+    Route::get('/get_next_semi_product_serial_no', [App\Http\Controllers\SemiProductionController::class, 'getNextSemiProductSerialNumber'])->name('semiproduction.getNextSemiProductSerialNumber');
 });
 
 Route::prefix('JobOrderCreation')->group(function () {
     Route::get('JobOrderCreation', [JobOrderCreationController::class, 'index'])->name('jobordercreation.index');
     Route::get('/create', [App\Http\Controllers\JobOrderCreationController::class, 'create'])->name('jobordercreation.create');
     Route::post('/create', [App\Http\Controllers\JobOrderCreationController::class, 'store'])->name('jobordercreation.store');
+    Route::get('/get-items', [App\Http\Controllers\JobOrderCreationController::class, 'getItems'])->name('jobordercreation.getItems');
+});
+
+Route::prefix('job-order-approval')->group(function () {
+    Route::get('', [JobOrderApprovalController::class, 'index'])->name('joborderapproval.index');
+    Route::get('/create', [JobOrderApprovalController::class, 'create'])->name('joborderapproval.create');
+    Route::post('/create', [JobOrderApprovalController::class, 'store'])->name('joborderapproval.store');
+    Route::get('/get-items', [JobOrderApprovalController::class, 'getItems'])->name('joborderapproval.getItems');
 });
 
 Route::prefix('ProductionWastage')->group(function () {
@@ -523,7 +622,17 @@ Route::prefix('Dispatch')->group(function () {
     Route::get('Dispatch', [DispatchController::class, 'index'])->name('dispatch.index');
     Route::get('/create', [App\Http\Controllers\DispatchController::class, 'create'])->name('dispatch.create');
     Route::post('/create', [App\Http\Controllers\DispatchController::class, 'store'])->name('dispatch.store');
+
+    Route::get('/get-fgrn-items', [App\Http\Controllers\DispatchController::class, 'getFgrnItems'])->name('dispatch.getFgrnItems');
+    Route::get('/get-calculations', [App\Http\Controllers\DispatchController::class, 'getCalculation'])->name('dispatch.getCalculation');
 });
+
+Route::prefix('Dispatch-approval')->group(function () {
+    Route::get('/', [DispatchApprovalController::class, 'index'])->name('dispatch_approval.index');
+    Route::get('/create/{dispatch_item}', [DispatchApprovalController::class, 'create'])->name('dispatch_approval.create');
+    Route::post('/create', [DispatchApprovalController::class, 'store'])->name('dispatch_approval.store');
+});
+
 Route::prefix('FinishedGoodsSerialCodeAssigning')->group(function () {
     Route::get('FinishedGoodsSerialCodeAssigning', [App\Http\Controllers\FinishedGoodsSerialCodeAssigningController::class, 'index'])->name('finishedgoodsserialcodeassigning.index');
     Route::get('/create', [App\Http\Controllers\FinishedGoodsSerialCodeAssigningController::class, 'create'])->name('finishedgoodsserialcodeassigning.create');
@@ -535,6 +644,7 @@ Route::prefix('BalanceOrder')->group(function () {
     Route::get('{balance_order}/view', [App\Http\Controllers\BalanceOrderController::class, 'view'])->name('balanceorder.view');
     Route::get('{balance_order}/delicery-order-create', [App\Http\Controllers\BalanceOrderController::class, 'deliveryOrderCreateIndex'])->name('balanceorder.delicery_order_create_index');
     Route::post('{balance_order}/delicery-order-create', [App\Http\Controllers\BalanceOrderController::class, 'deliveryOrderCreate'])->name('balanceorder.delivery_order_create');
+    Route::get('/{balance_order_id}/print', [App\Http\Controllers\BalanceOrderController::class, 'print'])->name('balanceorder.print');
 });
 
 Route::prefix('demand-forecasting')->group(function () {
@@ -549,6 +659,7 @@ Route::prefix('demand-forecast-approve')->group(function () {
     Route::get('/create', [App\Http\Controllers\DfApprovalController::class, 'create'])->name('df_approve.create');
     Route::post('/create', [App\Http\Controllers\DfApprovalController::class, 'store'])->name('df_approve.store');
     Route::get('/get-items', [App\Http\Controllers\DfApprovalController::class, 'getDfApprovedItems'])->name('df_approve.getDfApprovedItems');
+    Route::get('/get-df', [App\Http\Controllers\DfApprovalController::class, 'getDfData'])->name('df_approve.getDfData');
 });
 
 

@@ -9,25 +9,51 @@ use Illuminate\Support\Facades\Auth;
 
 class SupplierController extends Controller
 {
-    public function new()
+    public function generateNextNumber()
     {
-        $last_su =  Supplier::latest()->first();
-        $last_su_number = 0;
-        if($last_su != null){
-           $last_su_number = $last_su->id;
-        }
-        $next_number = "SUP".sprintf("%05d", $last_su_number+1);
-        return view('pages.Supplier.new', compact('next_number'));
+        $count  = Supplier::get()->count();
+        return "SUP" . sprintf('%05d', $count + 1);
     }
 
-    public function all(){
+    public function new()
+    {
+        // $last_su =  Supplier::latest()->first();
+        // $last_su_number = 0;
+        // if ($last_su != null) {
+        //     $last_su_number = $last_su->id;
+        // }
+        // $next_number = "SUP" . sprintf("%05d", $last_su_number + 1);
+        // return view('pages.Supplier.new', compact('next_number'));
+        {
+            $supplier = new Supplier;
+            $next_number = $this->generateNextNumber();
+            return view('pages.Supplier.new', compact('next_number', 'supplier'));
+        }
+
+
+    }
+
+    public function all()
+    {
         $suppliers = Supplier::get();
         return view('pages.Supplier.all', compact('suppliers'));
-
     }
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'supplier_code'=>'required',
+            'supplier_name' => 'required',
+            'supplier_type' => 'required',
+            'supplier_registration_type'=>'required'
+        ]);
+        $isSupExist = Supplier::where('supplier_code', $request->supplier_code)->first();
+            if ($isSupExist) {
+                $data['supplier_code'] = $this->generateNextNumber();
+            }
+
+
+
         $request['created_by'] = Auth::id();
         Supplier::create($request->all());
 
@@ -46,7 +72,7 @@ class SupplierController extends Controller
         $suppliers = Supplier::find($supplier_id);
         $suppliers->update($request->all());
 
-        $request['updated_by']=Auth::id();
+        $request['updated_by'] = Auth::id();
         Supplier::find($supplier_id)->update($request->all());
 
         $response['alert-success'] = 'Supplier updated successfully';
@@ -117,5 +143,4 @@ class SupplierController extends Controller
         $suppliers = Supplier::find($request->supplier_id);
         return $suppliers;
     }
-
 }

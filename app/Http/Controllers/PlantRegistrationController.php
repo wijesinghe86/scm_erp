@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Auth;
 
 class PlantRegistrationController extends Controller
 {
+
+    public function generateNextNumber()
+    {
+        $count  = PlantRegistration::get()->count();
+        return "PLT" . sprintf('%05d', $count + 1);
+    }
+
     public function index()
     {
         $plantregistrations = PlantRegistration::get();
@@ -22,14 +29,17 @@ class PlantRegistrationController extends Controller
     {
         $warehouses = Warehouse::get();
 
-        $last_pr =  PlantRegistration::latest()->first();
-        $last_pr_number = 0;
-        if($last_pr != null){
-           $last_pr_number = $last_pr->id;
-        }
-        $next_number = "PLT".sprintf("%05d", $last_pr_number+1);
+        // $last_pr =  PlantRegistration::latest()->first();
+        // $last_pr_number = 0;
+        // if($last_pr != null){
+        //    $last_pr_number = $last_pr->id;
+        // }
+        // $next_number = "PLT".sprintf("%05d", $last_pr_number+1);
+        $plant = new PlantRegistration;
+        $next_number = $this->generateNextNumber();
 
-        return view('pages.PlantRegistration.create',compact('warehouses', 'next_number'));
+
+        return view('pages.PlantRegistration.create',compact('warehouses', 'next_number', 'plant'));
     }
 
     public function store(Request $request){
@@ -37,6 +47,19 @@ class PlantRegistrationController extends Controller
         // Supplier::create($request->all());
 
         // $request['created_by'] = Auth::id();
+        $this->validate($request, [
+            'plant_number' => 'required',
+            'plant_name' => 'required',
+            'plant_serial_number' => 'required'
+
+        ]);
+
+        $isPtlExist = PlantRegistration::where('plant_number', $request->plant_number)->first();
+            if ($isPtlExist) {
+                $data['plant_number'] = $this->generateNextNumber();
+            }
+
+
         $request['created_by']=Auth::id();
         PlantRegistration::create($request->all());
 

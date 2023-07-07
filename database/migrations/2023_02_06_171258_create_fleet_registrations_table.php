@@ -19,11 +19,11 @@ return new class extends Migration
             $table->string('fleet_name')->nullable();
             $table->string('fleet_registration_number')->nullable();
             $table->string('fleet_model_manufacture')->nullable();
-            $table->integer('category_of_fleet')->default(1);
+            $table->integer('category_of_fleet')->nullable();
             $table->string('current_meter_reading')->nullable();
-            $table->integer('type_of_fuel_consumption')->default(1);
+            $table->integer('type_of_fuel_consumption')->nullable();
             $table->string('loading_capacity')->nullable();
-            $table->integer('fleet_type')->default(1);
+            $table->integer('fleet_type')->nullable();
             $table->string('make')->nullable();
             $table->string('model')->nullable();
             $table->string('fleet_manufacture_year')->nullable();
@@ -40,7 +40,7 @@ return new class extends Migration
             $table->date('insurance_start_date')->nullable();
             $table->date('insurance_expire_date')->nullable();
             $table->decimal('amount',15,2)->nullable();
-            $table->integer('fleet_registration_status')->default(1);
+            $table->integer('fleet_registration_status')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();

@@ -10,4 +10,18 @@ class ProductionPlanning extends Model
 {
     use HasFactory;
 
+    public function items()
+    {
+        return $this->hasMany(ProductionPlaningItem::class, 'pps_id', 'id');
+    }
+
+    public function demand_forecasting()
+    {
+        return $this->hasOne(DemandForecasting::class, 'id', 'df_id');
+    }
+
+    public function job_orders()
+    {
+        return $this->hasMany(JobOrder::class, 'pps_no', 'id');
+    }
 }

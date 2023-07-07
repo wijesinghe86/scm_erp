@@ -5,7 +5,7 @@
     <div class="col-12 grid-margin stretch-card">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title">Goods Issue Note</h4>
+          <h4 class="card-title">Raw Material Issue Note</h4>
           <form class="forms-sample" method="POST" action="{{ route('goodsissuenote.store') }}">
               @csrf
                 <div class="row">

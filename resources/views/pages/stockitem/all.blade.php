@@ -10,7 +10,8 @@
                             <a href="{{ route('stockitem.create') }}" class="btn btn-success float-end mb-2"> Add New </a>
                             <a href="{{ route('stockitem.deleted') }}" class="btn btn-danger float-end mb-2"> Delete </a>
                         </div>
-
+                        <div class="table-responsive">
+                            <table class="table bordered form-group">
                             <table class="table table-bordered" id="tbl_stockitem">
 
                                 <thead>

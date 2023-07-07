@@ -12,6 +12,8 @@
                                 {{-- <a href="{{ route('balanceorder.create') }}" class="btn btn-success float-end mb-2"> Add New </a> --}}
                                 {{-- <a href="{{ route('balanceorder.deleted') }}" class="btn btn-success float-end mb-2"> Deleted </a> --}}
                             </div>
+                            <div class="table-responsive">
+                                <table class="table bordered form-group">
                             <table class="table table-bordered" id="tbl_balanceorder">
                                 <thead>
                                     <tr>

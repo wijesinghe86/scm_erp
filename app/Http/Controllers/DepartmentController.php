@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class DepartmentController extends Controller
 {
+    public function generateNextNumber()
+    {
+        $count  = Department::get()->count();
+        return "DEP" . sprintf('%03d', $count + 1);
+    }
+
     public function index()
     {
         $departments =  Department::get();
@@ -17,18 +23,37 @@ class DepartmentController extends Controller
 
      public function create()
     {
-        $last_dp =  Department::latest()->first();
-        $last_dp_number = 0;
-        if($last_dp != null){
-           $last_dp_number = $last_dp->id;
-        }
-        $next_number = "DEP".sprintf("%03d", $last_dp_number+1);
-        return view('pages.department.create',compact('next_number'));
+        // $last_dp =  Department::latest()->first();
+        // $last_dp_number = 0;
+        // if($last_dp != null){
+        //    $last_dp_number = $last_dp->id;
+        // }
+        // $next_number = "DEP".sprintf("%03d", $last_dp_number+1);
+        // return view('pages.department.create',compact('next_number'));
+
+            $department = new Department;
+            $next_number = $this->generateNextNumber();
+            return view('pages.department.create', compact('next_number', 'department'));
+
+
     }
 
     public function store(Request $request){
         // dd($request->all());
         // Supplier::create($request->all());
+
+        $this->validate($request, [
+            'department_number'=>'required',
+            'department_name' => 'required',
+            'department_description' => 'required',
+
+        ]);
+        $isDepExist = Department::where('department_number', $request->department_number)->first();
+            if ($isDepExist) {
+                $data['department_number'] = $this->generateNextNumber();
+            }
+
+
 
         $request['created_by'] = Auth::id();
         Department::create($request->all());
@@ -94,7 +119,7 @@ class DepartmentController extends Controller
     public function view($department_id)
     {
         $response['departments'] = Department::find($department_id);
-        return view('pages.Department.view')->with($response);
+        return view('pages.department.view')->with($response);
     }
 
     public function getData(Request $request)
