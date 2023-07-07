@@ -99,8 +99,10 @@ class RawMaterialIssueForProductionController extends Controller
                 $stock = Stock::where('stock_item_id',  $semiProduct->semi_pro_stock_no)
                     ->where('warehouse_id', $semiProduct->semi_production->warehouse_id)
                     ->first();
-                $stock->qty = $stock->qty - $item['semi_product_qty'];
-                $stock->save();
+                if ($stock) {
+                    $stock->qty = $stock->qty - $item['semi_product_qty'];
+                    $stock->save();
+                }
             }
 
             DB::commit();
@@ -109,6 +111,8 @@ class RawMaterialIssueForProductionController extends Controller
         } catch (Exception $e) {
             DB::rollBack();
             logger($e);
+            flash()->error($e->getMessage());
+            redirect()->back()->withInput();
         }
     }
 
