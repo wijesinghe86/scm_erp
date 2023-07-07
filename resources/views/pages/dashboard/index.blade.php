@@ -55,7 +55,7 @@
         <div class="card">
           <div class="card-body">
             <div class="clearfix">
-              <h4 class="card-title float-left"> </h4>
+              <h4 class="card-title float-left">Fast Moving Items </h4>
             </div>
           </div>
         </div>
@@ -63,7 +63,7 @@
       <div class="col-md-5 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title"> </h4>
+            <h4 class="card-title">Slow Moving Items</h4>
           </div>
         </div>
       </div>
@@ -72,7 +72,7 @@
       <div class="col-12 grid-margin">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title"> </h4>
+            <h4 class="card-title">Outstanding Invoice </h4>
             <div class="table-responsive">
 
             </div>
@@ -84,7 +84,7 @@
       <div class="col-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title"> </h4>
+            <h4 class="card-title">Customer Statistics</h4>
             <div class="d-flex">
               <div class="d-flex align-items-center me-4 text-muted font-weight-light">
                 {{-- <i class="mdi mdi-account-outline icon-sm me-2"></i> --}}
@@ -106,7 +106,7 @@
       <div class="col-md-7 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title"> </h4>
+            <h4 class="card-title">Daily Activities</h4>
             <div class="table-responsive">
 
             </div>
