@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('location_id')->nullable();
             $table->string('payment_method')->nullable();
+            $table->string('is_approved')->nullable();
             $table->timestamps();
         });
     }

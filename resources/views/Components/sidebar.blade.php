@@ -72,7 +72,7 @@
             </div>
         </li>
 
-     
+
     {{-- Procurement --}}
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-procurement" aria-expanded="false"
@@ -112,8 +112,8 @@
                 </li>
                 <li class="nav-item"> <a class="nav-link" href="{{ route('invoices.all') }}">Invoice</a>
                 </li>
-                
-    
+
+
 </ul>
 </div>
 </li>
@@ -225,7 +225,7 @@
                         Assigning </a></li> --}}
                 {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('productionwastage.index') }}">Production
                         Wastage</a></li> --}}
-                
+
                 <li class="nav-item"> <a class="nav-link" href="{{ route('dispatch.index') }}">Dispatch</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ route('dispatch_approval.index') }}">Dispatch
                         Approval</a></li>
@@ -295,7 +295,57 @@
             </ul>
         </div>
     </li>
-
+    <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="collapse" href="#ui-inv" aria-expanded="false" aria-controls="ui-inv">
+            <span class="menu-title">Warehouse</span>
+            {{-- <i class="menu-arrow"></i> --}}
+            <i class="mdi mdi-contacts menu-icon"></i>
+        </a>
+        <div class="collapse" id="ui-inv">
+            <ul class="nav flex-column sub-menu">
+                {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('purchase_order.index') }}">Purchase
+                        Order</a></li> --}}
+                <li class="nav-item"> <a class="nav-link" href="{{ route('goodsreceived.index') }}">Goods
+                        Received</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('deliveryorders.all') }}">Delivery
+                            Order</a>
+                    </li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('balanceorder.index') }}">Balance
+                            Order</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('returns.all') }}">Customer Return</a></li>
+        </li>
+        <li class="nav-item"> <a class="nav-link" href="{{ route('returns.approvalIndex') }}">Customer Return Approval</a>
+        </li>
+                {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('goodsissuenote.index') }}">Goods Issue
+                        Note</a></li> --}}
+                {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('balanceorder.index') }}">Balance
+                        Order</a></li> --}}
+                {{-- <li class="nav-item"> <a class="nav-link"
+                        href="{{ route('materialsreturnbycustomer.index') }}">Materials Return By Customer</a>
+                </li> --}}
+                <li class="nav-item"> <a class="nav-link" href="{{ route('stockadjustment.index') }}">Stock
+                        Adjustment </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('stocklocationchange.index') }}">Stock
+                        Location Change</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('stocklocationchange_approvals.index') }}">Stock
+                        Location Change <br> Approval</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('stocklocationchange_received.index') }}">Stock
+                        Location Change <br> Recived</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('finishedgoods.index') }}">Finished
+                        Goods</a></li>
+                <li class="nav-item"> <a class="nav-link"
+                        href="{{ route('finished_goods_approval.index') }}">Finished
+                        Goods Inspect</a></li>
+                {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('overshortanddamage.index') }}">Over
+                        Short And Damage Details Creation</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('disposal.index') }}">Disposal</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('miscreceived.index') }}">Miscellaneous
+                        Received </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('miscissued.index') }}">Miscellaneous
+                        Issued </a></li> --}}
+            </ul>
+        </div>
+    </li>
     {{-- Planning / Layout Design --}}
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-plan" aria-expanded="false"
