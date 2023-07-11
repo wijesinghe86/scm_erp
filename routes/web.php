@@ -52,6 +52,7 @@ use App\Http\Controllers\WarehouseAreaDesignController;
 use App\Http\Controllers\EquipmentRegistrationController;
 use App\Http\Controllers\FinishedGoodsApprovalController;
 use App\Http\Controllers\JobOrderApprovalController;
+use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ManAndEquipmentSafetyController;
 use App\Http\Controllers\MiscellaneousReceivedController;
 use App\Http\Controllers\OverShortageAndDamageController;
@@ -81,7 +82,7 @@ Route::get('/', function () {
 });
 Auth::routes();
 
-// Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
+Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 Route::get('/', [HomeController::class, 'index'])->name('dashboard');
 
