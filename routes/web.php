@@ -65,6 +65,7 @@ use App\Http\Controllers\SemiFinishedGoodsSerialCodeAssigningController;
 use App\Http\Controllers\OperationMachanismProductionAndTimeManagementController;
 use App\Http\Controllers\ProductionPlanningApprovalController;
 use App\Http\Controllers\RawMaterialReceivedController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,7 +81,7 @@ use App\Http\Controllers\RawMaterialReceivedController;
 Route::get('/', function () {
     return view('welcome');
 });
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 
@@ -174,7 +175,6 @@ Route::prefix('StockAdjustment')->group(function () {
 
     Route::get('/approval/{stock_adjustment}', [StockAdjustmentController::class, 'approvalIndex'])->name('stockadjustment.approvalIndex');
     Route::post('/approval/{stock_adjustment}', [StockAdjustmentController::class, 'approval'])->name('stockadjustment.approval');
-
 });
 
 /* .....CREATING ROUTE FOR Location Bay Design ....... */
@@ -474,7 +474,7 @@ Route::prefix('raw_material_request')->group(function () {
     Route::post('/delete-item', [App\Http\Controllers\RawMaterialRequestController::class, 'deleteItem'])->name('raw_material_request.deleteItem');
     Route::get('/view-table', [App\Http\Controllers\RawMaterialRequestController::class, 'viewCartTable'])->name('raw_material_request.viewCartTable');
 
-    
+
     Route::get('/getStockItem', [App\Http\Controllers\RawMaterialRequestController::class, 'getStockItem'])->name('raw_material_request.getStockItem');
 });
 Route::prefix('raw_material_request_approve')->group(function () {
@@ -753,4 +753,19 @@ Route::prefix('raw-material-code-assign')->group(function () {
 
 Route::get('/test/inovice-items', function () {
     return App\Models\InvoiceItem::where('invoice_number', "BT002000001")->get()->groupBy('location_id')->toArray();
+});
+
+
+Route::prefix('users')->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('users.index');
+    Route::get('/create', [UserController::class, 'new'])->name('users.new');
+    Route::post('/store', [UserController::class, 'store'])->name('users.store');
+    Route::get('/update/{user}', [UserController::class, 'indexUpdate'])->name('users.indexUpdate');
+    Route::post('/update/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::get('/delete/{user}', [UserController::class, 'delete'])->name('users.delete');
+
+
+    Route::get('/password-chanege', [UserController::class, 'passwordChangeIndex'])->name('users.passwordChangeIndex');
+    Route::post('/password-chanege/{user}', [UserController::class, 'passwordChange'])->name('users.passwordChange');
+
 });

@@ -11,8 +11,7 @@ class MrPurchaseItem extends Model
     use HasFactory;
 
     public function item()
-{
-    return $this->belongsTo(StockItem::class, 'item_id', 'id');
-
-}
+    {
+        return $this->belongsTo(StockItem::class, 'item_id', 'id');
+    }
 }
