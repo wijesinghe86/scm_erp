@@ -29,12 +29,16 @@
                                                 @foreach ($delivery_order->items as $key => $item)
                                                     @php
                                                         $location_id = $item->location;
-                                                        $filterStockData = $item->stock_item->stocks->filter(function ($stock) use ($location_id) {
-                                                            return $stock->warehouse_id == $location_id;
-                                                        });
+                                                        $filterStockData = [];
+                                                        foreach ($item->stock_item->stocks as $key => $stock) {
+                                                            if ($stock->warehouse_id == $location_id) {
+                                                                array_push($filterStockData, $stock);
+                                                            }
+                                                        }
+                                                        
                                                         $stock = 0;
                                                         if (count($filterStockData) > 0) {
-                                                            $stock = $filterStockData[0]['qty'];
+                                                            $stock = reset($filterStockData)['qty'];
                                                         }
                                                         
                                                     @endphp

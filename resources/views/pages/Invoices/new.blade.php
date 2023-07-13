@@ -352,6 +352,9 @@
                 const filterCurrentStockData = selectedItemData?.stocks?.find(row => row?.warehouse?.id ==
                     warehouse)
                 if (parseFloat(quantity) > parseFloat(filterCurrentStockData?.qty)) {
+                    alertDanger(
+                        `${filterCurrentStockData?.qty} stock available on ${filterCurrentStockData?.warehouse?.warehouse_name} warehouse`
+                        )
                     $(this).val(filterCurrentStockData?.qty)
                 }
             }
@@ -552,14 +555,12 @@
             }
 
             $.ajax({
-                url: "{{ route('cart.store') }}",
+                url: "{{ route('invoices.item.store') }}",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "POST",
-                data: {
-                    item_data: data
-                },
+                data: data,
                 success: function(response) {
                     fetchInvoiceTotal();
                     $('#stock_no').val("");

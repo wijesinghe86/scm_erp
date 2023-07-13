@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use PDF;
 use Cart;
 use Exception;
-use App\Models\Invoice;
+use App\Models\Stock;
 // use App\Models\Item;
+use App\Models\Invoice;
 use App\Models\Customer;
 use App\Models\Employee;
 use App\Models\StockItem;
@@ -19,7 +20,7 @@ use App\Models\InvoiceSetting;
 use App\Models\DeliveryOrderItem;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Validation\ValidationException;
 
 class InvoiceController extends ParentController
 {
@@ -207,45 +208,22 @@ class InvoiceController extends ParentController
 
     public function storeItem(Request $request)
     {
-        // $customer = Customer::find($request->customer_id);
+        $stock = Stock::where('stock_item_id', $request['id'])->where('warehouse_id', $request['attributes']['location_id'])->first();
+        $warehouse = Warehouse::find($request['attributes']['location_id']);
+        if (!$stock) {
+            throw ValidationException::withMessages(['item' => "Stock Record not found"]);
+        }
 
-        // $invoice_total = InvoiceItem::where('invoice_number', $request->invoice_no)->sum('total');
-        // $new_total = $invoice_total + ($request->quantity * $request->unit_price) - (($request->quantity * $request->unit_price) * ($request->item_discount_percentage/100));
+        $cartItem = Cart::session(request()->user()->id)->get($request['id']);
 
-        // if($customer->customer_credit_limit < $new_total)
-        // {
-        //     return response()->json(['status'=>0, 'message' =>'Customer credit limit exceeded ']);
-        // }
-        // else
-        // {
-
-        $this->validate($request, [
-            'item_id' => 'required',
-            'unit_price' => 'required',
-            'quantity' => 'required',
-            'location_id' => 'required',
-        ], [
-            'item_id.required' => 'The item is required'
-        ]);
-
-        $item = StockItem::find($request->item_id);
-        InvoiceItem::create([
-            'invoice_number' => $request->invoice_no,
-            'item_id' => $request->item_id,
-            'stock_no' => $item->stock_number,  //from stockitem table
-            'description' => $item->description,  //from stockitem table
-            'uom' => $item->unit,  //from stockitem table
-            'location_id' => $request->location_id,
-            'quantity' => $request->quantity,
-            'unit_price' => $request->unit_price,
-            'sub_total' => $request->quantity * $request->unit_price,
-            'item_discount_percentage' => $request->item_discount_percentage ?? 0,
-            'item_discount_amount' => $request->item_discount_amount ?? 0,
-            'total' => ($request->quantity * $request->unit_price) - (($request->quantity * $request->unit_price) * ($request->item_discount_percentage / 100)),
-        ]);
-
-        //     return response()->json(['status' =>1, 'message' => 'Item added to invoice']);
-        // }
+        if ($cartItem) {
+            $newQty = $request['quantity'] + $cartItem['quantity'];
+            if ($stock->qty < $newQty) {
+                throw ValidationException::withMessages(['item' => "Item quantity exceed the stock in hand"]);
+            }
+        }
+        Cart::session(request()->user()->id)->add($request->all());
+        return $this->cartList();
     }
 
     public function deleteItem(Request $request)
@@ -281,5 +259,22 @@ class InvoiceController extends ParentController
         $discount_type =  $request->discount_type ?? "fixed";
 
         return (new Invoice)->calculateTotal($request->invoice_no, $option, $discount_amount, $discount_type);
+    }
+
+
+
+    public function cartList()
+    {
+        $cartCollection =  Cart::session(request()->user()->id)->getContent();
+        $sorted = $cartCollection->sortBy(function ($product, $key) {
+            return $key;
+        });
+        $subTotal = Cart::session(request()->user()->id)->getSubTotal();
+        $total = Cart::session(request()->user()->id)->getTotal();
+        return [
+            'cart' => $sorted->toArray(),
+            'subTotal' => $subTotal,
+            'total' => $total
+        ];
     }
 }

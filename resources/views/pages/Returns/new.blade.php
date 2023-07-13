@@ -271,7 +271,7 @@
 
         let selectedDeliveryOrder = {};
 
-        let customerId = "{{ $customer->id }}";
+        let customerId = "{{$customer_data ? $customer_data->id : ""}}";
         let invoiceDate = "{{ $invoice_date }}";
         let invoiceNumber = "{{ $invoice_number }}"
         let deliveryOrderId = "{{ $delivery_order_no }}"
