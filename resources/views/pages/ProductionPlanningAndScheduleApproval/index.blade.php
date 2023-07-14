@@ -24,6 +24,7 @@
                                         <td>Created By</td>
                                         <td>Status</td>
                                         <td>Approved By</td>
+                                        <td>Remark</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -37,6 +38,7 @@
                                             <td>{{ $item->createdBy->name }}</td>
                                             <td>{{ $item->approval_status }}</td>
                                             <td>{{ $item->approvedBy->name }}</td>
+                                            <td>{{ $item->remark }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

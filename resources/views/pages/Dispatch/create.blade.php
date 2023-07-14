@@ -44,8 +44,8 @@
                             <div class="row">
                                 <div class="form-group col-md-4">
                                     <label>Total No.of Dispatched Items</label>
-                                    <input type="text" class="form-control" name="tot_no_dispatch_items"
-                                        id="tot_no_dispatch_items" placeholder="Total Items">
+                                    <input class="form-control" name="tot_no_dispatch_items"
+                                        type="number" id="tot_no_dispatch_items" placeholder="Total Items">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Total No.of Dispatched Qty</label>
@@ -64,7 +64,7 @@
                                     <label>Fleet No</label>
                                     <select class="form-control" name="fleet_id">
                                         @foreach ($fleets as $fleet)
-                                            <option value="{{ $fleet->id }}">{{ $fleet->fleet_registration_no }}
+                                            <option value="{{ $fleet->id }}">{{ $fleet->fleet_name }}
                                             </option>
                                         @endforeach
                                     </select>

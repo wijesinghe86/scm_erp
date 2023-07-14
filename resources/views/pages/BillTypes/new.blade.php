@@ -16,7 +16,7 @@
                                         <input type="text" class="form-control border-input" name="billtype_code" id="billtype_code" required autocomplete="off">
                                     </div>
                                 </div>
-                                <div class="col-md-8">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="item-name-label">Description</label>
                                         <input type="text" class="form-control border-input" name="billtype_description" id="billtype_description" required autocomplete="off">

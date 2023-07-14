@@ -17,6 +17,7 @@
                                         <td>Created By</td>
                                         <td>Inspected By</td>
                                         <td>Inspected At</td>
+                                        <td>Remark</td>
                                         <td></td>
                                     </tr>
                                 </thead>
@@ -30,6 +31,7 @@
                                             <td>{{optional(optional($fgrn)->createdBy)->name }}</td>
                                             <td>{{optional(optional($fgrn)->inspectedBy)->name }}</td>
                                             <td>{{ date('Y-m-d H:s', strtotime($fgrn->inspected_at)) }}</td>
+                                            <td>{{ $fgrn->approval_remark }}</td>
                                             <td>
                                                 <a href="{{ route('finished_goods_approval.create', $fgrn->id) }}"
                                                     class="btn btn-primary">Inspect</a>

@@ -72,6 +72,8 @@ class StockLocationChangeController extends Controller
             $slc->to_location = $request->to_location;
             $slc->created_by = request()->user()->id;
             $slc->remarks = $request->remarks;
+            $slc->fleet_id = $request->fleet_id;
+            $slc->delivered_by = $request->delivered_by;
             $slc->save();
 
             foreach ($items as $key => $item) {

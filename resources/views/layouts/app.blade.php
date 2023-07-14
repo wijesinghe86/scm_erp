@@ -28,7 +28,7 @@
         <div class="main-panel">
 
           @if ($errors->any())
-            <div class="content-wrapper" style="padding-bottom: 0px;">
+            <div class="content-wrapper" style="flex-grow:unset; padding:2.25rem 2.25rem 0 2.25rem">
                 <div class="alert alert-danger">
                     <ul>
                         @foreach ($errors->all() as $error)

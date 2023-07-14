@@ -35,6 +35,7 @@ class JobOrderApprovalController extends Controller
 
             $job_order_item = JobOrderItem::find($item['id']);
             $job_order_item->approval_status = $item['approval_status'];
+            $job_order_item->approval_remark = $item['approval_remark'];
             $job_order_item->approval_status_changed_by = request()->user()->id;
             $job_order_item->approval_status_changed_at = now();
             if ($item['approval_status'] != null) {

@@ -7,7 +7,9 @@
                     <div class="card-body">
                         <h4 class="card-title">Finished Goods Inspect</h4>
                         @if ($finished_good->inspected_by != null)
-                            <div style="display: flex; justify-content: flex-end;" > <span style="font-size:16px;text-transform: uppercase" class="badge badge-primary float-right">{{ $finished_good->status }}</span></div>
+                            <div style="display: flex; justify-content: flex-end;"> <span
+                                    style="font-size:16px;text-transform: uppercase"
+                                    class="badge badge-primary float-right">{{ $finished_good->status }}</span></div>
                         @endif
                         <div>
                             <div class="row">
@@ -177,13 +179,19 @@
                                 <form style="margin-top: 20px;" method="POST"
                                     action="{{ route('finished_goods_approval.store', $finished_good->id) }}">
                                     @csrf
-                                    <div class="form-group col-md-3">
-                                        <label>Status</label>
-                                        <select required name="status" class="form-control item-select">
-                                            <option value="" selected disabled>Select Finish Good Item</option>
-                                            <option value="approved">Approved</option>
-                                            <option value="reject">Reject</option>
-                                        </select>
+                                    <div class="row" > 
+                                        <div class="form-group col-md-3">
+                                            <label>Status</label>
+                                            <select required name="status" class="form-control item-select">
+                                                <option value="" selected disabled>Select Finish Good Item</option>
+                                                <option value="approved">Approved</option>
+                                                <option value="reject">Reject</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label>Remark</label>
+                                            <input class="form-control" name="approval_remark" />
+                                        </div>
                                     </div>
                                     <button type="submit" class="btn btn-success me-2">Submit</button>
                                 </form>

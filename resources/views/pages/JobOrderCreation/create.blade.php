@@ -71,6 +71,8 @@
                             <button id="jobCreateSubmitBtn" type="submit" class="btn btn-success me-2">Complete Job Order
                                 Creation</button>
 
+                            <a href="{{route('jobordercreation.index')}}" class="btn btn-danger" >Cancel</a>
+
                         </form>
                     </div>
                 </div>

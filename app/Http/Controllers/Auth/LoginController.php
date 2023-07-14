@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\JsonResponse;
+
 
 class LoginController extends Controller
 {
@@ -36,5 +40,24 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    protected function attemptLogin(Request $request)
+    {
+        $credentials = $this->credentials($request);
+        $credentials['is_active'] = true; 
+
+        return $this->guard()->attempt(
+            $credentials,
+            $request->filled('remember')
+        );
+    }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        throw ValidationException::withMessages([
+            // $this->username() => [trans('auth.failed')],
+            $this->username() => ["Invalid Credentials or Your Account is Inactive"],
+        ]);
     }
 }

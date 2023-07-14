@@ -10,12 +10,13 @@
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a href="{{ route('users.new') }}" class="btn btn-success float-end mb-2">Add New </a>
                         </div>
-                        <table class="table table-bordered" id="tbl_warehouse">
+                        <table class="data-table table table-bordered">
                             <thead>
                                 <tr>
                                     <td>No</td>
                                     <td>Name</td>
                                     <td>Email</td>
+                                    <td>Status</td>
                                     <td>Action</td>
                                 </tr>
                             </thead>
@@ -25,11 +26,14 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>
-                                        <a href="{{ route('users.indexUpdate', $user->id) }}">
+                                        {{ $user->is_active == '1' ? 'Active' : 'Inactive' }}
+                                    </td>
+                                    <td style="font-size: 18px;" >
+                                        <a class="p-2" href="{{ route('users.indexUpdate', $user->id) }}">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </a>
                                         @if ($user->id != request()->user()->id)
-                                            <a onclick="return confirmation();"
+                                            <a class="p-2" onclick="return confirmation();"
                                                 href="{{ route('users.delete', $user->id) }}">
                                                 <i class="fa-solid fa-trash-can text-danger"></i>
                                             </a>
@@ -48,6 +52,10 @@
 @endsection
 @push('scripts')
     <script>
+        $(document).ready(function() {
+            $('.data-table').DataTable();
+        });
+
         function confirmation() {
             if (!confirm("Are You Sure to delete this"))
                 event.preventDefault();

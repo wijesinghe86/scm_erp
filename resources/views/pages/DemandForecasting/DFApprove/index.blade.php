@@ -16,7 +16,8 @@
                                 <thead>
                                     <tr>
                                         <td>Date</td>
-                                        <td>Item No</td>
+                                        <td>Stock No</td>
+                                        <td>Description</td>
                                         <td>DF No</td>
                                         <td>Approved Qty</td>
                                         <td>Status</td>
@@ -28,6 +29,7 @@
                                         <tr>
                                             <td>{{ date('Y-m-d',strtotime($row->created_at))}}</td>
                                             <td>{{ $row->item->stock_number }}</td>
+                                            <td>{{ $row->item->description }}</td>
                                             <td>{{ $row->demand_forecast->df_no }}</td>
                                             <td>{{ $row->approved_qty }}</td>
                                             <td>{{ $row->action }}</td>

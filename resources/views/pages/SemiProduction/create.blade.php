@@ -306,6 +306,9 @@
                     index
                 },
                 success: function(response) {
+                    let serial_number_picker = $('#serial_number_picker').val();
+                    const filterItem = rawMaterialCodes.find(row => row?.id == serial_number_picker);
+                    getNextSerialNumber(filterItem?.serial_no)
                     alertSuccess("Item removed successfully")
                     viewCartTable();
                 }
