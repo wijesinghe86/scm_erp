@@ -75,11 +75,11 @@
                                     <input readonly type="text" class="form-control" id="from_stock_number">
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <label>From Stock Number</label>
+                                    <label>From Stock Description</label>
                                     <select style="width: 100%;" class="form-control item-select" id="from_stock_id">
                                         <option value="">Select Item</option>
                                         @foreach ($stock_items as $stock_item)
-                                            <option value="{{ $stock_item->id }}">{{ $stock_item->stock_number }}
+                                            <option value="{{ $stock_item->id }}">{{ $stock_item->description }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -96,14 +96,14 @@
 
                             <div style="display: none;" class="main-container row">
                                 <div class="form-group col-md-3 transfer-show">
-                                    <label>To Stock Number</label>
+                                    <label>To Stock Description</label>
                                     <input readonly type="text" class="form-control" id="to_stock_number">
                                 </div>
                                 <div style="display: none;" class="transfer-show form-group col-md-3">
                                     <label>Transfer To Stock Number</label>
                                     <select style="width: 100%;" class="form-control item-select" id="to_stock_id">
                                         @foreach ($stock_items as $stock_item)
-                                            <option value="{{ $stock_item->id }}">{{ $stock_item->stock_number }}
+                                            <option value="{{ $stock_item->id }}">{{ $stock_item->description }}
                                             </option>
                                         @endforeach
                                     </select>

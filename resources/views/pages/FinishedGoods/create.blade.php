@@ -118,6 +118,10 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-4">
+                                    <label>UOM</label>
+                                    <input type="text" readonly class="form-control" id="wastage_uom">
+                                </div>
+                                <div class="form-group col-md-4">
                                     <label>Qty</label>
                                     <input type="number" class="form-control" id="wastage_qty">
                                 </div>
@@ -311,6 +315,8 @@
                 let wastage_stock_item_id = $(this).val();
                 const stockItem = stockItems?.find(row => row?.id == wastage_stock_item_id)
                 $('#wastage_stock_no').val(stockItem?.stock_number);
+                $('#wastage_uom').val(stockItem?.unit);
+
             })
 
 

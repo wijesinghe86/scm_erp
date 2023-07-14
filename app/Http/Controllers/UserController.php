@@ -27,12 +27,14 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|unique:users',
             'password' => 'required',
+            'is_active' => 'required',
         ]);
 
         $user = new User;
         $user->name = $request->name;
         $user->password = Hash::make($request->password);
         $user->email = $request->email;
+        $user->is_active = $request->is_active;
         $user->save();
 
         flash()->success('User Created');
@@ -67,6 +69,7 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
         }
         $user->email = $request->email;
+        $user->is_active = $request->is_active;
         $user->save();
 
 

@@ -61,7 +61,7 @@
                                         value="{{ old('plant') }}" placeholder="Plant">
                                 </div>
                             </div>
-                            <div style="display:none; position: absolute; top:20%; right:2;" id="stockView">
+                            <div style="display:none; position: absolute; top:5rem; right:2; z-index: 1000; border:1px solid black;" id="stockView">
                                 <table style="background-color: white" class="table table-striped">
                                     <thead style="background-color: lightgray">
                                         <tr>
@@ -110,11 +110,11 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Stock Item Qty</label>
-                                    <input type="text" class="form-control" id="item_qty" value="" placeholder="">
+                                    <input type="number" class="form-control" id="item_qty" value="" placeholder="">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Stock Item Weight</label>
-                                    <input type="text" class="form-control" id="item_weight" value=""
+                                    <input type="number" class="form-control" id="item_weight" value=""
                                         placeholder="">
                                 </div>
                             </div>

@@ -162,6 +162,10 @@
      //          }
      //      });
      //  }
+
+     $(document).ready(function() {
+         $('.data-table').DataTable();
+     });
  </script>
 
  @stack('scripts')

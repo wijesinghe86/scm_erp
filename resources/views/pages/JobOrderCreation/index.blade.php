@@ -13,58 +13,66 @@
                                 {{-- <a href="{{ route('jobordercreation.deleted') }}" class="btn btn-success float-end mb-2"> Deleted </a> --}}
                             </div>
                             <div class="table-responsive">
-                                <table class="table bordered form-group">                          
-                            <table class="table table-bordered" id="tbl_jobordercreation">
-                                <thead>
-                                    <tr>
-                                        <td>No</td>
-                                        <td>Job Order Number</td>
-                                        <td>Job Order Date</td>
-                                        <td>Stock Number</td>
-                                        <td>PPS Number</td>
-                                        <td>Plant Number</td>
-                                        <td>Job Order Quantity</td>
-                                        <td>Created By</td>
-                                        {{-- <td>Actions</td> --}}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($job_order_items as $job_order_item)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $job_order_item->job_order->job_order_no }}</td>
-                                            <td>{{ $job_order_item->job_order->jo_date }}</td>
-                                            <td>{{ $job_order_item->stock_item->stock_number }}</td>
-                                            <td>{{ $job_order_item->production_planing->pps_no }}</td>
-                                            <td>{{ $job_order_item->job_order->plant->plant_number }}</td>
-                                            <td>{{ $job_order_item->jo_qty }}</td>
-                                            <td>{{ $job_order_item->createdBy->name }}</td>
-                                            {{-- <td>
-                                                <a href="{{ route('jobordercreation.edit', $job_order_item->id) }}">
-                                                    <i class="mdi mdi-pencil text-dark"></i></a>
+                                <table class="table bordered form-group">
+                                    <table class="table table-bordered" id="tbl_jobordercreation">
+                                        <thead>
+                                            <tr>
+                                                <td>No</td>
+                                                <td>Job Order Number</td>
+                                                <td>Job Order Date</td>
+                                                <td>PPS Number</td>
+                                                <td>Plant Number</td>
+                                                <td>Created By</td>
+                                                <td>Items</td>
+                                                {{-- <td>Actions</td> --}}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($job_orders as $job_order)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $job_order->job_order_no }}</td>
+                                                    <td>{{ $job_order->jo_date }}</td>
+                                                    <td>{{ $job_order->production_planing->pps_no }}</td>
+                                                    <td>{{ $job_order->plant->plant_number }}</td>
+                                                    <td>{{ $job_order->createdBy->name }}</td>
+                                                    <td>
+                                                        <table class="table table-striped">
+                                                            <tr>
+                                                                <td>#</td>
+                                                                <td>Stock Number</td>
+                                                                <td>Description</td>
+                                                                <td>Qty</td>
+                                                                <td>Approval</td>
+                                                            </tr>
+                                                            @foreach ($job_order->items as $item)
+                                                                <tr>
+                                                                    <td>{{ $loop->iteration }}</td>
+                                                                    <td>{{ $item->stock_item->stock_number }}</td>
+                                                                    <td>{{ $item->stock_item->description }}</td>
+                                                                    <td>{{ $item->jo_qty }}</td>
+                                                                    <td>{{ $item->approval_status_changed_by ? $item->approval_status : '' }}
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
 
-                                                <a href="{{ route('jobordercreation.delete', $job_order_item->id) }}">
-                                                    <i class="mdi mdi-delete text-danger"></i></a>
-
-                                                <a href="{{ route('jobordercreation.view', $jobordercreation->id) }}">
-                                                    <i class="mdi mdi-eye text-dark"></i></a>
-                                            </td> --}}
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-
-                            </table>
+                                    </table>
+                            </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-@endsection
+    @endsection
 
-@push('scripts')
-    <script>
-        $(document).ready(function() {
-            $('#tbl_jobordercreation').DataTable();
-        });
-    </script>
-@endpush
+    @push('scripts')
+        <script>
+            $(document).ready(function() {
+                $('#tbl_jobordercreation').DataTable();
+            });
+        </script>
+    @endpush

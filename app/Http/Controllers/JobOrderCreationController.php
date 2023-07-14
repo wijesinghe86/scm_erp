@@ -26,8 +26,8 @@ class JobOrderCreationController extends Controller
 
     public function index()
     {
-        $job_order_items = JobOrderItem::get();
-        return view('pages.JobOrderCreation.index',compact('job_order_items'));
+        $job_orders = JobOrder::get();
+        return view('pages.JobOrderCreation.index',compact('job_orders'));
     }
 
     public function create()

@@ -23,6 +23,17 @@
                                 <input type="password" class="form-control" name="password" placeholder="Password">
                                 <p><small>*** Leave Empty if you dont want to change ***</small></p>
                             </div>
+                            @if ($user->id != request()->user()->id)
+                                <div class="form-group col-md-4">
+                                    <label>Active</label>
+                                    <select value="{{ $user->is_active }}" class="form-control" name="is_active">
+                                        <option {{ $user->is_active == '1' ? 'selected' : '' }} value="1">Active
+                                        </option>
+                                        <option {{ $user->is_active == '0' ? 'selected' : '' }} value="0">Inactive
+                                        </option>
+                                    </select>
+                                </div>
+                            @endif
                             <button class="btn btn-success">Update</button>
                             <a href="{{ route('users.index') }}" style="margin-left: 20px;"
                                 class="btn btn-danger">Cancel</a>

@@ -23,6 +23,7 @@
                                             <td>Description</td>
                                             <td>Serial Number</td>
                                             <td>Semi Product Serial Numbers</td>
+                                            <td>Semi Product Description | Stock Number</td>
                                             <td>Qty</td>
                                             <td>Weight</td>
                                             <td>Plant Number</td>
@@ -47,14 +48,24 @@
                                                     @endforeach
                                                 </td>
                                                 <td>
+                                                    @foreach ($semi_production->semi_product_items as $semiProductItem)
+                                                        <div>{{ $semiProductItem->semi_product_stock_item->description }} |
+                                                            {{ $semiProductItem->semi_product_stock_item->stock_number }}
+                                                        </div><br>
+                                                    @endforeach
+                                                    <div><b>TOTAL</b></div>
+                                                </td>
+                                                <td>
                                                     @foreach ($semi_production->semi_product_items->pluck('semi_pro_qty') as $semi_pro_qty)
                                                         <div>{{ $semi_pro_qty }}</div><br>
                                                     @endforeach
+                                                    <div><b>{{money($semi_production->semi_product_items->pluck('semi_pro_qty')->sum())}}</b></div>
                                                 </td>
                                                 <td>
                                                     @foreach ($semi_production->semi_product_items->pluck('semi_pro_weight') as $semi_pro_weight)
                                                         <div>{{ $semi_pro_weight }}</div><br>
                                                     @endforeach
+                                                    <div><b>{{money($semi_production->semi_product_items->pluck('semi_pro_weight')->sum())}}</b></div>
                                                 </td>
                                                 <td>{{ $semi_production->plant->plant_number }}</td>
                                                 <td>{{ $semi_production->warehouse->warehouse_code }}</td>
