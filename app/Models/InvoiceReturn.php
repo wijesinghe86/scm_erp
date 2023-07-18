@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Warehouse;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class InvoiceReturn extends Model
 {
@@ -32,7 +33,7 @@ class InvoiceReturn extends Model
 
     public function location()
     {
-        return $this->hasOne(warehouse::class, "id", "location_id");
+        return $this->hasOne(Warehouse::class, "id", "location_id");
     }
 
     public function createdBy()
