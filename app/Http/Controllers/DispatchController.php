@@ -32,7 +32,10 @@ class DispatchController extends Controller
     {
         $employees = Employee::get();
         $fleets = FleetRegistration::get();
-        $finished_goods = FinishGood::with(['warehouse', 'items'])->whereNotNull('inspected_by')->get();
+        $finished_goods = FinishGood::with(['warehouse', 'items', 'dispatch'])
+            ->whereNotNull('inspected_by')
+            ->whereDoesntHave('dispatch')
+            ->get();
         $next_number = $this->generateNextNumber();
         return view('pages.Dispatch.create', compact('employees', 'fleets', 'finished_goods', 'next_number'));
     }
@@ -103,9 +106,9 @@ class DispatchController extends Controller
 
 
         return [
-            "tot_no_dispatch_items"=>$tot_no_dispatch_items,
-            "tot_no_dispatch_qty"=>$tot_no_dispatch_qty,
-            "tot_no_dispatch_weight"=>$tot_no_dispatch_weight,
+            "tot_no_dispatch_items" => $tot_no_dispatch_items,
+            "tot_no_dispatch_qty" => $tot_no_dispatch_qty,
+            "tot_no_dispatch_weight" => $tot_no_dispatch_weight,
         ];
     }
 }

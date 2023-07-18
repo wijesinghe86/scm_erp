@@ -19,8 +19,8 @@
                                         <tr>
                                             <td>No</td>
                                             <td>PPS Number</td>
-                                            {{-- <td>Plant Number</td> --}}
                                             <td>PPS Date</td>
+                                            <td>DF Number</td>
                                             <td>Production Start Date</td>
                                             <td>Production End Date</td>
                                             <td>Items</td>
@@ -31,8 +31,8 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $productionplanningandschedule->pps_no }}</td>
-                                                {{-- <td>{{ $productionplanningandschedule->plant_number}}</td> --}}
                                                 <td>{{ $productionplanningandschedule->pps_date }}</td>
+                                                <td>{{ optional(optional($productionplanningandschedule)->demand_forecasting)->df_no}}</td>
                                                 <td>{{ $productionplanningandschedule->start_date }}</td>
                                                 <td>{{ $productionplanningandschedule->end_date }}</td>
                                                 <td>

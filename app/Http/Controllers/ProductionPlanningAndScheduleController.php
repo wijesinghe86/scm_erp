@@ -26,10 +26,11 @@ class ProductionPlanningAndScheduleController extends Controller
     {
         $df_list = DemandForecasting::with(['approvals' => function ($item) {
             return $item->where('action', 'approved');
-        }])
+        }, 'production_planing'])
             ->whereHas('approvals', function ($q) {
                 return $q->where('action', 'approved');
             })
+            ->whereDoesntHave('production_planing')
             ->get();
         $plants = PlantRegistration::get();
 

@@ -66,7 +66,7 @@
 
                             <button type="submit" class="btn btn-success me-2">Complete Production Planning And
                                 Schedule</button>
-                            <a class="btn btn-secondary"
+                            <a class="btn btn-danger"
                                 href="{{ route('productionplanningandschedule.index') }}">Cancel</a>
                         </form>
                     </div>

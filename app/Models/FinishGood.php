@@ -39,4 +39,9 @@ class FinishGood extends Model
     {
         return $this->hasOne(User::class, 'id', 'inspected_by');
     }
+
+    public function dispatch()
+    {
+        return $this->hasOne(Dispatch::class, 'fgrn_no', 'id');
+    }
 }

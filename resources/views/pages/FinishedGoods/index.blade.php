@@ -12,7 +12,7 @@
                                 </a>
                                 {{-- <a href="{{ route('finishedgoods.deleted') }}" class="btn btn-success float-end mb-2"> Deleted </a> --}}
                             </div>
-                            <div class="table-responsive" >
+                            <div class="table-responsive">
                                 <table class="table table-bordered" id="tbl_finishedgoods">
                                     <thead>
                                         <tr>
@@ -28,6 +28,7 @@
                                             <td>Prod End Date</td>
                                             <td>Status</td>
                                             <td>Created By</td>
+                                            <td>Items</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -36,7 +37,7 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $fgrn->fgrn_no }}</td>
                                                 <td>{{ $fgrn->rmi->rmi_no }}</td>
-                                                <td>{{ $fgrn->warehouse->warehouse_name }}</td>
+                                                <td>{{ optional(optional($fgrn)->warehouse)->warehouse_name }}</td>
                                                 <td>{{ $fgrn->tot_issue_weight }}</td>
                                                 <td>{{ $fgrn->tot_pro_weight }}</td>
                                                 <td>{{ $fgrn->tot_wastage }}</td>
@@ -44,7 +45,30 @@
                                                 <td>{{ $fgrn->pro_start_date_time }}</td>
                                                 <td>{{ $fgrn->pro_end_date_time }}</td>
                                                 <td>{{ $fgrn->status }}</td>
-                                                <td>{{ $fgrn->createdBy->name }}</td>
+                                                <td>{{ optional(optional($fgrn)->createdBy)->name }}</td>
+                                                <td>
+                                                    <table class="table table-striped">
+                                                        <tr>
+                                                            <td>#</td>
+                                                            <td>Stock Number</td>
+                                                            <td>Description</td>
+                                                            <td>Qty</td>
+                                                            <td>Weight</td>
+                                                            <td>Batch</td>
+                                                        </tr>
+                                                        @foreach ($fgrn->items as $item)
+                                                            <tr>
+                                                                <td>{{ $loop->iteration }}</td>
+                                                                <td>{{ $item->stock_item->stock_number }}</td>
+                                                                <td>{{ $item->stock_item->description }}</td>
+                                                                <td>{{ $item->pro_qty }}</td>
+                                                                <td>{{ $item->pro_weight }}</td>
+                                                                <td>{{ $item->batch_no }}
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </table>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>

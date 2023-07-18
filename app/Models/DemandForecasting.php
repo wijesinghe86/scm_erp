@@ -23,4 +23,9 @@ class DemandForecasting extends Model
     {
         return $this->hasMany(DfApproved::class,'df_id','id');
     }
+
+    public function production_planing()
+    {
+        return $this->hasMany(ProductionPlanning::class,'df_id','id');
+    }
 }

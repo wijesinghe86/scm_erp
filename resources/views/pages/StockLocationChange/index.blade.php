@@ -37,11 +37,14 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $stock_location_change->slc_number }}</td>
                                                 <td>{{ $stock_location_change->slc_date }}</td>
-                                                <td>{{ $stock_location_change->from_warehouse->warehouse_name }}</td>
-                                                <td>{{ $stock_location_change->to_warehouse->warehouse_name }}</td>
-                                                <td>{{ $stock_location_change->fleet->fleet_name }}</td>
+                                                <td>{{ optional(optional($stock_location_change)->from_warehouse)->warehouse_name }}
+                                                </td>
+                                                <td>{{ optional(optional($stock_location_change)->to_warehouse)->warehouse_name }}
+                                                </td>
+                                                <td>{{ optional(optional($stock_location_change)->fleet)->fleet_name }}</td>
                                                 <td>{{ $stock_location_change->delivered_by }}</td>
-                                                <td>{{ $stock_location_change->issuedBy->employee_fullname }}</td>
+                                                <td>{{ optional(optional($stock_location_change)->issuedBy)->employee_fullname }}
+                                                </td>
                                                 <td>{{ $stock_location_change->issued_date }}</td>
                                                 {{-- <td>{{ $stock_location_change->delivered_date }}</td> --}}
                                                 {{-- <td>{{ $stock_location_change->receivedBy->employee_fullname }}</td> --}}
@@ -58,8 +61,10 @@
                                                         @foreach ($stock_location_change->items as $item)
                                                             <tr>
                                                                 <td>{{ $loop->iteration }}</td>
-                                                                <td>{{ $item->stock_item->stock_number }}</td>
-                                                                <td>{{ $item->stock_item->description }}</td>
+                                                                <td>{{ optional(optional($item)->stock_item)->stock_number }}
+                                                                </td>
+                                                                <td>{{ optional(optional($item)->stock_item)->description }}
+                                                                </td>
                                                                 <td>{{ $item->qty }}</td>
                                                             </tr>
                                                         @endforeach

@@ -30,10 +30,10 @@
                                             <td>{{ date('Y-m-d',strtotime($row->created_at))}}</td>
                                             <td>{{ $row->item->stock_number }}</td>
                                             <td>{{ $row->item->description }}</td>
-                                            <td>{{ $row->demand_forecast->df_no }}</td>
+                                            <td>{{ optional($row->demand_forecast)->df_no }}</td>
                                             <td>{{ $row->approved_qty }}</td>
                                             <td>{{ $row->action }}</td>
-                                            <td>{{ $row->approved_by->name }}</td>
+                                            <td>{{ optional(optional($row)->approved_by)->name }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
