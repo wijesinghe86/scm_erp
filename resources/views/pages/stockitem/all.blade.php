@@ -20,35 +20,8 @@
                                         <td>Stock Number</td>
                                         <td>Descritption</td>
                                         <td>Unit</td>
-                                        <td>Cost Price</td>
-                                        <!-- <td>Barcode</td>
-                                        <td>Keyword</td>
                                         <td>Group</td>
                                         <td>Class</td>
-                                        <td>Serial Number</td>
-                                        <td>Part Number</td>
-                                        <td>Model</td>
-                                        <td>Make</td>
-                                        <td>Substitute Item</td>
-                                        <td>End User</td>
-                                        <td>stock item Grade</td>
-                                        <td>Chemical C</td>
-                                        <td>Chemical Mn</td>
-                                        <td>Mechanical Ys</td>
-                                        <td>Mechanical Ts</td>
-                                        <td>Mechanical Ei</td>
-                                        <td>Physical Weight</td>
-                                        <td>Physical Width</td>
-                                        <td>Physical Thickness</td>
-                                        <td>Date of Manufactor</td>
-                                        <td>Date of Expiry</td>
-                                        <td>Minimum Quantity</td>
-                                        <td>Maximum Quantity</td>
-                                        <td>Re-Order Level</td>
-                                        <td>Special Instructions</td>
-                                        <td>Storage Method</td>
-                                        <td>Handling Method</td>
-                                        <td>Inspection Required Status</td> -->
                                         <td>Created By</td>
                                         <td>Status</td>
                                         <td>Action</td>
@@ -62,36 +35,9 @@
                                             <td>{{ $StockItem->stock_number }}</td>
                                             <td>{{ $StockItem->description }}</td>
                                             <td>{{ $StockItem->unit }}</td>
-                                            <td>{{ $StockItem->cost_price }}</td>
-                                            {{-- <td>{{ $StockItem->barcode }}</td>
-                                            <td>{{ $StockItem->keyword }}</td>
                                             <td>{{ $StockItem->group }}</td>
-                                            <td>{{ $StockItem->class }}</td>
-                                            <td>{{ $StockItem->serial_number }}</td>
-                                            <td>{{ $StockItem->part_number }}</td>
-                                            <td>{{ $StockItem->model }}</td>
-                                            <td>{{ $StockItem->make }}</td>
-                                            <td>{{ $StockItem->minimum_qty }}</td>
-                                            <td>{{ $StockItem->maximum_qty }}</td>
-                                            <td>{{ $StockItem->re_order_level }}</td>
-                                            <td>{{ $StockItem->substitute_stock_number }}</td>
-                                            <td>{{ $StockItem->enduser }}</td>
-                                            <td>{{ $StockItem->stock_item_Grade }}</td>
-                                            <td>{{ $StockItem->stock_item_chem_c }}</td>
-                                            <td>{{ $StockItem->stock_item_chem_mn }}</td>
-                                            <td>{{ $StockItem->stock_item_mech_ys }}</td>
-                                            <td>{{ $StockItem->stock_item_mech_ts }}</td>
-                                            <td>{{ $StockItem->stock_item_mech_ei }}</td>
-                                            <td>{{ $StockItem->stock_item_physical_weight }}</td>
-                                            <td>{{ $StockItem->stock_item_physical_width }}</td>
-                                            <td>{{ $StockItem->stock_item_physical_thickness }}</td>
-                                            <td>{{ $StockItem->stock_item_date_of_mfr }}</td>
-                                            <td>{{ $StockItem->stock_item_date_of_expiry }}</td>
-                                            <td>{{ $StockItem->stock_item_special_ins }}</td>
-                                            <td>{{ $StockItem->stock_item_storage_method }}</td>
-                                            <td>{{ $StockItem->stock_item_handling_method }}</td>
-                                            <td>{{ $StockItem->stock_item_inspection_reuired }}</td> --}}
-                                            {{-- <td>{{ $StockItem->created_by }}</td> --}}
+                                             <td>{{ $StockItem->class }}</td>
+
                                             <td>{{ $StockItem->createUser ? $StockItem->createUser->name : 'User not found' }}</td>
 
                                             <td>

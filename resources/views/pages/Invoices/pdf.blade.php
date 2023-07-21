@@ -28,7 +28,7 @@
 
 <body>
   {{-- header --}}
-    <table style="height: 14mm">
+    <table style="height: 16mm">
         <tr>
             <td></td>
             <td></td>
@@ -49,22 +49,22 @@
             <td style="height: 8mm; width:26mm">Vat No</td>
             <td style="height: 8mm; width:36mm">{{ $invoices->customer->customer_vat_number }}</td>
             {{-- <td style="height: 8mm; width:22.5mm">Date</td> --}}
-            <td style="height: 8mm; width:28mm">{{ $invoices->invoice_date }}</td>
+            <td style="height: 8mm; width:30mm">{{ $invoices->invoice_date }}</td>
         </tr>
         <tr>
             {{-- <td style="height: 8mm; width:26mm">Terms</td> --}}
             <td style="height: 8mm; width:36mm">{{ $invoices->payment_terms }}</td>
             {{-- <td style="height: 8mm; width:22.5mm">Invoice No.</td> --}}
-            <td style="height: 8mm; width:32mm">{{ $invoices->invoice_number }}</td>
+            <td style="height: 8mm; width:36mm">{{ $invoices->invoice_number }}</td>
         </tr>
         <tr>
             {{-- <td style="height: 8mm; width:26mm">Purchanse Order No.</td> --}}
             <td style="height: 8mm; width:36mm">{{ $invoices->po_number }}</td>
             {{-- <td style="height: 8mm; width:22.5mm">D. N. No.</td> --}}
-            <td style="height: 8mm; width:32mm">{{ $invoices->po_number }}</td>
+            <td style="height: 8mm; width:36mm">{{ $invoices->po_number }}</td>
         </tr>
     </table>
-    <table style="height: 6mm">                                                                                                                                                 
+    {{-- <table style="height: 6mm">
         <tr>
             <th style="width:6mm">No.</th>
             <th style="width:86mm">Description</th>
@@ -74,9 +74,9 @@
             <th style="width:22.5mm">Unit Rate(Rs.)</th>
             <th style="width:32mm">Amount(Rs)</th>
         </tr>
-    </table>
+    </table> --}}
      {{-- item table hieght --}}
-    <table style="height:105mm;">
+    <table style="height:110mm;">
         @foreach ($invoices->items as $key => $item)
             <tr>
                 <td style="width:6mm">{{ $key + 1 }}</td>
@@ -94,18 +94,21 @@
             <td style="width:97mm">
                 <table>
                     <tr>
-                        <td class="align-top" style="width: " >Prepared By<td>
-                        <td>test user<td>
+                        <td class="align-top" style="width: " >Prepared By:<td>
+                            <td>{{ $invoices->createUser ? $invoices->createUser->name : 'User Error' }}</td>
+                                <td>Sales Code<td>
+                                <td>{{ $invoices->SalesStaff->employee_epf_no }}</td>
+                        {{-- <td>test user<td>
                             <td>Created by<td>
                                 <td>test user<td>
                                     <td>Created by<td>
-                                        <td>test user<td>
+                                        <td>test user<td> --}}
+                    </tr>
+                     <tr>
+                        <td>Created Date:<td>
+                        <td>{{ $invoices->created_at }}<td>
                     </tr>
                     {{-- <tr>
-                        <td>Created by<td>
-                        <td>test user<td>
-                    </tr>
-                    <tr>
                         <td>created at<td>
                         <td>test user<td>
                     </tr> --}}

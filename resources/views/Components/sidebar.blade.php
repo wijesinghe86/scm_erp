@@ -273,8 +273,8 @@
                     <li class="nav-item"> <a class="nav-link" href="{{ route('returns.all') }}">Customer Return</a>
                     </li>
         </li>
-        <li class="nav-item"> <a class="nav-link" href="{{ route('returns.approvalIndex') }}">Customer Return
-                Approval</a>
+        <li class="nav-item"> <a class="nav-link" href="{{ route('returns.approvalIndex') }}">Approved Customer <br>Returns
+                </a>
         </li>
         {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('goodsissuenote.index') }}">Goods Issue
                         Note</a></li> --}}

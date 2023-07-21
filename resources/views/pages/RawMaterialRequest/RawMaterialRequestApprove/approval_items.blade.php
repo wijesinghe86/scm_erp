@@ -24,8 +24,8 @@
                             <th scope="col">Rmr Descrition</th>
                             <th scope="col">Rmr Qty</th>
                             <th scope="col">Rmr Weight</th>
-                            <th scope="col">Approve qty</th>
-                            <th scope="col">Approve weight</th>
+                            <th scope="col">Approved qty</th>
+                            <th scope="col">Approved weight</th>
                             <th scope="col">Justification</th>
                         </tr>
                         @foreach ($material_request_items as $index => $material_request_item)

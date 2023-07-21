@@ -11,7 +11,7 @@
                                     <div class="form-group col-md-4">
                                         <label>Stock Number *</label>
                                         <input type="text" class="form-control" name="stock_number"
-                                            placeholder="Stock Number">
+                                            placeholder="Stock Number" value="{{ old('stock_number')}}">
                                     </div>
                                 </div>
 
@@ -20,14 +20,14 @@
                                 <div class="row">
                                     <div class="form-group col-md-12">
                                         <label>Description *</label>
-                                        <input type="text" class="form-control" name="description" placeholder="Description" >
+                                        <input type="text" class="form-control" name="description" placeholder="Description" value="{{ old('Description')}}" >
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="form-group col-md-4">
                                         <label>Unit of Measure *</label>
-                                        <input type="text" class="form-control" name="unit" placeholder="Unit of Measure">
+                                        <input type="text" class="form-control" name="unit" placeholder="Unit of Measure" value="{{ old('unit')}}">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>Cost Price</label>

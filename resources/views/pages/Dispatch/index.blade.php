@@ -11,6 +11,7 @@
                                 <a href="{{ route('dispatch.create') }}" class="btn btn-success float-end mb-2"> Add New </a>
                                 {{-- <a href="{{ route('dispatch.deleted') }}" class="btn btn-success float-end mb-2"> Deleted </a> --}}
                             </div>
+                            <div class="table-responsive">
                             <table class="table table-bordered" id="tbl_dispatch">
                                 <thead>
                                     <tr>
@@ -22,6 +23,7 @@
                                         <td>Driver Name</td>
                                         <td>Dispatched By</td>
                                         <td>Inspected By</td>
+                                        <td>Items</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -35,11 +37,32 @@
                                             <td>{{ $dispatch->driver_name }}</td>
                                             <td>{{ $dispatch->dispatchedBy->employee_fullname }}</td>
                                             <td>{{ $dispatch->inspectedBy->employee_fullname }}</td>
+                                            <td>
+                                                <table class="table table-striped">
+                                                    <tr>
+                                                        <td>#</td>
+                                                        <td>Stock Number</td>
+                                                        <td>Description</td>
+                                                        <td>Qty</td>
+                                                    </tr>
+                                                    @foreach ($dispatch->items as $item)
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ optional(optional($item)->stock_item)->stock_number }}
+                                                            </td>
+                                                            <td>{{ optional(optional($item)->stock_item)->description }}
+                                                            </td>
+                                                            <td>{{ $item->qty }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </table>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
 
                             </table>
+                            </div>
                     </div>
                 </div>
             </div>

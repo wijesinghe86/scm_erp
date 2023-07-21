@@ -9,8 +9,7 @@
                             <div style="margin-bottom: 20px;" class="row">
                                 <div class="col-md-8">
                                     <h4 class="title"><a href="{{ route('dashboard') }}"><i
-                                                class="mdi mdi-home"></i></a>Approve
-                                        Returns</h4>
+                                                class="mdi mdi-home"></i></a>Customer Returns Approved Registry</h4>
                                 </div>
                             </div>
                             <div class="content table-responsive table-full-width">
@@ -24,7 +23,7 @@
                                             <th>APPROVED BY</th>
                                             <th>LOCATION</th>
                                             <th>RETURNED DATE</th>
-                                            <th>ACTION</th>
+                                            <th>VIEW</th>
 
                                         </tr>
                                     </thead>
@@ -42,12 +41,15 @@
                                                     </td>
                                                     <td>{{ $invoice_return->location->warehouse_name }}</td>
                                                     <td>{{ date('Y-m-d', strtotime($invoice_return->created_at)) }}</td>
-                                                    <td style="display:flex;gap:1rem; align-items: center;" align="right">
+                                                     <td style="display:flex;gap:1rem; align-items: center;" align="right">
+                                                        {{-- @if ($invoice_return->is_approved)
                                                         <button type="submit"
                                                             class="btn btn-success">Approve</button>
-                                                        <a class="h4"
+                                                            @endif --}}
+                                                       <a class="h4"
                                                             href="{{ route('returns.view', $invoice_return->id) }}">
                                                             <i class="fa-sharp fa-solid fa-eye"></i>
+
                                                         </a>
                                                     </td>
                                                 </form>
@@ -62,6 +64,7 @@
             </div>
         </div>
     </div>
+
 @endsection
 
 @push('scripts')
