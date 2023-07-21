@@ -13,6 +13,12 @@ use App\Models\MrPurchaseItem;
 
 class PurchaseOrderMrController extends ParentController
 {
+    public function generateNextNumber()
+    {
+        $count  = MrPurchase::get()->count();
+        return "MPO" . sprintf('%06d', $count + 1);
+    }
+
 
     public function index(){
         $lists = MrPurchase::all();
@@ -30,18 +36,27 @@ class PurchaseOrderMrController extends ParentController
          $mrfprf_list = MrfPrfMain::get();
          $suppliers = Supplier::get();
          $customers = Customer::get();
+         $mr_purchase = new MrPurchase;
+         $next_number = $this->generateNextNumber();
+         return view('pages.PurchaseOrderMr.create', compact('mrfprf_list', 'suppliers', 'customers', 'mr_purchase','next_number') );
 
-        $last_po =  MrPurchase::latest()->first();
-        $last_po_number = 0;
-        if($last_po != null){
-        $last_po_number = $last_po->id;
-        }
+        // $last_po =  MrPurchase::latest()->first();
+        // $last_po_number = 0;
+        // if($last_po != null){
+        // $last_po_number = $last_po->id;
+        // }
 
-        $next_number = "MPO".sprintf("%07d", $last_po_number+1);
-        return view('pages.PurchaseOrderMr.create', compact('mrfprf_list', 'suppliers', 'customers', 'next_number') );
+        // $next_number = "MPO".sprintf("%07d", $last_po_number+1);
+        // return view('pages.PurchaseOrderMr.create', compact('mrfprf_list', 'suppliers', 'customers', 'next_number') );
     }
 
     public function store(Request $request){
+
+        $isMpoExist = MrPurchase::where('po_no', $request->po_number)->first();
+        if ($isMpoExist) {
+            $data['po_no'] = $this->generateNextNumber();
+        }
+
         $po = new MrPurchase;
         $po->po_no = $request->po_number;
         $po->prf_id = $request->prf_id;
