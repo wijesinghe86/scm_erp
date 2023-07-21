@@ -22,11 +22,10 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Requested By</label>
-                                    <select class="form-control" name="requested_by" placeholder="Reqested By"
-                                        value="{{ old('requested_by') }}">
+                                    <select class="form-control emp-select" name="requested_by" value="{{ old('requested_by') }}">
                                         {{-- <option selected disabled>Select</option> --}}
                                         @foreach ($employees as $employee)
-                                            <option value="{{ $employee->id }}"> {{ $employee->employee_fullname }} -
+                                            <option value="{{$employee->id}}"> {{ $employee->employee_fullname }} -
                                                 {{ $employee->departmentData->department_name }}
                                                 ({{ $employee->sectionData->section_name }})</option>
                                         @endforeach
@@ -115,6 +114,7 @@
                                     @endif
                                 </tbody>
                             </table>
+                            <br>
                             <button type="submit" class="btn btn-success me-2" name="button" value="complete">Complete
                                 Materials Request</button>
                         </form>
@@ -130,6 +130,13 @@
         $(document).ready(function() {
             $('.item-select').select2({
                 placeholder: "Select Item",
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.emp-select').select2({
+                placeholder: "Select",
             });
         });
     </script>

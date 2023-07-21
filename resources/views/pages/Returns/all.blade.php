@@ -28,6 +28,7 @@
                                             <th>PAYMENT METHOD</th>
                                             <th>LOCATION</th>
                                             <th>RETURNED DATE</th>
+                                            <th>APPROVED BY</th>
                                             <th>ACTION</th>
 
                                         </tr>
@@ -43,6 +44,7 @@
                                                 <td>{{ $invoice_return->payment_method }}</td>
                                                 <td>{{ $invoice_return->location->warehouse_name }}</td>
                                                 <td>{{ date("Y-m-d", strtotime($invoice_return->created_at)) }}</td>
+                                                <td>{{ $invoice_return->approvedBy ? $invoice_return->approvedBy->name : 'Not Approved' }}
                                                 <td align="right">
                                                     <a class="h4"
                                                         href="{{ route('returns.view', $invoice_return->id) }}">
