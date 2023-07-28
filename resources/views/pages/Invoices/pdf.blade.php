@@ -49,19 +49,19 @@
             <td style="height: 8mm; width:19mm">Vat No</td>
             <td style="height: 8mm; width:24mm; text-align:center;">{{ $invoices->customer->customer_vat_number }}</td>
             <td style="height: 8mm; width:30mm; opacity: 0;">Date</td>
-            <td style="height: 8mm; width:27mm:; text-align:center;">{{ $invoices->invoice_date }}</td>
+            <td style="height: 8mm; width:27mm:; text-align:right;">{{ $invoices->invoice_date }}</td>
         </tr>
         <tr>
             <td style="height: 8mm; width:19mm; opacity: 0;">Terms</td>
             <td style="height: 8mm; width:24mm; text-align:center;">{{ $invoices->payment_terms }}</td>
             <td style="height: 8mm; width:30mm; opacity:0;">Invoice No.</td>
-            <td style="height: 8mm; width:27mm; text-align:center;">{{ $invoices->invoice_number }}</td>
+            <td style="height: 8mm; width:27mm; text-align:right;">{{ $invoices->invoice_number }}</td>
         </tr>
         <tr>
             <td style="height: 8mm; width:19mm; opacity:0;">Purchanse Order No.</td>
             <td style="height: 8mm; width:24mm; text-align:center;">{{ $invoices->po_number }}</td>
             <td style="height: 8mm; width:30mm; opacity:0;">D. N. No.</td>
-            <td style="height: 8mm; width:27mm; text-align:center;">{{ $invoices->po_number }}</td>
+            <td style="height: 8mm; width:27mm; text-align:right;">{{ $invoices->po_number }}</td>
         </tr>
     </table>
   <table style="height: 6mm">
