@@ -25,10 +25,10 @@ return new class extends Migration
             $table->date('verified_date')->nullable();
             $table->unsignedBigInteger('inspected_by')->nullable();
             $table->date('inspected_date')->nullable();
-            $table->decimal('per_weight')->nullable();
-            $table->decimal('tot_weight')->nullable();
-            $table->decimal('per_volume')->nullable();
-            $table->decimal('tot_volume')->nullable();
+            $table->decimal('per_weight',15,2)->nullable();
+            $table->decimal('tot_weight',15,2)->nullable();
+            $table->decimal('per_volume',15,2)->nullable();
+            $table->decimal('tot_volume',15,2)->nullable();
             $table->unsignedBigInteger('po_id')->nullable();
             $table->unsignedBigInteger('supplier_id')->nullable();
             $table->string('warehouse')->nullable();

@@ -28,7 +28,7 @@
 
 <body>
   {{-- header --}}
-    <table style="height: 16mm">
+    <table style="height: 15mm">
         <tr>
             <td></td>
             <td></td>
@@ -38,7 +38,7 @@
         {{-- invoice to --}}
         <tr>
             <td rowspan="3">
-                <div style="margin-left: 18mm">
+                <div style="margin-left: 10mm;">
                     <div>{{ $invoices->customer->customer_name }}</div>
                     <small>{{ $invoices->customer->customer_address_line1 }}</small><br>
                     <small>{{ $invoices->customer->customer_address_line2 }}</small><br>
@@ -47,36 +47,40 @@
                 </div>
             </td>
             <td style="height: 8mm; width:26mm">Vat No</td>
-            <td style="height: 8mm; width:36mm">{{ $invoices->customer->customer_vat_number }}</td>
-            {{-- <td style="height: 8mm; width:22.5mm">Date</td> --}}
-            <td style="height: 8mm; width:30mm">{{ $invoices->invoice_date }}</td>
+            <td style="height: 8mm; width:30mm; text-align:left;">{{ $invoices->customer->customer_vat_number }}</td>
+            <td style="height: 8mm; width:22mm; opacity: 0;">Date</td>
+            <td style="height: 8mm; width:30mm: text-align:left;">{{ $invoices->invoice_date }}</td>
         </tr>
         <tr>
-            {{-- <td style="height: 8mm; width:26mm">Terms</td> --}}
-            <td style="height: 8mm; width:36mm">{{ $invoices->payment_terms }}</td>
-            {{-- <td style="height: 8mm; width:22.5mm">Invoice No.</td> --}}
-            <td style="height: 8mm; width:36mm">{{ $invoices->invoice_number }}</td>
+            <td style="height: 8mm; width:26mm; opacity: 0;">Terms</td>
+            <td style="height: 8mm; width:30mm; text-align:left;">{{ $invoices->payment_terms }}</td>
+            <td style="height: 8mm; width:22mm; opacity:0;">Invoice No.</td>
+            <td style="height: 8mm; width:30mm; text-align:left;">{{ $invoices->invoice_number }}</td>
         </tr>
         <tr>
-            {{-- <td style="height: 8mm; width:26mm">Purchanse Order No.</td> --}}
-            <td style="height: 8mm; width:36mm">{{ $invoices->po_number }}</td>
-            {{-- <td style="height: 8mm; width:22.5mm">D. N. No.</td> --}}
-            <td style="height: 8mm; width:36mm">{{ $invoices->po_number }}</td>
+            <td style="height: 8mm; width:26mm; opacity:0;">Purchanse Order No.</td>
+            <td style="height: 8mm; width:30mm">{{ $invoices->po_number }}</td>
+            <td style="height: 8mm; width:22.5mm; opacity:0;">D. N. No.</td>
+            <td style="height: 8mm; width:30mm; text-align:left;">{{ $invoices->po_number }}</td>
         </tr>
     </table>
-    {{-- <table style="height: 6mm">
+  <table style="height: 6mm">
         <tr>
-            <th style="width:6mm">No.</th>
-            <th style="width:86mm">Description</th>
-            <th style="width:14mm">U/M</th>
-            <th style="width:16mm">Ord, Qty.</th>
-            <th style="width:20mm">Weight</th>
-            <th style="width:22.5mm">Unit Rate(Rs.)</th>
-            <th style="width:32mm">Amount(Rs)</th>
+            <th style="width:6mm; opacity: 0;">No.</th>
+            <th style="width:86mm; opacity: 0;">Description</th>
+            <th style="width:14mm; opacity: 0;">U/M</th>
+            <th style="width:16mm; opacity: 0;">Ord, Qty.</th>
+            <th style="width:20mm; opacity: 0;">Weight</th>
+            <th style="width:22.5mm; opacity: 0;">Unit Rate(Rs.)</th>
+            <th style="width:32mm; opacity: 0;">Amount(Rs)</th>
         </tr>
-    </table> --}}
+    </table>
      {{-- item table hieght --}}
     <table style="height:110mm;">
+        {{-- <thead>
+
+        </thead> --}}
+        <tbody>
         @foreach ($invoices->items as $key => $item)
             <tr>
                 <td style="width:6mm">{{ $key + 1 }}</td>
@@ -88,13 +92,14 @@
                 <td style="width:32mm">{{ $item->total }}</td>
             </tr>
         @endforeach
+        </tbody>
     </table>
     <table>
         <tr>
             <td style="width:97mm">
                 <table>
                     <tr>
-                        <td class="align-top" style="width: " >Prepared By:<td>
+                        <td class="align-top" style="opacity: 0; " >Prepared By:<td>
                             <td>{{ $invoices->createUser ? $invoices->createUser->name : 'User Error' }}</td>
                                 <td>Sales Code<td>
                                 <td>{{ $invoices->SalesStaff->employee_epf_no }}</td>
