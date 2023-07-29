@@ -76,7 +76,7 @@
         </tr>
     </table> --}}
      {{-- item table hieght --}}
-    <table style="height:100mm;">
+    <table style="height:106mm;">
         <thead>
          <tr>
             <th style="width:6mm; opacity: 0;">No.</th>
@@ -92,13 +92,13 @@
         <tbody>
         @foreach ($invoices->items as $key => $item)
             <tr>
-                <td style="width:6mm">{{ $key + 1 }}</td>
-                <td style="width:86mm">{{ $item->description }}</td>
-                <td style="width:14mm">{{ $item->uom }}</td>
-                <td style="width:16mm">{{ $item->quantity }}</td>
-                <td style="width:20mm">{{ $item->uom }}</td>
-                <td style="width:22.5mm">{{ $item->unit_price }}</td>
-                <td style="width:32mm">{{ $item->total }}</td>
+                <td style="width:6mm; text-align:left;">{{ $key + 1 }}</td>
+                <td style="width:86mm; text-align:left;">{{ $item->description }}</td>
+                <td style="width:14mm; text-align:left;">{{ $item->uom }}</td>
+                <td style="width:16mm; text-align:left;">{{ $item->quantity }}</td>
+                <td style="width:20mm; text-align:left;">{{ $item->uom }}</td>
+                <td style="width:22.5mm; text-align:left;">{{ $item->unit_price }}</td>
+                <td style="width:32mm; text-align:left;">{{ $item->total }}</td>
             </tr>
         @endforeach
         </tbody>
@@ -132,7 +132,7 @@
             <td style="width:14mm"></td>
             <td style="width:16mm"></td>
             <td style="width:20mm"></td>
-            <td style="height:26mm;width:22.5mm">
+            <td style="height:20mm;width:22.5mm">
                 <div style="height:7px">Total(Rs.)</div></br>
                 @if ($invoices->type != 1 && in_array($invoices->option, [1, 2]))
                     <div style="height:7px">Ex. Of Vat(Rs.)</div></br>
@@ -145,7 +145,7 @@
                 @endif
                 <div style="height:7px">Grand Total(Rs.)</div></br>
             </td>
-            <td style="height:26mm;width:32mm">
+            <td style="height:20mm;width:32mm">
                 <div style="height:7px">
                     {{ $invoices->type == 1 ? money($invoices->grand_total) : money($invoices->sub_total) }}</div></br>
                 @if ($invoices->type != 1 && $invoices->option == 1)
