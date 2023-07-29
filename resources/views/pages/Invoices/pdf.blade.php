@@ -20,7 +20,7 @@
 
         td,
         th {
-            border: 1px solid black;
+             border: 1px solid black;
         }
     </style>
     <title>{{ $invoices->invoice_number }} | {{ $invoices->getInvoiceTypeNameAttribute() }}</title>
@@ -30,7 +30,7 @@
   {{-- header --}}
     <table style="height: 15mm">
         <tr>
-            <td></td>
+            <td style="text-align:right; font-size:20px">Tax Invoice</td>
             <td></td>
         </tr>
     </table>
@@ -59,12 +59,12 @@
         </tr>
         <tr>
             <td style="height: 8mm; width:19mm; opacity:0;">Purchanse Order No.</td>
-            <td style="height: 8mm; width:24mm; text-align:center;">{{ $invoices->po_number }}</td>
+            <td style="height: 8mm; width:24mm; text-align:center; opacity:0;">{{ $invoices->po_number }}</td>
             <td style="height: 8mm; width:30mm; opacity:0;">D. N. No.</td>
-            <td style="height: 8mm; width:27mm; text-align:right;">{{ $invoices->po_number }}</td>
+            <td style="height: 8mm; width:27mm; text-align:right; opacity:0;">{{ $invoices->po_number }}</td>
         </tr>
     </table>
-  <table style="height: 6mm">
+  {{-- <table style="height: 6mm">
         <tr>
             <th style="width:6mm; opacity: 0;">No.</th>
             <th style="width:86mm; opacity: 0;">Description</th>
@@ -74,12 +74,21 @@
             <th style="width:22.5mm; opacity: 0;">Unit Rate(Rs.)</th>
             <th style="width:32mm; opacity: 0;">Amount(Rs)</th>
         </tr>
-    </table>
+    </table> --}}
      {{-- item table hieght --}}
     <table style="height:100mm;">
-        {{-- <thead>
+        <thead>
+         <tr>
+            <th style="width:6mm; opacity: 0;">No.</th>
+            <th style="width:86mm; opacity: 0;">Description</th>
+            <th style="width:14mm; opacity: 0;">U/M</th>
+            <th style="width:16mm; opacity: 0;">Ord, Qty.</th>
+            <th style="width:20mm; opacity: 0;">Weight</th>
+            <th style="width:22.5mm; opacity: 0;">Unit Rate(Rs.)</th>
+            <th style="width:32mm; opacity: 0;">Amount(Rs)</th>
+        </tr>
 
-        </thead> --}}
+        </thead>
         <tbody>
         @foreach ($invoices->items as $key => $item)
             <tr>
@@ -99,8 +108,8 @@
             <td style="width:97mm">
                 <table>
                     <tr>
-                        <td class="align-top" style="opacity: 0; " >Prepared By:<td>
-                            <td>{{ $invoices->createUser ? $invoices->createUser->name : 'User Error' }}</td>
+                        <td class="align-top" style="width:36mm; opacity: 0; " >Prepared By:<td>
+                            <td class style="width: 20mm;">{{ $invoices->createUser ? $invoices->createUser->name : 'User Error' }}</td>
                                 <td>Sales Code<td>
                                 <td>{{ $invoices->SalesStaff->employee_epf_no }}</td>
                         {{-- <td>test user<td>
@@ -110,8 +119,8 @@
                                         <td>test user<td> --}}
                     </tr>
                      <tr>
-                        <td>Created Date:<td>
-                        <td>{{ $invoices->created_at }}<td>
+                        <td class style="width: 36mm;">Created Date:<td>
+                        <td class style="width: 36mm;">{{ $invoices->created_at }}<td>
                     </tr>
                     {{-- <tr>
                         <td>created at<td>
