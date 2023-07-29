@@ -20,7 +20,7 @@
 
         td,
         th {
-             /* border: 1px solid black; */
+             border: 1px solid black;
         }
     </style>
     <title>{{ $invoices->invoice_number }} | {{ $invoices->getInvoiceTypeNameAttribute() }}</title>
@@ -131,7 +131,7 @@
             </td>
             <td style="width:14mm"></td>
             <td style="width:16mm"></td>
-            <td style="width:10mm"></td>
+            <td style="width:4mm"></td>
             <td style="height:20mm;width:30mm">
                 <div style="height:7px">Total(Rs.)</div></br>
                 @if ($invoices->type != 1 && in_array($invoices->option, [1, 2]))
@@ -145,7 +145,7 @@
                 @endif
                 <div style="height:7px">Grand Total(Rs.)</div></br>
             </td>
-            <td style="height:20mm;width:30mm">
+            <td style="height:20mm;width:25mm; text-align:right;">
                 <div style="height:7px">
                     {{ $invoices->type == 1 ? money($invoices->grand_total) : money($invoices->sub_total) }}</div></br>
                 @if ($invoices->type != 1 && $invoices->option == 1)
