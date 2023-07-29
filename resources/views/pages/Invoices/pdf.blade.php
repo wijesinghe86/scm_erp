@@ -31,11 +31,11 @@
     <table style="height: 15mm">
         <tr>
             <td style="text-align:right; font-size:20px">Tax Invoice</td>
-            <td></td>
+            {{-- <td></td> --}}
         </tr>
     </table>
     <table style="height: 25mm">
-        {{-- invoice to --}}
+     {{-- invoice to  --}}
         <tr>
             <td rowspan="3">
                 <div style="margin-left: 10mm;">
@@ -110,8 +110,8 @@
                     <tr>
                         <td class="align-top" style="width:25mm; opacity: 0; " >Prepared By:<td>
                             <td class style="width: 20mm;">{{ $invoices->createUser ? $invoices->createUser->name : 'User Error' }}</td>
-                                <td>Sales Code<td>
-                                <td class style="width: 25">{{ $invoices->SalesStaff->employee_epf_no }}</td>
+                                <td class style="width:20mm;">Sales Code<td>
+                                <td class style="width: 18mm">{{ $invoices->SalesStaff->employee_epf_no }}</td>
                         {{-- <td>test user<td>
                             <td>Created by<td>
                                 <td>test user<td>
@@ -119,8 +119,8 @@
                                         <td>test user<td> --}}
                     </tr>
                      <tr>
-                        <td class style="width: 25mm;">Created Date:<td>
-                        <td class style="width: 28mm;">{{ $invoices->created_at }}<td>
+                        <td class style="width: 25mm;">Created Date | Time:<td>
+                        <td class style="width: 18mm;">{{ $invoices->created_at }}<td>
                     </tr>
                     {{-- <tr>
                         <td>created at<td>
@@ -130,22 +130,22 @@
                 </table>
             </td>
             <td style="width:14mm"></td>
-            <td style="width:16mm"></td>
-            <td style="width:4mm"></td>
+            <td style="width:12mm"></td>
+            <td style="width:1mm"></td>
             <td style="height:20mm;width:30mm">
                 <div style="height:7px">Total(Rs.)</div></br>
                 @if ($invoices->type != 1 && in_array($invoices->option, [1, 2]))
                     <div style="height:7px">Ex. Of Vat(Rs.)</div></br>
                 @endif
                 @if ($invoices->type != 1)
-                    <div style="height:7px">Vat {{ $invoices->vat_rate }}%</div></br>
+                    <div style="height:7px">Vat {{ $invoices->vat_rate }}</div></br>
                 @endif
                 @if ($invoices->discount_amount > 0)
                     <div style="height:7px">Dicount(Rs.)</div></br>
                 @endif
                 <div style="height:7px">Grand Total(Rs.)</div></br>
             </td>
-            <td style="height:20mm;width:25mm; text-align:right;">
+            <td style="height:20mm;width:30mm; text-align:right;">
                 <div style="height:7px">
                     {{ $invoices->type == 1 ? money($invoices->grand_total) : money($invoices->sub_total) }}</div></br>
                 @if ($invoices->type != 1 && $invoices->option == 1)
@@ -155,7 +155,7 @@
                     <div style="height:7px">{{ money($invoices->sub_total - $invoices->vat_amount) }}</div></br>
                 @endif
                 @if ($invoices->type != 1)
-                    <div style="height:7px">{{ $invoices->vat_rate }}</div></br>
+                    <div style="height:7px">{{ $invoices->vat_amount }}</div></br>
                 @endif
                 @if ($invoices->discount_amount > 0)
                     <div style="height:7px">{{ money($invoices->discount_amount) }}</div></br>
