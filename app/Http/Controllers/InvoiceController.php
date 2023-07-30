@@ -39,11 +39,12 @@ class InvoiceController extends ParentController
         $employees = Employee::all();
         $stockItems = StockItem::all();
         $warehouses = Warehouse::all();
+        $billTypes = BillType::all();
         $invoice_number = $this->generateInvoiceNumber();
         $invoiceOption = $setting->InvoiceOption($invoice_number);
         Cart::session(request()->user()->id)->clear();
 
-        return view('pages.Invoices.new', compact('customer', 'vatRates', 'customers', 'employees', 'stockItems', 'warehouses', 'setting', 'invoice_number', 'invoiceOption'));
+        return view('pages.Invoices.new', compact('customer', 'vatRates', 'customers', 'employees', 'stockItems', 'warehouses', 'billTypes', 'setting', 'invoice_number', 'invoiceOption'));
     }
 
     public function generateInvoiceNumber()

@@ -20,7 +20,7 @@
 
         td,
         th {
-             border: 1px solid black;
+             /* border: 1px solid black; */
         }
     </style>
     <title>{{ $invoices->invoice_number }} | {{ $invoices->getInvoiceTypeNameAttribute() }}</title>
@@ -30,7 +30,7 @@
   {{-- header --}}
     <table style="height: 15mm">
         <tr>
-            <td style="text-align:right; font-size:20px">Tax Invoice</td>
+            <td style="text-align:right; font-size:20px">{{ $invoices->getBillType->billtype_description }}</td>
             {{-- <td></td> --}}
         </tr>
     </table>
