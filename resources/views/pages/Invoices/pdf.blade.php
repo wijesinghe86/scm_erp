@@ -137,7 +137,7 @@
             <td style="width:10mm"></td>
             <td style="width:10mm"></td>
             <td style="width:1mm"></td>
-            <td style="height:12mm;width:30mm">
+            <td style="height:10mm;width:30mm">
                 <div style="height:6px">Total(Rs.)</div></br>
                 @if ($invoices->type != 1 && in_array($invoices->option, [1, 2]))
                     <div style="height:6px">Ex. Of Vat(Rs.)</div></br>
@@ -150,7 +150,7 @@
                 @endif
                 <div style="height:6px">Grand Total(Rs.)</div></br>
             </td>
-            <td style="height:12mm;width:35mm; text-align:right;">
+            <td style="height:10mm;width:35mm; text-align:right;">
                 <div style="height:6px">
                     {{ $invoices->type == 1 ? money($invoices->grand_total) : money($invoices->sub_total) }}</div></br>
                 @if ($invoices->type != 1 && $invoices->option == 1)
