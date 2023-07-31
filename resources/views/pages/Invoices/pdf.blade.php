@@ -97,8 +97,8 @@
                 <td style="width:14mm; text-align:left;">{{ $item->uom }}</td>
                 <td style="width:16mm; text-align:left;">{{ $item->quantity }}</td>
                 <td style="width:20mm; text-align:left;">{{ $item->weight }}</td>
-                <td style="width:22.5mm; text-align:left;">{{ $item->unit_price }}</td>
-                <td style="width:30mm; text-align:left;">{{ $item->total }}</td>
+                <td style="width:22.5mm; text-align:right;">{{ $item->unit_price }}</td>
+                <td style="width:30mm; text-align:right;">{{ $item->total }}</td>
             </tr>
         @endforeach
         </tbody>
