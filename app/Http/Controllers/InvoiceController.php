@@ -8,6 +8,7 @@ use Exception;
 use App\Models\Stock;
 // use App\Models\Item;
 use App\Models\Invoice;
+use App\Models\BillType;
 use App\Models\Customer;
 use App\Models\Employee;
 use App\Models\StockItem;
