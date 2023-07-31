@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('job_order_items', function (Blueprint $table) {
-            //
+            $table->dropColumn('approval_remark');
         });
     }
 };

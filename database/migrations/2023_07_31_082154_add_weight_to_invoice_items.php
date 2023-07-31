@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('finish_goods', function (Blueprint $table) {
-            $table->string('approval_remark')->nullable();
+        Schema::table('invoice_items', function (Blueprint $table) {
+            $table->decimal('weight',15,2)->default(0);
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('finish_goods', function (Blueprint $table) {
-            $table->dropColumn('approval_remark');
+        Schema::table('invoice_items', function (Blueprint $table) {
+            $table->dropColumn('weight');
         });
     }
 };

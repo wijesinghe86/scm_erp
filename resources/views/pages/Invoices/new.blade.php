@@ -166,25 +166,34 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-md-2">
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-3">
                                     <label>U/M</label>
                                     <input type="text" class="form-control" name="uom" id="uom"
                                         placeholder="U/M">
                                 </div>
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-3">
                                     <label>Order Qty</label>
                                     <input type="number" class="form-control" name="quantity"
                                         id="quantity"onkeypress="getItemDiscount()" min="0" step="0.01"
                                         placeholder="Order Qty">
                                 </div>
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-3">
                                     <label>Unit Rate (Rs.)</label>
                                     <input type="number" class="form-control" name="unit_price" id="unit_price"
                                         onkeypress="getItemDiscount()" min="0" step="0.01"
                                         placeholder="Unit Rate (Rs.)" onchange="calculateUnitPrice(this)">
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <label>Discount</label>
+                                    <label>Weight</label>
+                                    <input type="number" class="form-control" name="weight" id="weight"
+                                        placeholder="weight">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    <label>Item Discount</label>
                                     {{-- <input type="number" class="form-control"
                                         name="item_discount_percentage"onkeyup="getItemDiscount()" min="0"
                                         step="0.01" id="item_discount_percentage" placeholder="Discount"> --}}

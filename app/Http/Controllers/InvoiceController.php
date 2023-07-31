@@ -133,6 +133,7 @@ class InvoiceController extends ParentController
                     'uom' => $item->attributes->uom,
                     'location_id' => $item->attributes->location_id,
                     'quantity' => $item->quantity,
+                    'weight' => $item->weight,
                     'unit_price' => $item->price,
                     'sub_total' => $item->attributes->sub_total,
                     'item_discount_type' => $item->attributes->item_discount_type,
