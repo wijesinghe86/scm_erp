@@ -24,7 +24,7 @@
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->attributes->uom }}</td>
                     <td>{{ $item->quantity }}</td>
-                    <td>{{ $item->weight }}</td>
+                    <td>{{ $item->attributes->weight }}</td>
                     <td>{{ money($item->price) }}</td>
                     <td>{{ money($item->attributes->sub_total) }}</td>
                     <td>{{ money($item->attributes->item_discount_amount) }}</td>

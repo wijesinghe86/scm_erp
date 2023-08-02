@@ -499,6 +499,7 @@
             //passing the value to Item table
             var item_id = $('#item_id').val();
             var quantity = $('#quantity').val();
+            var weight = $('#weight').val();
             var unit_price = $('#unit_price').val();
             var item_discount_amount = $('#item_discount_amount').val() || 0;
             var item_discount_type = $('#item_discount_type').val();
@@ -551,6 +552,7 @@
                 price: unit_price,
                 quantity,
                 attributes: {
+                    weight,
                     stock_no: stockItem?.stock_number,
                     uom: stockItem?.unit,
                     item_discount_type,
@@ -560,6 +562,7 @@
                     location_id: location_id,
                     sub_total: subTotal,
                     total: subTotal - parseFloat(item_discount_amount),
+
                 },
             }
 
@@ -576,6 +579,7 @@
                     $('#uom').val("");
                     $('#item_id').val("").trigger('change');
                     $('#quantity').val("");
+                    $('#weight').val("");
                     $('#unit_price').val("");
                     $('#js_discount_amount').val("");
                     $('#location_id').val("").trigger('change');
