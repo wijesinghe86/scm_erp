@@ -17,8 +17,8 @@
                                     <td>No</td>
                                     <td>Department Number</td>
                                     <td>Department Name</td>
-                                    {{-- <td>Department Description</td> --}}
-                                    <td>Remarks</td>
+                                  <td>Department Description</td>
+                                    {{-- <td>Remarks</td> --}}
                                     <td>Created By</td>
                                     <td>Status</td>
                                     <td>Action</td>
@@ -30,8 +30,8 @@
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{ $department->department_number}}</td>
                                     <td>{{ $department->department_name}}</td>
-                                    {{-- <td>{{ $department->department_description}}</td> --}}
-                                    <td>{{ $department->remark}}</td>
+                                <td>{{ $department->department_description}}</td>
+                                    {{-- <td>{{ $department->remark}}</td> --}}
                                     <td>{{ $department->createUser ? $department->createUser->name : 'User not found' }}</td>
 
                                     <td>

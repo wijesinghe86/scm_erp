@@ -120,6 +120,7 @@
                                                     </tr>
                                                 </table>
                                             </th>
+                                            <th align="center">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -137,23 +138,36 @@
                                                 <td>{{ $item->dispatch_qty }}</td>
                                                 <td>{{ $item->dispatch_weight }}</td>
                                                 <td>{{ $item->warehouse_to->warehouse_name }}</td>
-                                                <td>
-                                                    <select required class="form-control"
-                                                        name="items[{{ $index }}][status]">
-                                                        <option value="" selected> Select Status</option>
-                                                        <option value="approved">Approve</option>
-                                                        <option value="rejected">Reject</option>
-                                                    </select>
-                                                    <input type="hidden" name="items[{{ $index }}][id]"
-                                                        value="{{ $item->id }}" />
-                                                </td>
+                                                @if ($item->approve_status == null)
+                                                    <td>
+                                                        <select style="width:15rem;" required class="form-control"
+                                                            name="items[{{ $index }}][status]">
+                                                            <option value="" selected> Select Status</option>
+                                                            <option value="approved">Approve</option>
+                                                            <option value="rejected">Reject</option>
+                                                        </select>
+                                                        <input type="hidden" name="items[{{ $index }}][id]"
+                                                            value="{{ $item->id }}" />
+                                                    </td>
+                                                @else
+                                                    <td>
+                                                        <input style="width:15rem;" readonly class="form-control"
+                                                            value="{{ $item->approve_status }}" />
+                                                        <input type="hidden" name="items[{{ $index }}][id]"
+                                                            value="{{ $item->id }}" />
+                                                    </td>
+                                                @endif
+
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
                             <br>
-                            <button class="btn btn-success me-2">Submit</button>
+                            @if (count($dispatch_item->items->whereNull('approve_status')) > 0)
+                                <button class="btn btn-success me-2">Submit</button>
+                            @endif
+                            <a href="{{ route('dispatch_approval.index') }}" class="btn btn-danger me-2">Cancel</a>
                         </form>
                     </div>
                 </div>

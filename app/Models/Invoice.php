@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Cart;
+use App\Models\BillType;
 use App\Models\Customer;
 use App\Models\Employee;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Cart;
 
 class Invoice extends Model
 {
@@ -96,6 +97,11 @@ class Invoice extends Model
     public function SalesStaff()
     {
         return $this->hasOne(Employee::class, 'id', 'employee_id');
+    }
+
+    public function getBillType()
+    {
+        return $this->hasOne(BillType::class, 'id', 'type');
     }
 
     public function Items()

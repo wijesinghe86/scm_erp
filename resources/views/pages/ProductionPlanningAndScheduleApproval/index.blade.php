@@ -13,34 +13,38 @@
                                     class="btn btn-success float-end mb-2">
                                     Approve </a>
                             </div>
-                            <table class="table table-bordered" id="pps_table">
-                                <thead>
-                                    <tr>
-                                        <td>No</td>
-                                        <td>PPS No</td>
-                                        <td>DF No</td>
-                                        <td>Item</td>
-                                        <td>Quantity</td>
-                                        <td>Created By</td>
-                                        <td>Status</td>
-                                        <td>Approved By</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($list as $item)
+                            <div class="table-responsive">
+                                <table class="table table-bordered data-table" id="pps_table">
+                                    <thead>
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->production_planing->pps_no }}</td>
-                                            <td>{{ $item->demand_forecasting->df_no }}</td>
-                                            <td>{{ $item->stock_item->description}}</td>
-                                            <td>{{ $item->pps_qty }}</td>
-                                            <td>{{ $item->createdBy->name }}</td>
-                                            <td>{{ $item->approval_status }}</td>
-                                            <td>{{ $item->approvedBy->name }}</td>
+                                            <td>No</td>
+                                            <td>PPS No</td>
+                                            <td>DF No</td>
+                                            <td>Item</td>
+                                            <td>Quantity</td>
+                                            <td>Created By</td>
+                                            <td>Status</td>
+                                            <td>Approved By</td>
+                                            <td>Remark</td>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($list as $item)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ optional(optional($item)->production_planing)->pps_no }}</td>
+                                                <td>{{ optional(optional($item)->demand_forecasting)->df_no }}</td>
+                                                <td>{{ optional(optional($item)->stock_item)->description }}</td>
+                                                <td>{{ $item->pps_qty }}</td>
+                                                <td>{{ $item->createdBy->name }}</td>
+                                                <td>{{ $item->approval_status }}</td>
+                                                <td>{{ optional(optional($item)->approvedBy)->name }}</td>
+                                                <td>{{ $item->remark }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                     </div>
                 </div>
             </div>

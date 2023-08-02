@@ -5,7 +5,7 @@
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="title">Return Create</h4>
+                        <h4 class="title">Customer Return Entry</h4>
                         <br>
                         <div class="row">
                             <div class="form-group col-md-2">
@@ -59,6 +59,7 @@
                         </div>
 
                         @if ($delivery_order)
+                            <div class="table-responsive">
                             <table class="table table-bordered" id="tbl_finishedgoods">
                                 <thead>
                                     <tr>
@@ -68,8 +69,8 @@
                                         <td>U/M</td>
                                         <td>UNIT PRICE</td>
                                         <td>ISSUED QTY</td>
-                                        <td>AVAILABLE TO RETURN QTY</td>
-                                        <td>QUANTITY</td>
+                                        <td>RETURNABLE QTY</td>
+                                        <td>RETURNED QTY</td>
                                         <td>LOCATION</td>
                                     </tr>
                                 </thead>
@@ -103,12 +104,14 @@
                                             <td>
                                                 <button class="btn btn-primary "
                                                     onclick="addToCart({{ $item }},{{ $key }})">Add
-                                                    To Return List</button>
+                                                    </button>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+                            </div>
+                            <br>
 
                             <h5 class="card-title">Return List</h5>
                             <table class="table table-bordered">
@@ -129,8 +132,8 @@
 
                                 </tbody>
                             </table>
-
                             </table>
+
                             <button onclick="onSubmit()" class="btn btn-success me-2">Create Return</button>
                         @endif
 
@@ -271,7 +274,7 @@
 
         let selectedDeliveryOrder = {};
 
-        let customerId = "{{ $customer->id }}";
+        let customerId = "{{$customer_data ? $customer_data->id : ""}}";
         let invoiceDate = "{{ $invoice_date }}";
         let invoiceNumber = "{{ $invoice_number }}"
         let deliveryOrderId = "{{ $delivery_order_no }}"

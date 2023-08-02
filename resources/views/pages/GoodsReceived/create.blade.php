@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('content')
-    <div class="content-wrapper"> 
+    <div class="content-wrapper">
         <div class="row">
-          <div class="col-12 grid-margin stretch-card"> 
-                <div class="card">  
-                    <div class="card-body"> 
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
                         <h4 class="card-title">Goods Received Note Entry</h4>
                         <form class="forms-sample" method="POST" action="{{ route('goodsreceived.store') }}">
                             @csrf
@@ -16,7 +16,7 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>GRN Date</label>
-                                    <input type="date" class="form-control" name="grn_date"
+                                    <input type="date" class="form-control" name="grn_date" value="{{ date('Y-m-d') }}"
                                         placeholder="Goods Received Date">
                                 </div>
                                 <div class="form-group col-md-4">
@@ -25,13 +25,13 @@
                                     <label>Local</label>
                                     <input type="radio" name="type_of_received" value="Import">
                                     <label>Import</label>
-                                   </div>
+                                </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label>Received By</label>
-                                    <select class="form-control" name="received_by" id="received_by" >
+                                    <select class="form-control" name="received_by" id="received_by">
                                         <option value="" selected disabled>Select</option>
                                         @foreach ($employees as $row)
                                             <option value="{{ $row->id }}">{{ $row->employee_fullname }}</option>
@@ -47,7 +47,7 @@
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label>Inspected By</label>
-                                    <select class="form-control" name="inspected_by" id="inspected_by" >
+                                    <select class="form-control" name="inspected_by" id="inspected_by">
                                         <option value="" selected disabled>Select</option>
                                         @foreach ($employees as $row)
                                             <option value="{{ $row->id }}">{{ $row->employee_fullname }}</option>
@@ -63,7 +63,7 @@
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label>Verified By</label>
-                                    <select class="form-control" name="verified_by" id="verified_by" >
+                                    <select class="form-control" name="verified_by" id="verified_by">
                                         <option value="" selected disabled>Select</option>
                                         @foreach ($employees as $row)
                                             <option value="{{ $row->id }}">{{ $row->employee_fullname }}</option>
@@ -102,7 +102,8 @@
                             <div class="row">
                                 <div class="form-group col-md-3">
                                     <label>PO Number</label>
-                                    <select class="form-control po_input" name="po_id" id="po_id" onchange="itemOnChange(this)" >
+                                    <select class="form-control po_input" name="po_id" id="po_id"
+                                        onchange="itemOnChange(this)">
                                         <option value="" selected disabled>Select PO No</option>
                                         @foreach ($po_list as $row)
                                             <option value="{{ $row->id }}">{{ $row->po_no }}</option>
@@ -111,18 +112,20 @@
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label>Supplier Id</label>
-                                    <input type="text" readonly class="form-control" name="supplier" id="supplier" >
+                                    <input type="text" readonly class="form-control" name="supplier" id="supplier">
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>Supplier Name</label>
-                                    <input type="text" readonly class="form-control" name="supplier_name" id="supplier_name" >
+                                    <input type="text" readonly class="form-control" name="supplier_name"
+                                        id="supplier_name">
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>Warehouse</label>
                                     <select class="form-control" name="warehouse" id="warehouse">
                                         <option value="" selected> Select </option>
-                                        @foreach($warehouses as $warehouse)
-                                        <option value="{{$warehouse->id}}">{{$warehouse->warehouse_name}}</option>
+                                        @foreach ($warehouses as $warehouse)
+                                            <option value="{{ $warehouse->id }}">{{ $warehouse->warehouse_name }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -140,52 +143,40 @@
 @endsection
 @push('scripts')
     <script type="application/javascript">
-        var po_list = '{!! $po_list->toJson()!!}';
+        var po_list = <?php echo json_encode($po_list);?>;
         po_list = JSON.parse(po_list);
 
         function itemOnChange(elem) {
+            var selectedPo = po_list.find(row => row?.id == elem.value)
 
-          var selectedPo = po_list.filter((row)=>{
-            return row.id == elem.value;
-          })
-
-          if(selectedPo.length == 0){
-            return;
-          }
-
-          selectedPo = selectedPo[0];
-
-          console.log("selected po",selectedPo);
-
-          document.getElementById("supplier").value = selectedPo.get_supplier.id;
-          document.getElementById("supplier_name").value = selectedPo.get_supplier.supplier_name;
-            }
+            $('#supplier').val(selectedPo.get_supplier.id)
+            $('#supplier_name').val(selectedPo.get_supplier.supplier_name)
+        }
         </script>
 
-@push('scripts')
-    <script>
-        $(document).ready(function() {
-            $('.item-select').select2({
-                placeholder: "Select Item",
-            });
-        });
+    @push('scripts')
+        <script>
             $(document).ready(function() {
-            // alert("ss");
-            $('.items_table');
-        });
-        $(".po_input").change(function() {
-            var id = $(this).val();
-            // alert("Handler for .change() called." + id);
-
-            $(".items_table").load('/goodsreceived/get-items?po_id=' + id, function() {
-
+                $('.item-select').select2({
+                    placeholder: "Select Item",
+                });
             });
-        });
+            $(document).ready(function() {
+                // alert("ss");
+                $('.items_table');
+            });
+            $(".po_input").change(function() {
+                var id = $(this).val();
+                // alert("Handler for .change() called." + id);
 
-    </script>
+                $(".items_table").load('/goodsreceived/get-items?po_id=' + id, function() {
+
+                });
+            });
+        </script>
     @endpush
 
-{{-- @push('styles')
+    {{-- @push('styles')
     <style>
         .select2-container .select-selection--single {
             height: 46px;

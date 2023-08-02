@@ -61,6 +61,22 @@
                                     <label>Remarks</label>
                                     <input type="text" class="form-control" name="remarks">
                                 </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Fleet</label>
+                                    <select class="form-control" name="fleet_id">
+                                        <option value="">Select Fleet</option>
+                                        @foreach ($fleets as $fleet)
+                                            <option value="{{ $fleet->id }}">
+                                                {{ $fleet->fleet_registration_number }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Driver Name</label>
+                                    <input type="text" class="form-control" name="delivered_by">
+                                </div>
                             </div>
                             {{-- </div> --}}
                             <hr>
@@ -97,7 +113,8 @@
                                         placeholder="Revd Qty">
                                 </div> --}}
 
-                                <div style="display:none; position: absolute; bottom:-20px; right:0; width: 400px;" id="stockView">
+                                <div style="display:none; position: absolute; bottom:-20px; right:0; width: 400px;"
+                                    id="stockView">
                                     <table class="table table-striped">
                                         <thead style="background-color: lightgray">
                                             <tr>
@@ -149,14 +166,14 @@
                 $('#stockView').hide();
 
                 if (stockItem?.stocks?.length > 0) {
-                        $('#stockViewItems').find('tr').remove().end()
-                        stockItem?.stocks.forEach(element => {
-                            $('#stockViewItems').append(
-                                `<tr><td>${element?.warehouse?.warehouse_name}</td><td align="right" >${element?.qty}</td></tr>`
-                            )
-                        })
-                        $('#stockView').show();
-                    }
+                    $('#stockViewItems').find('tr').remove().end()
+                    stockItem?.stocks.forEach(element => {
+                        $('#stockViewItems').append(
+                            `<tr><td>${element?.warehouse?.warehouse_name}</td><td align="right" >${element?.qty}</td></tr>`
+                        )
+                    })
+                    $('#stockView').show();
+                }
             })
 
             function onAddClick() {

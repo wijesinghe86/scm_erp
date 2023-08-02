@@ -166,25 +166,34 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-md-2">
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-3">
                                     <label>U/M</label>
                                     <input type="text" class="form-control" name="uom" id="uom"
                                         placeholder="U/M">
                                 </div>
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-3">
                                     <label>Order Qty</label>
                                     <input type="number" class="form-control" name="quantity"
                                         id="quantity"onkeypress="getItemDiscount()" min="0" step="0.01"
                                         placeholder="Order Qty">
                                 </div>
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-3">
                                     <label>Unit Rate (Rs.)</label>
                                     <input type="number" class="form-control" name="unit_price" id="unit_price"
                                         onkeypress="getItemDiscount()" min="0" step="0.01"
                                         placeholder="Unit Rate (Rs.)" onchange="calculateUnitPrice(this)">
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <label>Discount</label>
+                                    <label>Weight</label>
+                                    <input type="number" class="form-control" name="weight" id="weight"
+                                        placeholder="weight">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    <label>Item Discount</label>
                                     {{-- <input type="number" class="form-control"
                                         name="item_discount_percentage"onkeyup="getItemDiscount()" min="0"
                                         step="0.01" id="item_discount_percentage" placeholder="Discount"> --}}
@@ -352,6 +361,9 @@
                 const filterCurrentStockData = selectedItemData?.stocks?.find(row => row?.warehouse?.id ==
                     warehouse)
                 if (parseFloat(quantity) > parseFloat(filterCurrentStockData?.qty)) {
+                    alertDanger(
+                        `${filterCurrentStockData?.qty} stock available on ${filterCurrentStockData?.warehouse?.warehouse_name} warehouse`
+                        )
                     $(this).val(filterCurrentStockData?.qty)
                 }
             }
@@ -487,6 +499,7 @@
             //passing the value to Item table
             var item_id = $('#item_id').val();
             var quantity = $('#quantity').val();
+            var weight = $('#weight').val();
             var unit_price = $('#unit_price').val();
             var item_discount_amount = $('#item_discount_amount').val() || 0;
             var item_discount_type = $('#item_discount_type').val();
@@ -539,6 +552,7 @@
                 price: unit_price,
                 quantity,
                 attributes: {
+                    weight,
                     stock_no: stockItem?.stock_number,
                     uom: stockItem?.unit,
                     item_discount_type,
@@ -548,24 +562,24 @@
                     location_id: location_id,
                     sub_total: subTotal,
                     total: subTotal - parseFloat(item_discount_amount),
+
                 },
             }
 
             $.ajax({
-                url: "{{ route('cart.store') }}",
+                url: "{{ route('invoices.item.store') }}",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "POST",
-                data: {
-                    item_data: data
-                },
+                data: data,
                 success: function(response) {
                     fetchInvoiceTotal();
                     $('#stock_no').val("");
                     $('#uom').val("");
                     $('#item_id').val("").trigger('change');
                     $('#quantity').val("");
+                    $('#weight').val("");
                     $('#unit_price').val("");
                     $('#js_discount_amount').val("");
                     $('#location_id').val("").trigger('change');

@@ -77,6 +77,9 @@ class RawMaterialReceivedController extends Controller
                 $stock = Stock::where('stock_item_id', $row['stock_item_no'])
                     ->where('warehouse_id', $request->warehouse_code)
                     ->first();
+                if ($stock == null) {
+                    throw ValidationException::withMessages(['items' => "Stock Record Not found"]);
+                }
                 $stock->qty = $stock->qty + $row['received_qty'];
                 $stock->save();
             }
@@ -87,6 +90,8 @@ class RawMaterialReceivedController extends Controller
         } catch (Exception $e) {
             DB::rollBack();
             logger($e);
+            flash()->error($e->getMessage());
+            redirect()->back();
         }
     }
 

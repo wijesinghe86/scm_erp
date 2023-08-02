@@ -43,6 +43,7 @@ class ProductionPlanningApprovalController extends Controller
 
             $production_planing_item = ProductionPlaningItem::find($item['id']);
             $production_planing_item->approval_status = $item['approval_status'];
+            $production_planing_item->remark = $item['remark'];
             $production_planing_item->approval_status_changed_by = request()->user()->id;
             $production_planing_item->approval_status_changed_at = now();
             if ($item['approval_status'] != null) {

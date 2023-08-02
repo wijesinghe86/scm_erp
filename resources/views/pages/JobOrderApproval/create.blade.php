@@ -24,7 +24,7 @@
                             </div>
                             <div class="items_table"></div>
                             <button type="submit" class="btn btn-success me-2">Approved</button>
-                            <a href="{{route('production_planning_and_schedule_approval.index')}}" class="btn btn-danger">Cancel</a>
+                            <a href="{{route('joborderapproval.index')}}" class="btn btn-danger">Cancel</a>
                         </form>
                     </div>
                 </div>

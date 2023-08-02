@@ -22,6 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('location_id')->nullable();
             $table->string('payment_method')->nullable();
             $table->string('is_approved')->nullable();
+            $table->unsignedBigInteger('approved_by')->nullable();
             $table->timestamps();
         });
     }

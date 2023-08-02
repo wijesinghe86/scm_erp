@@ -24,8 +24,8 @@
                             <th scope="col">Rmr Descrition</th>
                             <th scope="col">Rmr Qty</th>
                             <th scope="col">Rmr Weight</th>
-                            <th scope="col">Approve qty</th>
-                            <th scope="col">Approve weight</th>
+                            <th scope="col">Approved qty</th>
+                            <th scope="col">Approved weight</th>
                             <th scope="col">Justification</th>
                         </tr>
                         @foreach ($material_request_items as $index => $material_request_item)
@@ -36,7 +36,7 @@
                                 <td>{{ $material_request_item->req_qty }}</td>
                                 <td>{{ $material_request_item->req_weight }}</td>
                                 <td>
-                                    <input required type="number" class="form-control"
+                                    <input style="min-width:10rem;" required type="number" class="form-control"
                                         name="items[{{ $material_request_item->id }}][approved_qty]">
                                     <input type="hidden" class="form-control" value="{{ $material_request_item->id }}"
                                         name="items[{{ $material_request_item->id }}][rmr_item_id]">
@@ -49,11 +49,11 @@
 
                                 </td>
                                 <td>
-                                    <input required type="number" class="form-control"
+                                    <input style="min-width:10rem;" required type="number" class="form-control"
                                         name="items[{{ $material_request_item->id }}][approved_weight]">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control"
+                                    <input style="min-width:10rem;" type="text" class="form-control"
                                         name="items[{{ $material_request_item->id }}][justification]">
                                 </td>
                             </tr>

@@ -11,8 +11,8 @@
                                 <a href="{{ route('rawmaterial_received_for_production.create') }}"
                                     class="btn btn-success float-end mb-2"> Add New </a>
                             </div>
-                            <div class="table-responsive" >
-                                <table class="table table-bordered" id="tbl_rawmaterialissueforproduction">
+                            <div class="table-responsive">
+                                <table class="table table-bordered data-table" id="tbl_rawmaterialissueforproduction">
                                     <thead>
                                         <tr>
                                             <td>No</td>
@@ -29,8 +29,10 @@
                                                 <td class="align-top">{{ $loop->iteration }}</td>
                                                 <td class="align-top">{{ $row->rma_no }}</td>
                                                 <td class="align-top">{{ $row->rmi_no }}</td>
-                                                <td class="align-top">{{ $row->warehouse->warehouse_name }}</td>
-                                                <td class="align-top">{{ $row->receivedBy->employee_fullname }}</td>
+                                                <td class="align-top">
+                                                    {{ optional(optional($row)->warehouse)->warehouse_name }}</td>
+                                                <td class="align-top">
+                                                    {{ optional(optional($row)->receivedBy)->employee_fullname }}</td>
                                                 <td>
                                                     <table class="table table-striped">
                                                         <tr>
@@ -43,7 +45,8 @@
                                                         @foreach ($row->items as $item)
                                                             <tr>
                                                                 <td>{{ $loop->iteration }}</td>
-                                                                <td>{{ $item->stock_item->stock_number }}</td>
+                                                                <td>{{ optional(optional($item)->stock_item)->stock_number }}
+                                                                </td>
                                                                 <td>{{ $item->serial_no }}</td>
                                                                 <td>{{ $item->received_qty }}</td>
                                                                 <td>{{ $item->remarks }}</td>

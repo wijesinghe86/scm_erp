@@ -30,4 +30,10 @@ class RawMaterialIssue extends Model
     {
         return $this->hasOne(User::class, 'id', 'created_by');
     }
+
+
+    public function finished_good()
+    {
+        return $this->hasOne(FinishGood::class, 'rmi_no', 'id');
+    }
 }

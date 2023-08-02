@@ -34,7 +34,9 @@ class FinishedGoodsController extends Controller
         $stock_items = StockItem::get();
         $warehouses = Warehouse::get();
         $next_number = $this->generateNextNumber();
-        $rmi_data  = RawMaterialIssue::with(['warehouse', 'createdBy', 'items.received'])->get();
+        $rmi_data  = RawMaterialIssue::with(['warehouse', 'createdBy', 'items.received', 'finished_good'])
+            ->whereDoesntHave('finished_good')
+            ->get();
 
         return view('pages.FinishedGoods.create', compact('warehouses', 'stock_items', 'next_number', 'rmi_data'));
     }
@@ -91,7 +93,7 @@ class FinishedGoodsController extends Controller
                 $finished_good_item->fgrn_no = $data['fgrn_no'];
                 $finished_good_item->warehouse_id = $request->warehouse_id;
                 $finished_good_item->rmi_no = $request->rmi_no;
-                $finished_good_item->rmi_item_stock_description =$finish_good['rmi_item_stock_description'];
+                $finished_good_item->rmi_item_stock_description = $finish_good['rmi_item_stock_description'];
                 $finished_good_item->rmi_item_stock_number = $finish_good['rmi_item_stock_number'];
                 $finished_good_item->rmi_qty = $finish_good['rmi_qty'];
                 $finished_good_item->stock_item_id =  $finish_good['stock_item_id'];

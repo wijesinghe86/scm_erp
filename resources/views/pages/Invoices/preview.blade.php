@@ -119,20 +119,23 @@
                                             <td align="right" class="border"
                                                 style="height: 26mm;min-height:26mm; max-height:26mm; width: 11mm;padding:10px 10px">
                                                 <div style="height:7px">
-                                                    {{ $invoices->type == 1 ? money($invoices->grand_total) : money($invoices->sub_total) }}
+                                                    {{ money($invoices->sub_total) }}
                                                 </div></br>
                                                 @if ($invoices->type != 1 && $invoices->option == 1)
                                                     <div style="height:7px">{{ money($invoices->sub_total) }}</div></br>
                                                 @endif
                                                 @if ($invoices->type != 1 && $invoices->option == 2)
                                                     <div style="height:7px">
-                                                        {{ money($invoices->sub_total - $invoices->vat_amount) }}</div></br>
+                                                        {{ money($invoices->sub_total - $invoices->vat_amount) }}</div>
+                                                    </br>
                                                 @endif
                                                 @if ($invoices->type != 1)
                                                     <div style="height:7px">{{ money($invoices->vat_amount) }}</div></br>
                                                 @endif
                                                 @if ($invoices->discount_amount > 0)
-                                                    <div style="height:7px">{{ money($invoices->discount_amount) }}</div>
+                                                    <div style="height:7px">
+                                                        {{ $invoices->discount_type == 'percentage' ? money($invoices->sub_total * ($invoices->discount_amount/100)) : money($invoices->discount_amount) }}
+                                                    </div>
                                                     </br>
                                                 @endif
                                                 <div style="height:7px">{{ money($invoices->grand_total) }}</div></br>
@@ -179,12 +182,12 @@
         }
 
         /* tr {
-                                                                                                                                            border: 1px solid blue !important;
-                                                                                                                                        }
+                                                                                                                                                border: 1px solid blue !important;
+                                                                                                                                            }
 
-                                                                                                                                        td {
-                                                                                                                                            border: 1px solid red !important;
-                                                                                                                                        } */
+                                                                                                                                            td {
+                                                                                                                                                border: 1px solid red !important;
+                                                                                                                                            } */
 
         .info-td {
             vertical-align: top !important;

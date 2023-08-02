@@ -29,6 +29,7 @@ class FinishedGoodsApprovalController extends Controller
         try {
             DB::beginTransaction();
             $finished_good->status = $request->status;
+            $finished_good->approval_remark = $request->approval_remark;
             $finished_good->inspected_by = request()->user()->id;
             $finished_good->inspected_at = now();
             $finished_good->save();

@@ -12,6 +12,7 @@
                                     New </a>
                                 {{-- <a href="{{ route('stockadjustment.deleted') }}" class="btn btn-success float-end mb-2"> Deleted </a> --}}
                             </div>
+                            <div class="table-responsive">
                             <table class="table table-bordered" id="tbl_stockadjustment">
                                 <thead>
                                     <tr>

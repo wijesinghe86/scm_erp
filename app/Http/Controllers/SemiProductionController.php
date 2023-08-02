@@ -166,14 +166,17 @@ class SemiProductionController extends Controller
             'semi_qty' => $request->semi_qty,
             'semi_weight' => $request->semi_weight,
             'semi_serial_no' => $request->semi_serial_no,
+            'actual_weight' => $request->actual_weight,
 
         ];
         session(['semi.items' => $items]);
+        $items =  session('semi.items') ?? [];
+        logger($items);
         return [
             'success' => true,
             'message' => 'Item Added',
             'semi_product_total_qty' => collect($items)->sum('semi_qty'),
-            'raw_material_total_qty' => $request->actual_weight,
+            'raw_material_total_qty' => collect($items)->unique('serial_number_picker')->sum('actual_weight'),
         ];
     }
 

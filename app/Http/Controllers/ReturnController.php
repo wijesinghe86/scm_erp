@@ -129,7 +129,7 @@ class ReturnController extends Controller
 
     public function approvalIndex()
     {
-        $invoice_returns =  InvoiceReturn::where('is_approved', false)->get();
+        $invoice_returns =  InvoiceReturn::where('is_approved', true)->get();
         return view('pages.Returns.approval', compact('invoice_returns'));
     }
 
