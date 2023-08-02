@@ -18,6 +18,7 @@ class InvoiceItem extends Model
         'description',
         'uom',
         'quantity',
+        'weight',
         'unit_price',
         // 'item_discount_percentage',
         'item_discount_value',
