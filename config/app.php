@@ -182,12 +182,17 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Darryldecode\Cart\CartServiceProvider::class,
+        spatie\permission\permissionServiceProvider::class,
+
+        
+
 
         /*
-         * Package Service Providers...
-         */
+    //Package Service Providers...
 
-        /*
+
+
+
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
