@@ -16,7 +16,7 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                 <label>Reference No</label>
-                                <input value="{{ old('ref_no') }}" type="text" class="form-control" name="ref_no" id="ref_no"
+                                <input value="{{$ref_number }}" type="text" class="form-control" name="ref_no" id="ref_no"
                                 placeholder="Ref_No" >
                                 </div>
                                 <div class="form-group col-md-4">
@@ -32,7 +32,7 @@
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label>Justification</label>
-                                    <input value="{{ old('justification') }}" type="text" class="form-control" name="justification" id="justification"
+                                    <input value="{{ $justifications}}" type="text" class="form-control" name="justification" id="justification"
                                         placeholder="Justification" >
                                 </div>
                             </div>
@@ -40,6 +40,9 @@
                                 <div class="form-group col-md-3">
                                     <label>Stock Number</label>
                                     <input readonly type="text" class="form-control" name="stock_number" id="stock_number">
+                                    @if($errors->has('stock_number'))
+                                        <div class="error">{{ $errors->first('stock_number') }}</div>
+                                        @endif
                                 </div>
                                 <div class="form-group col-md-7">
                                     <label>Description</label>
@@ -72,7 +75,8 @@
                                     <input readonly type="text" class="form-control" id="new_stock_bal">
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-success me-2">Update</button>
+                            <button name="addAnother" value="0" type="submit" class="btn btn-success me-2">Create</button>
+                            <button name="addAnother" value="1" type="submit" class="btn btn-success me-2">Create And Add another</button>
                         </form>
                     </div>
                 </div>
@@ -90,6 +94,7 @@
             });
         });
         </script>
+        
         
         <script type="application/javascript">
      var stock_items = '{!! $stock_items->toJson()!!}';
@@ -161,4 +166,7 @@
         }
         </script>
         @endpush
+
+        
+            
 

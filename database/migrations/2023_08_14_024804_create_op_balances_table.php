@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('ref_no')->nullable();
             $table->unsignedBigInteger('warehouse_id')->nullable();
             $table->string('justification')->nullable();
+            $table->string('stock_id')->nullable();
+            $table->decimal('qty', 15, 2)->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
         });
