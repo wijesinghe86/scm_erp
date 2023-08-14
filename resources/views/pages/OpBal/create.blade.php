@@ -75,7 +75,7 @@
                                     <input readonly type="text" class="form-control" id="new_stock_bal">
                                 </div>
                             </div>
-                            <button name="addAnother" value="0" type="submit" class="btn btn-success me-2">Create</button>
+                            {{-- <button name="addAnother" value="0" type="submit" class="btn btn-success me-2">Create</button> --}}
                             <button name="addAnother" value="1" type="submit" class="btn btn-success me-2">Create And Add another</button>
                         </form>
                     </div>
