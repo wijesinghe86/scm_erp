@@ -2,13 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DfController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\MrfPrfController;
 use App\Http\Controllers\ReturnController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\BillTypeController;
-use App\Http\Controllers\CartController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DispatchController;
 use App\Http\Controllers\DisposalController;
@@ -23,7 +25,6 @@ use App\Http\Controllers\DfApprovalController;
 use App\Http\Controllers\StorageAreaController;
 use App\Http\Controllers\TaxCreationController;
 use App\Http\Controllers\DeliveryOrderController;
-use App\Http\Controllers\DispatchApprovalController;
 use App\Http\Controllers\FinishedGoodsController;
 use App\Http\Controllers\GoodsReceivedController;
 use App\Http\Controllers\PurchaseOrderController;
@@ -32,10 +33,13 @@ use App\Http\Controllers\ProductionCostController;
 use App\Http\Controllers\SemiProductionController;
 use App\Http\Controllers\InvoiceSettingsController;
 use App\Http\Controllers\MaterialRequestController;
+use App\Http\Controllers\OpenningBalanceController;
 use App\Http\Controllers\PurchaseOrderMrController;
 use App\Http\Controllers\RawMaterialCodeController;
 use App\Http\Controllers\StockAdjustmentController;
 use App\Http\Controllers\WarehouseSafetyController;
+use App\Http\Controllers\DispatchApprovalController;
+use App\Http\Controllers\JobOrderApprovalController;
 use App\Http\Controllers\JobOrderCreationController;
 use App\Http\Controllers\FleetRegistrationController;
 use App\Http\Controllers\LocationBayDesigncontroller;
@@ -47,25 +51,22 @@ use App\Http\Controllers\RawMaterialRequestController;
 use App\Http\Controllers\LocationShelfDesignController;
 use App\Http\Controllers\MiscellaneousIssuedController;
 use App\Http\Controllers\PlantTimeManagementController;
+use App\Http\Controllers\RawMaterialReceivedController;
 use App\Http\Controllers\StockLocationChangeController;
 use App\Http\Controllers\WarehouseAreaDesignController;
 use App\Http\Controllers\EquipmentRegistrationController;
 use App\Http\Controllers\FinishedGoodsApprovalController;
-use App\Http\Controllers\JobOrderApprovalController;
-use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ManAndEquipmentSafetyController;
 use App\Http\Controllers\MiscellaneousReceivedController;
 use App\Http\Controllers\OverShortageAndDamageController;
 use App\Http\Controllers\MaterialsReturnByCustomerController;
 use App\Http\Controllers\RawMaterialRequestApproveController;
+use App\Http\Controllers\ProductionPlanningApprovalController;
 use App\Http\Controllers\OperationMechanismByProductController;
 use App\Http\Controllers\ProductionPlanningAndScheduleController;
 use App\Http\Controllers\RawMaterialIssueForProductionController;
 use App\Http\Controllers\SemiFinishedGoodsSerialCodeAssigningController;
 use App\Http\Controllers\OperationMachanismProductionAndTimeManagementController;
-use App\Http\Controllers\ProductionPlanningApprovalController;
-use App\Http\Controllers\RawMaterialReceivedController;
-use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -422,6 +423,12 @@ Route::middleware(['custom.auth'])->group(function () {
     });
 
     // Inventory Control
+    /* .....CREATING ROUTE FOR Poenning Balance Entry ....... */
+    Route::prefix('obentry')->group(function () {
+        Route::get('/create', [OpenningBalanceController::class, 'create'])->name('obentry.create');
+        Route::post('/create', [OpenningBalanceController::class, 'store'])->name('obentry.store');
+        Route::post('/get-stock', [OpenningBalanceController::class, 'getStock'])->name('obentry.stock');
+    });
     /* .....CREATING ROUTE FOR Miscellaneous Received ....... */
     Route::prefix('miscreceived')->group(function () {
         Route::get('/', [MiscellaneousReceivedController::class, 'index'])->name('miscreceived.index');
