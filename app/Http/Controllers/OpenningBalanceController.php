@@ -13,6 +13,12 @@ use Illuminate\Validation\ValidationException;
 
 class OpenningBalanceController extends Controller
 {
+
+    public function index()
+    {
+        $openingBalance = OpBalance::get();
+        return view ('pages.OpBal.index', compact('openingBalance'));
+    }
     public function create(Request $request)
     {
         // logger($request->all());
@@ -43,7 +49,7 @@ class OpenningBalanceController extends Controller
         if ($is_exist) {
             throw ValidationException::withMessages(["Duplicate Entry"]);
         }
-        
+
         $opBal = new OpBalance;
         $opBal->date = $request->ob_date;
         $opBal->ref_no = $request->ref_no;
@@ -57,7 +63,7 @@ class OpenningBalanceController extends Controller
         //Stock
         $stock= Stock::where('stock_item_id',$request->stock_id)->where('warehouse_id',$request->warehouse)->first();
         if(!$stock){
-            throw ValidationException::withMessages(['item'=> "Stock Not found"]);    
+            throw ValidationException::withMessages(['item'=> "Stock Not found"]);
         }
 
         $stock->qty  = $stock->qty + $request->qty;
@@ -93,7 +99,7 @@ class OpenningBalanceController extends Controller
         return $stock;
     }
 
-    
 
-    
+
+
 }

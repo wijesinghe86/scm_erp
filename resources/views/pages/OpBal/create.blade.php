@@ -21,7 +21,7 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Warehouse</label>
-                                    <select class="form-control" name="warehouse" id="warehouse">
+                                    <select class="form-control warehouse-select" name="warehouse" id="warehouse">
                                         @foreach ($warehouses as $warehouse)
                                             <option value="{{ $warehouse->id }}">{{ $warehouse->warehouse_name }}
                                             </option>
@@ -77,6 +77,7 @@
                             </div>
                             {{-- <button name="addAnother" value="0" type="submit" class="btn btn-success me-2">Create</button> --}}
                             <button name="addAnother" value="1" type="submit" class="btn btn-success me-2">Create And Add another</button>
+                            <a href="{{ route('obentry.index') }}" class="btn btn-primary me-2"> View Report </a>
                         </form>
                     </div>
                 </div>
@@ -94,8 +95,25 @@
             });
         });
         </script>
-        
-        
+
+<script>
+    $(document).ready(function() {
+        // viewItemTable()
+        $('.warehouse-select').select2({
+            placeholder: "Select Warehouse",
+        });
+
+        let warehouse = '{{ $warehouse_name }}'
+        if (warehouse == null) {
+            warehouse = ""
+        }
+
+        $('.warehouse-select').val(warehouse).trigger('change')
+
+    });
+</script>
+
+
         <script type="application/javascript">
      var stock_items = '{!! $stock_items->toJson()!!}';
         stock_items = JSON.parse(stock_items);
@@ -167,6 +185,6 @@
         </script>
         @endpush
 
-        
-            
+
+
 
