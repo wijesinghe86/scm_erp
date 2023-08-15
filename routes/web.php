@@ -425,6 +425,7 @@ Route::middleware(['custom.auth'])->group(function () {
     // Inventory Control
     /* .....CREATING ROUTE FOR Poenning Balance Entry ....... */
     Route::prefix('obentry')->group(function () {
+        Route::get('/', [OpenningBalanceController::class, 'index'])->name('obentry.index');
         Route::get('/create', [OpenningBalanceController::class, 'create'])->name('obentry.create');
         Route::post('/create', [OpenningBalanceController::class, 'store'])->name('obentry.store');
         Route::post('/get-stock', [OpenningBalanceController::class, 'getStock'])->name('obentry.stock');
