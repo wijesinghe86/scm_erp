@@ -6,7 +6,7 @@
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4><a href="{{ route('dashboard') }}" ><i class="mdi mdi-home"></i></a>Openning Balance Entry List</h2>
+                    <h4><a href="{{ route('dashboard') }}" ><i class="mdi mdi-home"></i></a>Openning Balance Report</h2>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <a href="{{ route('obentry.create') }}" class="btn btn-success float-end mb-2"> Add New </a>
                         {{-- <a href="{{ route('department.deleted') }}" class="btn btn-success float-end mb-2"> Deleted </a> --}}
