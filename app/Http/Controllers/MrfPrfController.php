@@ -17,22 +17,32 @@ class MrfPrfController extends ParentController
         return view('pages.mrfprf.index',compact('lists'));
     }
 
+    public function generateNextNumber()
+    {
+        $count  = MrfPrfMain::get()->count();
+        return "MPRF" . sprintf('%04d', $count + 1);
+    }
+
+
     public function create()
     {   $mr_list = MaterialRequest::with('mr_approved')
         ->whereHas('mr_approved',function($q){
         $q->where('status','approved');
-        })
+        })->get();
         // ->doesntHave('prf_items')
-        ->get();
-
-        $last_prf = MrfPrfMain::latest()->first();
-        $last_prf_number = 0;
-        if($last_prf != null){
-        $last_prf_number = $last_prf->id;
-        }
-        $next_number = "MPRF".sprintf("%04d", $last_prf_number+1);
-
+        $purchase = new MrfPrfMain;
+        $next_number = $this->generateNextNumber();
         return view('pages.mrfprf.create', compact('mr_list', 'next_number'));
+
+
+        // $last_prf = MrfPrfMain::latest()->first();
+        // $last_prf_number = 0;
+        // if($last_prf != null){
+        // $last_prf_number = $last_prf->id;
+        // }
+        // $next_number = "MPRF".sprintf("%04d", $last_prf_number+1);
+
+        // return view('pages.mrfprf.create', compact('mr_list', 'next_number'));
     }
 
     public function getMrfItems(Request $request)
@@ -46,6 +56,11 @@ class MrfPrfController extends ParentController
 
     public function store(Request $request)
     {
+        $isPrfExist = MrfPrfMain::where('mrfprf_no', $request->mrfprf_no)->first();
+            if ($isPrfExist) {
+                $data['mrfprf_no'] = $this->generateNextNumber();
+            }
+
         //dd($request->all());
         $mrfprf = new MrfPrfMain;
         $mrfprf->mrfprf_no = $request->mrfprf_no;
