@@ -12,11 +12,18 @@ use Illuminate\Validation\ValidationException;
 
 class MaterialRequestController extends Controller
 {
+
+
     public function index()
     {
         $lists =  MaterialRequest::with ('request_items.item')->get();
         return view('pages.MaterialRequest.index',compact('lists'));
 
+    }
+    public function generateNextNumber()
+    {
+        $count  = MaterialRequest::get()->count();
+        return "MR" . sprintf('%04d', $count + 1);
     }
 
     public function create()
@@ -26,18 +33,27 @@ class MaterialRequestController extends Controller
         $stockItems = StockItem::get();
 
         $items = session('mr.items') ?? [];
-
-        $last_mr =  MaterialRequest::latest()->first();
-        $last_mr_number = 0;
-        if($last_mr != null){
-           $last_mr_number = $last_mr->id;
-        }
-        $next_number = "MR".sprintf("%04d", $last_mr_number+1);
+        $materialRequest = new MaterialRequest;
+        $next_number = $this->generateNextNumber();
         return view('pages.MaterialRequest.create', compact('employees', 'stockItems', 'items', 'next_number'));
+
+        // $last_mr =  MaterialRequest::latest()->first();
+        // $last_mr_number = 0;
+        // if($last_mr != null){
+        //    $last_mr_number = $last_mr->id;
+        // }
+        // $next_number = "MR".sprintf("%04d", $last_mr_number+1);
+        // return view('pages.MaterialRequest.create', compact('employees', 'stockItems', 'items', 'next_number'));
     }
 
     public function store(Request $request)
-    {   //dd($request->all());
+    {
+        $isMrfExist = MaterialRequest::where('mrf_no', $request->mrf_no)->first();
+            if ($isMrfExist) {
+                $data['mrf_no'] = $this->generateNextNumber();
+            }
+
+        //dd($request->all());
         $request['created_by_id'] = Auth::id();
         if ($request->button == "add") {
             return $this->addLineItem($request);

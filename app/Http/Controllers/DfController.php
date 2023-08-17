@@ -18,6 +18,13 @@ class DfController extends ParentController
         return view('pages.DemandForecasting.all', compact('demandforecastings'));
     }
 
+    public function generateNextNumber()
+    {
+        $count  = DemandForecasting::get()->count();
+        return "DF" . sprintf('%04d', $count + 1);
+    }
+
+
     public function create()
     {
 
@@ -27,13 +34,17 @@ class DfController extends ParentController
             ->doesntHave('df_items')
             ->get();
 
-        $last_df = DemandForecasting::latest()->first();
-        $last_df_number = 0;
-        if ($last_df != null) {
-            $last_df_number = $last_df->id;
-        }
-        $next_number = "DF" . sprintf("%04d", $last_df_number + 1);
+        $demandforecasting = new DemandForecasting;
+        $next_number = $this->generateNextNumber();
         return view('pages.DemandForecasting.new', compact('mr_list', 'employees', 'next_number'));
+
+        // $last_df = DemandForecasting::latest()->first();
+        // $last_df_number = 0;
+        // if ($last_df != null) {
+        //     $last_df_number = $last_df->id;
+        // }
+        // $next_number = "DF" . sprintf("%04d", $last_df_number + 1);
+        // return view('pages.DemandForecasting.new', compact('mr_list', 'employees', 'next_number'));
     }
 
     public function getMrfItems(Request $request)
@@ -47,6 +58,11 @@ class DfController extends ParentController
 
     public function store(Request $request)
     {
+        $isDfExist = DemandForecasting::where('df_no', $request->df_no)->first();
+            if ($isDfExist) {
+                $data['df_no'] = $this->generateNextNumber();
+            }
+
         //dd($request->all());
         $this->validate($request, [
             'requested_by'=> 'required',
