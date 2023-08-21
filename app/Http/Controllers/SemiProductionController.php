@@ -22,6 +22,11 @@ class SemiProductionController extends Controller
         $semi_productions = SemiProduction::get();
         return view('pages.SemiProduction.index', compact('semi_productions'));
     }
+    public function generateNextNumber()
+    {
+        $count  = SemiProduction::get()->count();
+        return "SP" . sprintf('%04d', $count + 1);
+    }
 
     public function create()
     {
@@ -33,15 +38,19 @@ class SemiProductionController extends Controller
         session(['semi.items' => []]);
 
         $items = session('semi.items') ?? [];
-
-        $last_semi =  SemiProduction::latest()->first();
-        $last_semi_number = 0;
-        if ($last_semi != null) {
-            $last_semi_number = $last_semi->id;
-        }
-        $next_number = "SP" . sprintf("%04d", $last_semi_number + 1);
-
+        $semiProduction = new SemiProduction;
+        $next_number = $this->generateNextNumber();
         return view('pages.SemiProduction.create', compact('warehouses', 'grnItems', 'stockItems', 'plants', 'rawMaterialCodes', 'items', 'next_number'));
+
+
+    //     $last_semi =  SemiProduction::latest()->first();
+    //     $last_semi_number = 0;
+    //     if ($last_semi != null) {
+    //         $last_semi_number = $last_semi->id;
+    //     }
+    //     $next_number = "SP" . sprintf("%04d", $last_semi_number + 1);
+
+    //     return view('pages.SemiProduction.create', compact('warehouses', 'grnItems', 'stockItems', 'plants', 'rawMaterialCodes', 'items', 'next_number'));
     }
     public function loadSerial(Request $request)
     {
@@ -54,6 +63,11 @@ class SemiProductionController extends Controller
 
     public function store(Request $request)
     {
+        $isSemiProduction = SemiProduction::where('semi_pro_No', $request->semi_product_no)->first();
+            if ($isSemiProduction) {
+                $data['semi_pro_No'] = $this->generateNextNumber();
+            }
+
 
         $this->validate($request, [
             'semi_product_no' => 'required',
