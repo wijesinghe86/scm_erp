@@ -27,6 +27,14 @@
                                     <option value="0">Inactive</option>
                                 </select>
                             </div>
+                            <div>
+                                <div>Roles</div>
+                                @foreach ($roleList as $role)
+                                <label>{{ $role->name }} </label>
+                                <input type="checkbox" onchange="onRoleChange(this,{{ $role }})"  />
+                                @endforeach
+                                <input type="hidden" value="{{json_encode( $roles) }}" />
+                            </div>
                             <button class="btn btn-success">Create</button>
                             <a href="{{ route('users.index') }}" style="margin-left: 20px;"
                                 class="btn btn-danger">Cancel</a>
@@ -36,4 +44,22 @@
             </div>
         </div>
     </div>
+@push('scripts')
+
+    <script>
+        let roles = []
+        function onRoleChange(e,roleData){
+            console.log(roleData);
+            const role = roleData?.name
+
+            if(roles.includes(role)){
+                const indexOf = role.indexOf(role)
+                roles.splice(indexOf,1)
+                return
+            }
+            roles.push(role)
+        }
+    </script>
+@endpush
+
 @endsection

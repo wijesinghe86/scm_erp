@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
@@ -18,7 +19,10 @@ class UserController extends Controller
     public function new()
     {
         $user = new User;
-        return view('pages.Users.create', compact('user'));
+        $roleList = Role::get();
+        $roles = [];
+
+        return view('pages.Users.create', compact('user','roleList','roles'));
     }
 
     public function store(Request $request)
@@ -36,6 +40,9 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->is_active = $request->is_active;
         $user->save();
+
+        //TODO: get from request
+        $user->assignRole(['deuser']);
 
         flash()->success('User Created');
         return redirect()->route('users.index');

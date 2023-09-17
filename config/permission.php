@@ -116,7 +116,7 @@ return [
     /*
      * When set to true, the required permission names are added to the exception
      * message. This could be considered an information leak in some contexts, so
-     * the default setting is false here for optimum safety.
+     * the default setting is false here for optimum safet\y.
      */
 
     'display_permission_in_exception' => false,

@@ -81,8 +81,10 @@ use App\Http\Controllers\UserController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::middleware(['custom.auth'])->group(function () {
-    Auth::routes(['register' => false]);
+
+Auth::routes(['register' => true]);
+Route::middleware(['auth','custom.auth'])->group(function () {
+    
 
     Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 
@@ -97,7 +99,7 @@ Route::middleware(['custom.auth'])->group(function () {
 
     // Master Files-------
     /* .....CREATING ROUTE FOR Customer Creation ....... */
-    Route::prefix('customer')->group(function () {
+    Route::middleware(['role:admin', 'role:SuperAdmin'])->prefix('customer')->group(function () {
         Route::get('customer', [App\Http\Controllers\CustomerController::class, 'index'])->name('customer.index');
         Route::get('/create', [App\Http\Controllers\CustomerController::class, 'create'])->name('customer.create');
         Route::post('/create', [App\Http\Controllers\CustomerController::class, 'store'])->name('customer.store');
