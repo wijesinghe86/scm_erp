@@ -2,23 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use Exception;
+use App\Models\Stock;
 use App\Models\StockItem;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use App\Models\SemiProduction;
 use App\Models\GoodsReceivedItem;
 use App\Models\PlantRegistration;
+use App\Services\StockLogService;
 use App\Models\SemiProductionItem;
 use App\Models\RawMaterialSerialCode;
-use App\Models\Stock;
 use Illuminate\Validation\ValidationException;
-use DB;
-use Exception;
 
 class SemiProductionController extends Controller
 {
     public function index()
     {
+
+        
         $semi_productions = SemiProduction::get();
         return view('pages.SemiProduction.index', compact('semi_productions'));
     }
@@ -102,11 +105,18 @@ class SemiProductionController extends Controller
             $semiProductions->diff_raw_mat_qty = $request->remaining_qty;
             $semiProductions->created_by = request()->user()->id;
             $semiProductions->save();
-
             //reduce stock from stock_item_id use actual_weight
             $stock = Stock::where('stock_item_id', $request->stock_item_id)->where('warehouse_id',$request->warehouse)->first();
+            if(!$stock){
+                throw ValidationException::withMessages(['stock' => 'Stock not found']);
+            }
             $stock->qty = $stock->qty - $request->actual_weight;
+
+
             $stock->save();
+
+
+            // (new StockLogService())->createLog("smi_product.create",$stock->qty,$stock->qty - $request->actual_weight,json_encode($request->all()),json_encode($stock));
 
             foreach ($items as $item) {
                 $semiProductionItems = new SemiProductionItem();
@@ -120,9 +130,15 @@ class SemiProductionController extends Controller
                 $semiProductionItems->save();
 
                 // add stock from $item['stock_item_id'] use $item['semi_qty']
-                $item_stock = Stock::where('stock_item_id', $request->stock_item_id)->where('warehouse_id',$request->warehouse)->first();
-                $item_stock->qty = $item_stock->qty + $item['stock_item_id'];
+                $item_stock = Stock::where('stock_item_id', $item['semi_stock_item_id'])->where('warehouse_id',$request->warehouse)->first();
+                if(!$item_stock){
+                    throw ValidationException::withMessages(['stock' => 'Semi Stock not found']);
+                }
+                $item_stock->qty = $item_stock->qty + $item['semi_qty'];
                 $item_stock->save();
+
+
+
             }
 
             DB::commit();

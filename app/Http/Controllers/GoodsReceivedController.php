@@ -14,6 +14,12 @@ use App\Models\Stock;
 
 class GoodsReceivedController extends Controller
 {
+    public function generateNextNumber()
+    {
+        $count  = GoodsReceived::get()->count();
+        return "GRN" . sprintf('%07d', $count + 1);
+    }
+
     public function index()
 
     {
@@ -35,19 +41,29 @@ class GoodsReceivedController extends Controller
         $suppliers = Supplier::get();
         $employees = Employee::get();
         $po_list = MrPurchase::with('get_supplier')->get();
-
-        $last_grn =  GoodsReceived::latest()->first();
-        $last_grn_number = 0;
-        if ($last_grn != null) {
-            $last_grn_number = $last_grn->id;
-        }
-
-        $next_number = "GRN" . sprintf("%07d", $last_grn_number + 1);
+        $goods = new GoodsReceived;
+        $next_number = $this->generateNextNumber();
         return view('pages.GoodsReceived.create', compact('warehouses', 'suppliers', 'employees', 'po_list', 'next_number'));
+
+
+        // $last_grn =  GoodsReceived::latest()->first();
+        // $last_grn_number = 0;
+        // if ($last_grn != null) {
+        //     $last_grn_number = $last_grn->id;
+        // }
+
+        // $next_number = "GRN" . sprintf("%07d", $last_grn_number + 1);
+        // return view('pages.GoodsReceived.create', compact('warehouses', 'suppliers', 'employees', 'po_list', 'next_number'));
     }
 
     public function store(Request $request)
     {
+        $isGrnExist = GoodsReceived::where('grn_no', $request->grn_number)->first();
+        if ($isGrnExist) {
+            $data['grn_no'] = $this->generateNextNumber();
+        }
+
+
         // dd($request->all());
         $grn = new GoodsReceived;
         $grn->grn_no = $request->grn_number;
