@@ -99,7 +99,7 @@ Route::middleware(['auth','custom.auth'])->group(function () {
 
     // Master Files-------
     /* .....CREATING ROUTE FOR Customer Creation ....... */
-    Route::middleware(['role:admin', 'role:SuperAdmin'])->prefix('customer')->group(function () {
+    Route::middleware(['role:Super Admin|Admin'])->prefix('customer')->group(function () {
         Route::get('customer', [App\Http\Controllers\CustomerController::class, 'index'])->name('customer.index');
         Route::get('/create', [App\Http\Controllers\CustomerController::class, 'create'])->name('customer.create');
         Route::post('/create', [App\Http\Controllers\CustomerController::class, 'store'])->name('customer.store');
