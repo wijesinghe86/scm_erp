@@ -18,10 +18,10 @@ class Roleseeder extends Seeder
      */
     public function run()
     {
-        $role = Role::create(['name' => 'superAdmin']);
-        $role = Role::create(['name' => 'admin']);
+        $role = Role::create(['name' => 'Super Admin']);
+        $role = Role::create(['name' => 'Admin']);
 
-        $role2 = Role::create(['name' => 'deuser']);
+        $role2 = Role::create(['name' => 'User']);
 
 
         $adminUser = User::create([
@@ -31,7 +31,7 @@ class Roleseeder extends Seeder
             "is_active"=> true,
         ]);
 
-        $adminUser->assignRole('admin');
+        $adminUser->assignRole('Super Admin');
 
     }
 }

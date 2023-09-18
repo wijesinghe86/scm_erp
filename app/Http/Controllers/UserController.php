@@ -19,10 +19,10 @@ class UserController extends Controller
     public function new()
     {
         $user = new User;
-        $roleList = Role::get();
+        $roleList = Role::where('name', "!=", "Super Admin")->get();
         $roles = [];
 
-        return view('pages.Users.create', compact('user','roleList','roles'));
+        return view('pages.Users.create', compact('user', 'roleList', 'roles'));
     }
 
     public function store(Request $request)
@@ -32,6 +32,7 @@ class UserController extends Controller
             'email' => 'required|unique:users',
             'password' => 'required',
             'is_active' => 'required',
+            'roles' => 'required',
         ]);
 
         $user = new User;
@@ -41,8 +42,7 @@ class UserController extends Controller
         $user->is_active = $request->is_active;
         $user->save();
 
-        //TODO: get from request
-        $user->assignRole(['deuser']);
+        $user->assignRole(json_decode($request->roles));
 
         flash()->success('User Created');
         return redirect()->route('users.index');
@@ -51,7 +51,8 @@ class UserController extends Controller
 
     public function indexUpdate(Request $request, User $user)
     {
-        return view('pages.Users.update', compact('user'));
+        $roleList = Role::where('name', "!=", "Super Admin")->get();
+        return view('pages.Users.update', compact('user', 'roleList'));
     }
 
     public function update(Request $request, User $user)
@@ -61,6 +62,7 @@ class UserController extends Controller
                 'name' => 'required',
                 'email' => 'required|unique:users',
                 'password' => 'nullable',
+                'roles' => 'required',
             ]);
         }
 
@@ -68,8 +70,8 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required',
             'password' => 'nullable',
+            'roles' => 'required',
         ]);
-
 
         $user->name = $request->name;
         if ($request->password) {
@@ -79,6 +81,12 @@ class UserController extends Controller
         $user->is_active = $request->is_active;
         $user->save();
 
+
+        foreach ($user->roles->pluck('name') as $key => $role) {
+            $user->removeRole($role);
+        }
+
+        $user->assignRole(json_decode($request->roles));
 
         flash()->success('User Updated');
         return redirect()->route('users.index');
