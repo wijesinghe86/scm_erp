@@ -83,8 +83,8 @@ Route::get('/', function () {
 });
 
 Auth::routes(['register' => true]);
-Route::middleware(['auth','custom.auth'])->group(function () {
-    
+Route::middleware(['auth', 'custom.auth'])->group(function () {
+
 
     Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 
@@ -760,13 +760,15 @@ Route::middleware(['auth','custom.auth'])->group(function () {
 
 
     Route::prefix('users')->group(function () {
-        Route::get('/', [UserController::class, 'index'])->name('users.index');
-        Route::get('/create', [UserController::class, 'new'])->name('users.new');
-        Route::post('/store', [UserController::class, 'store'])->name('users.store');
-        Route::get('/update/{user}', [UserController::class, 'indexUpdate'])->name('users.indexUpdate');
-        Route::post('/update/{user}', [UserController::class, 'update'])->name('users.update');
-        Route::get('/delete/{user}', [UserController::class, 'delete'])->name('users.delete');
-
+        //Only for needed routes
+        Route::middleware(['role:Super Admin|Admin'])->group(function () {
+            Route::get('/', [UserController::class, 'index'])->name('users.index');
+            Route::get('/create', [UserController::class, 'new'])->name('users.new');
+            Route::post('/store', [UserController::class, 'store'])->name('users.store');
+            Route::get('/update/{user}', [UserController::class, 'indexUpdate'])->name('users.indexUpdate');
+            Route::post('/update/{user}', [UserController::class, 'update'])->name('users.update');
+            Route::get('/delete/{user}', [UserController::class, 'delete'])->name('users.delete');
+        });
 
         Route::get('/password-chanege', [UserController::class, 'passwordChangeIndex'])->name('users.passwordChangeIndex');
         Route::post('/password-chanege/{user}', [UserController::class, 'passwordChange'])->name('users.passwordChange');

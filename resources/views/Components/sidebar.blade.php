@@ -43,9 +43,9 @@
                             Rack Design</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('locationshelfdesign.index') }}">Location
                             Shelf Design</a></li>
-
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('users.index') }}">Users</a></li>
-
+                    @hasanyrole('Super Admin|Admin')
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('users.index') }}">Users</a></li>
+                    @endhasanyrole
                     {{-- <li class="nav-item"> <a class="nav-link" href="">Users</a></li> --}}
                 </ul>
             </div>
@@ -273,8 +273,9 @@
                     <li class="nav-item"> <a class="nav-link" href="{{ route('returns.all') }}">Customer Return</a>
                     </li>
         </li>
-        <li class="nav-item"> <a class="nav-link" href="{{ route('returns.approvalIndex') }}">Approved Customer <br>Returns
-                </a>
+        <li class="nav-item"> <a class="nav-link" href="{{ route('returns.approvalIndex') }}">Approved Customer
+                <br>Returns
+            </a>
         </li>
         {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('goodsissuenote.index') }}">Goods Issue
                         Note</a></li> --}}
