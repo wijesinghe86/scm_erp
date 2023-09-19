@@ -18,14 +18,20 @@ class Roleseeder extends Seeder
      */
     public function run()
     {
-        $role = Role::create(['name' => 'Super Admin']);
-        $role = Role::create(['name' => 'Admin']);
-
-        $role2 = Role::create(['name' => 'User']);
+        $role1 = Role::create(['name' => 'Super Admin']);
+        $role2 = Role::create(['name' => 'Admin']);
+        $role3 = Role::create(['name' => 'Master Data Entry']);
+        $role4 = Role::create(['name' => 'Master Data Editor']);
+        $role5 = Role::create(['name' => 'Sales User']);
+        $role6 = Role::create(['name' => 'Sales Admin']);
+        $role7 = Role::create(['name' => 'Production User']);
+        $role8 = Role::create(['name' => 'Production Admin']);
+        $role9 = Role::create(['name' => 'Warehouse User']);
+        $role10 = Role::create(['name' => 'Warehouse Admin']);
 
 
         $adminUser = User::create([
-            "name"=> "Admin",
+            "name"=> "Super Admin",
             "email"=> "admin@admin.com",
             "password"=> Hash::make("123admin"),
             "is_active"=> true,

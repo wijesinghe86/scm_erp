@@ -19,7 +19,7 @@ class UserController extends Controller
     public function new()
     {
         $user = new User;
-        $roleList = Role::where('name', "!=", "Super Admin")->get();
+        $roleList = Role::where('name', "!=", "Super Admin")->get(); //not to display the Super Admin as a role for selection in the user creation 
         $roles = [];
 
         return view('pages.Users.create', compact('user', 'roleList', 'roles'));

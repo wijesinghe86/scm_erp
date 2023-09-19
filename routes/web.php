@@ -117,7 +117,7 @@ Route::middleware(['auth','custom.auth'])->group(function () {
     });
 
     /* .....CREATING ROUTE FOR Supplier Registration ....... */
-    Route::prefix('supplier')->group(function () {
+    Route::middleware(['role:Master Data Entry'])->prefix('supplier')->group(function () {
         Route::get('supplier', [SupplierController::class, 'all'])->name('supplier.all');
         Route::get('/new', [SupplierController::class, 'new'])->name('supplier.new');
         Route::post('/store', [App\Http\Controllers\SupplierController::class, 'store'])->name('supplier.store');
