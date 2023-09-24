@@ -577,12 +577,14 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
     Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin'])->prefix('RawMaterialIssueForProduction')->group(function () {
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin'])->get('RawMaterialIssueForProduction', [RawMaterialIssueForProductionController::class, 'index'])->name('rawmaterialissueforproduction.index');
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User'])->get('/create', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'create'])->name('rawmaterialissueforproduction.create');
-        Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User'])->post('/create', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'create'])->name('rawmaterialissueforproduction.store');
-        Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User'])->get('/create', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'create'])->name('rawmaterialissueforproduction.getSemiProductSerials');
-        Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User'])->get('/create', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'create'])->name('rawmaterialissueforproduction.addItem');
-        Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User'])->get('/create', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'create'])->name('rawmaterialissueforproduction.deleteItem');
-        Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User'])->get('/create', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'create'])->name('rawmaterialissueforproduction.viewCartTable');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User'])->post('/create', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'store'])->name('rawmaterialissueforproduction.store');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User'])->get('/get-semi-product-serials', [App\Http\Controllers\RawMaterialIssueForProductionController::class,'getSemiProductSerials'])->name('rawmaterialissueforproduction.getSemiProductSerials');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User'])->post('/add-item', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'addItem'])->name('rawmaterialissueforproduction.addItem');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User'])->post('/delete-item', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'deleteItem'])->name('rawmaterialissueforproduction.deleteItem');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User'])->get('/view-table', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'viewCartTable'])->name('rawmaterialissueforproduction.viewCartTable');
     });
+
+    
 
     Route::middleware(['role:Super Admin|Admin|Production User|Production Admin'])->prefix('RawMaterialReceivedForProduction')->group(function () {
         Route::middleware(['role:Super Admin|Admin|Production User|Production Admin'])->get('RawMaterialReceivedForProduction', [RawMaterialReceivedController::class, 'index'])->name('rawmaterial_received_for_production.index');
