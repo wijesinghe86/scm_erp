@@ -28,6 +28,9 @@ class Roleseeder extends Seeder
         $role8 = Role::create(['name' => 'Production Admin']);
         $role9 = Role::create(['name' => 'Warehouse User']);
         $role10 = Role::create(['name' => 'Warehouse Admin']);
+        $role11 = Role::create(['name'=>'Factory Warehouse User']);
+        $role12 = Role::create(['name'=>'Factory Admin']);
+        $role13 = Role::create(['name'=>'Procurement User']);
 
 
         $adminUser = User::create([
