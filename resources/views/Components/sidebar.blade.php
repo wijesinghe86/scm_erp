@@ -9,7 +9,8 @@
         </li>
 
         {{-- Master --}}
-        <li class="nav-item">
+        @hasanyrole('Super Admin|Admin|Master Data Entry|Master Data Editor|Sales User|Sales Admin|Production User|Production Admin|Factory Warehouse User|Factory Admin')
+               <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-master" aria-expanded="false"
                 aria-controls="ui-master">
                 <span class="menu-title">Master</span>
@@ -18,40 +19,63 @@
             </a>
             <div class="collapse" id="ui-master">
                 <ul class="nav flex-column sub-menu">
+                    @hasanyrole('Super Admin|Admin|Master Data Entry|Master Data Editor|Production User|Production Admin|Factory Warehouse User|Factory Admin')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('stockitem.all') }}">Stock Item</a></li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Master Data Entry|Master Data Editor|Sales User|Sales Admin')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('customer.index') }}">Customer</a></li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Master Data Entry|Master Data Editor')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('supplier.all') }}">Supplier</a></li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Master Data Entry|Master Data Editor')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('department.index') }}">Department</a></li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Master Data Entry|Master Data Editor')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('section.index') }}">Section</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('fleetregistration.index') }}">Fleet
-                            Registration</a></li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Master Data Entry|Master Data Editor|Production User|Production Admin|Factory Warehouse User|Factory Admin')
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('fleetregistration.index') }}">Fleet Registration</a></li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Master Data Entry|Master Data Editor')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('employee.all') }}">Employee</a></li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Sales User|Sales Admin')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('taxcreation.index') }}">TaxCreation</a>
                     </li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('PlantRegistration.index') }}">Plant
-                            Registration</a></li>
-                    <li class="nav-item"> <a class="nav-link"
-                            href="{{ route('equipmentregistration.index') }}">EquipmentRegistration</a></li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Master Data Entry|Master Data Editor|Production User|Production Admin|Factory Warehouse User|Factory Admin')
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('PlantRegistration.index') }}">Plant Registration</a></li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Master Data Entry|Master Data Editor|Production User|Production Admin|Factory Warehouse User|Factory Admin')
+                    <li class="nav-item"> <a class="nav-link"href="{{ route('equipmentregistration.index') }}">EquipmentRegistration</a></li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Master Data Entry|Master Data Editor|Production User|Production Admin|Factory Warehouse User|Factory Admin')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('warehouse.index') }}">Warehouse</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('locationbaydesign.index') }}">Location
-                            Bay
-                            Design</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('locationrowdesign.index') }}">Location
-                            Row
-                            Design</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('locationrackdesign.index') }}">Location
-                            Rack Design</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('locationshelfdesign.index') }}">Location
-                            Shelf Design</a></li>
-
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin')
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('locationbaydesign.index') }}">Location Bay Design</a></li>
+                     @endhasanyrole
+                     @hasanyrole('Super Admin|Admin')
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('locationrowdesign.index') }}">Location Row Design</a></li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin')
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('locationrackdesign.index') }}">Location Rack Design</a></li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin')
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('locationshelfdesign.index') }}">Location Shelf Design</a></li>
+                     @endhasanyrole
+                    @hasanyrole('Super Admin')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('users.index') }}">Users</a></li>
-
+                    @endhasanyrole
                     {{-- <li class="nav-item"> <a class="nav-link" href="">Users</a></li> --}}
                 </ul>
             </div>
         </li>
+        @endhasanyrole
 
         {{-- Material Request --}}
+        @hasanyrole('Super Admin|Admin|Factory Warehouse User|Factory Admin|Production User|Production Admin')
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#mr-request" aria-expanded="false"
                 aria-controls="mr-request">
@@ -60,22 +84,31 @@
             </a>
             <div class="collapse" id="mr-request">
                 <ul class="nav flex-column sub-menu">
+             @hasanyrole('Super Admin|Admin|Factory Warehouse User')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('material_request.index') }}">Material
                             Request Form</a>
+                 @endhasanyrole
+                 @hasanyrole('Super Admin|Admin|Factory Warehouse User|Factory Admin')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('mr_request_approve.index') }}">Material
                             Request Approval</a>
+                @endhasanyrole
+                @hasanyrole('Super Admin|Admin|Production User')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('raw_material_request.index') }}">Raw
                             Material Request<br> Form</a>
+                @endhasanyrole
+                @hasanyrole('Super Admin|Admin|Production Admin')
                     <li class="nav-item"> <a class="nav-link"
                             href="{{ route('raw_material_request_approve.index') }}">Raw Material
                             Request <br>Approve Form</a>
+                            @endhasanyrole
                     </li>
                 </ul>
             </div>
         </li>
-
+@endhasanyrole
 
         {{-- Procurement --}}
+        @hasanyrole('Super Admin|Admin|Procurement User')
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-procurement" aria-expanded="false"
                 aria-controls="ui-procurement">
@@ -85,21 +118,31 @@
             </a>
             <div class="collapse" id="ui-procurement">
                 <ul class="nav flex-column sub-menu">
+                    @hasanyrole('Super Admin|Admin|Procurement User')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('mrfprf.index') }}">Procurement
                             Request</a></li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Procurement User')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('purchase_order_mr.index') }}">Purchase
                             Order</a></li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('purchase_request.index') }}">Sundry
                             Procurement
                             <br>Request-Optional</a></li>
+                            @endhasanyrole
+                            @hasanyrole('Super Admin|Admin')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('purchase_order.index') }}">Sundry
                             Purchase
                             <br>Order-Optional</a></li>
+                            @endhasanyrole
 
                 </ul>
             </div>
         </li>
+        @endhasanyrole
         {{-- Sales and Marketing --}}
+        @hasanyrole('Super Admin|Admin|Sales User|Sales Admin')
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-sale" aria-expanded="false"
                 aria-controls="ui-sale">
@@ -124,53 +167,9 @@
                 </ul>
             </div>
         </li>
-        {{-- Production Planning and Scheduling --}}
-        {{-- <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="collapse" href="#ui-pps" aria-expanded="false" aria-controls="ui-pps">
-            <span class="menu-title">Production Planning and <br> Scheduling</span>
-            <i class="mdi mdi-contacts menu-icon"></i>
-        </a>
-        <div class="collapse" id="ui-pps">
-            <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link"
-                        href="{{ route('productionplanningandschedule.index') }}">Production Planning And <br>
-                        Schedule</a></li>
-                <li class="nav-item"> <a class="nav-link"
-                        href="{{ route('rawmaterialsserialcodeassigning.index') }}">Raw Materials Serial Code <br>
-                        Assigning</a></li>
-                <li class="nav-item"> <a class="nav-link"
-                        href="{{ route('rawmaterialissueforproduction.index') }}">Raw Material Issue For
-                        Production</a>
-                </li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('semiproduction.index') }}">Semi
-                        Production </a></li>
-                <li class="nav-item"> <a class="nav-link"
-                        href="{{ route('semifinishedgoodsserialcodeassigning.index') }}">Semi Finished Goods
-                        Serial <br> Code Assigning</a></li>
-                <li class="nav-item"> <a class="nav-link"
-                        href="{{ route('finishedgoodsserialcodeassigning.index') }}">Finished Goods Serial
-                        <br>Code
-                        Assigning </a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('productionwastage.index') }}">Production
-                        Wastage</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('jobordercreation.index') }}">Job Order
-                        Creation</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('dispatch.index') }}">Dispatch</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('productioncost.index') }}">Production
-                        Cost</a></li>
-                <li class="nav-item"> <a class="nav-link"
-                        href="{{ route('operationmachanismproductionandtimemanagement.index') }}">Operation
-                        Machanism <br>Production And Time <br>Management</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('planttimemanagement.index') }}">Plant
-                        Time Management</a></li>
-                <li class="nav-item"> <a class="nav-link"
-                        href="{{ route('operationmechanismbyproduct.index') }}">Operation Mechanism <br>By
-                        Product</a>
-                </li>
-            </ul>
-        </div>
-    </li> --}}
+        @endhasanyrole
         {{-- Demand Forecasting --}}
+        @hasanyrole('Super Admin|Admin|Production User|Production Admin')
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-df" aria-expanded="false"
                 aria-controls="ui-df">
@@ -180,16 +179,22 @@
             </a>
             <div class="collapse" id="ui-df">
                 <ul class="nav flex-column sub-menu">
+        @hasanyrole('Super Admin|Admin|Production User')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('demand-forecasting.index') }}">Demand
                             Forecasting Entry</a>
                     </li>
+        @endhasanyrole
+        @hasanyrole('Super Admin|Admin|Production Admin')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('df_approve.index') }}">Demand
                             Forecasting Approve</a>
                     </li>
+        @endhasanyrole
                 </ul>
             </div>
         </li>
+        @endhasanyrole
         {{-- Production Planning and Scheduling --}}
+        @hasanyrole('Super Admin|Admin|Production User|Production Admin')
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-pps" aria-expanded="false"
                 aria-controls="ui-pps">
@@ -199,33 +204,49 @@
             </a>
             <div class="collapse" id="ui-pps">
                 <ul class="nav flex-column sub-menu">
+        @hasanyrole('Super Admin|Admin|Production User')
                     <li class="nav-item"> <a class="nav-link"
                             href="{{ route('productionplanningandschedule.index') }}">Production Planning And <br>
                             Schedule</a></li>
+        @endhasanyrole
+        @hasanyrole('Super Admin|Admin|Production Admin')
                     <li class="nav-item"> <a class="nav-link"
                             href="{{ route('production_planning_and_schedule_approval.index') }}">Production Planning
                             And
                             <br>
                             Schedule Approval</a></li>
+         @endhasanyrole
+         @hasanyrole('Super Admin|Admin|Production User')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('jobordercreation.index') }}">Job Order
                             Creation</a></li>
+        @endhasanyrole
+        @hasanyrole('Super Admin|Admin|Production Admin')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('joborderapproval.index') }}">Job Order
                             Approval</a></li>
+        @endhasanyrole
+                @hasanyrole('Super Admin|Admin|Factory Warehouse User|Factory Admin')
                     <li class="nav-item"> <a class="nav-link"
                             href="{{ route('rawmaterialsserialcodeassigning.index') }}">Raw Materials Serial Code <br>
                             Assigning</a></li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Production User')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('semiproduction.index') }}">Semi
                             Production </a></li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Factory Warehouse User|Factory Admin')
                     <li class="nav-item"> <a class="nav-link"
                             href="{{ route('rawmaterialissueforproduction.index') }}">Raw Material Issue For
                             <br>
                             Production</a>
                     </li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Production User')
                     <li class="nav-item"> <a class="nav-link"
                             href="{{ route('rawmaterial_received_for_production.index') }}">Raw Material Received For
                             <br>
                             Production</a>
                     </li>
+                    @endhasanyrole
                     {{-- <li class="nav-item"> <a class="nav-link"
                         href="{{ route('semifinishedgoodsserialcodeassigning.index') }}">Semi Finished Goods
                         Serial <br> Code Assigning</a></li> --}}
@@ -235,10 +256,13 @@
                         Assigning </a></li> --}}
                     {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('productionwastage.index') }}">Production
                         Wastage</a></li> --}}
-
+                    @hasanyrole('Super Admin|Admin|Factory Warehouse User')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('dispatch.index') }}">Dispatch</a></li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Factory Admin')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('dispatch_approval.index') }}">Dispatch
                             Approval</a></li>
+                    @endhasanyrole
                     {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('productioncost.index') }}">Production
                         Cost</a></li>
                 <li class="nav-item"> <a class="nav-link"
@@ -253,7 +277,9 @@
                 </ul>
             </div>
         </li>
+        @endhasanyrole
         {{-- Inventory Control --}}
+        @hasanyrole('Super Admin|Admin')
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-inv" aria-expanded="false"
                 aria-controls="ui-inv">
@@ -276,8 +302,9 @@
                     <li class="nav-item"> <a class="nav-link" href="{{ route('returns.all') }}">Customer Return</a>
                     </li>
         </li>
-        <li class="nav-item"> <a class="nav-link" href="{{ route('returns.approvalIndex') }}">Approved Customer <br>Returns
-                </a>
+        <li class="nav-item"> <a class="nav-link" href="{{ route('returns.approvalIndex') }}">Approved Customer
+                <br>Returns
+            </a>
         </li>
         {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('goodsissuenote.index') }}">Goods Issue
                         Note</a></li> --}}
@@ -308,6 +335,9 @@
     </ul>
     </div>
     </li>
+    @endhasanyrole
+    {{-- Warehouse --}}
+    @hasanyrole('Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin')
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-inv" aria-expanded="false" aria-controls="ui-inv">
             <span class="menu-title">Warehouse</span>
@@ -318,19 +348,28 @@
             <ul class="nav flex-column sub-menu">
                 {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('purchase_order.index') }}">Purchase
                         Order</a></li> --}}
-
+                @hasanyrole('Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin')
                 <li class="nav-item"> <a class="nav-link" href="{{ route('goodsreceived.index') }}">Goods
                         Received</a></li>
+                @endhasanyrole
+                @hasanyrole('Super Admin|Admin|Warehouse User')
                 <li class="nav-item"> <a class="nav-link" href="{{ route('deliveryorders.all') }}">Delivery
                         Order</a>
                 </li>
+                @endhasanyrole
+                @hasanyrole('Super Admin|Admin|Warehouse User')
                 <li class="nav-item"> <a class="nav-link" href="{{ route('balanceorder.index') }}">Balance
                         Order</a></li>
+                @endhasanyrole
+                @hasanyrole('Super Admin|Admin|Warehouse User')
                 <li class="nav-item"> <a class="nav-link" href="{{ route('returns.all') }}">Customer Return</a></li>
     </li>
+    @endhasanyrole
+    @hasanyrole('Super Admin|Admin|Warehouse Admin')
     <li class="nav-item"> <a class="nav-link" href="{{ route('returns.approvalIndex') }}">Customer Return
             Approval</a>
     </li>
+    @endhasanyrole
     {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('goodsissuenote.index') }}">Goods Issue
                         Note</a></li> --}}
     {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('balanceorder.index') }}">Balance
@@ -338,18 +377,30 @@
     {{-- <li class="nav-item"> <a class="nav-link"
                         href="{{ route('materialsreturnbycustomer.index') }}">Materials Return By Customer</a>
                 </li> --}}
+    @hasanyrole('Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin')
     <li class="nav-item"> <a class="nav-link" href="{{ route('stockadjustment.index') }}">Stock
             Adjustment </a></li>
+     @endhasanyrole
+     @hasanyrole('Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin')
     <li class="nav-item"> <a class="nav-link" href="{{ route('stocklocationchange.index') }}">Stock
             Location Change</a></li>
+     @endhasanyrole
+     @hasanyrole('Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin')
     <li class="nav-item"> <a class="nav-link" href="{{ route('stocklocationchange_approvals.index') }}">Stock
             Location Change <br> Approval</a></li>
+     @endhasanyrole
+     @hasanyrole('Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin')
     <li class="nav-item"> <a class="nav-link" href="{{ route('stocklocationchange_received.index') }}">Stock
             Location Change <br> Recived</a></li>
+    @endhasanyrole
+    @hasanyrole('Super Admin|Admin|Production User')
     <li class="nav-item"> <a class="nav-link" href="{{ route('finishedgoods.index') }}">Finished
             Goods</a></li>
+    @endhasanyrole
+    @hasanyrole('Super Admin|Admin|Production Admin')
     <li class="nav-item"> <a class="nav-link" href="{{ route('finished_goods_approval.index') }}">Finished
             Goods Inspect</a></li>
+    @endhasanyrole
     {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('overshortanddamage.index') }}">Over
                         Short And Damage Details Creation</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ route('disposal.index') }}">Disposal</a></li>
@@ -360,7 +411,9 @@
     </ul>
     </div>
     </li>
+    @endhasanyrole
     {{-- Planning / Layout Design --}}
+    @hasanyrole('Super Admin|Admin')
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-plan" aria-expanded="false"
             aria-controls="ui-plan">
@@ -377,8 +430,9 @@
             </ul>
         </div>
     </li>
-
+    @endhasanyrole
     {{-- Safety Criteria --}}
+    @hasanyrole('Super Admin|Admin')
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-safe" aria-expanded="false"
             aria-controls="ui-safe">
@@ -397,8 +451,9 @@
             </ul>
         </div>
     </li>
-
+    @endhasanyrole
     {{-- ------ REPORTS---REPORTS----REPORTS-----REPORTS- --}}
+
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-report" aria-expanded="false"
             aria-controls="ui-report">
@@ -410,6 +465,7 @@
 
 
     {{-- Sales and Marketing Reports --}}
+    @hasanyrole('Super Admin|Admin')
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-pps" aria-expanded="false" aria-controls="ui-pps">
             <span class="menu-title">Sales and Marketing</span>
@@ -445,10 +501,11 @@
         </div>
     </li>
 
-
+    @endhasanyrole
 
     {{-- Customer Relationship Managemenet Repots --}}
-    <li class="nav-item">
+    @hasanyrole('Super Admin|Admin')
+       <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-pps" aria-expanded="false" aria-controls="ui-pps">
             <span class="menu-title">Customer Relationship <br> Management</span>
             {{-- <i class="menu-arrow"></i> --}}
@@ -498,10 +555,11 @@
             </ul>
         </div>
     </li>
-
+     @endhasanyrole
 
     {{-- Supplier Relationship Managemenet Reports --}}
-    <li class="nav-item">
+    @hasanyrole('Super Admin|Admin')
+       <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-pps" aria-expanded="false" aria-controls="ui-pps">
             <span class="menu-title">Supplier Relationship <br> Management</span>
             {{-- <i class="menu-arrow"></i> --}}
@@ -551,8 +609,9 @@
             </ul>
         </div>
     </li>
-
+    @endhasanyrole
     {{-- Demand Forecasting Reports --}}
+    @hasanyrole('Super Admin|Admin')
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-pps" aria-expanded="false" aria-controls="ui-pps">
             <span class="menu-title">Demand Forecasting <br> Reports</span>
@@ -593,8 +652,9 @@
             </ul>
         </div>
     </li>
-
+    @endhasanyrole
     {{-- Production Planning and Scheduling Reports --}}
+    @hasanyrole('Super Admin|Admin')
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-pps" aria-expanded="false" aria-controls="ui-pps">
             <span class="menu-title">Production Planning <br>and Scheduling </span>
@@ -685,8 +745,10 @@
     </ul>
     </div>
     </li>
+    @endhasanyrole
 
     {{-- Inventory Control Reports --}}
+    @hasanyrole('Super Admin|Admin')
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-pps" aria-expanded="false" aria-controls="ui-pps">
             <span class="menu-title">Inventory Control </span>
@@ -802,7 +864,7 @@
     </ul>
     </div>
     </li>
-
+    @endhasanyrole
     {{-- Warehouse Management System Reports --}}
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-pps" aria-expanded="false" aria-controls="ui-pps">
@@ -888,6 +950,7 @@
     <li class="nav-item"> <a class="nav-link" href="{{ route('operationmechanismbyproduct.index') }}">Semi-Raw
             Materials Report</a>
     </li>
+
     </ul>
     </div>
     </li>
