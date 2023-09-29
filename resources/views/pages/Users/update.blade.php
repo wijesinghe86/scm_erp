@@ -34,6 +34,21 @@
                                     </select>
                                 </div>
                             @endif
+                            <hr class="hr" />
+                            <div style="margin-bottom:1rem;">Roles</div>
+                            <div style="margin-left:1.5rem;" class="form-group">
+                                @foreach ($roleList as $role)
+                                    <div class="form-check">
+                                        <input
+                                            {{ in_array($role->name, $user->roles->pluck('name')->toArray()) ? 'checked' : '' }}
+                                            class="form-check-input" id="{{ $role->id }}" type="checkbox"
+                                            onchange="onRoleChange(this,{{ $role }})" />
+                                        <label class="form-check-label"
+                                            for="{{ $role->id }}">{{ $role->name }}</label>
+                                    </div>
+                                @endforeach
+                                <input type="hidden" name="roles" id="roles" />
+                            </div>
                             <button class="btn btn-success">Update</button>
                             <a href="{{ route('users.index') }}" style="margin-left: 20px;"
                                 class="btn btn-danger">Cancel</a>
@@ -43,4 +58,31 @@
             </div>
         </div>
     </div>
+    @push('scripts')
+        <script>
+            let roles = []
+            $(document).ready(function() {
+                let userRoles = <?php echo $user->roles->pluck('name'); ?>;
+                $('#roles').val(JSON.stringify(userRoles))
+                roles = userRoles
+            });
+
+
+            function onRoleChange(e, roleData) {
+                const role = roleData?.name
+                if (roles.includes(role)) {
+                    const indexOf = role.indexOf(role)
+                    roles.splice(indexOf, 1)
+                    if (roles.length == 0) {
+                        $('#roles').val(null)
+                    } else {
+                        $('#roles').val(JSON.stringify(roles))
+                    }
+                    return
+                }
+                roles.push(role)
+                $('#roles').val(JSON.stringify(roles))
+            }
+        </script>
+    @endpush
 @endsection
