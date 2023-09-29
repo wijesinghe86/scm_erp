@@ -22,6 +22,7 @@
                                     <thead>
                                         <tr>
                                             <td>No</td>
+                                            <th>CUSTOMER NAME</th>
                                             <th>DELIVERY ORDER NUMBER</th>
                                             <th>INVOICE NUMBER</th>
                                             <th>INVOICE DATE</th>
@@ -30,12 +31,14 @@
                                             <th>CREATED BY</th>
                                             <th>ACTION</th>
 
+
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($deliveryOrders as $key => $deliveryOrder)
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
+                                                <td>{{ $deliveryOrder->customer->customer_name }}</td>
                                                 <td>{{ $deliveryOrder->delivery_order_no }}</td>
                                                 <td>{{ $deliveryOrder->invoice_number }}</td>
                                                 <td>{{ $deliveryOrder->invoice_date }}</td>
@@ -48,6 +51,7 @@
                                                         href="{{ route('deliveryorders.view', $deliveryOrder->id) }}">
                                                         <i class="fa-sharp fa-solid fa-eye"></i>
                                                     </a>
+
 
                                                     {{-- <a class="h4"
                                                         href="{{ route('stockitem.edit', $deliveryOrder->id) }}">

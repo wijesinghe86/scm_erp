@@ -117,6 +117,8 @@
                     </li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('invoices.all') }}">Invoice</a>
                     </li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('sales_order.index') }}">Sales Order</a>
+                    </li>
 
 
                 </ul>
@@ -316,6 +318,7 @@
             <ul class="nav flex-column sub-menu">
                 {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('purchase_order.index') }}">Purchase
                         Order</a></li> --}}
+
                 <li class="nav-item"> <a class="nav-link" href="{{ route('goodsreceived.index') }}">Goods
                         Received</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ route('deliveryorders.all') }}">Delivery
