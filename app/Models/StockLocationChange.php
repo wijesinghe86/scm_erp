@@ -46,6 +46,10 @@ class StockLocationChange extends Model
     {
         return $this->hasOne(User::class, "id", "created_by");
     }
+    public function approvedBy()
+    {
+        return $this->hasOne(User::class, 'id', 'approved_by');
+    }
 
 
     public function fleet()

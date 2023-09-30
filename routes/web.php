@@ -22,6 +22,7 @@ use App\Http\Controllers\StockItemController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DfApprovalController;
+use App\Http\Controllers\SalesOrderController;
 use App\Http\Controllers\StorageAreaController;
 use App\Http\Controllers\TaxCreationController;
 use App\Http\Controllers\DeliveryOrderController;
@@ -783,4 +784,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::get('/password-chanege', [UserController::class, 'passwordChangeIndex'])->name('users.passwordChangeIndex');
         Route::post('/password-chanege/{user}', [UserController::class, 'passwordChange'])->name('users.passwordChange');
     });
+
+    Route::get('sales_order', [SalesOrderController::class, 'index'])->name('sales_order.index');
+    Route::get('/{invoice_id}/view', [SalesOrderController::class, 'view'])->name('sales_order.view');
 });

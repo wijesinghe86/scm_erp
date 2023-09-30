@@ -52,8 +52,9 @@
                                 <label>Payment Method</label>
                                 <select name="payment_method" class="form-control item-select" id="payment_method">
                                     <option selected disabled>Select Terms</option>
-                                    <option value="1">Cash</option>
-                                    <option value="2">Credit</option>
+                                    <option value="1">N/A</option>
+                                    <option value="2">Cash</option>
+                                    <option value="3">Credit</option>
                                 </select>
                             </div>
                         </div>
