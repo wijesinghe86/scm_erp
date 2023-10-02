@@ -11,7 +11,7 @@
                                     <div class="form-group col-md-4">
                                         <label>Stock Number *</label>
                                         <input type="text" class="form-control" name="stock_number"
-                                            placeholder="Stock Number" value="{{ old('stock_number')}}">
+                                            placeholder="Stock Number" value="{{ old('stock_number')}}" maxlength="7">
                                     </div>
                                 </div>
 

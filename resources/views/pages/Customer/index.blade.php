@@ -23,7 +23,6 @@
                                         <td>No</td>
                                         <td>Customer Code</td>
                                         <td>Customer Name</td>
-                                        <td>Customer Address</td>
                                         <td>Customer Type</td>
                                         <td>Created By</td>
                                         <td>Status</td>
@@ -37,7 +36,6 @@
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{ $customer->customer_code }}</td>
                                             <td>{{ $customer->customer_name }}</td>
-                                            <td>{{ $customer->customer_address_line1 }}</td>
                                             <td>{{ $customer->customer_type_of_customer }}</td>
                                             <td>{{ $customer->createUser?$customer->createUser->name: 'User not found' }}</td>
                                             <td>

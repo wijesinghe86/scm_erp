@@ -17,7 +17,7 @@ class StockItem extends Model
         'cost_price',
         'barcode',
         'keyword',
-        //'group',
+        'group',
         'class',
         'serial_number',
         'part_number',
