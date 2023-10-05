@@ -52,7 +52,7 @@
                                             <th>Stock No</th>
                                             <th>Description</th>
                                             <th>U/M</th>
-                                            <th>Issue Qty</th>
+                                            <th>Received Qty</th>
                                         </tr>
                                     </thead>
                                     <tbody>

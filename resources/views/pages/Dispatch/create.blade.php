@@ -13,7 +13,7 @@
                                 <div class="form-group col-md-2">
                                     <label>Dispatch No</label>
                                     <input type="text" value="{{ $next_number }}" class="form-control"
-                                        name="dispatch_no" placeholder="Dispatch No">
+                                        name="dispatch_no" placeholder="Dispatch No" readonly>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label>Dispatched Date</label>

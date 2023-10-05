@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label>Tax Code</label>
-                        <input type="text" class="form-control" name="tax_code" placeholder="Tax Code" value="{{$taxcreations->tax_code}}">
+                        <input type="text" class="form-control" name="tax_code" placeholder="Tax Code" value="{{$taxcreations->tax_code}}" readonly>
                     </div>
                     <div class="form-group col-md-4">
                         <label>Tax Name</label>

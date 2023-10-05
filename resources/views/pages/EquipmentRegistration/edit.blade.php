@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label>Equipment Code</label>
-                        <input type="text" class="form-control" name="equipment_code" placeholder="Equipment Code" value="{{$equipmentregistrations->equipment_code}}">
+                        <input type="text" class="form-control" name="equipment_code" placeholder="Equipment Code" value="{{$equipmentregistrations->equipment_code}}" readonly>
                     </div>
                     <div class="form-group col-md-4">
                         <label>Stock Number</label>

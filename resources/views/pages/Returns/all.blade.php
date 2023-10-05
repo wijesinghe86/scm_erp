@@ -25,7 +25,6 @@
                                             <th>INVOICE NUMBER</th>
                                             <th>INVOICE DATE</th>
                                             <th>CREATED BY</th>
-                                            <th>PAYMENT METHOD</th>
                                             <th>LOCATION</th>
                                             <th>RETURNED DATE</th>
                                             <th>APPROVED BY</th>
@@ -41,7 +40,6 @@
                                                 <td>{{ $invoice_return->invoice->invoice_number }}</td>
                                                 <td>{{ $invoice_return->invoice->invoice_date }}</td>
                                                 <td>{{ $invoice_return->createdBy->name }}</td>
-                                                <td>{{ $invoice_return->payment_method }}</td>
                                                 <td>{{ $invoice_return->location->warehouse_name }}</td>
                                                 <td>{{ date("Y-m-d", strtotime($invoice_return->created_at)) }}</td>
                                                 <td>{{ $invoice_return->approvedBy ? $invoice_return->approvedBy->name : 'Not Approved' }}

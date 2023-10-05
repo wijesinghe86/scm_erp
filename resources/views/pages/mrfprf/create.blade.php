@@ -5,14 +5,14 @@
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Purchase Request Entry for Material Request </h4>
+                        <h4 class="card-title">Procurement Request </h4>
                         <form class="forms-sample" method="POST" action="{{ route('mrfprf.store') }}">
                             @csrf
                             <div class="row">
                                 <div class="form-group col-md-2">
                                     <label>PRF No</label>
                                     <input type="text" class="form-control" name="mrfprf_no" id="mrfprf_no" value="{{$next_number}}"
-                                        placeholder="PRF No" >
+                                        placeholder="PRF No" readonly>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label>PRF Date</label>
@@ -34,7 +34,7 @@
                             <div class="prfitems_table"></div>
 
                             <button type="submit" class="btn btn-success me-2">Submit</button>
-                            <button class="btn btn-danger">Cancel</button>
+                            <a href="{{ route('mrfprf.index') }}" class="btn btn-danger">Go to PR Registry</a>
                         </form>
                     </div>
                 </div>

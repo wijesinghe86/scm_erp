@@ -11,8 +11,13 @@
                             <div class="row">
                                 <div class="form-group col-md-3">
                                     <label>PO NO</label>
-                                    <input type="text" class="form-control" name="po_number" value="{{ $next_number }}"
-                                        placeholder="PO No" value="">
+                                    <label>Purchase Reference Number</label>
+                                    <select class="form-control item-select  prf_input" name="prf_id">
+                                        <option value="" selected disabled>Select</option>
+                                        @foreach ($mrfprf_list as $row)
+                                            <option value="{{ $row->id }}">{{ $row->mrfprf_no }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>PO Date</label>
@@ -73,17 +78,13 @@
                                         placeholder="Total Volume">
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <label>Purchase Reference Number</label>
-                                    <select class="form-control item-select  prf_input" name="prf_id">
-                                        <option value="" selected disabled>Select</option>
-                                        @foreach ($mrfprf_list as $row)
-                                            <option value="{{ $row->id }}">{{ $row->mrfprf_no }}</option>
-                                        @endforeach
-                                    </select>
+                                    <label>PO NO</label>
+                                    <input type="text" class="form-control" name="po_number" value="{{ $next_number }}"
+                                        placeholder="PO No" value="" readonly>
                                 </div>
                             </div>
                                     <div class="items_table"></div>
-                                    <button type="submit" class="btn btn-success me-2">Complete Purchase Order Material Request</button>
+                                    <button type="submit" class="btn btn-success me-2">Complete Purchase Order</button>
 
                         </form>
                     </div>

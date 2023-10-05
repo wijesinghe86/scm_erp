@@ -13,7 +13,7 @@
                                 <div class="form-group col-md-2">
                                     <label>Customer Code</label>
                                     <input type="text" class="form-control" name="customer_code"
-                                        value="{{ $customers->customer_code }}" placeholder="Customer Code">
+                                        value="{{ $customers->customer_code }}" placeholder="Customer Code" readonly>
                                 </div>
                                 <div class="form-group col-md-10">
                                     <label>Customer Name</label>

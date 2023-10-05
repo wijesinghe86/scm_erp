@@ -7,7 +7,7 @@
                 <th>Des</th>
                 <th>U/M</th>
                 <th>PPS Available QTY</th>
-                <th>Quantity</th>
+                <th>JO Quantity</th>
             </tr>
         </thead>
         <tbody>

@@ -15,7 +15,7 @@
                       <div class="row">
                         <div class="form-group col-md-4">
                           <label>Plant Number</label>
-                          <input type="text" class="form-control" name="plant_number" placeholder="Plant Number" value="{{$plantregistrations->plant_number}}">
+                          <input type="text" class="form-control" name="plant_number" placeholder="Plant Number" value="{{$plantregistrations->plant_number}}" readonly>
                         </div>
                         <div class="form-group col-md-4">
                           <label>Plant Name</label>

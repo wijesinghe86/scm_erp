@@ -18,7 +18,7 @@
                                 <div class="form-group col-md-3">
                                     <label>MRF No</label>
                                     <input type="text" class="form-control" name="mrf_no" placeholder="MRF No"
-                                        value="{{ $next_number }}">
+                                        value="{{ $next_number }}" readonly>
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Requested By</label>
