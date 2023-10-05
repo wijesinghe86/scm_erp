@@ -12,7 +12,7 @@
                                 <div class="form-group col-md-3">
                                     <label>Job Order Number</label>
                                     <input type="text" class="form-control" value="{{ $next_job_order_number }}"
-                                        name="job_order_no" placeholder="Job Order Number">
+                                        name="job_order_no" placeholder="Job Order Number" readonly>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>Job Order Date</label>
@@ -71,7 +71,7 @@
                             <button id="jobCreateSubmitBtn" type="submit" class="btn btn-success me-2">Complete Job Order
                                 Creation</button>
 
-                            <a href="{{route('jobordercreation.index')}}" class="btn btn-danger" >Cancel</a>
+                            <a href="{{route('jobordercreation.index')}}" class="btn btn-danger" >Go to Jo Order Registry</a>
 
                         </form>
                     </div>

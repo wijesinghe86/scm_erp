@@ -33,7 +33,7 @@
 
 
                             <button type="submit" class="btn btn-success me-2">Approved</button>
-                            <button class="btn btn-danger">Cancel</button>
+                            <a href="{{ route('mr_request_approve.index') }}" class="btn btn-danger">Go to Approved Registry</a>
                         </form>
                     </div>
                 </div>

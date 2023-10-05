@@ -37,7 +37,7 @@
 
 
                             <button type="submit" class="btn btn-success me-2">Approved</button>
-                            <a href="{{ route('df_approve.index') }}" class="btn btn-danger">Cancel</a>
+                            <a href="{{ route('df_approve.index') }}" class="btn btn-danger">GO to DF Approved Registry</a>
                         </form>
                     </div>
                 </div>

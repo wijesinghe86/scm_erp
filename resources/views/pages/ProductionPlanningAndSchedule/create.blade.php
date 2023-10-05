@@ -12,30 +12,21 @@
                                 <div class="form-group col-md-4">
                                     <label>PPS No</label>
                                     <input type="text" class="form-control" name="pps_no" id="pps_no"
-                                        value="{{ $next_number }}" placeholder="PPS No">
+                                        value="{{ $next_number }}" placeholder="PPS No" readonly>
                                 </div>
-                                {{-- <div class="form-group col-md-4">
-                        <label>Plant</label>
-                                    <select class="form-consectionstrol item-select" name="plant">
-                                        @foreach ($plants as $plant)
-                                            <option value="{{ $plant->id }}">{{ $plant->plant_name }}</option>
+                                <div class="form-group col-md-4">
+                                    <label>DF No</label>
+                                    <select class="form-control df_input" name="df_id" id="df_id" placeholder="DF NO">
+                                        <option value="df_id" selected disabled>Select DF No</option>
+                                        @foreach ($df_list as $row)
+                                            <option value="{{ $row->id }}">{{ $row->df_no }}</option>
                                         @endforeach
                                     </select>
-                    </div> --}}
+                                </div>
                                 <div class="form-group col-md-4">
                                     <label>PPS Date</label>
                                     <input type="date" class="form-control" name="pps_date" id="pps_date"
                                         placeholder="PPS Date">
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label>Plant</label>
-                                    <select class="form-control plant-select" name="plant" id="plant"
-                                        placeholder="Plant">
-                                        <option value="" selected disabled>Select Plant</option>
-                                        @foreach ($plants as $plant)
-                                            <option value="{{ $plant->id }}">{{ $plant->plant_name }}</option>
-                                        @endforeach
-                                    </select>
                                 </div>
                             </div>
 
@@ -53,11 +44,12 @@
                                         placeholder="Production End Date">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>DF No</label>
-                                    <select class="form-control df_input" name="df_id" id="df_id" placeholder="DF NO">
-                                        <option value="df_id" selected disabled>Select DF No</option>
-                                        @foreach ($df_list as $row)
-                                            <option value="{{ $row->id }}">{{ $row->df_no }}</option>
+                                    <label>Plant</label>
+                                    <select class="form-control plant-select" name="plant" id="plant"
+                                        placeholder="Plant">
+                                        <option value="" selected disabled>Select Plant</option>
+                                        @foreach ($plants as $plant)
+                                            <option value="{{ $plant->id }}">{{ $plant->plant_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -67,7 +59,7 @@
                             <button type="submit" class="btn btn-success me-2">Complete Production Planning And
                                 Schedule</button>
                             <a class="btn btn-danger"
-                                href="{{ route('productionplanningandschedule.index') }}">Cancel</a>
+                                href="{{ route('productionplanningandschedule.index') }}">Go to PPS Registry</a>
                         </form>
                     </div>
                 </div>

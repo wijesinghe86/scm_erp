@@ -27,7 +27,7 @@
 
 
                             <button type="submit" class="btn btn-success me-2">Approved</button>
-                            <a href="{{route('production_planning_and_schedule_approval.index')}}" class="btn btn-danger">Cancel</a>
+                            <a href="{{route('production_planning_and_schedule_approval.index')}}" class="btn btn-danger">Go To PPS Approal Registry</a>
                         </form>
                     </div>
                 </div>

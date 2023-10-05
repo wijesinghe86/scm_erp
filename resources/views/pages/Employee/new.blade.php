@@ -13,7 +13,7 @@
                                 <div class="form-group col-md-6">
                                     <label>Employee Registration No</label>
                                     <input type="text" class="form-control" name="employee_reg_no"
-                                        placeholder="Employee Registration No" value="{{$next_number}}">
+                                        placeholder="Employee Registration No" value="{{$next_number}}" readonly>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label>EPF No</label>

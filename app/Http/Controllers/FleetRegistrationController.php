@@ -43,7 +43,11 @@ class FleetRegistrationController extends Controller
         $this->validate($request, [
             'fleet_number'=>'required',
             'fleet_name' => 'required',
-            'fleet_registration_number'=>'required'
+            'fleet_registration_number'=>'required',
+            'category_of_fleet'=>'required',
+            'fleet_type'=>'required'
+
+
         ]);
         $isFleetExist = FleetRegistration::where('fleet_number', $request->fleet_number)->first();
             if ($isFleetExist) {

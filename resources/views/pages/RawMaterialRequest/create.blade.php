@@ -13,7 +13,7 @@
                                 <div class="form-group col-md-3">
                                     <label>Request No</label>
                                     <input type="text" class="form-control" name="rmr_no" value="{{ $next_number }}"
-                                        placeholder="Req No">
+                                        placeholder="Req No" readonly>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>Request Date</label>

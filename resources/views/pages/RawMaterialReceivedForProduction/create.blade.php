@@ -10,9 +10,9 @@
                             @csrf
                             <div class="row">
                                 <div class="form-group col-md-3">
-                                    <label>RMA No</label>
+                                    <label>MRC No</label>
                                     <input required type="text" class="form-control" value="{{ $next_number }}"
-                                        name="rma_no" placeholder="RMA No">
+                                        name="rma_no" placeholder="RMA No" readonly>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>Received By</label>

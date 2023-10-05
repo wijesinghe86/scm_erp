@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label>Fleet Number *</label>
-                        <input type="text" class="form-control" name="fleet_number" placeholder="Fleet Number" value="{{$next_number}}">
+                        <input type="text" class="form-control" name="fleet_number" placeholder="Fleet Number" value="{{$next_number}}" readonly>
                     </div>
                     <div class="form-group col-md-4">
                         <label>Fleet Name *</label>
@@ -29,7 +29,7 @@
                         <input type="text" class="form-control" name="fleet_model_manufacture" placeholder="Fleet Model Manufacture">
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Category of Fleet</label>
+                        <label>Category of Fleet*</label>
                         <SELECT name="category_of_fleet" class="form-control">
                             <option value=""> Select </option>
                             <option value="1">Fleet</option>
@@ -60,7 +60,7 @@
                         <input type="text" class="form-control" name="loading_capacity" placeholder="Loading Capacity">
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Fleet Type</label>
+                        <label>Fleet Type*</label>
                         <SELECT name="fleet_type" class="form-control">
                             <option value=""> Select </option>
                             <option value="1">Company Own</option>
@@ -106,7 +106,7 @@
                 <p>Revenue</p>
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label>Revenue  Period From</label>
+                        <label>Revenue Period From</label>
                         <input type="date" class="form-control" name="tax_period_from" placeholder="Revenue Period From">
                     </div>
                     <div class="form-group col-md-4">
