@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Supplier;
+use App\Models\MrPurchaseItem;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,5 +20,11 @@ class MrPurchase extends Model
     public function createUser()
     {
         return $this->hasOne(User::class, 'id', 'created_by');
+    }
+
+    public function items()
+    {
+        return $this->hasMany(MrPurchaseItem::class, 'po_id', 'id' );
+
     }
 }

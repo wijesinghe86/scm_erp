@@ -28,7 +28,7 @@
                                             <th>INVOICE DATE</th>
                                             <th>LOCATION</th>
                                             <th>ISSUED DATE</th>
-                                            <th>CREATED BY</th>
+                                            <th>ISSUED BY</th>
                                             <th>ACTION</th>
 
 

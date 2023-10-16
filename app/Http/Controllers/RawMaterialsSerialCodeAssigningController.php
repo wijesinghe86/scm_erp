@@ -7,13 +7,15 @@ use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use App\Models\GoodsReceived;
 use App\Models\GoodsReceivedItem;
+use App\Models\RawMaterialSerialCode;
 
 
 class RawMaterialsSerialCodeAssigningController extends ParentController
 {
     public function index()
     {
-         return view('pages.RawMaterialsSerialCodeAssigning.index');
+        $list = RawMaterialSerialCode::get();
+         return view('pages.RawMaterialsSerialCodeAssigning.index', compact('list'));
      }
 
      public function create()

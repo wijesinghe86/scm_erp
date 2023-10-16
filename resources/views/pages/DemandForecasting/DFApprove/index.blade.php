@@ -48,7 +48,7 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            // $('#tbl_dfapprove').DataTable();
+            $('#tbl_dfapprove').DataTable();
         });
     </script>
 @endpush

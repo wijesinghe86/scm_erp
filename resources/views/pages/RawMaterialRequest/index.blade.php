@@ -98,7 +98,7 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            $('#tbl_materialrequest').DataTable();
+            $('#tbl_raw_materialrequest').DataTable();
         });
     </script>
 @endpush

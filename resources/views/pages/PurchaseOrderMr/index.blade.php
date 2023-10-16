@@ -17,8 +17,9 @@
                                     <td>No</td>
                                     <td>PO Date</td>
                                     <td>PO No</td>
+                                    <td>Items</td>
                                     <td>Created By</td>
-                                    <td>Action</td>
+                                    {{-- <td>Action</td> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -27,6 +28,26 @@
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{ $list->po_date }}</td>
                                     <td>{{ $list->po_no }}</td>
+                                    <td>
+                                        <table class="table table-striped">
+                                            <tr>
+                                                <th scope="col" >#</th>
+                                                <th scope="col" >S/No</th>
+                                                <th scope="col" >Descrition</th>
+                                                <th scope="col" >U/M</th>
+                                                <th scope="col" >Qty</th>
+                                            </tr>
+                                            @foreach ($list->items as $poItems)
+                                            <tr>
+                                                <td>{{ $loop->iteration}}</td>
+                                                <td>{{ $poItems->item->stock_number }}</td>
+                                                <td>{{ $poItems->item->description }}</td>
+                                                <td>{{ $poItems->item->unit }}</td>
+                                                <td>{{ $poItems->po_qty }}</td>
+                                            </tr>
+                                            @endforeach
+                                            </table>
+                                        </td>
                                     <td>{{ $list->createUser ? $list->createUser->name : 'User not found' }}</td>
                                 </tr>
                             @endforeach
@@ -40,9 +61,9 @@
 @endsection
 
 @push('scripts')
-    {{-- <script>
+    <script>
         $(document).ready( function () {
             $('#tbl_purchase_order').DataTable();
         } );
-    </script> --}}
+    </script>
 @endpush

@@ -45,6 +45,12 @@ class ProductionPlanningAndScheduleController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'pps_date'=>'required',
+            'start_date'=>'required',
+            'end_date'=>'required'
+        ]);
+
         $pps = new ProductionPlanning;
         $pps->pps_no = $request->pps_no;
         $pps->pps_date = $request->pps_date;
