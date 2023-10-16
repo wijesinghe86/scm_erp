@@ -37,4 +37,5 @@ class DeliveryOrderItem extends Model
     {
         return $this->hasOne(Warehouse::class, 'id', 'location');
     }
+    
 }

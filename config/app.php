@@ -69,7 +69,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => env('APP_TIMEZONE', 'Asia/Colombo'),
 
     /*
     |--------------------------------------------------------------------------
@@ -184,7 +184,7 @@ return [
         Darryldecode\Cart\CartServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
 
-        
+
 
 
         /*

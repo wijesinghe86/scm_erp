@@ -25,7 +25,6 @@ return new class extends Migration
             $table->unsignedBigInteger('balance_order_id')->nullable();
             $table->string('returned_ids')->nullable();
             $table->bigInteger('created_by')->nullable();
-            $table->bigInteger('issued_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

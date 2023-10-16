@@ -33,6 +33,7 @@ return new class extends Migration
             $table->bigInteger('location')->nullable();
             $table->decimal('returned_qty', 15, 2)->default(0);
             $table->bigInteger('created_by')->nullable();
+            $table->bigInteger('issued_by')->nullable();
             $table->softDeletes();
 
             $table->timestamps();
