@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\PurchaseOrderItem;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PurchaseOrder extends Model
 {
@@ -13,4 +14,6 @@ class PurchaseOrder extends Model
     {
         return $this->hasOne(User::class, 'id', 'created_by');
     }
+
+    
 }

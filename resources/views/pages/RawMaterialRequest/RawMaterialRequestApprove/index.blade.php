@@ -53,3 +53,11 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#tbl_mrapprove').DataTable();
+        });
+    </script>
+@endpush

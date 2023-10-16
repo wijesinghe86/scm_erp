@@ -31,6 +31,13 @@ class Roleseeder extends Seeder
         $role11 = Role::create(['name'=>'Factory Warehouse User']);
         $role12 = Role::create(['name'=>'Factory Admin']);
         $role13 = Role::create(['name'=>'Procurement User']);
+        $role14 = Role::create(['name'=>'Sales Executive']);
+        $role15 = Role::create(['name'=>'MR Executive']);
+        $role16 = Role::create(['name'=>'Production Executive']);
+        $role17 = Role::create(['name'=>'Prcurement Executive']);
+        $role18 = Role::create(['name'=>'Warehouse Executive']);
+        $role19 = Role::create(['name'=>'Inventory Executive']);
+        $role20 = Role::create(['name'=>'Executive User']);
 
 
         $adminUser = User::create([

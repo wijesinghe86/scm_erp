@@ -23,11 +23,18 @@ class RawMaterialSerialCode extends Model
     {
         return $this->belongsTo(GoodsReceived::class, 'grn_id', 'id');
     }
-
-
+    public function warehouse()
+    {
+        return $this->belongsTo(Warehouse::class, 'warehouse_code', 'id');
+    }
     public function semi_production_items()
     {
         return $this->belongsTo(SemiProductionItem::class, 'id', 'raw_mat_serial_no');
     }
+
+    public function createUser()
+{
+    return $this->hasOne(User::class, 'id', 'created_by');
+}
 
 }
