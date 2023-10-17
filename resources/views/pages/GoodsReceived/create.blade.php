@@ -12,7 +12,7 @@
                                 <div class="form-group col-md-4">
                                     <label>GRN No</label>
                                     <input type="text" class="form-control" name="grn_number" value="{{ $next_number }}"
-                                        placeholder="Goods Received Number">
+                                        placeholder="Goods Received Number" readonly>
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>GRN Date</label>
@@ -25,6 +25,62 @@
                                     <label>Local</label>
                                     <input type="radio" name="type_of_received" value="Import">
                                     <label>Import</label>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    <label>PO Number</label>
+                                    <select class="form-control po_input" name="po_id" id="po_id"
+                                        onchange="itemOnChange(this)">
+                                        <option value="" selected disabled>Select PO No</option>
+                                        @foreach ($po_list as $row)
+                                            <option value="{{ $row->id }}">{{ $row->po_no }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>Supplier Id</label>
+                                    <input type="text" readonly class="form-control" name="supplier" id="supplier">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Supplier Name</label>
+                                    <input type="text" readonly class="form-control" name="supplier_name"
+                                        id="supplier_name">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Warehouse</label>
+                                    <select class="form-control" name="warehouse" id="warehouse">
+                                        <option value="" selected> Select </option>
+                                        @foreach ($warehouses as $warehouse)
+                                            <option value="{{ $warehouse->id }}">{{ $warehouse->warehouse_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="items_table"></div>
+                            <hr>
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    <label>Weight Per Unit</label>
+                                    <input type="text" class="form-control" name="weight_per_unit"
+                                        placeholder="Weight Per Unit">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Total Weight</label>
+                                    <input type="text" class="form-control" name="total_weight"
+                                        placeholder="Total Weight">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Volume Per Unit</label>
+                                    <input type="text" class="form-control" name="volume_per_unit"
+                                        placeholder="Volume Per Unit">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Total Volume</label>
+                                    <input type="text" class="form-control" name="total_volume"
+                                        placeholder="Total Volume">
                                 </div>
                             </div>
                             <hr>
@@ -76,63 +132,7 @@
                                         placeholder="Verified Date">
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="form-group col-md-3">
-                                    <label>Weight Per Unit</label>
-                                    <input type="text" class="form-control" name="weight_per_unit"
-                                        placeholder="Weight Per Unit">
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label>Total Weight</label>
-                                    <input type="text" class="form-control" name="total_weight"
-                                        placeholder="Total Weight">
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label>Volume Per Unit</label>
-                                    <input type="text" class="form-control" name="volume_per_unit"
-                                        placeholder="Volume Per Unit">
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label>Total Volume</label>
-                                    <input type="text" class="form-control" name="total_volume"
-                                        placeholder="Total Volume">
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="form-group col-md-3">
-                                    <label>PO Number</label>
-                                    <select class="form-control po_input" name="po_id" id="po_id"
-                                        onchange="itemOnChange(this)">
-                                        <option value="" selected disabled>Select PO No</option>
-                                        @foreach ($po_list as $row)
-                                            <option value="{{ $row->id }}">{{ $row->po_no }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-2">
-                                    <label>Supplier Id</label>
-                                    <input type="text" readonly class="form-control" name="supplier" id="supplier">
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label>Supplier Name</label>
-                                    <input type="text" readonly class="form-control" name="supplier_name"
-                                        id="supplier_name">
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label>Warehouse</label>
-                                    <select class="form-control" name="warehouse" id="warehouse">
-                                        <option value="" selected> Select </option>
-                                        @foreach ($warehouses as $warehouse)
-                                            <option value="{{ $warehouse->id }}">{{ $warehouse->warehouse_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="items_table"></div>
-
+                            
                             <button type="submit" class="btn btn-success me-2">Complete Goods Received Note</button>
                         </form>
                     </div>

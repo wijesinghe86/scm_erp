@@ -20,7 +20,7 @@ class RawMaterialReceivedController extends Controller
     public function generateNextNumber()
     {
         $count  = RawMaterialReceived::get()->count();
-        return "RMA" . sprintf('%06d', $count + 1);
+        return "MRC" . sprintf('%06d', $count + 1);
     }
 
     public function index()

@@ -9,7 +9,7 @@
                             List</h2>
 
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="tbl_disposal">
+                                <table class="table table-bordered" id="tbl_slcApprove">
                                     <thead>
                                         <tr>
                                             <td>No</td>
@@ -52,3 +52,11 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#tbl_slcApprove').DataTable();
+        });
+    </script>
+@endpush

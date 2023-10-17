@@ -6,7 +6,7 @@
         <div class="col-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Purchase Request</h4>
+                    <h4 class="card-title">Procurement Request</h4>
                     <form class="forms-sample" method="POST" action="{{ route('purchase_request.store') }}">
                     @csrf
                       <div class="row">

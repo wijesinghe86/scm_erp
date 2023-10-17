@@ -69,7 +69,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => env('APP_TIMEZONE', 'Asia/Colombo'),
 
     /*
     |--------------------------------------------------------------------------
@@ -182,12 +182,17 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Darryldecode\Cart\CartServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
+
+
+
 
         /*
-         * Package Service Providers...
-         */
+    //Package Service Providers...
 
-        /*
+
+
+
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,

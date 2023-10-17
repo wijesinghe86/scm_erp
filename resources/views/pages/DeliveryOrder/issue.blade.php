@@ -21,7 +21,7 @@
                                                     <td>U/M</td>
                                                     <td>ORDERED QTY</td>
                                                     <td>BALANCE QTY</td>
-                                                    <td>ISSUE QTY</td>
+                                                    <td>ISSUED QTY</td>
                                                     <td>STOCK IN HAND</td>
                                                 </tr>
                                             </thead>
@@ -67,7 +67,7 @@
                                         </table>
                                         <div style="display:flex;justify-content: flex-end; align-items: center; gap:1rem;">
                                             <a href="{{ route('deliveryorders.view', $delivery_order->id) }}"
-                                                class="btn btn-danger">Cancel</a>
+                                                class="btn btn-danger">D/O Registry</a>
                                             <button onclick="validateBeforeSubmit()" type="button"
                                                 class="btn btn-success">Issue Delivery</button>
                                         </div>

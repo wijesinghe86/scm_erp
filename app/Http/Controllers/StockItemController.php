@@ -33,7 +33,7 @@ class StockItemController extends Controller
     {
 
         $this->validate($request, [
-            'stock_number' => 'required',
+            'stock_number' => 'required|max:7',
             'description' => 'required',
             'unit' => 'required',
             'keyword' => 'required',

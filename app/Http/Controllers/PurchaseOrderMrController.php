@@ -57,6 +57,12 @@ class PurchaseOrderMrController extends ParentController
             $data['po_no'] = $this->generateNextNumber();
         }
 
+        $this->validate($request, [
+            'prf_id'=>'required',
+            'po_date'=>'required|date',
+            'supplier_id'=>'required'
+            ]);
+
         $po = new MrPurchase;
         $po->po_no = $request->po_number;
         $po->prf_id = $request->prf_id;

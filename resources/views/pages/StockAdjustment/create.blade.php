@@ -12,7 +12,7 @@
                                 <div class="form-group col-md-4">
                                     <label>Stock Adjustment Number</label>
                                     <input type="text" value="{{ $next_number }}" class="form-control"
-                                        name="stock_adjustment_number" placeholder="Stock Adjustment Number">
+                                        name="stock_adjustment_number" placeholder="Stock Adjustment Number" readonly>
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Stock Adjustment Date</label>

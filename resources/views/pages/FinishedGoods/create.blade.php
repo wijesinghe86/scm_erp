@@ -16,7 +16,7 @@
                                 <div class="form-group col-md-4">
                                     <label>FGRN No</label>
                                     <input type="text" class="form-control" value="{{ $next_number }}" name="fgrn_no"
-                                        placeholder="FGRN_No">
+                                        placeholder="FGRN_No" readonly>
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Warehouse</label>
@@ -30,14 +30,6 @@
 
                             <div class="row">
                                 <div class="form-group col-md-4">
-                                    <label>Production Start Date Time</label>
-                                    <input type="datetime-local" class="form-control" name="pro_start_date_time">
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label>Production End Date Time</label>
-                                    <input type="datetime-local" class="form-control" name="pro_end_date_time">
-                                </div>
-                                <div class="form-group col-md-4">
                                     <label>RMI No</label>
                                     <select class="form-control item-select" name="rmi_no" id="rmi_no">
                                         <option value="">Select RMI</option>
@@ -46,6 +38,14 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                <div class="form-group col-md-4">
+                                    <label>Production Start Date Time</label>
+                                    <input type="datetime-local" class="form-control" name="pro_start_date_time">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Production End Date Time</label>
+                                    <input type="datetime-local" class="form-control" name="pro_end_date_time">
+                                </div>   
                             </div>
                             <hr>
                             <h5>Finish Product Entry</h5>
@@ -166,6 +166,7 @@
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-success me-2">Complete Finished Goods</button>
+                            <a href="{{ route ('finishedgoods.index') }}" class="btn btn-success me-2">Go to FGRN Registry</a>
                         </form>
                     </div>
                 </div>

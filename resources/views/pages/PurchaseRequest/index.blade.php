@@ -10,6 +10,7 @@
                         <a href="{{ route('purchase_request.create') }}" class="btn btn-success float-end mb-2"> Add New </a>
                         {{-- <a href="{{ route('warehouse.deleted') }}" class="btn btn-success float-end mb-2"> Deleted </a> --}}
                             </div>
+                        <table class="table bordered form-group">
                         <table class="table table-bordered" id="tbl_purchaserequest">
                         <thead>
                             <tr>
@@ -22,7 +23,7 @@
                         <tbody>
                             @foreach ($lists as $purchasingrequest)
                             <tr>
-                                <td>{{$loop->iteration}}</td>
+                            <td>{{$loop->iteration}}</td>
                             <td>{{ $purchasingrequest->prf_date }}</td>
                             <td>{{ $purchasingrequest->prf_no }}</td>
                             <td>{{ $purchasingrequest->createUser ? $purchasingrequest->createUser->name : 'User not found' }}

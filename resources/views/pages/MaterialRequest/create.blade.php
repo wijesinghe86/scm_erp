@@ -18,18 +18,7 @@
                                 <div class="form-group col-md-3">
                                     <label>MRF No</label>
                                     <input type="text" class="form-control" name="mrf_no" placeholder="MRF No"
-                                        value="{{ $next_number }}">
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label>Requested By</label>
-                                    <select class="form-control emp-select" name="requested_by" value="{{ old('requested_by') }}">
-                                        {{-- <option selected disabled>Select</option> --}}
-                                        @foreach ($employees as $employee)
-                                            <option value="{{$employee->id}}"> {{ $employee->employee_fullname }} -
-                                                {{ $employee->departmentData->department_name }}
-                                                ({{ $employee->sectionData->section_name }})</option>
-                                        @endforeach
-                                    </select>
+                                        value="{{ $next_number }}" readonly>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>Required Date</label>
@@ -115,6 +104,17 @@
                                 </tbody>
                             </table>
                             <br>
+                            <div class="form-group col-md-4">
+                                <label>Requested By</label>
+                                <select class="form-control emp-select" name="requested_by" value="{{ old('requested_by') }}">
+                                    {{-- <option selected disabled>Select</option> --}}
+                                    @foreach ($employees as $employee)
+                                        <option value="{{$employee->id}}"> {{ $employee->employee_fullname }} -
+                                            {{ $employee->departmentData->department_name }}
+                                            ({{ $employee->sectionData->section_name }})</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <button type="submit" class="btn btn-success me-2" name="button" value="complete">Complete
                                 Materials Request</button>
                         </form>

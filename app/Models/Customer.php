@@ -41,7 +41,7 @@ class Customer extends Model
     ];
 
     public static $PAYMENT_TERM_CREDIT = "credit";
-    
+
     public static $PAYMENT_TERMS = [
         [
             'value' => 'cash',

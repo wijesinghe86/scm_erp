@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label>Department Number</label>
-                        <input type="text" class="form-control" name="department_number" placeholder="Department Number" value="{{$departments->department_number}}">
+                        <input type="text" class="form-control" name="department_number" placeholder="Department Number" value="{{$departments->department_number}}" readonly>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Department Name</label>

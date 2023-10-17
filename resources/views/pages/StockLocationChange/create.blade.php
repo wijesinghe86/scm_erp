@@ -13,7 +13,7 @@
                                 <div class="form-group col-md-3">
                                     <label>SLC Number</label>
                                     <input type="text" value="{{ $next_number }}" class="form-control"
-                                        name="slc_number">
+                                        name="slc_number" readonly>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>SLC Date</label>
@@ -136,9 +136,10 @@
                             <div id="item_list"></div>
                             <div class="text-right">
                                 <button type="submit" class="btn btn-success me-2">Complete Stock Location
-                                    Change</button>
+                                    Change</button>                                  
                             </div>
                         </form>
+                       
                     </div>
                 </div>
             </div>

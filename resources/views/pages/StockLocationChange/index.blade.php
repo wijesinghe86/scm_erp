@@ -16,6 +16,7 @@
                                     <thead>
                                         <tr>
                                             <td>No</td>
+                                            <td>Approval Status</td>
                                             <td>Stock Location Change Number</td>
                                             <td>Stock Location Change Date</td>
                                             <td>From Warehouse Code</td>
@@ -35,13 +36,14 @@
                                         @foreach ($stock_location_changes as $stock_location_change)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $stock_location_change->approvedBy ? 'Approved' : 'Not Approved' }}
                                                 <td>{{ $stock_location_change->slc_number }}</td>
                                                 <td>{{ $stock_location_change->slc_date }}</td>
                                                 <td>{{ optional(optional($stock_location_change)->from_warehouse)->warehouse_name }}
                                                 </td>
                                                 <td>{{ optional(optional($stock_location_change)->to_warehouse)->warehouse_name }}
                                                 </td>
-                                                <td>{{ optional(optional($stock_location_change)->fleet)->fleet_name }}</td>
+                                                <td>{{ optional(optional($stock_location_change)->fleet)->fleet_registration_number}}</td>
                                                 <td>{{ $stock_location_change->delivered_by }}</td>
                                                 <td>{{ optional(optional($stock_location_change)->issuedBy)->employee_fullname }}
                                                 </td>
@@ -50,6 +52,7 @@
                                                 {{-- <td>{{ $stock_location_change->receivedBy->employee_fullname }}</td> --}}
                                                 {{-- <td>{{ $stock_location_change->received_date }}</td> --}}
                                                 <td>{{ $stock_location_change->remarks }}</td>
+                                                
                                                 <td>
                                                     <table class="table table-striped">
                                                         <tr>

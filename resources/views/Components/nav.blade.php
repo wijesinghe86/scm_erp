@@ -34,7 +34,7 @@
                 <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown"
                     aria-expanded="false">
                     <div class="nav-profile-text">
-                        <img src="https://i0.wp.com/ui-avatars.com/api/{{ request()->user()->name }}?ssl=1"
+                        <img src="https://i0.wp.com/ui-avatars.com/api/{{ optional(optional(request())->user())->name }}?ssl=1"
                             style="border-radius: 20px; height:40px; width:40px;" />
                         {{-- <i class="mdi mdi-account"></i>{{ auth()->user()->name }} --}}
                     </div>

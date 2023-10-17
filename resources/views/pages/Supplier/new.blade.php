@@ -14,7 +14,7 @@
                             <div class="row">
                                 <div class="form-group col-md-3">
                                     <label for="">Supplier Code *</label>
-                                    <input type="text" class="form-control" id="" placeholder="Supplier Code" name="supplier_code" value="{{$next_number}}">
+                                    <input type="text" class="form-control" id="" placeholder="Supplier Code" name="supplier_code" value="{{$next_number}}" readonly>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="">Supplier Name *</label>

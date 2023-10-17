@@ -15,36 +15,45 @@
                             <thead>
                                 <tr>
                                     <td>No</td>
-                                    <td>Goods Receiving Number</td>
-                                    <td>Warehouse Code</td>
-                                    <td>Supplier Code</td>
+                                    <td>GRN No</td>
+                                    <td>Location</td>
                                     <td>Stock Number</td>
-                                    <td>Serial Number</td>
-                                    {{-- <td>RM Serial Quantity</td>
-                                    <td>RM Serial Weight</td>
+                                    <td>Description</td>
+                                    <td>Serial No</td>
                                     <td>Created By</td>
-                                    <td>Created Date</td> --}}
                                 </tr>
                             </thead>
-                            {{-- <tbody>
-                                @foreach ($rawmaterialsserialcodeassignings as $rawmaterialsserialcodeassigning)
+                            <tbody>
+                                @foreach ($list as $rawmaterialsserialcodeassigning)
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
-                                    <td>{{ $rawmaterialsserialcodeassigning->grn_number}}</td>
-                                    <td>{{ $rawmaterialsserialcodeassigning->warehouse_code}}</td>
-                                    <td>{{ $rawmaterialsserialcodeassigning->supplier_code}}</td>
-                                    <td>{{ $rawmaterialsserialcodeassigning->stock_number}}</td>
-                                    <td>{{ $rawmaterialsserialcodeassigning->serial_number}}</td>
-                                    <td>{{ $rawmaterialsserialcodeassigning->rm_serial_quantity}}</td>
-                                    <td>{{ $rawmaterialsserialcodeassigning->rm_serial_weight}}</td>
-                                    <td>{{ $rawmaterialsserialcodeassigning->created_by}}</td>
-                                    <td>{{ $rawmaterialsserialcodeassigning->created_date}}</td>
+                                    <td>{{ $rawmaterialsserialcodeassigning->grn->grn_no}}</td>
+                                    <td>{{ $rawmaterialsserialcodeassigning->warehouse->warehouse_name}}</td>
+                                    <td>{{ $rawmaterialsserialcodeassigning->item->stock_number}}</td>
+                                    <td>{{ $rawmaterialsserialcodeassigning->item->description}}</td>
+                                    <td>
+                                        <table class="table table-striped">
+                                            <tr>
+                                                <th scope="col" >#</th>
+                                                <th scope="col" >Serial No</th>
+                                                <th scope="col" >Weight</th>
+                                            </tr>
+                                            @foreach ($list as $rawmaterialsserialcodeassigning)
+                                                <tr>
+                                                    <td>{{$loop->iteration}}</td>
+                                                    <td>{{ $rawmaterialsserialcodeassigning->serial_no }}</td>
+                                                    <td>{{ $rawmaterialsserialcodeassigning->qty }}</td>
+                                                </tr>
+                                             @endforeach
 
-                                </tr>
+                                        </table>
+                                    </td>
+                                    <td>{{ $rawmaterialsserialcodeassigning->createUser ? $rawmaterialsserialcodeassigning->createUser->name : 'User not found' }}
+                                    </td>
+                                    </tr>
                                 @endforeach
-                            </tbody> --}}
-
-                        </table>
+                            </tbody>
+                       </table>
                 </div>
             </div>
         </div>

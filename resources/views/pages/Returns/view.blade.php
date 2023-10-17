@@ -64,8 +64,8 @@
                                     <td>DESCRIPTION</td>
                                     <td>U/M</td>
                                     <td>QUANTITY</td>
-                                    <td>UNIT PRICE</td>
-                                    <td>TOTAL</td>
+                                    {{-- <td>UNIT PRICE</td>
+                                    <td>TOTAL</td> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -76,14 +76,14 @@
                                         <td>{{ $item->description }}</td>
                                         <td>{{ $item->uom }}</td>
                                         <td>{{ $item->quantity }}</td>
-                                        <td>{{ $item->unit_price }}</td>
-                                        <td>{{ $item->total }}</td>
+                                        {{-- <td>{{ $item->unit_price }}</td>
+                                        <td>{{ $item->total }}</td> --}}
                                     </tr>
                                 @endforeach
-                                <tr>
+                                {{-- <tr>
                                     <td colspan="6" align="right">Total</td>
                                     <td>{{ $invoice_return->items->sum('total') }}</td>
-                                </tr>
+                                </tr> --}}
                             </tbody>
                         </table>
                         <a href="{{ route('returns.all') }}">

@@ -17,7 +17,7 @@
                                 <div class="form-group col-md-3">
                                     <label>RMI No</label>
                                     <input type="text" class="form-control" value="{{ $next_number }}" name="rmi_no"
-                                        placeholder="RMI No">
+                                        placeholder="RMI No" readonly>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label>Warehouse</label>

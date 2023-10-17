@@ -13,7 +13,7 @@
                             <div class="form-group col-md-2">
                                 <label>Semi_Pro No</label>
                                 <input type="text" class="form-control" name="semi_product_no"
-                                    value="{{ $next_number }}" placeholder="Semi Product No">
+                                    value="{{ $next_number }}" placeholder="Semi Product No" readonly>
                             </div>
                             <div class="form-group col-md-2">
                                 <label>Date</label>
