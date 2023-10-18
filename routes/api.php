@@ -28,6 +28,7 @@ Route::prefix('test')->group(function () {
         $stocks = Stock::truncate();
         $stock_items = StockItem::get();
         $warehouses = Warehouse::get();
+        
 
         foreach ($stock_items as $key => $stock_item) {
             foreach ($warehouses as $key => $warehouse) {

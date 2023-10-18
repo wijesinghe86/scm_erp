@@ -20,5 +20,5 @@ class MrfPrfMain extends Model
         return $this->hasMany(MrfPrfItem::class,'mr_id','id');
     }
 
-
+    
 }
