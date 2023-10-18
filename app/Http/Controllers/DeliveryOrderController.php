@@ -25,7 +25,8 @@ class DeliveryOrderController extends ParentController
     public function all()
     {
         $deliveryOrders = DeliveryOrder::all();
-        return view('pages.DeliveryOrder.all', compact('deliveryOrders'));
+        $deliveryOrderItems = DeliveryOrderItem::all();
+        return view('pages.DeliveryOrder.all', compact('deliveryOrders', 'deliveryOrderItems'));
     }
 
     public function view(DeliveryOrder $delivery_order)
@@ -70,7 +71,7 @@ class DeliveryOrderController extends ParentController
                 // $delivery_order_item->available_qty = $item['issue_quantity'] > 0 ? $delivery_order_item->qty - $delivery_order_item->issued_qty : 0;
                 $delivery_order_item->available_qty = $delivery_order_item->qty - $delivery_order_item->issued_qty;
                 $delivery_order_item->issued_date = now();
-                
+
                 $delivery_order_item->save();
 
                 //stock reduce
