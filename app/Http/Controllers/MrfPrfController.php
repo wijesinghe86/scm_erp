@@ -28,8 +28,8 @@ class MrfPrfController extends ParentController
     {   $mr_list = MaterialRequest::with('mr_approved')
         ->whereHas('mr_approved',function($q){
         $q->where('status','approved');
-        })->get();
-        // ->doesntHave('prf_items')
+        })->doesntHave('prf_items')->get();
+
         $purchase = new MrfPrfMain;
         $next_number = $this->generateNextNumber();
         return view('pages.mrfprf.create', compact('mr_list', 'next_number'));
