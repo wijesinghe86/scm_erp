@@ -37,5 +37,11 @@ class DeliveryOrderItem extends Model
     {
         return $this->hasOne(Warehouse::class, 'id', 'location');
     }
+
+    public function issued()
+        {
+            return $this->hasOne(User::class, 'id', 'issued_by');
+        }
     
+
 }
