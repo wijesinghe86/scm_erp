@@ -71,6 +71,8 @@ class DeliveryOrderController extends ParentController
                 // $delivery_order_item->available_qty = $item['issue_quantity'] > 0 ? $delivery_order_item->qty - $delivery_order_item->issued_qty : 0;
                 $delivery_order_item->available_qty = $delivery_order_item->qty - $delivery_order_item->issued_qty;
                 $delivery_order_item->issued_date = now();
+                $delivery_order_item->issued_by = Auth::id();
+
 
                 $delivery_order_item->save();
 
