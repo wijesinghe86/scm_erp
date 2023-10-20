@@ -113,7 +113,7 @@
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-procurement" aria-expanded="false"
                 aria-controls="ui-procurement">
                 <span class="menu-title">Procurement</span>
-                {{-- <i class="menu-arrow"></i> --}}
+                {{-- <i class="fa-solid fa-scale-balanced"></i> --}}
                 <i class="mdi mdi-contacts menu-icon"></i>
             </a>
             <div class="collapse" id="ui-procurement">
