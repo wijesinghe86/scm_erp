@@ -103,8 +103,8 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
     /* .....CREATING ROUTE FOR Customer Creation ....... */
     Route::prefix('customer')->group(function () {
         Route::middleware(['role:Super Admin|Admin|Master Data Entry|Master Data Editor|Sales User|Sales Admin'])->get('customer', [App\Http\Controllers\CustomerController::class, 'index'])->name('customer.index');
-        Route::middleware(['role:Super Admin|Admin|Master Data Entry'])->get('/create', [App\Http\Controllers\CustomerController::class, 'create'])->name('customer.create');
-        Route::middleware(['role:Super Admin|Admin|Master Data Entry'])->post('/create', [App\Http\Controllers\CustomerController::class, 'store'])->name('customer.store');
+        Route::middleware(['role:Super Admin|Admin|Master Data Entry|Sales Admin'])->get('/create', [App\Http\Controllers\CustomerController::class, 'create'])->name('customer.create');
+        Route::middleware(['role:Super Admin|Admin|Master Data Entry|Sales Admin'])->post('/create', [App\Http\Controllers\CustomerController::class, 'store'])->name('customer.store');
         Route::middleware(['role:Super Admin|Admin|Master Data Editor|Sales Admin'])->get('/{customer_id}/edit', [App\Http\Controllers\CustomerController::class, 'edit'])->name('customer.edit');
         Route::middleware(['role:Super Admin|Admin|Master Data Editor|Sales Admin'])->post('/{customer_id}/update', [App\Http\Controllers\CustomerController::class, 'update'])->name('customer.update');
         Route::middleware(['role:Super Admin|Admin'])->get('/{customer_id}/delete', [App\Http\Controllers\CustomerController::class, 'delete'])->name('customer.delete');
