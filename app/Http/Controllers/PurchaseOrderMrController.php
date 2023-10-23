@@ -33,7 +33,7 @@ class PurchaseOrderMrController extends ParentController
     }
 
     public function create(){
-         $mrfprf_list = MrfPrfMain::get();
+         $mrfprf_list = MrfPrfMain::with('items')->doesntHave('po_items')->get();
          $suppliers = Supplier::get();
          $customers = Customer::get();
          $mr_purchase = new MrPurchase;
@@ -87,6 +87,7 @@ class PurchaseOrderMrController extends ParentController
             $po_item->po_qty = $item['po_qty'];
             $po_item->weight = $item['weight'];
             $po_item->po_id = $po->id;
+            $po_item->prf_id = $po->prf_id;
             $po_item->save();
         endforeach;
 

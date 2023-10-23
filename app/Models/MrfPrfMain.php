@@ -20,5 +20,10 @@ class MrfPrfMain extends Model
         return $this->hasMany(MrfPrfItem::class,'mr_id','id');
     }
 
+    public function po_items()
+    {
+       return $this->hasMany(MrPurchaseItem::class, 'prf_id', 'id' );
+    }
+
     
 }
