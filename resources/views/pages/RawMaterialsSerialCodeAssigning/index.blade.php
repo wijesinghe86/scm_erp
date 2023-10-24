@@ -16,10 +16,10 @@
                                 <tr>
                                     <td>No</td>
                                     <td>GRN No</td>
-                                    <td>Location</td>
                                     <td>Stock Number</td>
                                     <td>Description</td>
                                     <td>Serial No</td>
+                                    <td>Qty</td>
                                     <td>Created By</td>
                                 </tr>
                             </thead>
@@ -28,26 +28,31 @@
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{ $rawmaterialsserialcodeassigning->grn->grn_no}}</td>
-                                    <td>{{ $rawmaterialsserialcodeassigning->warehouse->warehouse_name}}</td>
                                     <td>{{ $rawmaterialsserialcodeassigning->item->stock_number}}</td>
                                     <td>{{ $rawmaterialsserialcodeassigning->item->description}}</td>
-                                    <td>
+                                    <td>{{ $rawmaterialsserialcodeassigning->serial_no }}</td>
+                                    <td>{{ $rawmaterialsserialcodeassigning->qty }}</td>
+                                    {{-- <td>
                                         <table class="table table-striped">
                                             <tr>
                                                 <th scope="col" >#</th>
+                                                <th scope="col" >Stock No</th>
+                                                <th scope="col" >Description</th>
                                                 <th scope="col" >Serial No</th>
                                                 <th scope="col" >Weight</th>
                                             </tr>
                                             @foreach ($list as $rawmaterialsserialcodeassigning)
                                                 <tr>
-                                                    <td>{{$loop->iteration}}</td>
+                                                    <td>{{$loop->iteration}}</td> --}}
+                                                    {{-- <td>{{ $rawmaterialsserialcodeassigning->item->stock_number}}</td>
+                                                    <td>{{ $rawmaterialsserialcodeassigning->item->description}}</td>
                                                     <td>{{ $rawmaterialsserialcodeassigning->serial_no }}</td>
                                                     <td>{{ $rawmaterialsserialcodeassigning->qty }}</td>
                                                 </tr>
                                              @endforeach
 
-                                        </table>
-                                    </td>
+                                        </table> --}}
+                                    {{-- </td> --}}
                                     <td>{{ $rawmaterialsserialcodeassigning->createUser ? $rawmaterialsserialcodeassigning->createUser->name : 'User not found' }}
                                     </td>
                                     </tr>

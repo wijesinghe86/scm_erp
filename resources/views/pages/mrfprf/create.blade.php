@@ -14,6 +14,15 @@
                                     <input type="text" class="form-control" name="mrfprf_no" id="mrfprf_no" value="{{$next_number}}"
                                         placeholder="PRF No" readonly>
                                 </div>
+                                <div class="form-group col-md-6">
+                                    <label>Requested by</label>
+                                    <input type="text" class="form-control" name="requested_by" id="requested_by" 
+                                        placeholder="requested_by" readonly>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>Requested Date</label>
+                                    <input type="text" class="form-control" name="req_date" id="req_date">
+                                </div>
                                 <div class="form-group col-md-2">
                                     <label>PRF Date</label>
                                     <input type="date" class="form-control" name="mrfprf_date" id="mrfprf_date">
@@ -22,7 +31,7 @@
                             <div class="row">
                                 <div class="form-group col-md-2">
                                   <label>Material Request No</label>
-                                  <select class ="form-control mr_input" name="mr_id" id="mr_id" placeholder="MRF No" >
+                                  <select class ="form-control mr_input" name="mr_id" id="mr_id" placeholder="MRF No" onchange="itemOnChange(this)" >
                                   <option value="" selected disabled>Select MRF No</option>
                                         @foreach ($mr_list as $row)
                                             <option value="{{ $row->id }}">{{ $row->mrf_no }}</option>
@@ -58,4 +67,27 @@
         });
 
         </script>
+
+<script type="application/javascript">
+    var mr_list = '{!! $mr_list->toJson()!!}';
+    mr_list = JSON.parse(mr_list);
+
+    function itemOnChange(elem) {
+
+      var selectedMr = mr_list.filter((row)=>{
+        return row.id == elem.value;
+      })
+
+      if(selectedMr.length == 0){
+        return;
+      }
+
+      selectedMr = selectedMr[0];
+
+      console.log("selected mr",selectedMr);
+
+      document.getElementById("requested_by").value = selectedMr.employee_id;
+      document.getElementById("req_date").value = selectedMr.required_date;
+    }
+    </script>
 @endpush
