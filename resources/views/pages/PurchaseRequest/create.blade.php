@@ -23,7 +23,7 @@
                       <div class="row">
                         <div class="form-group col-md-4">
                           <label> Requested By</label>
-                          <select name="requested_by" class="form-control">
+                          <select name="requested_by" class="form-control" id="requested_by">
                             @foreach ($employees as $employe)
                             <option value="{{$employe->id}}"> {{$employe->employee_fullname}}  ({{$employe->departmentData->department_name}} / {{$employe->sectionData->section_name}})</option>
                             @endforeach
@@ -132,7 +132,7 @@
     document.getElementById("uom").value = selectedItem.unit;
 
   }
-
-
+  
 </script>
+
 @endsection
