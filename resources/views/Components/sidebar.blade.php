@@ -84,19 +84,19 @@
             </a>
             <div class="collapse" id="mr-request">
                 <ul class="nav flex-column sub-menu">
-             @hasanyrole('Super Admin|Admin|Factory Warehouse User')
+             @hasanyrole('Super Admin|Admin|Factory Warehouse User|Factory Admin|Production Admin')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('material_request.index') }}">Material
                             Request Form</a>
                  @endhasanyrole
-                 @hasanyrole('Super Admin|Admin|Factory Warehouse User|Factory Admin')
+                 @hasanyrole('Super Admin|Admin|Factory Warehouse User|Factory Admin|Production Admin')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('mr_request_approve.index') }}">Material
                             Request Approval</a>
                 @endhasanyrole
-                @hasanyrole('Super Admin|Admin|Production User')
+                @hasanyrole('Super Admin|Admin|Production User|Factory Admin|Production Admin')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('raw_material_request.index') }}">Raw
                             Material Request<br> Form</a>
                 @endhasanyrole
-                @hasanyrole('Super Admin|Admin|Production Admin')
+                @hasanyrole('Super Admin|Admin|Production Admin|Factory Admin|Production Admin')
                     <li class="nav-item"> <a class="nav-link"
                             href="{{ route('raw_material_request_approve.index') }}">Raw Material
                             Request <br>Approve Form</a>
@@ -224,7 +224,7 @@
                     <li class="nav-item"> <a class="nav-link" href="{{ route('joborderapproval.index') }}">Job Order
                             Approval</a></li>
         @endhasanyrole
-                @hasanyrole('Super Admin|Admin|Factory Warehouse User|Factory Admin')
+                @hasanyrole('Super Admin|Admin|Factory Warehouse User|Factory Admin|Production Admin')
                     <li class="nav-item"> <a class="nav-link"
                             href="{{ route('rawmaterialsserialcodeassigning.index') }}">Raw Materials Serial Code <br>
                             Assigning</a></li>
@@ -233,7 +233,7 @@
                     <li class="nav-item"> <a class="nav-link" href="{{ route('semiproduction.index') }}">Semi
                             Production </a></li>
                     @endhasanyrole
-                    @hasanyrole('Super Admin|Admin|Factory Warehouse User|Factory Admin')
+                    @hasanyrole('Super Admin|Admin|Factory Warehouse User|Factory Admin|Production Admin')
                     <li class="nav-item"> <a class="nav-link"
                             href="{{ route('rawmaterialissueforproduction.index') }}">Raw Material Issue For
                             <br>
