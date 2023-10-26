@@ -102,10 +102,10 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
     // Master Files-------
     /* .....CREATING ROUTE FOR Customer Creation ....... */
     Route::prefix('customer')->group(function () {
-        Route::middleware(['role:Super Admin|Admin|Master Data Entry|Master Data Editor|Sales User|Sales Admin'])->get('customer', [App\Http\Controllers\CustomerController::class, 'index'])->name('customer.index');
+        Route::middleware(['role:Super Admin|Admin|Master Data Entry|Master Data Editor|Sales User|Sales Admin|Executive User'])->get('customer', [App\Http\Controllers\CustomerController::class, 'index'])->name('customer.index');
         Route::middleware(['role:Super Admin|Admin|Master Data Entry|Sales Admin'])->get('/create', [App\Http\Controllers\CustomerController::class, 'create'])->name('customer.create');
         Route::middleware(['role:Super Admin|Admin|Master Data Entry|Sales Admin'])->post('/create', [App\Http\Controllers\CustomerController::class, 'store'])->name('customer.store');
-        Route::middleware(['role:Super Admin|Admin|Master Data Editor'])->get('/{customer_id}/edit', [App\Http\Controllers\CustomerController::class, 'edit'])->name('customer.edit');
+        Route::middleware(['role:Super Admin|Admin|Master Data Editor|Executive User'])->get('/{customer_id}/edit', [App\Http\Controllers\CustomerController::class, 'edit'])->name('customer.edit');
         Route::middleware(['role:Super Admin|Admin|Master Data Editor'])->post('/{customer_id}/update', [App\Http\Controllers\CustomerController::class, 'update'])->name('customer.update');
         Route::middleware(['role:Super Admin|Admin'])->get('/{customer_id}/delete', [App\Http\Controllers\CustomerController::class, 'delete'])->name('customer.delete');
         Route::middleware(['role:Super Admin|Admin'])->get('/deleted', [App\Http\Controllers\CustomerController::class, 'deleted'])->name('customer.deleted');
@@ -427,14 +427,14 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
 
     // Inventory Control
     /* .....CREATING ROUTE FOR Poenning Balance Entry ....... */
-    Route::prefix('obentry')->group(function () {
+    Route::middleware(['role:Super Admin|Admin|Factory Warehouse User|Warehouse User|Warehouse Admin|Factory Admin'])->prefix('obentry')->group(function () {
         Route::get('/', [OpenningBalanceController::class, 'index'])->name('obentry.index');
         Route::get('/create', [OpenningBalanceController::class, 'create'])->name('obentry.create');
         Route::post('/create', [OpenningBalanceController::class, 'store'])->name('obentry.store');
         Route::post('/get-stock', [OpenningBalanceController::class, 'getStock'])->name('obentry.stock');
     });
     /* .....CREATING ROUTE FOR Miscellaneous Received ....... */
-    Route::middleware(['role:Super Admin|Admin'])->prefix('miscreceived')->group(function () {
+    Route::middleware(['role:Super Admin|Admin|'])->prefix('miscreceived')->group(function () {
         Route::get('/', [MiscellaneousReceivedController::class, 'index'])->name('miscreceived.index');
         Route::get('/create', [MiscellaneousReceivedController::class, 'create'])->name('miscreceived.create');
         Route::post('/create', [MiscellaneousReceivedController::class, 'store'])->name('miscreceived.store');
@@ -593,7 +593,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin'])->get('/view-table', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'viewCartTable'])->name('rawmaterialissueforproduction.viewCartTable');
     });
 
-    
+
 
     Route::middleware(['role:Super Admin|Admin|Production User|Production Admin'])->prefix('RawMaterialReceivedForProduction')->group(function () {
         Route::middleware(['role:Super Admin|Admin|Production User|Production Admin'])->get('RawMaterialReceivedForProduction', [RawMaterialReceivedController::class, 'index'])->name('rawmaterial_received_for_production.index');

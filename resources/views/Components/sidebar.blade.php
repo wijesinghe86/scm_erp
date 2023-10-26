@@ -9,7 +9,7 @@
         </li>
 
         {{-- Master --}}
-        @hasanyrole('Super Admin|Admin|Master Data Entry|Master Data Editor|Sales User|Sales Admin|Production User|Production Admin|Factory Warehouse User|Factory Admin')
+        @hasanyrole('Super Admin|Admin|Master Data Entry|Master Data Editor|Sales User|Sales Admin|Production User|Production Admin|Factory Warehouse User|Factory Admin|Executive User')
                <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-master" aria-expanded="false"
                 aria-controls="ui-master">
@@ -22,7 +22,7 @@
                     @hasanyrole('Super Admin|Admin|Master Data Entry|Master Data Editor|Production User|Production Admin|Factory Warehouse User|Factory Admin')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('stockitem.all') }}">Stock Item</a></li>
                     @endhasanyrole
-                    @hasanyrole('Super Admin|Admin|Master Data Entry|Master Data Editor|Sales User|Sales Admin')
+                    @hasanyrole('Super Admin|Admin|Master Data Entry|Master Data Editor|Sales User|Sales Admin|Executive User')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('customer.index') }}">Customer</a></li>
                     @endhasanyrole
                     @hasanyrole('Super Admin|Admin|Master Data Entry|Master Data Editor')
@@ -348,6 +348,9 @@
             <ul class="nav flex-column sub-menu">
                 {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('purchase_order.index') }}">Purchase
                         Order</a></li> --}}
+                @hasanyrole('Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin')
+                <li class="nav-item"> <a class="nav-link" href="{{ route('obentry.index') }}">Openning Balance Entry</a></li>
+                @endhasanyrole
                 @hasanyrole('Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin')
                 <li class="nav-item"> <a class="nav-link" href="{{ route('goodsreceived.index') }}">Goods
                         Received</a></li>
