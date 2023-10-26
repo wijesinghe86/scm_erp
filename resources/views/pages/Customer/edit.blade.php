@@ -16,14 +16,14 @@
                                         value="{{ $customers->customer_code }}" placeholder="Customer Code" readonly>
                                 </div>
                                 <div class="form-group col-md-10">
-                                    <label>Customer Name</label>
+                                    <label>Customer Name*</label>
                                     <input type="text" class="form-control" name="customer_name"
                                         value="{{ $customers->customer_name }}" placeholder="Customer Name">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-4">
-                                    <label>Vat Number</label>
+                                    <label>Vat Number*</label>
                                     <input type="text" class="form-control" name="customer_vat_number"
                                         value="{{ $customers->customer_vat_number }}" placeholder="Vat Number">
                                 </div>
@@ -33,7 +33,7 @@
                                         value="{{ $customers->customer_svat_number }}" placeholder="SVat Number">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Customer Type</label>
+                                    <label>Customer Type*</label>
                                     <select class="form-control" name="customer_type_of_customer"
                                         value="{{ $customers->customer_type_of_customer }}">
                                         @foreach ($customers::$CUSTOMER_TYPE_LIST as $item)
@@ -47,21 +47,21 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label>Address Line 1</label>
+                                    <label>Address Line 1*</label>
                                     <input type="text" class="form-control" name="customer_address_line1"
                                         value="{{ $customers->customer_address_line1 }}" placeholder="Address Line 1">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label>address Line2</label>
+                                    <label>address Line2*</label>
                                     <input type="text" class="form-control" name="customer_address_line2"
                                         value="{{ $customers->customer_address_line2 }}" placeholder="address Line2">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-3">
-                                    <label>Mobile Number</label>
+                                    <label>Mobile Number*</label>
                                     <input type="text" class="form-control" name="customer_mobile_number"
                                         value="{{ $customers->customer_mobile_number }}" placeholder="Mobile Number">
                                 </div>
