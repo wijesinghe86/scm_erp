@@ -106,7 +106,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Master Data Entry|Sales Admin'])->get('/create', [App\Http\Controllers\CustomerController::class, 'create'])->name('customer.create');
         Route::middleware(['role:Super Admin|Admin|Master Data Entry|Sales Admin'])->post('/create', [App\Http\Controllers\CustomerController::class, 'store'])->name('customer.store');
         Route::middleware(['role:Super Admin|Admin|Master Data Editor|Executive User'])->get('/{customer_id}/edit', [App\Http\Controllers\CustomerController::class, 'edit'])->name('customer.edit');
-        Route::middleware(['role:Super Admin|Admin|Master Data Editor'])->post('/{customer_id}/update', [App\Http\Controllers\CustomerController::class, 'update'])->name('customer.update');
+        Route::middleware(['role:Super Admin|Admin|Master Data Editor|Executive User'])->post('/{customer_id}/update', [App\Http\Controllers\CustomerController::class, 'update'])->name('customer.update');
         Route::middleware(['role:Super Admin|Admin'])->get('/{customer_id}/delete', [App\Http\Controllers\CustomerController::class, 'delete'])->name('customer.delete');
         Route::middleware(['role:Super Admin|Admin'])->get('/deleted', [App\Http\Controllers\CustomerController::class, 'deleted'])->name('customer.deleted');
         Route::middleware(['role:Super Admin|Admin'])->get('/{customer_id}/restore', [App\Http\Controllers\CustomerController::class, 'restore'])->name('customer.restore');
