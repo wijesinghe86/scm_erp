@@ -30,7 +30,8 @@
   {{-- header --}}
     <table style="height: 15mm">
         <tr>
-            <td style="text-align:right; font-size:22px">{{ $invoices->getBillType->billtype_description }}</td>
+            <td style="text-align:right; font-size:22px">{{ $invoices->getBillType->getInvoiceTypeNameAttribute() }}</td>
+            {{-- <td style="text-align:right; font-size:22px">{{ $invoices->getBillType->billtype_description }}</td> This was the first coding--}}
             {{-- <td></td> --}}
         </tr>
     </table>
