@@ -40,7 +40,7 @@
                                     <small>Purchase Order No. {{ $invoices->po_number }}</small>
                                 </td>
                                 <td class="info-td border" style="">
-                                    <small>D. N. NO. {{ $invoices->invoice_date }}</small>
+                                    <small>D. N. NO. {{ $invoices->ref_number}}</small>
                                 </td>
                             </tr>
                         </table>

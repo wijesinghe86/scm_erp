@@ -61,7 +61,7 @@
                 &nbsp;
             </td>
             <td width="15%" align="left" class="td-style">
-                <div style="text-align: center"><b>{{ $invoice->po_no }}</b></div>
+                <div style="text-align: center"><b>{{ $invoice->po_number }}</b></div>
             </td>
             <td width="12%" align="left" class="td-style">
                 &nbsp;
