@@ -60,9 +60,9 @@
         </tr>
         <tr>
             <td style="height: 8mm; width:19mm; opacity:0;">Purchase Order No.</td>
-            <td style="height: 8mm; width:24mm; text-align:center; opacity:0;">{{ $invoices->po_number }}</td>
+            <td style="height: 8mm; width:24mm; text-align:center">{{ $invoices->po_number }}</td>
             <td style="height: 8mm; width:30mm; opacity:0;">D. N. No.</td>
-            <td style="height: 8mm; width:27mm; text-align:right; opacity:0;">{{ $invoices->ref_number }}</td>
+            <td style="height: 8mm; width:27mm; text-align:right">{{ $invoices->ref_number }}</td>
         </tr>
     </table>
   {{-- <table style="height: 6mm">
