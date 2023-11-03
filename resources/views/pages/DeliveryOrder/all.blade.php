@@ -44,7 +44,7 @@
                                                 <td>{{ $deliveryOrder->invoice_date }}</td>
                                                 <td>{{ optional($deliveryOrder->location)->warehouse_name }}</td>
                                                 <td>{{ $deliveryOrder->issued_date? $deliveryOrder->issued_date: "Not Issued" }}</td>
-                                                <td>{{ $deliveryOrder->createdBy ? $deliveryOrder->createdBy->name : 'User not found' }}
+                                                <td>{{ optional($deliveryOrder->items[0]->issued)->name}}
                                                 </td>
                                                 <td align="right">
                                                     <a class="h4"
