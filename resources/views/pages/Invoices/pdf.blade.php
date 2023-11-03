@@ -124,8 +124,8 @@
                         <td class style="width: 30mm; font-size: 13px; text-align:left;">{{ $invoices->created_at }}<td>
                     </tr>
                     <tr>
-                        <td class style="width: 30mm; font-size: 13px; text-align:left;">Sales Code:<td>
-                        <td class style="width: 30mm; font-size: 13px; text-align:left;">{{ $invoices->SalesStaff->employee_reg_no }}<td>
+                        <td class style="width: 30mm; font-size: 13px; text-align:left;">Sales Executive:<td>
+                        <td class style="width: 30mm; font-size: 13px; text-align:left;">{{ $invoices->SalesStaff->employee_fullname }}<td>
                     </tr>
 
                     {{-- <tr>
