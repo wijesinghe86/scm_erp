@@ -335,8 +335,9 @@
                 errorList.push('The sales staff name is required')
             }
 
+
             if (customerData?.customer_payment_terms == '{{ $customer::$PAYMENT_TERM_CREDIT }}' &&
-                currentSubTotal > customerData?.customer_credit_limit && paymentTerm ==
+                parseFloat(currentSubTotal) > parseFloat(customerData?.customer_credit_limit) && paymentTerm ==
                 '{{ $customer::$PAYMENT_TERM_CREDIT }}') {
                 errorList.push('Customer credit limit exeeded')
             }
@@ -385,11 +386,11 @@
                     option: "{{ $invoiceOption }}"
                 },
                 success: function(response) {
-                    if (customerData?.customer_payment_terms == '{{ $customer::$PAYMENT_TERM_CREDIT }}' &&
-                        response.subtotal > customerData?.customer_credit_limit && paymentTerm ==
-                        '{{ $customer::$PAYMENT_TERM_CREDIT }}') {
-                        alertDanger("Customer Credit Limit exeeded")
-                    }
+                    // if (customerData?.customer_payment_terms == '{{ $customer::$PAYMENT_TERM_CREDIT }}' &&
+                    //     response.subtotal > customerData?.customer_credit_limit && paymentTerm ==
+                    //     '{{ $customer::$PAYMENT_TERM_CREDIT }}') {
+                    //     alertDanger("Customer Credit Limit exeeded")
+                    // }
                     $(".js_subtotal").val(response.subtotal);
                     $(".js_vatRate").val(response.vatRate)
                     $(".js_vat").val(response.vat)
