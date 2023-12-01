@@ -88,6 +88,7 @@ class MaterialRequestController extends Controller
             $materialRequestItem->priority = $item['priority'];
             $materialRequestItem->mrf_qty = $item['mrf_qty'];
             $materialRequestItem->remaining_qty = $item['mrf_qty'];
+
             $materialRequestItem->save();
 
     }
@@ -129,6 +130,8 @@ class MaterialRequestController extends Controller
             'description' => $stock_item->description,
             'priority' => $request->priority,
             'mrf_qty' => $request->mrf_qty,
+            'unprice'=> $stock_item->cost_price,
+            'item_value'=>$request->item_value,
         ];
 
         session(['mr.items'=>$items]);

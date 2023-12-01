@@ -34,12 +34,12 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-2">
                                     <label>Stock No</label>
                                     <input type="text" readonly class="form-control" name="stock_no" id="stock_no"
                                         placeholder="Stock No">
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <label>Description</label>
                                     <select name="stock_item_id" class="form-control item-select" id="stock_item_id"
                                         onchange="itemOnChange(this) ">
@@ -54,9 +54,14 @@
                                     <input type="text" readonly class="form-control" name="uom" id="uom"
                                         placeholder="U/M">
                                 </div>
+                               <div class="form-group col-md-2">
+                                    <label>Unit Price</label>
+                                    <input type="number" readonly class="form-control" name="unprice" id="unprice"
+                                        placeholder="Unit Price">
+                                </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-2">
                                     <label>Priority</label>
                                     <select name="priority" class="form-control">
                                         @foreach (config('scm.priorities') as $priority)
@@ -64,10 +69,15 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-3">
                                     <label>MRF Qty</label>
-                                    <input type="text" class="form-control" name="mrf_qty" id="mrf_qty"
-                                        placeholder="MRF Qty">
+                                    <input type="number" class="form-control" name="mrf_qty" id="mrf_qty"
+                                        placeholder="MRF Qty" >
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>Value</label>
+                                    <input type="number" readonly class="form-control" name="item_value" id="item_value"
+                                        placeholder="Value">
                                 </div>
                             </div>
 
@@ -84,6 +94,8 @@
                                         <th>U/M</th>
                                         <th>Priority</th>
                                         <th>MRF Qty</th>
+                                        <th>Unit Price</th>
+                                        <th>Value</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -96,6 +108,8 @@
                                                 <td>{{ $item['uom'] }}</td>
                                                 <td>{{ $item['priority'] }}</td>
                                                 <td>{{ $item['mrf_qty'] }}</td>
+                                               <td>{{ $item['unit_price'] }}</td> 
+                                               <td>{{ $item['item_value'] }}</td> 
                                                 <td><a href="{{ route('material_request.delete_item', $index) }}"
                                                         class="btn btn-danger">Delete</a></td>
                                             </tr>
@@ -160,8 +174,19 @@
 
           document.getElementById("stock_no").value = selectedItem.stock_number;
           document.getElementById("uom").value = selectedItem.unit;
-
+          document.getElementById("unprice").value = selectedItem.cost_price;
         }
+
+        $('#mrf_qty').on('input', function() {
+
+            let quantity = $(this).val();
+            let price = $('#unprice').val();
+
+            let total = parseFloat(quantity) * parseFloat(price)
+            $('#item_value').val(total)
+
+        })
+
       </script>
 @endpush
 

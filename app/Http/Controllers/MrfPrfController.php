@@ -25,9 +25,11 @@ class MrfPrfController extends ParentController
 
 
     public function create()
-    {   $mr_list = MaterialRequest::with('mr_approved')
+    {   $mr_list = MaterialRequest::with(['mr_approved','requested_by'])
         ->whereHas('mr_approved',function($q){
-        $q->where('status','approved');
+            $q->where('status','approved')
+                ->where('approved_for','purchase')
+            ;
         })->doesntHave('prf_items')->get();
 
         $purchase = new MrfPrfMain;

@@ -10,6 +10,8 @@
             <th>Requested Qty</th>
             <th>Order Qty</th>
             <th>Weight</th>
+            <th>Unit Price</th>
+            <th>Value</th>
             <th></th>
         </tr>
     </thead>
@@ -28,6 +30,14 @@
                 </td>
                 <td>
                     <input class="form-control" name="items[{{ $index }}][weight]" type="number">
+                    <input type="hidden" name="items[{{ $index }}][item_id]" value="{{ $row->item->id }}" />
+                </td>
+                <td>
+                    <input class="form-control" name="items[{{ $index }}][Unit Price]" type="number">
+                    <input type="hidden" name="items[{{ $index }}][item_id]" value="{{ $row->item->id }}" />
+                </td>
+                <td>
+                    <input class="form-control" name="items[{{ $index }}][Value]" type="number">
                     <input type="hidden" name="items[{{ $index }}][item_id]" value="{{ $row->item->id }}" />
                 </td>
                 {{-- <td>{{$item['description']}}</td>
