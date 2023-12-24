@@ -94,8 +94,8 @@
                                         <th>U/M</th>
                                         <th>Priority</th>
                                         <th>MRF Qty</th>
-                                        <th>Unit Price</th>
-                                        <th>Value</th>
+                                        <th>Unit Price(Rs)</th>
+                                        <th>Value(Rs)</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -108,7 +108,7 @@
                                                 <td>{{ $item['uom'] }}</td>
                                                 <td>{{ $item['priority'] }}</td>
                                                 <td>{{ $item['mrf_qty'] }}</td>
-                                               <td>{{ $item['unit_price'] }}</td> 
+                                               <td>{{ $item['unit_price'] }}</td>  
                                                <td>{{ $item['item_value'] }}</td> 
                                                 <td><a href="{{ route('material_request.delete_item', $index) }}"
                                                         class="btn btn-danger">Delete</a></td>
@@ -118,6 +118,13 @@
                                 </tbody>
                             </table>
                             <br>
+                            <div class="form-group col-md-3">
+                                <label>Estimated Total Value(Rs)</label>
+                                <input type="number" class="form-control" name="tot_value" id="tot_value"
+                                    placeholder="MRF Qty" value= {{collect($items)->sum('item_value')}} readonly >
+
+                                    
+                            </div>
                             <div class="form-group col-md-4">
                                 <label>Requested By</label>
                                 <select class="form-control emp-select" name="requested_by" value="{{ old('requested_by') }}">
@@ -129,6 +136,8 @@
                                     @endforeach
                                 </select>
                             </div>
+                            
+
                             <button type="submit" class="btn btn-success me-2" name="button" value="complete">Complete
                                 Materials Request</button>
                         </form>
@@ -186,6 +195,10 @@
             $('#item_value').val(total)
 
         })
+
+        
+        
+
 
       </script>
 @endpush

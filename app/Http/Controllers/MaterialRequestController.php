@@ -78,6 +78,7 @@ class MaterialRequestController extends Controller
         $materialRequest->justification = $request->justification;
         $materialRequest->required_date = $request->required_date;
         $materialRequest->created_by_id = request()->user()->id;
+        $materialRequest->total_value = $request->tot_value;
 
         $materialRequest->save();
 
@@ -88,6 +89,8 @@ class MaterialRequestController extends Controller
             $materialRequestItem->priority = $item['priority'];
             $materialRequestItem->mrf_qty = $item['mrf_qty'];
             $materialRequestItem->remaining_qty = $item['mrf_qty'];
+            $materialRequestItem->unit_price = $item['unit_price'];
+            $materialRequestItem->value = $item['item_value'];
 
             $materialRequestItem->save();
 
@@ -130,12 +133,15 @@ class MaterialRequestController extends Controller
             'description' => $stock_item->description,
             'priority' => $request->priority,
             'mrf_qty' => $request->mrf_qty,
-            'unprice'=> $stock_item->cost_price,
+            'unit_price'=> $request->unprice,
             'item_value'=>$request->item_value,
         ];
 
+        logger($request->all());
+
         session(['mr.items'=>$items]);
         return redirect()->back()->withInput();
+        
         //dd("add line item success ");
 
 

@@ -15,7 +15,7 @@ class MrApproveController extends ParentController
 {
     public function index()
     {
-        $lists = MrApproved::with(['materialRequest','item','requested', 'created_by'])
+        $lists = MrApproved::with(['materialRequest','item','requested', 'created_by', ])
                 ->latest()
                 ->get();
         return view('pages.MaterialRequest.MRApprove.all',compact('lists'));

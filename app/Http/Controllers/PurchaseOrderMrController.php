@@ -88,6 +88,8 @@ class PurchaseOrderMrController extends ParentController
             $po_item->weight = $item['weight'];
             $po_item->po_id = $po->id;
             $po_item->prf_id = $po->prf_id;
+            $po_item->unit_price = $item['Unit Price'];
+            $po_item->item_value = $item['Value'];
             $po_item->save();
         endforeach;
 

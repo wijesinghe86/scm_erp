@@ -30,9 +30,12 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Category</label>
-                                    <select class="form-control item-select" name="invoice_category" id="invoice_category"
+                                    {{-- <input type="text" class="form-control item-select" name="invoice_category" readonly id="invoice_category"> --}}
+                                    
+                                    {{-- Downcodingswerecommentedtomakethecategoryfieldreadonly --}}
+                                  <select class="form-control item-select" name="invoice_category" readonly id="invoice_category" 
                                         required>
-                                        <option value="">-</option>
+                                        <option value="">-</option> 
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}"
                                                 {{ $setting ? ($setting->invoice_category == $category->id ? 'selected' : '') : '' }}>
@@ -85,7 +88,7 @@
                 if (invoiceType == 1) {
                     $('#invoice_option').val(0)
                     $("#invoice_option").find(':not(:selected)').prop('disabled', true);
-                    const invoiceCategory = invoiceCategories?.find(row => row?.billtype_code == "IN")
+                    const invoiceCategory = invoiceCategories?.find(row => row?.billtype_code == "GIN")
                     if (invoiceCategory) {
                         $('#invoice_category').val(invoiceCategory?.id)
                     }
@@ -96,7 +99,7 @@
                     if (runType != "load") {
                         $('#invoice_option').val("")
                     }
-                    const invoiceCategory = invoiceCategories?.find(row => row?.billtype_code == "TI")
+                    const invoiceCategory = invoiceCategories?.find(row => row?.billtype_code == "GTI")
                     if (invoiceCategory) {
                         $('#invoice_category').val(invoiceCategory?.id)
                     }
@@ -105,13 +108,47 @@
                 if (invoiceType == 3) {
                     $('#invoice_option').val(3)
                     $("#invoice_option").find(':not(:selected)').prop('disabled', true);
-                    const invoiceCategory = invoiceCategories?.find(row => row?.billtype_code == "SVT")
+                    const invoiceCategory = invoiceCategories?.find(row => row?.billtype_code == "GSVT")
                     if (invoiceCategory) {
                         $('#invoice_category').val(invoiceCategory?.id)
                     }
                     return
                 }
             }
+
+            // function setinvoiceOption(invoiceType, runType) {
+            //     if (invoiceType == 1) {
+            //         $('#invoice_option').val(0)
+            //         $("#invoice_option").find(':not(:selected)').prop('disabled', true);
+            //         const invoiceCategory = invoiceCategories?.find(row => row?.billtype_code == "GIN")
+            //         if (invoiceCategory) {
+            //             $('#invoice_category').val(invoiceCategory?.id )
+            //         }
+            //         return
+            //     }
+            //     if (invoiceType == 2) {
+            //         $("#invoice_option").find(':not(:selected)').prop('disabled', false);
+            //         if (runType != "load") {
+            //             $('#invoice_option').val("")
+            //         }
+            //         const invoiceCategory = invoiceCategories?.find(row => row?.billtype_code == "GTI")
+            //         if (invoiceCategory) {
+            //             $('#invoice_category').val(invoiceCategory?.id )
+            //         }
+            //         return
+            //     }
+            //     if (invoiceType == 3) {
+            //         $('#invoice_option').val(3)
+            //         $("#invoice_option").find(':not(:selected)').prop('disabled', true);
+            //         const invoiceCategory = invoiceCategories?.find(row => row?.billtype_code == "GSVT")
+            //         if (invoiceCategory) {
+            //             $('#invoice_category').val(invoiceCategory?.id)
+            //         }
+            //         return
+            //     }
+            // }
+
+            
         </script>
     @endpush
 @endsection

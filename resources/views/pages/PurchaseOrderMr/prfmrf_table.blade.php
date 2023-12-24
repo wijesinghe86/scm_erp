@@ -1,6 +1,6 @@
 <div class="table-responsive">
     <table class="table bordered form-group">
-        <table class="table bordered">
+        
     <thead>
         <tr>
             <th></th>
@@ -24,29 +24,37 @@
                 <td>{{ $row->item->unit }}</td>
                 <td><input class="form-control" type="number" value="{{ $row->prfqty }}" readonly></td>
                 <td>
-                    <input class="form-control" name="items[{{ $index }}][po_qty]" type="number"
-                        value="{{ $row->prfqty }}">
-                    <input type="hidden" name="items[{{ $index }}][item_id]" value="{{ $row->item->id }}" />
-                </td>
+                    {{-- <input id="qty-{{ $index }}" onkeyup="qtyfunc(this)" class="form-control" name="items[{{ $index }}][po_qty]" type="number"
+                        value="{{ $row->prfqty }}"> --}}
+                        <input oninput="onChangeQty(this,{{ $index }})" class="form-control" id="qty-{{ $index }}"
+                        name="items[{{ $index }}][po_qty]" type="number" value="{{ $row->prfqty }}">
+                <input type="hidden" name="items[{{ $index }}][item_id]"value="{{ $row->item->id }}" />
+
                 <td>
                     <input class="form-control" name="items[{{ $index }}][weight]" type="number">
                     <input type="hidden" name="items[{{ $index }}][item_id]" value="{{ $row->item->id }}" />
                 </td>
+
                 <td>
-                    <input class="form-control" name="items[{{ $index }}][Unit Price]" type="number">
+                    <input oninput="onChangePrice(this,{{ $index }})" class="form-control"  id="price-{{ $index }}" name="items[{{ $index }}][Unit Price]" type="number">
                     <input type="hidden" name="items[{{ $index }}][item_id]" value="{{ $row->item->id }}" />
                 </td>
                 <td>
-                    <input class="form-control" name="items[{{ $index }}][Value]" type="number">
-                    <input type="hidden" name="items[{{ $index }}][item_id]" value="{{ $row->item->id }}" />
+                    <input class="form-control" name="items[{{ $index }}][Value]" type="number" id="total-{{ $index }}" >
+                     <input type="hidden" name="items[{{ $index }}][item_id]" value="{{ $row->item->id }}" /> 
                 </td>
-                {{-- <td>{{$item['description']}}</td>
-        <td>{{$item['uom']}}</td>
-        <td>{{$item['priority']}}</td>
-        <td>{{$item['prf_qty']}}</td> --}}
+            
 
                 {{-- <td><a href="{{ route('purchase_request.delete_item', $index) }}" class="btn btn-danger">Delete</a></td> --}}
             </tr>
         @endforeach
     </tbody>
+    {{-- <tfoot>
+        <td colspan="8">Total Value</td>
+        <td id="total"></td>
+    </tfoot> --}}
 </table>
+</div>
+
+
+
