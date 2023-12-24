@@ -17,7 +17,7 @@ class MrfPrfMain extends Model
     }
     public function items()
     {
-        return $this->hasMany(MrfPrfItem::class,'mr_id','id');
+        return $this->hasMany(MrfPrfItem::class,'prf_id','id');
     }
 
     public function po_items()
@@ -25,7 +25,7 @@ class MrfPrfMain extends Model
        return $this->hasMany(MrPurchaseItem::class, 'prf_id', 'id' );
     }
 
-    
 
-    
+
+
 }

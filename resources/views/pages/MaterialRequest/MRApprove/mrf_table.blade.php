@@ -11,6 +11,8 @@
             <th>Requested Qty</th>
             <th>Rem Qty</th>
             <th>Approved Qty</th>
+            <th>Unit Price</th>
+            <th>Value</th>
             <th>Status</th>
             <th>Approved For</th>
             <th></th>
@@ -32,7 +34,9 @@
                     <input type="hidden" name="items[{{ $index }}][item_id]" value="{{ $row->item->id }}" />
                     <input type="hidden" name="items[{{ $index }}][mr_item_id]" value="{{ $row->id }}" />
                 </td>
-
+                
+                <td>{{ $row->item->cost_price }}</td>
+                <td>{{ $row->value }}</td>
                 <td>
                     <select class="form-control" name="items[{{ $index }}][status]" >
                         <option value="" selected> Select Status</option>
@@ -49,6 +53,7 @@
                         @endforeach
                     </select>
                 </td>
+                
             </tr>
         @endforeach
     </tbody>

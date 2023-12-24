@@ -84,8 +84,14 @@
                                 </div>
                             </div>
                                     <div class="items_table"></div>
-                                    <button type="submit" class="btn btn-success me-2">Complete Purchase Order</button>
+                                    <br> 
+                                   <div class="form-group col-md-3">
+                                        <label>Total PO Value</label>
+                                        <input type="number" class="form-control" name="po_value" id="po_value" 
+                                            placeholder="PO Value" readonly>
 
+                                    </div>
+                                    <button type="submit" class="btn btn-success me-2">Complete Purchase Order</button>
                         </form>
                     </div>
                 </div>
@@ -108,9 +114,32 @@
             });
         });
 
+        
+
 
         //         $( "#result" ).load( "ajax/test.html", function() {
         //   alert( "Load was performed." );
         // });
+
+    function onChangeQty(e,index){
+    const qty = e.value;
+    const price = $(`#price-${index}`).val();
+    console.log({qty});
+    console.log({price});
+    $(`#total-${index}`).val(qty*price);
+    // $('#total-'+index)
+    }
+
+
+    function onChangePrice(e,index){
+    const qty = $(`#qty-${index}`).val();
+    const price = e.value;
+    console.log({qty});
+    console.log({price});
+    $(`#total-${index}`).val(qty*price);
+    }
+
+    
     </script>
 @endpush
+

@@ -358,6 +358,11 @@
         $('#quantity').on('change', function() {
             const warehouse = $('#location_id').val();
             let quantity = $(this).val();
+            // let price = $('#mr_price').val();
+
+            // let total = parseFloat(quantity) * parseFloat(price)
+            // $('#mr_total').val(total)
+
             if (Object.keys(selectedItemData)?.length > 0) {
                 const filterCurrentStockData = selectedItemData?.stocks?.find(row => row?.warehouse?.id ==
                     warehouse)

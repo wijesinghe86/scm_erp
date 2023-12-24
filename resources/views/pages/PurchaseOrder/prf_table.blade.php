@@ -27,6 +27,7 @@
                         value="{{ $row->prf_qty }}">
                     <input type="hidden" name="items[{{ $index }}][item_id]" value="{{ $row->item->id }}" />
                 </td>
+                
                 {{-- <td>{{$item['description']}}</td>
         <td>{{$item['uom']}}</td>
         <td>{{$item['priority']}}</td>

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Employee;
 use App\Models\StockItem;
 use App\Models\MaterialRequest;
+use App\Models\MaterialRequestItem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -29,6 +30,8 @@ class MrApproved extends Model
     {
         return $this->belongsTo(User::class,'created_user_id','id');
     }
+
+   
 
     
 }

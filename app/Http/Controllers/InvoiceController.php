@@ -126,6 +126,7 @@ class InvoiceController extends ParentController
             $items =  Cart::session(request()->user()->id)->getContent();
             foreach ($items as $key => $item) {
                 InvoiceItem::create([
+                    'invoice_id'=>$invoice->id,
                     'invoice_number' => $invoice->invoice_number,
                     'item_id' => $item->id,
                     'stock_no' => $item->attributes->stock_no,
