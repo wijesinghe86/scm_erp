@@ -33,7 +33,15 @@ class PurchaseOrderMrController extends ParentController
     }
 
     public function create(){
-         $mrfprf_list = MrfPrfMain::with('items')->doesntHave('po_items')->get();
+         $mrfprf_list = MrfPrfMain::with(['items'=> function ($item) {
+            return $item->where('approval_status', 'approved');
+        }])
+        ->whereHas('items', function ($q) {
+
+        return $q->where('approval_status', 'approved');
+         })
+         ->doesntHave('po_items')->get();
+         
          $suppliers = Supplier::get();
          $customers = Customer::get();
          $mr_purchase = new MrPurchase;

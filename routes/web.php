@@ -18,6 +18,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MrequestController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\MrApproveController;
+use App\Http\Controllers\PrApproveController;
 use App\Http\Controllers\StockItemController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\DepartmentController;
@@ -574,6 +575,13 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Production Admin'])->get('/create', [ProductionPlanningApprovalController::class, 'create'])->name('production_planning_and_schedule_approval.create');
         Route::middleware(['role:Super Admin|Admin|Production Admin'])->post('/create', [ProductionPlanningApprovalController::class, 'store'])->name('production_planning_and_schedule_approval.store');
         Route::middleware(['role:Super Admin|Admin|Production Admin'])->get('/get-items', [ProductionPlanningApprovalController::class, 'getItems'])->name('production_planning_and_schedule_approval.getItems');
+    });
+
+    Route::middleware(['role:Super Admin|Admin|Procurement User'])->prefix('pr_request_approve')->group(function () {
+        Route::middleware(['role:Super Admin|Admin|Procurement User'])->get('', [PrApproveController::class, 'index'])->name('pr_request_approve.index');
+        Route::middleware(['role:Super Admin|Admin|Procurement User'])->get('/create', [PrApproveController::class, 'create'])->name('pr_request_approve.create');
+        Route::middleware(['role:Super Admin|Admin|Production Admin'])->post('/create', [PrApproveController::class, 'store'])->name('pr_request_approve.store');
+        Route::middleware(['role:Super Admin|Admin|Production Admin'])->get('/get-items', [PrApproveController::class, 'getItems'])->name('pr_request_approve.getItems');
     });
 
     Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin'])->prefix('rawmaterialsserialcodeassigning')->group(function () {
