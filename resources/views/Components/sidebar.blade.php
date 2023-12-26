@@ -122,6 +122,10 @@
                     <li class="nav-item"> <a class="nav-link" href="{{ route('mrfprf.index') }}">Procurement
                             Request</a></li>
                     @endhasanyrole
+                     @hasanyrole('Super Admin|Admin|Procurement User')       
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('pr_request_approve.index') }}">Procurement
+                        Request<br> Approve</a></li>
+                @endhasanyrole
                     @hasanyrole('Super Admin|Admin|Procurement User')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('purchase_order_mr.index') }}">Purchase
                             Order</a></li>

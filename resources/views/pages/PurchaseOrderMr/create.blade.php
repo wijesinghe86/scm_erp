@@ -121,22 +121,28 @@
         //   alert( "Load was performed." );
         // });
 
-    function onChangeQty(e,index){
-    const qty = e.value;
-    const price = $(`#price-${index}`).val();
-    console.log({qty});
-    console.log({price});
-    $(`#total-${index}`).val(qty*price);
-    // $('#total-'+index)
-    }
+    // function onChangeQty(e,index){
+    // const qty = e.value;
+    // const price = $(`#price-${index}`).val();
+    // console.log({qty});
+    // console.log({price});
+    // $(`#total-${index}`).val(qty*price);
+    // // $('#total-'+index)
+    // }
 
 
-    function onChangePrice(e,index){
-    const qty = $(`#qty-${index}`).val();
-    const price = e.value;
-    console.log({qty});
-    console.log({price});
-    $(`#total-${index}`).val(qty*price);
+    // function onChangePrice(e,index){
+    // const qty = $(`#qty-${index}`).val();
+    // const price = e.value;
+    // console.log({qty});
+    // console.log({price});
+    // $(`#total-${index}`).val(qty*price);
+    // }
+
+    function poValue(e, index){
+        const total = e.value;
+        var poVal = $(`#total-${index}`).val + $(`#total-${index}`).val;
+        $('#po_value').val(poVal);
     }
 
     
