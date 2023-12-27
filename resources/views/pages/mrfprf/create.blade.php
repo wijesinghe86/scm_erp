@@ -10,13 +10,32 @@
                             @csrf
                             <div class="row">
                                 <div class="form-group col-md-2">
+                                  <label>Material Request No</label>
+                                  <select class ="form-control mr_input" name="mr_id" id="mr_id" placeholder="MRF No" onchange="itemOnChange(this)" >
+                                  <option value="" selected disabled>Select MRF No</option>
+                                        @foreach ($mr_list as $row)
+                                            <option value="{{ $row->id }}">{{ $row->mrf_no }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Estimated Total Value</label>
+                                    <input type="number" class="form-control" name="est_tot_value" id="est_tot_value"  
+                                        placeholder="Etimated Total Value" readonly>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-2">
                                     <label>PRF No</label>
                                     <input type="text" class="form-control" name="mrfprf_no" id="mrfprf_no" value="{{$next_number}}"
                                         placeholder="PRF No" readonly>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Requested by</label>
-                                    <input type="text" class="form-control" name="requested_by" id="requested_by"
+
+                                    <input type="text" class="form-control" id="requested_name"
+                                    placeholder="requested_by" readonly>
+                                    <input type="hidden" class="form-control" name="requested_by" id="requested_by"
                                         placeholder="requested_by" readonly>
                                 </div>
                                 <div class="form-group col-md-2">
@@ -28,17 +47,7 @@
                                     <input type="date" class="form-control" name="mrfprf_date" id="mrfprf_date">
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="form-group col-md-2">
-                                  <label>Material Request No</label>
-                                  <select class ="form-control mr_input" name="mr_id" id="mr_id" placeholder="MRF No" onchange="itemOnChange(this)" >
-                                  <option value="" selected disabled>Select MRF No</option>
-                                        @foreach ($mr_list as $row)
-                                            <option value="{{ $row->id }}">{{ $row->mrf_no }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+                            
 
                             <div class="prfitems_table"></div>
 
@@ -87,7 +96,9 @@
       console.log("selected mr",selectedMr);
 
       document.getElementById("requested_by").value = selectedMr.employee_id;
+      document.getElementById("requested_name").value = selectedMr.requested_by.employee_fullname;
       document.getElementById("req_date").value = selectedMr.required_date;
+      document.getElementById("est_tot_value").value = selectedMr.total_value;
     }
     </script>
 @endpush

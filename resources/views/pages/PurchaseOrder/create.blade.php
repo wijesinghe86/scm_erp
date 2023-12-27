@@ -113,4 +113,26 @@
         //   alert( "Load was performed." );
         // });
     </script>
-@endpush
+
+ <script>
+    function Calc(v)
+    {
+        var index = $(v).parent().parent().index();
+        alert(index);
+    }
+    // function onUnitPriceChange(e, index) {
+    //             let unitPrice = e.value == "" ? 0 : parseFloat(e.value)
+    //             let qty = $(`#qty-${index}`).val()
+    //             $(`#total-${index}`).val(unitPrice * qty)
+
+                
+    //         }
+            
+    // function onQtyChange(e, index) {
+    //             let unitPrice = $(`#unitprice-${index}`).val()
+    //             let qty = e.value == "" ? 0 : parseFloat(e.value)
+    //             $(`#total-${index}`).val(unitPrice * qty)
+    //         }          
+
+</script>   
+@endpush 

@@ -27,6 +27,11 @@
                                     <label>Required Date</label>
                                     <input type="date" readonly class="form-control" name="required_date" id="required_date">
                                   </div>
+                                  <div class="form-group col-md-2">
+                                    <label>Estimated Total Value</label>
+                                    <input type="number" readonly class="form-control" name="est_tot_value" id="est_tot_value" >
+                                   
+                                  </div>
                             </div>
 
                             <div class="items_table"></div>
@@ -63,6 +68,7 @@
 
       document.getElementById("requested_by").value = selectedMr.requested_by.employee_fullname;
       document.getElementById("required_date").value = selectedMr.required_date;
+      document.getElementById("est_tot_value").value = selectedMr.total_value;
 
     }
     </script>

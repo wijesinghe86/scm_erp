@@ -106,7 +106,7 @@ class Invoice extends Model
 
     public function Items()
     {
-        return $this->hasMany(InvoiceItem::class, 'invoice_number', 'invoice_number');
+        return $this->hasMany(InvoiceItem::class, 'invoice_id', 'id');
     }
     /**
      * Calculate Discount

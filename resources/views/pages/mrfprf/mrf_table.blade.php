@@ -10,7 +10,11 @@
             <th>Priority</th>
             <th>Approved Qty</th>
             <th>Requested Qty</th>
+            <th>Unit Price</th>
+            <th>Value</th>
             <th>Purchase Request Qty</th>
+            
+            
             <th></th>
         </tr>
     </thead>
@@ -24,6 +28,8 @@
                 <td>{{ $row->priority }}</td>
                 <td>{{ $row->approval_purchase->sum('remaining_qty') }}</td>
                 <td><input class="form-control" type="number" value="{{ $row->mrf_qty }}" readonly></td>
+                <td>{{ $row->item->cost_price }}</td>
+                <td>{{ $row->value }}</td>
                 <td>
                 <input class="form-control" name="items[{{ $index }}][qty]" type="number"
                         value="{{ $row->approval_purchase->sum('remaining_qty') }}">
@@ -40,6 +46,7 @@
         <td>{{$item['prf_qty']}}</td> --}}
 
                 {{-- <td><a href="{{ route('purchase_request.delete_item', $index) }}" class="btn btn-danger">Delete</a></td> --}}
+                
             </tr>
         @endforeach
     </tbody>
