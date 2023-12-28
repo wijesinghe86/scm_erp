@@ -130,6 +130,10 @@
                     <li class="nav-item"> <a class="nav-link" href="{{ route('purchase_order_mr.index') }}">Purchase
                             Order</a></li>
                     @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Procurement User')
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('purchase_order_approve.index') }}">Purchase
+                            Order Approval</a></li>
+                    @endhasanyrole
                     @hasanyrole('Super Admin|Admin')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('purchase_request.index') }}">Sundry
                             Procurement

@@ -40,7 +40,13 @@ class GoodsReceivedController extends Controller
         $warehouses = Warehouse::get();
         $suppliers = Supplier::get();
         $employees = Employee::get();
-        $po_list = MrPurchase::with('get_supplier')->get();
+        $po_list = MrPurchase::with(['get_supplier', 'items'=> function ($item) {
+            return $item->where('approval_status', 'approved');
+        }])
+        ->whereHas('items', function ($q) {
+        return $q->where('approval_status', 'approved');
+         })
+        ->doesntHave('grn_items')->get();
         $goods = new GoodsReceived;
         $next_number = $this->generateNextNumber();
         return view('pages.GoodsReceived.create', compact('warehouses', 'suppliers', 'employees', 'po_list', 'next_number'));
@@ -96,6 +102,7 @@ class GoodsReceivedController extends Controller
             $grn_item->rec_weight = $item['rec_weight'];
             $grn_item->batch_no = $item['batch_no'];
             $grn_item->expiry_date = $item['expiry_date'];
+            $grn_item->po_id = $grn->po_id;
             $grn_item->save();
 
             $is_stock_existing = Stock::where('stock_item_id', $item['item_id'])->where('warehouse_id', $request->warehouse)->first();
