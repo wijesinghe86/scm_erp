@@ -10,7 +10,7 @@ class PrApproveController extends ParentController
 {
     public function index()
     { 
-        $list = MrfPrfItem::get();
+        $list = MrfPrfItem::where('prf_id', '>=', '14')->get();
         // $list = MrfPrfItem::where('approval_status', '!=', "pending")->latest()->get();
         return view('pages.mrfprf.PrApprove.index', compact('list'));
         

@@ -37,7 +37,7 @@
                                                 <th scope="col" >Descrition</th>
                                                 <th scope="col" >U/M</th>
                                                 <th scope="col" >Qty</th>
-                                            </tr>
+                                                </tr>
                                             @foreach ($list->items as $prItems)
                                             <tr>
                                                 <td>{{$loop->iteration}}</td>
@@ -45,6 +45,7 @@
                                                 <td>{{ $prItems->item->description }}</td>
                                                 <td>{{ $prItems->item->unit }}</td>
                                                 <td>{{ $prItems->prfqty }}</td>
+                                                
                                             </tr>
                                         @endforeach
                                         </table>
