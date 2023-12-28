@@ -16,6 +16,7 @@
                                 <tr>
                                     <td>No</td>
                                     <td>PO Date</td>
+                                    <td>PR No</td>
                                     <td>PO No</td>
                                     <td>Items</td>
                                     <td>Created By</td>
@@ -27,6 +28,7 @@
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{ $list->po_date }}</td>
+                                    <td>{{ optional(optional($list)->purchase_request_id)->mrfprf_no }}</td>
                                     <td>{{ $list->po_no }}</td>
                                     <td>
                                         <table class="table table-striped">

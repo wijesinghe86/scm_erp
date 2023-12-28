@@ -61,6 +61,7 @@ use App\Http\Controllers\FinishedGoodsApprovalController;
 use App\Http\Controllers\ManAndEquipmentSafetyController;
 use App\Http\Controllers\MiscellaneousReceivedController;
 use App\Http\Controllers\OverShortageAndDamageController;
+use App\Http\Controllers\PurchaseOrderMrApproveController;
 use App\Http\Controllers\MaterialsReturnByCustomerController;
 use App\Http\Controllers\RawMaterialRequestApproveController;
 use App\Http\Controllers\ProductionPlanningApprovalController;
@@ -577,11 +578,17 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Production Admin'])->get('/get-items', [ProductionPlanningApprovalController::class, 'getItems'])->name('production_planning_and_schedule_approval.getItems');
     });
 
-    Route::middleware(['role:Super Admin|Admin|Procurement User'])->prefix('pr_request_approve')->group(function () {
+        Route::middleware(['role:Super Admin|Admin|Procurement User'])->prefix('pr_request_approve')->group(function () {
         Route::middleware(['role:Super Admin|Admin|Procurement User'])->get('', [PrApproveController::class, 'index'])->name('pr_request_approve.index');
         Route::middleware(['role:Super Admin|Admin|Procurement User'])->get('/create', [PrApproveController::class, 'create'])->name('pr_request_approve.create');
         Route::middleware(['role:Super Admin|Admin|Production Admin'])->post('/create', [PrApproveController::class, 'store'])->name('pr_request_approve.store');
         Route::middleware(['role:Super Admin|Admin|Production Admin'])->get('/get-items', [PrApproveController::class, 'getItems'])->name('pr_request_approve.getItems');
+    });
+        Route::middleware(['role:Super Admin|Admin|Procurement User'])->prefix('purchase_order_approve')->group(function () {
+        Route::middleware(['role:Super Admin|Admin|Procurement User'])->get('', [PurchaseOrderMrApproveController::class, 'index'])->name('purchase_order_approve.index');
+        Route::middleware(['role:Super Admin|Admin|Procurement User'])->get('/create', [PurchaseOrderMrApproveController::class, 'create'])->name('purchase_order_approve.create');
+        Route::middleware(['role:Super Admin|Admin|Production Admin'])->post('/create', [PurchaseOrderMrApproveController::class, 'store'])->name('purchase_order_approve.store');
+        Route::middleware(['role:Super Admin|Admin|Production Admin'])->get('/get-items', [PurchaseOrderMrApproveController::class, 'getItems'])->name('purchase_order_approve.getItems');
     });
 
     Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin'])->prefix('rawmaterialsserialcodeassigning')->group(function () {
