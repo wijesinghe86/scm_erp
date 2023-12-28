@@ -10,7 +10,7 @@ class PurchaseOrderMrApproveController extends ParentController
 {
     public function index()
     {
-        $list = MrPurchaseItem::get();
+        $list = MrPurchaseItem::where('po_id', '>=', '14')->get();
         // $list = MrfPrfItem::where('approval_status', '!=', "pending")->latest()->get();
         return view('pages.PurchaseOrderMr.PurchaseOrderMrApprove.index', compact('list'));
     }
