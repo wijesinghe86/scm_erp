@@ -6,25 +6,25 @@
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Purchase Request Approval Form</h4>
+                        <h4 class="card-title">Purchase Order Approval Form</h4>
                         <form class="forms-sample" method="POST"
-                            action="{{ route('pr_request_approve.store') }}">
+                            action="{{ route('purchase_order_approve.store') }}">
                             @csrf
                             <div class="row">
                                 <div class="form-group col-md-2">
-                                    <label>Purchase Request No</label>
-                                    <select class="form-control pr_select" name="pr_no" id="pr_no"
-                                        placeholder="PR No">
-                                        <option value="" selected disabled>Select PR No</option>
-                                        @foreach ($purchase_requests as $row)
-                                            <option value="{{ $row->id }}">{{ $row->mrfprf_no }}</option>
+                                    <label>Purchase Order No</label>
+                                    <select class="form-control po_select" name="po_no" id="po_no"
+                                        placeholder="PO No">
+                                        <option value="" selected disabled>Select PO No</option>
+                                        @foreach ($purchase_orders as $row)
+                                            <option value="{{ $row->id }}">{{ $row->po_no }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 {{-- <div class="form-group col-md-2">
                                     <label>Requested Date</label>
-                                    <input type = "text" class="form-control" name="pr_date" id="pr_date"
-                                        placeholder="pr_date">
+                                    <input type = "text" class="form-control" name="po_date" id="po_date"
+                                        placeholder="po_date">
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label>Requested by</label>
@@ -32,9 +32,9 @@
                                         placeholder="requested_by">
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <label>Estimated Value</label>
-                                    <input type = "number" class="form-control" name="est_value" id="est_value"
-                                        placeholder="Estimated Value">
+                                    <label>PO Value</label>
+                                    <input type = "number" class="form-control" name="po_value" id="po_value"
+                                        placeholder="PO Value">
                                 </div> --}}
                             </div>
 
@@ -42,7 +42,7 @@
 
 
                             <button type="submit" class="btn btn-success me-2">Approved</button>
-                            <a href="{{route('pr_request_approve.index')}}" class="btn btn-danger">Go To PR Approal Registry</a>
+                            <a href="{{route('purchase_order_approve.index')}}" class="btn btn-danger">Go To PO Approal Registry</a>
                         </form>
                     </div>
                 </div>
@@ -55,30 +55,30 @@
     <script>
         $(document).ready(function() {});
 
-        $(".pr_select").change(function() {
+        $(".po_select").change(function() {
             var id = $(this).val();
             $.ajax({
-                url: "{{ route('pr_request_approve.getItems') }}",
+                url: "{{ route('purchase_order_approve.getItems') }}",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "GET",
                 data: {
-                    prf_id: id
+                    po_id: id
                 },
                 success: function(response) {
-                    $('#pr_date').val(response?.mrfprf_date)
+                    $('#po_date').val(response?.po_date)
                     // $('#pps_edate').val(response?.end_date)
                 }
             });
             $.ajax({
-                url: "{{ route('pr_request_approve.getItems') }}",
+                url: "{{ route('purchase_order_approve.getItems') }}",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "GET",
                 data: {
-                    prf_id: id
+                    po_id: id
                 },
                 success: function(response) {
                     $('.items_table').html(response)
