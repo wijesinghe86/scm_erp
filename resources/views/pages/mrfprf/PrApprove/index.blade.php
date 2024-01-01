@@ -24,6 +24,7 @@
                                             <td>Created By</td> 
                                             <td>Status</td>
                                             <td>Approved By</td>
+                                            <td>Approved Date</td>
                                             <td>Remark</td>
                                         </tr>
                                     </thead>
@@ -38,6 +39,7 @@
                                                <td>{{ $item->mrf_prf->createUser->name }}</td> 
                                                 <td>{{ $item->approval_status }}</td>
                                                 <td>{{ optional(optional($item)->approvedBy)->name }}</td>
+                                                <td>{{ $item->approval_status_changed_at }}</td>
                                                 <td>{{ $item->remark }}</td>  
                                             </tr>
                                         @endforeach 

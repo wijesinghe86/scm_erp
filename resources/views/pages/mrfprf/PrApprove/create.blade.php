@@ -6,7 +6,7 @@
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Purchase Request Approval Form</h4>
+                        <h4 class="card-title">Procurement Request Approval Form</h4>
                         <form class="forms-sample" method="POST"
                             action="{{ route('pr_request_approve.store') }}">
                             @csrf
@@ -21,7 +21,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                {{-- <div class="form-group col-md-2">
+                                <div class="form-group col-md-2">
                                     <label>Requested Date</label>
                                     <input type = "text" class="form-control" name="pr_date" id="pr_date"
                                         placeholder="pr_date">
@@ -35,7 +35,7 @@
                                     <label>Estimated Value</label>
                                     <input type = "number" class="form-control" name="est_value" id="est_value"
                                         placeholder="Estimated Value">
-                                </div> --}}
+                                </div>
                             </div>
 
                             <div class="items_table"></div>
@@ -57,20 +57,20 @@
 
         $(".pr_select").change(function() {
             var id = $(this).val();
-            $.ajax({
-                url: "{{ route('pr_request_approve.getItems') }}",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                type: "GET",
-                data: {
-                    prf_id: id
-                },
-                success: function(response) {
-                    $('#pr_date').val(response?.mrfprf_date)
-                    // $('#pps_edate').val(response?.end_date)
-                }
-            });
+            // $.ajax({
+            //     url: "{{ route('pr_request_approve.getItems') }}",
+            //     headers: {
+            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //     },
+            //     type: "GET",
+            //     data: {
+            //         prf_id: id
+            //     },
+            //     success: function(response) {
+            //         $('#pr_date').val(response?.mr_id)
+            //         // $('#pps_edate').val(response?.end_date)
+            //     }
+            // });
             $.ajax({
                 url: "{{ route('pr_request_approve.getItems') }}",
                 headers: {
