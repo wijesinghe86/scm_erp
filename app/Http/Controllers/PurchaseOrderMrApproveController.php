@@ -18,7 +18,7 @@ class PurchaseOrderMrApproveController extends ParentController
     public function create()
     {
         $purchase_orders= MrPurchase::with(['items'=> function($item){
-            return $item->where('approval_status', 'pending'); 
+            return $item->where('approval_status', 'pending');
         }])
             ->whereHas('items', function ($q) {
                 return $q->where('approval_status', 'pending');

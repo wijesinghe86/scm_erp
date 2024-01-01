@@ -20,7 +20,7 @@
                                     <td>PRF No</td>
                                     <td>Items</td>
                                     <td>Created By</td>
-
+                                    <td>MR No</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -46,12 +46,15 @@
                                                 <td>{{ $prItems->item->unit }}</td>
                                                 <td>{{ $prItems->prfqty }}</td>
                                                 
+                                                
                                             </tr>
+                                            
                                         @endforeach
                                         </table>
                                     </td>
 
                                     <td>{{ $list->createUser ? $list->createUser->name : 'User not found' }}</td>
+                                    <td>{{ $prItems->material_request->mrf_no }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

@@ -140,7 +140,7 @@ class Invoice extends Model
         $total_item_discount = $items->sum('attributes.item_discount_amount');
 
 
-        $vatRate = 15; //TODO: need to make it dynamic later
+        $vatRate = 18; //TODO: need to make it dynamic later
         //    $subtotal = $items->sum('total');
         $subtotal = Cart::session(request()->user()->id)->getSubTotal() - $total_item_discount;
         $vat = $subtotal * ($vatRate / 100);

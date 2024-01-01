@@ -6,7 +6,7 @@
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Purchase Request Approval Form</h4>
+                        <h4 class="card-title">Procurement Request Approval Form</h4>
                         <form class="forms-sample" method="POST"
                             action="{{ route('pr_request_approve.store') }}">
                             @csrf
@@ -57,20 +57,20 @@
 
         $(".pr_select").change(function() {
             var id = $(this).val();
-            $.ajax({
-                url: "{{ route('pr_request_approve.getItems') }}",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                type: "GET",
-                data: {
-                    prf_id: id
-                },
-                success: function(response) {
-                    $('#pr_date').val(response?.mrfprf_date)
-                    // $('#pps_edate').val(response?.end_date)
-                }
-            });
+            // $.ajax({
+            //     url: "{{ route('pr_request_approve.getItems') }}",
+            //     headers: {
+            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //     },
+            //     type: "GET",
+            //     data: {
+            //         prf_id: id
+            //     },
+            //     success: function(response) {
+            //         $('#pr_date').val(response?.mr_id)
+            //         // $('#pps_edate').val(response?.end_date)
+            //     }
+            // });
             $.ajax({
                 url: "{{ route('pr_request_approve.getItems') }}",
                 headers: {
