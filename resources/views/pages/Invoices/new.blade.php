@@ -411,7 +411,7 @@
                 return;
             }
             var unitPrice = parseFloat($(elem).val());
-            var vatRate = 15;
+            var vatRate = 18;
             var newUnitPrice = unitPrice / ((100 + vatRate) / 100);
             $(elem).val(newUnitPrice.toFixed(2));
         }
