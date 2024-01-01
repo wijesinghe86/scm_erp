@@ -9,17 +9,17 @@ use Illuminate\Http\Request;
 class PrApproveController extends ParentController
 {
     public function index()
-    { 
-        $list = MrfPrfItem::where('prf_id', '>=', '5')->get();
+    {
+        $list = MrfPrfItem::where('prf_id', '>=', '14')->get();
         // $list = MrfPrfItem::where('approval_status', '!=', "pending")->latest()->get();
         return view('pages.mrfprf.PrApprove.index', compact('list'));
-        
+
     }
-    
+
     public function create()
     {
         $purchase_requests= MrfPrfMain::with(['items'=> function($item){
-            return $item->where('approval_status', 'pending'); 
+            return $item->where('approval_status', 'pending');
         }])
             ->whereHas('items', function ($q) {
                 return $q->where('approval_status', 'pending');

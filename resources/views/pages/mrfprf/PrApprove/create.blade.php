@@ -21,7 +21,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-md-2">
+                                {{-- <div class="form-group col-md-2">
                                     <label>Requested Date</label>
                                     <input type = "text" class="form-control" name="pr_date" id="pr_date"
                                         placeholder="pr_date">
@@ -35,7 +35,7 @@
                                     <label>Estimated Value</label>
                                     <input type = "number" class="form-control" name="est_value" id="est_value"
                                         placeholder="Estimated Value">
-                                </div>
+                                </div> --}}
                             </div>
 
                             <div class="items_table"></div>
