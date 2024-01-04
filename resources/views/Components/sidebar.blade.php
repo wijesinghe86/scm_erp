@@ -9,7 +9,7 @@
         </li>
 
         {{-- Master --}}
-        @hasanyrole('Super Admin|Admin|Master Data Entry|Master Data Editor|Sales User|Sales Admin|Production User|Production Admin|Factory Warehouse User|Factory Admin|Executive User')
+        @hasanyrole('Super Admin|Admin|Master Data Entry|Master Data Editor|Sales User|Sales Admin|Production User|Production Admin|Factory Warehouse User|Factory Admin|Executive User|Procurement User')
                <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-master" aria-expanded="false"
                 aria-controls="ui-master">
@@ -25,7 +25,7 @@
                     @hasanyrole('Super Admin|Admin|Master Data Entry|Master Data Editor|Sales User|Sales Admin|Executive User')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('customer.index') }}">Customer</a></li>
                     @endhasanyrole
-                    @hasanyrole('Super Admin|Admin|Master Data Entry|Master Data Editor')
+                    @hasanyrole('Super Admin|Admin|Master Data Entry|Master Data Editor|Procurement User')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('supplier.all') }}">Supplier</a></li>
                     @endhasanyrole
                     @hasanyrole('Super Admin|Admin|Master Data Entry|Master Data Editor')
@@ -122,7 +122,7 @@
                     <li class="nav-item"> <a class="nav-link" href="{{ route('mrfprf.index') }}">Procurement
                             Request</a></li>
                     @endhasanyrole
-                     @hasanyrole('Super Admin|Admin|Procurement User')       
+                     @hasanyrole('Super Admin|Admin|Procurement User')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('pr_request_approve.index') }}">Procurement
                         Request<br> Approve</a></li>
                 @endhasanyrole
