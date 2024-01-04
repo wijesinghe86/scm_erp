@@ -31,7 +31,8 @@
                                 </div> --}}
                                 <div class="form-group col-md-6">
                                     <label>Supplier Name</label>
-                                    <select class="form-control item-select" name="supplier_id" >
+                                    <select class="form-control sup-select" name="supplier_id" placeholder="Select Supplier" >
+                                        <option selected disabled>Select Supplier</option>
                                         @foreach ($suppliers as $supplier)
                                             <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
                                         @endforeach
@@ -84,10 +85,10 @@
                                 </div>
                             </div>
                                     <div class="items_table"></div>
-                                    <br> 
+                                    <br>
                                    <div class="form-group col-md-3">
                                         <label>Total PO Value</label>
-                                        <input type="number" class="form-control" name="po_value" id="po_value" 
+                                        <input type="number" class="form-control" name="po_value" id="po_value"
                                             placeholder="PO Value" readonly>
 
                                     </div>
@@ -101,6 +102,13 @@
 @endsection
 @push('scripts')
     <script>
+
+    $(document).ready(function() {
+        $('.sup-select').select2({
+            placeholder: "Select",
+        });
+    });
+
         $(document).ready(function() {
             // alert("ss");
             // $('.items_table');
@@ -114,7 +122,7 @@
             });
         });
 
-        
+
 
 
         //         $( "#result" ).load( "ajax/test.html", function() {
@@ -143,11 +151,11 @@
         var tot = 0;
             tot = tot +  $(`#total-${index}`).val();
             $('#po_value').val(tot);
-        
+
     }
 
-    
-    
+
+
     </script>
 @endpush
 

@@ -30,12 +30,12 @@
                                     <label>Requested by</label>
                                     <input type = "text" class="form-control" name="requested_by" id="requested_by"
                                         placeholder="requested_by">
-                                </div>
-                                <div class="form-group col-md-2">
+                                </div> --}}
+                               <div class="form-group col-md-2">
                                     <label>Estimated Value</label>
                                     <input type = "number" class="form-control" name="est_value" id="est_value"
                                         placeholder="Estimated Value">
-                                </div> --}}
+                                </div>
                             </div>
 
                             <div class="items_table"></div>
@@ -57,20 +57,20 @@
 
         $(".pr_select").change(function() {
             var id = $(this).val();
-            // $.ajax({
-            //     url: "{{ route('pr_request_approve.getItems') }}",
-            //     headers: {
-            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //     },
-            //     type: "GET",
-            //     data: {
-            //         prf_id: id
-            //     },
-            //     success: function(response) {
-            //         $('#pr_date').val(response?.mr_id)
-            //         // $('#pps_edate').val(response?.end_date)
-            //     }
-            // });
+            $.ajax({
+                url: "{{ route('pr_request_approve.getItems') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "GET",
+                data: {
+                    prf_id: id
+                },
+                success: function(response) {
+                    $('#est_value').val(response?.mr_id)
+                    // $('#pps_edate').val(response?.end_date)
+                }
+            });
             $.ajax({
                 url: "{{ route('pr_request_approve.getItems') }}",
                 headers: {

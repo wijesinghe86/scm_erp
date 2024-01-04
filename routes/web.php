@@ -122,16 +122,16 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
 
     /* .....CREATING ROUTE FOR Supplier Registration ....... */
     Route::prefix('supplier')->group(function () {
-        Route::middleware(['role:Super Admin|Admin|Master Data Entry|Master Data Editor'])->get('supplier', [SupplierController::class, 'all'])->name('supplier.all');
-        Route::middleware(['role:Super Admin|Admin|Master Data Entry'])->get('/new', [SupplierController::class, 'new'])->name('supplier.new');
-        Route::middleware(['role:Super Admin|Admin|Master Data Entry'])->post('/store', [App\Http\Controllers\SupplierController::class, 'store'])->name('supplier.store');
+        Route::middleware(['role:Super Admin|Admin|Master Data Entry|Master Data Editor|Procurement User'])->get('supplier', [SupplierController::class, 'all'])->name('supplier.all');
+        Route::middleware(['role:Super Admin|Admin|Master Data Entry|Procurement User'])->get('/new', [SupplierController::class, 'new'])->name('supplier.new');
+        Route::middleware(['role:Super Admin|Admin|Master Data Entry|Procurement User'])->post('/store', [App\Http\Controllers\SupplierController::class, 'store'])->name('supplier.store');
         Route::middleware(['role:Super Admin|Admin|Master Data Editor'])->get('/{supplier_id}/edit', [SupplierController::class, 'edit'])->name('supplier.edit');
         Route::middleware(['role:Super Admin|Admin|Master Data Editor'])->post('/{supplier_id}/update', [SupplierController::class, 'update'])->name('supplier.update');
         Route::middleware(['role:Super Admin|Admin|Master Data Editor'])->get('/{supplier_id}/delete', [SupplierController::class, 'delete'])->name('supplier.delete');
         Route::middleware(['role:Super Admin|Admin|Master Data Editor'])->get('/deleted', [SupplierController::class, 'deleted'])->name('supplier.deleted');
         Route::middleware(['role:Super Admin|Admin|Master Data Editor'])->get('/{supplier_id}/restore', [SupplierController::class, 'restore'])->name('supplier.restore');
         Route::middleware(['role:Super Admin|Admin|Master Data Editor|Master Data Editor'])->get('/{supplier_id}/delete/force', [SupplierController::class, 'deleteForce'])->name('supplier.delete.force');
-        Route::middleware(['role:Super Admin|Admin|Master Data Entry|Master Data Editor'])->get('/{supplier_id}', [SupplierController::class, 'view'])->name('supplier.view');
+        Route::middleware(['role:Super Admin|Admin|Master Data Entry|Master Data Editor|procurement User'])->get('/{supplier_id}', [SupplierController::class, 'view'])->name('supplier.view');
         Route::middleware(['role:Super Admin|Admin|Master Data Editor'])->get('/{supplier_id}/active', [SupplierController::class, 'active'])->name('supplier.active');
         Route::middleware(['role:Super Admin|Admin|Master Data Editor'])->get('/{supplier_id}/deactive', [SupplierController::class, 'deactive'])->name('supplier.deactive');
         Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/get/data', [SupplierController::class, 'getData'])->name('supplier.get.data');
@@ -580,15 +580,15 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
 
         Route::middleware(['role:Super Admin|Admin|Procurement User'])->prefix('pr_request_approve')->group(function () {
         Route::middleware(['role:Super Admin|Admin|Procurement User'])->get('', [PrApproveController::class, 'index'])->name('pr_request_approve.index');
-        Route::middleware(['role:Super Admin|Admin|Procurement User'])->get('/create', [PrApproveController::class, 'create'])->name('pr_request_approve.create');
-        Route::middleware(['role:Super Admin|Admin|Production Admin'])->post('/create', [PrApproveController::class, 'store'])->name('pr_request_approve.store');
-        Route::middleware(['role:Super Admin|Admin|Production Admin'])->get('/get-items', [PrApproveController::class, 'getItems'])->name('pr_request_approve.getItems');
+        Route::middleware(['role:Super Admin|Admin'])->get('/create', [PrApproveController::class, 'create'])->name('pr_request_approve.create');
+        Route::middleware(['role:Super Admin|Admin'])->post('/create', [PrApproveController::class, 'store'])->name('pr_request_approve.store');
+        Route::middleware(['role:Super Admin|Admin'])->get('/get-items', [PrApproveController::class, 'getItems'])->name('pr_request_approve.getItems');
     });
         Route::middleware(['role:Super Admin|Admin|Procurement User'])->prefix('purchase_order_approve')->group(function () {
         Route::middleware(['role:Super Admin|Admin|Procurement User'])->get('', [PurchaseOrderMrApproveController::class, 'index'])->name('purchase_order_approve.index');
-        Route::middleware(['role:Super Admin|Admin|Procurement User'])->get('/create', [PurchaseOrderMrApproveController::class, 'create'])->name('purchase_order_approve.create');
-        Route::middleware(['role:Super Admin|Admin|Production Admin'])->post('/create', [PurchaseOrderMrApproveController::class, 'store'])->name('purchase_order_approve.store');
-        Route::middleware(['role:Super Admin|Admin|Production Admin'])->get('/get-items', [PurchaseOrderMrApproveController::class, 'getItems'])->name('purchase_order_approve.getItems');
+        Route::middleware(['role:Super Admin|Admin'])->get('/create', [PurchaseOrderMrApproveController::class, 'create'])->name('purchase_order_approve.create');
+        Route::middleware(['role:Super Admin|Admin'])->post('/create', [PurchaseOrderMrApproveController::class, 'store'])->name('purchase_order_approve.store');
+        Route::middleware(['role:Super Admin|Admin'])->get('/get-items', [PurchaseOrderMrApproveController::class, 'getItems'])->name('purchase_order_approve.getItems');
     });
 
     Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin'])->prefix('rawmaterialsserialcodeassigning')->group(function () {
