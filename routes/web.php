@@ -5,6 +5,7 @@ use App\Http\Controllers\DfController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\MrfPrfController;
 use App\Http\Controllers\ReturnController;
@@ -434,6 +435,11 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::get('/create', [OpenningBalanceController::class, 'create'])->name('obentry.create');
         Route::post('/create', [OpenningBalanceController::class, 'store'])->name('obentry.store');
         Route::post('/get-stock', [OpenningBalanceController::class, 'getStock'])->name('obentry.stock');
+    });
+
+    Route::middleware(['role:Super Admin|Admin|Factory Warehouse User|Warehouse User|Warehouse Admin|Factory Admin'])->prefix('stock')->group(function () {
+        Route::get('/', [StockController::class, 'index'])->name('stock_balance.index');
+        
     });
     /* .....CREATING ROUTE FOR Miscellaneous Received ....... */
     Route::middleware(['role:Super Admin|Admin|'])->prefix('miscreceived')->group(function () {
