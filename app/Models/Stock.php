@@ -16,6 +16,6 @@ class Stock extends Model
     
     public function item()
     {
-        return $this->hasOne(StockItem::class, 'stock_item_id','id');
+        return $this->hasOne(StockItem::class, 'id','stock_item_id');
     }
 }
