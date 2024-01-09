@@ -26,11 +26,11 @@
                                     @foreach ($stock_balance as $stock)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
-                                            <td>{{ $stock->item->stock_number }}</td>
-                                            <td>{{ $stock->item->description }}</td>
-                                            <td>{{ $stock->item->unit }}</td>
-                                            <td>{{ $stock->qty }}</td>
-                                             <td>{{ $stock->warehouse->warehouse_name }}</td>  
+                                            <td>{{$stock->item->stock_number }}</td>
+                                            <td>{{$stock->item->description }}</td>
+                                            <td>{{$stock->item->unit }}</td>
+                                            <td>{{$stock->qty }}</td>
+                                             <td>{{$stock->warehouse->warehouse_name }}</td>  
                                         </tr>
                                     @endforeach
                                 </tbody>
