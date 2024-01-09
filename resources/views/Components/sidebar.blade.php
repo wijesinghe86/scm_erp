@@ -299,7 +299,7 @@
                 <ul class="nav flex-column sub-menu">
                     {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('purchase_order.index') }}">Purchase
                         Order</a></li> --}}
-                        <li class="nav-item"> <a class="nav-link" href="{{ route('obentry.index') }}">Openning Balance Entry</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('obentry.index') }}">Openning Balance</a></li>
                         <li class="nav-item"> <a class="nav-link" href="{{ route('stock_balance.index') }}">On Hand Balance</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('goodsreceived.index') }}">Goods
                             Received</a></li>
