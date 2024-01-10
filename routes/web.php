@@ -438,8 +438,8 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
     });
 
     Route::middleware(['role:Super Admin|Admin|Factory Warehouse User|Warehouse User|Warehouse Admin|Factory Admin'])->prefix('stock')->group(function () {
-        Route::get('/', [StockController::class, 'index'])->name('stock_balance.index');
-        
+        Route::get('/', [StockController::class, 'index'])->name('stock.index');
+
     });
     /* .....CREATING ROUTE FOR Miscellaneous Received ....... */
     Route::middleware(['role:Super Admin|Admin|'])->prefix('miscreceived')->group(function () {
