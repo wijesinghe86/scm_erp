@@ -300,7 +300,7 @@
                     {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('purchase_order.index') }}">Purchase
                         Order</a></li> --}}
                         <li class="nav-item"> <a class="nav-link" href="{{ route('obentry.index') }}">Openning Balance</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="{{ route('stock.index') }}">On Hand Balance</a></li>
+
                     <li class="nav-item"> <a class="nav-link" href="{{ route('goodsreceived.index') }}">Goods
                             Received</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('deliveryorders.all') }}">Delivery
@@ -346,7 +346,7 @@
     </li>
     @endhasanyrole
     {{-- Warehouse --}}
-    @hasanyrole('Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin')
+    @hasanyrole('Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin')
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-inv" aria-expanded="false" aria-controls="ui-inv">
             <span class="menu-title">Warehouse</span>
@@ -359,6 +359,9 @@
                         Order</a></li> --}}
                 @hasanyrole('Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin')
                 <li class="nav-item"> <a class="nav-link" href="{{ route('obentry.index') }}">Openning Balance Entry</a></li>
+                @endhasanyrole
+                @hasanyrole('Super Admin|Admin|Production Admin')
+                <li class="nav-item"> <a class="nav-link" href="{{ route('stock.index') }}">On Hand Balance</a></li>
                 @endhasanyrole
                 @hasanyrole('Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin')
                 <li class="nav-item"> <a class="nav-link" href="{{ route('goodsreceived.index') }}">Goods
