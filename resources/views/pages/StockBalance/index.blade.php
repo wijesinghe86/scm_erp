@@ -6,7 +6,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h4><a href="{{ route('dashboard') }}" ><i class="mdi mdi-home"></i></a>  Stock On Hand Balance</h2>
-                            
+
                         <div class="table-responsive">
                             <table class="table bordered form-group">
                             <table class="table table-bordered" id="tbl_stockitem">
@@ -26,11 +26,11 @@
                                     @foreach ($stock_balance as $stock)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
-                                            <td>{{$stock->item->stock_number }}</td>
-                                            <td>{{$stock->item->description }}</td>
-                                            <td>{{$stock->item->unit }}</td>
-                                            <td>{{$stock->qty }}</td>
-                                             <td>{{$stock->warehouse->warehouse_name }}</td>  
+                                            <td>{{optional(optional( $stock)->item)->stock_number }}</td>
+                                            <td>{{optional(optional( $stock)->item)->description }}</td>
+                                            <td>{{optional(optional( $stock)->item)->unit }}</td>
+                                            <td>{{optional($stock)->qty }}</td>
+                                             <td>{{optional(optional($stock)->warehouse)->warehouse_name }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
