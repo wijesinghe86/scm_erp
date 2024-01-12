@@ -429,15 +429,15 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
     });
 
     // Inventory Control
-    /* .....CREATING ROUTE FOR Poenning Balance Entry ....... */
+    /* .....CREATING ROUTE FOR Openning Balance Entry ....... */
     Route::middleware(['role:Super Admin|Admin|Factory Warehouse User|Warehouse User|Warehouse Admin|Factory Admin'])->prefix('obentry')->group(function () {
         Route::get('/', [OpenningBalanceController::class, 'index'])->name('obentry.index');
         Route::get('/create', [OpenningBalanceController::class, 'create'])->name('obentry.create');
         Route::post('/create', [OpenningBalanceController::class, 'store'])->name('obentry.store');
         Route::post('/get-stock', [OpenningBalanceController::class, 'getStock'])->name('obentry.stock');
     });
-
-    Route::middleware(['role:Super Admin|Admin|Factory Warehouse User|Warehouse User|Warehouse Admin|Factory Admin'])->prefix('stock')->group(function () {
+/* .....CREATING ROUTE FOR On Hand Balance Report ....... */
+    Route::middleware(['role:Super Admin|Admin|Production Admin'])->prefix('stock')->group(function () {
         Route::get('/', [StockController::class, 'index'])->name('stock.index');
 
     });
