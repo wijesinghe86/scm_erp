@@ -479,10 +479,10 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Factory Warehouse User'])->post('/received/{slc}/create', [StockLocationChangeController::class, 'receivedStore'])->name('stocklocationchange_received.store');
     });
 
-    Route::middleware(['role:Super Admin|Admin|Factory Warehouse User|Production Admin'])->prefix('material_request')->group(function () {
-        Route::middleware(['role:Super Admin|Admin|Factory Warehouse User|Production Admin'])->get('/', [App\Http\Controllers\MaterialRequestController::class, 'index'])->name('material_request.index');
-        Route::middleware(['role:Super Admin|Admin|Factory Warehouse User|Production Admin'])->get('/create', [App\Http\Controllers\MaterialRequestController::class, 'create'])->name('material_request.create');
-        Route::middleware(['role:Super Admin|Admin|Factory Warehouse User|Production Admin'])->post('/create', [App\Http\Controllers\MaterialRequestController::class, 'store'])->name('material_request.store');
+    Route::middleware(['role:Super Admin|Admin|Factory Warehouse User|Production User|Production Admin'])->prefix('material_request')->group(function () {
+        Route::middleware(['role:Super Admin|Admin|Factory Warehouse User|Production User|Production Admin'])->get('/', [App\Http\Controllers\MaterialRequestController::class, 'index'])->name('material_request.index');
+        Route::middleware(['role:Super Admin|Admin|Factory Warehouse User|Production User|Production Admin'])->get('/create', [App\Http\Controllers\MaterialRequestController::class, 'create'])->name('material_request.create');
+        Route::middleware(['role:Super Admin|Admin|Factory Warehouse User|Production User|Production Admin'])->post('/create', [App\Http\Controllers\MaterialRequestController::class, 'store'])->name('material_request.store');
         Route::middleware(['role:Super Admin|Admin|Factory Admin|Factory Warehouse User|Production Admin'])->get('material_request/delete/{index}', [MaterialRequestController::class, 'deleteSessionItem'])->name('material_request.delete_item');
     });
 
