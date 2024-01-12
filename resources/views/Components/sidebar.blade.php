@@ -84,7 +84,7 @@
             </a>
             <div class="collapse" id="mr-request">
                 <ul class="nav flex-column sub-menu">
-             @hasanyrole('Super Admin|Admin|Factory Warehouse User|Factory Admin|Production Admin')
+             @hasanyrole('Super Admin|Admin|Factory Warehouse User|Factory Admin|Production User|Production Admin')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('material_request.index') }}">Material
                             Request Form</a>
                  @endhasanyrole
@@ -96,7 +96,7 @@
                     <li class="nav-item"> <a class="nav-link" href="{{ route('raw_material_request.index') }}">Raw
                             Material Request<br> Form</a>
                 @endhasanyrole
-                @hasanyrole('Super Admin|Admin|Production Admin|Factory Admin|Production Admin')
+                @hasanyrole('Super Admin|Admin|Production Admin|Factory Admin')
                     <li class="nav-item"> <a class="nav-link"
                             href="{{ route('raw_material_request_approve.index') }}">Raw Material
                             Request <br>Approve Form</a>
