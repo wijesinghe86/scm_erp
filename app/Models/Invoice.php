@@ -103,7 +103,7 @@ class Invoice extends Model
     {
         return $this->hasOne(BillType::class, 'id', 'type');
     }
-
+    
     public function Items()
     {
         return $this->hasMany(InvoiceItem::class, 'invoice_id', 'id');

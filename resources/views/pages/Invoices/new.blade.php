@@ -25,6 +25,40 @@
                                 </div>
                                 {{-- Customer Selection Start here --}}
                                 <div class="row">
+                                    <div class="form-group col-md-4">
+                                        <label>Invoice Type</label>
+                                        <select class="form-control" name="invoice_type" id="invoice_type">
+                                            <option value="">Select</option>
+                                            <option value="1">Non-Tax Invoice</option>
+                                            <option value="2">Tax Invoice</option>
+                                            <option value="3">Suspended Tax Invoice</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label>Category</label>
+                                      <select class="form-control item-select" name="invoiceCategory" readonly id="invoiceCategory " 
+                                            required onchange="onCategoryChange()">
+                                            <option value="">-</option> 
+                                            @foreach ($billTypes as $category)
+                                                <option value="{{ $category->id }}">{{ $category->billtype_code }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label>Invoice Option</label>
+                                        <select class="form-control" name="invoice_option" id="invoice_option">
+                                            <option value="">Select</option>
+                                           <option value="0">None</option>
+                                           <option value="1">Option A</option>
+                                           <option value="2">Option B</option>
+                                           <option value="3">Option C</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
                                     <div class="form-group col-md-2">
                                         <label>Customer Code</label>
                                         <input type="text" class="form-control" id="cus_code" name="cus_code"
@@ -307,6 +341,7 @@
 @endsection
 
 @push('scripts')
+
     <script>
         let customerData = {};
         let stockItems = <?php echo json_encode($stockItems); ?>;
@@ -375,6 +410,24 @@
             }
 
         })
+
+        // function onCategoryChange(){
+        //     const invoicecategory = $("#invoiceCategory").val();
+        // }
+        // $.ajax({
+        //         url: "{{ route('invoices.get.invoicenumber') }}",
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         },
+        //         type: "GET",
+        //         data: {
+        //             invoicecategory:invoiceCategory
+        //         },
+        //         success: function(response) {
+        //             $('#invoice_number').val(invoice_number)
+        //             console.log();
+        //         }
+        //     });
 
         function fetchInvoiceTotal() {
             let paymentTerm = $("#payment_terms").val()

@@ -403,6 +403,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::get('/{invoice_id}/print', [InvoiceController::class, 'print'])->name('invoices.print');
         Route::get('/get/data', [InvoiceController::class, 'getData'])->name('invoices.get.data');
         Route::get('/get/total', [InvoiceController::class, 'getInvoiceTotal'])->name('invoices.get.total');
+        Route::get('/get/number', [InvoiceController::class, 'generateInvoiceNumber'])->name('invoices.get.invoicenumber');
     });
 
     /* .....CREATING ROUTE FOR Delivery Order ....... */

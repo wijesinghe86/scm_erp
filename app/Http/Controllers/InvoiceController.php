@@ -34,6 +34,7 @@ class InvoiceController extends ParentController
     public function new()
     {
         $customer = new Customer;
+        // $invoices = Invoice::all();
         $setting =   InvoiceSetting::first();
         $vatRates = TaxCreation::where('tax_code', '=', 'VAT')->first();
         $customers = Customer::all();
@@ -45,15 +46,20 @@ class InvoiceController extends ParentController
         $invoiceOption = $setting->InvoiceOption($invoice_number);
         Cart::session(request()->user()->id)->clear();
 
-        return view('pages.Invoices.new', compact('customer', 'vatRates', 'customers', 'employees', 'stockItems', 'warehouses', 'billTypes', 'setting', 'invoice_number', 'invoiceOption'));
+        return view('pages.Invoices.new', compact('customer', 'vatRates', 'customers', 'employees', 'stockItems', 'warehouses', 'billTypes','setting', 'invoice_number','invoiceOption'));
     }
 
     public function generateInvoiceNumber()
-    {
+    {            
         $setting = InvoiceSetting::first();
         $first_letter = $setting->category ? $setting->category->billtype_code : '';
         $invoice_count = Invoice::where('category', $setting->invoice_category)->count();
         return $first_letter . sprintf('%06d', $invoice_count + 1);
+
+        // $invoices = Invoice::get();
+        // $prefix = $invoices->getBillType ? $invoices->getBillType->billtype_code : '';
+        // $invoice_count = Invoice::where('category', $invoices->type)->count();
+        // return $prefix . sprintf('%06d', $invoice_count + 1);
     }
 
     public function generateDeliveryOrderNumber()
