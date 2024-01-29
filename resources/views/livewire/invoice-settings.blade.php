@@ -4,9 +4,9 @@
             <label for="invoice_type">Invoice Type</label>
             <select class="form-control item-select" name="invoice_type" id="invoice_type" required wire:model="invoice_type">
                 <option value="" disabled>-------</option>
-                <option value="1">Tax Invoice</option>
-                <option value="2">Non Tax Invoice</option>
-                <option value="3">Suspended Tax Invoice</option>
+                <option value="tax invoice">Tax Invoice</option>
+                <option value="Non tax invoice">Non Tax Invoice</option>
+                <option value="suspended tax invoice">Suspended Tax Invoice</option>
             </select>
         </div>
     <div class="form-group col-md-4">
