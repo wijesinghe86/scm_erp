@@ -10,6 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     @include('libraries.styles')
+    @livewireStyles
 
 
 
@@ -53,5 +54,7 @@
       <!-- page-body-wrapper ends -->
     </div>
     @include('libraries.scripts')
+
+    @livewireScripts
   </body>
 </html>
