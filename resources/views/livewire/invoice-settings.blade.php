@@ -3,19 +3,19 @@
         <div class="form-group col-md-4">
             <label for="invoice_type">Invoice Type</label>
             <select class="form-control item-select" name="invoice_type" id="invoice_type" required wire:model="invoice_type">
-                <option value="" disabled>-------</option>
-                <option value="tax invoice">Tax Invoice</option>
+                <option value="">-------</option>
+                <option value="Tax invoice">Tax Invoice</option>
                 <option value="Non tax invoice">Non Tax Invoice</option>
-                <option value="suspended tax invoice">Suspended Tax Invoice</option>
+                <option value="Suspended tax invoice">Suspended Tax Invoice</option>
             </select>
         </div>
     <div class="form-group col-md-4">
             <label for="invoice_option">Invoice Option</label>
             <select wire:model="invoice_option" class="form-control item-select" id="invoice_option">
-                <option value="0">-</option>
-                <option value="1"  @if($invoice_type == "2" || $invoice_type == 3 ) disabled @endif>Option A</option>
-                <option value="2"  @if($invoice_type == "2" || $invoice_type == 3 ) disabled @endif>Option B</option>
-                <option value="3"  @if($invoice_type == "2" || $invoice_type == 3 ) disabled @endif>Option C</option>
+                <option value="">-</option>
+                <option value="Option A"  @if($invoice_type == "Non tax invoice" || $invoice_type == "Suspended tax invoice" ) disabled @endif>Option A</option>
+                <option value="Option B"  @if($invoice_type == "Non tax invoice" || $invoice_type == "Suspended tax invoice" ) disabled @endif>Option B</option>
+                <option value="Option C"  @if($invoice_type == "Non tax invoice" || $invoice_type == "Suspended tax invoice" ) disabled @endif>Option C</option>
             </select>
         </div>
 
@@ -28,7 +28,8 @@
                     required>
                 <option value="">-</option>
                 @foreach ($categories as $category)
-                    <option value="{{ $category->id }}"> {{ $category->billtype_code }} </option>
+{{--                    <option value="{{ $category->id }}"> {{ $category->billtype_code }} </option>--}}
+                    <option value="{{ $category->billtype_code }}"> {{ $category->billtype_code }} </option>
                 @endforeach
             </select>
         </div>

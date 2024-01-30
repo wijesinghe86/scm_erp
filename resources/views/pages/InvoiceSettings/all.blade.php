@@ -31,7 +31,7 @@
                                             <td> {{$loop->iteration}} </td>
                                             <td> {{ $setting->invoice_type }}</td>
                                             <td> {{ $setting->invoice_category }}</td>
-                                        <td> {{ $setting->invoice_option }}</td>
+                                        <td> Option&nbsp;{{ $setting->invoice_option }}</td>
                                             <td></td>
                                             {{-- <td>{{ $invoice->created_at }}</td> --}}
                                             <td>

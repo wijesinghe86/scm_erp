@@ -14,7 +14,7 @@ class InvoiceSettings  extends Component
 
 
     public function invoice_type($value){
-        if ($value == '2' ||$value == '3'){
+        if ($value == 'Non tax invoice' || $value == 'Suspended tax invoice'){
             $this->invoice_option = null;
         }
 

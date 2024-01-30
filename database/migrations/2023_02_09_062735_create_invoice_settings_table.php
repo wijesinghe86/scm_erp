@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
 //            $table->integer('invoice_type')->default(1);
             $table->string('invoice_type',25);
-            $table->integer('invoice_category')->nullable();
-            $table->integer('invoice_option')->default(0);
+            $table->string('invoice_category',5)->nullable();
+            $table->string('invoice_option',1)->default(0);
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
         });
