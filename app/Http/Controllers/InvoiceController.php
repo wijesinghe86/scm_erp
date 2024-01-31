@@ -33,6 +33,7 @@ class InvoiceController extends ParentController
 
     public function new()
     {
+        $settings = InvoiceSetting::all();
         $customer = new Customer;
         $setting =   InvoiceSetting::first();
         $vatRates = TaxCreation::where('tax_code', '=', 'VAT')->first();
@@ -45,7 +46,7 @@ class InvoiceController extends ParentController
         $invoiceOption = $setting->InvoiceOption($invoice_number);
         Cart::session(request()->user()->id)->clear();
 
-        return view('pages.Invoices.new', compact('customer', 'vatRates', 'customers', 'employees', 'stockItems', 'warehouses', 'billTypes', 'setting', 'invoice_number', 'invoiceOption'));
+        return view('pages.Invoices.new', compact('customer', 'vatRates', 'customers', 'employees', 'stockItems', 'warehouses', 'billTypes', 'setting', 'invoice_number', 'invoiceOption','settings'));
     }
 
     public function generateInvoiceNumber()
