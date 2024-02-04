@@ -5,7 +5,7 @@
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="title">New {{ $setting->invoice_type_name }} Creation</h4>
+{{--                        <h4 class="title">New {{ $setting->invoice_type_name }} Creation</h4>--}}
                         <br>
                         <form id="invoiceCreateForm" action="{{ route('invoices.store') }}" method="POST">
                             @csrf
@@ -67,8 +67,19 @@
                                             name="invoice_number", id="invoice_number" readonly>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label>Invoice Category</label>
-                                        <input type="text" class="form-control" value="{{ $invoiceOption }}" readonly>
+{{--                                        <label>Invoice Category</label>--}}
+{{--                                        <input type="text" class="form-control" value="{{ $invoiceOption }}" readonly>--}}
+
+                                       <label>Invoice Setting</label>
+                                        <select class="form-control item-select" name="" id="" >
+                                            <option selected disabled> Invoice Setting</option>
+                                            @foreach ($settings as $setting)
+                                                <option value="{{ $setting->id }}">
+                                                    {{ $setting->invoice_category }} - {{$setting->invoice_option}}</option>
+                                            @endforeach
+                                        </select>
+
+
                                     </div>
                                     {{-- <div class="form-group col-md-3">
                                     <label>Tax</label></label>

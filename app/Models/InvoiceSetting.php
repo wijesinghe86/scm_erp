@@ -8,18 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class InvoiceSetting extends Model
 {
     use HasFactory;
+
+//    protected $primaryKey = ['invoice_type', 'invoice_option'];
+
     protected $fillable =
-    [
-        'invoice_type',
-        'invoice_category',
-        'invoice_option',
-        'updated_by'
-    ];
+        [
+            'invoice_type',
+            'invoice_category',
+            'invoice_option',
+////            'updated_by'
+        ];
 
     protected $appends =
-    [
-        'invoice_type_name',
-    ];
+        [
+            'invoice_type_name',
+        ];
 
     public function getInvoiceTypeNameAttribute()
     {
@@ -57,27 +60,39 @@ class InvoiceSetting extends Model
     //     }
     //    //
     // }
-    
+
     public function category()
     {
         return $this->hasOne(BillType::class, 'id', 'invoice_category');
     }
 
-    public function InvoiceOption($invoice_number){
-            switch($this->invoice_option){
-                case 0:
-                    return 'None';
-                break;
-                case 1:
-                    return 'Option A';
-                break;
-                case 2:
-                    return 'Option B';
-                break;
-                case 3:
-                    return 'Option C';
-                break;
-            }
-           //
-        }
+//    public function InvoiceOption($invoice_number)
+//    {
+//        switch ($this->invoice_option) {
+//            case 0:
+//                return 'None';
+//                break;
+//            case 1:
+//                return 'Option A';
+//                break;
+//            case 2:
+//                return 'Option B';
+//                break;
+//            case 3:
+//                return 'Option C';
+//                break;
+//        }
+//        //
+//    }
+
+
+    public function invoiceType()
+    {
+        return $this->belongsTo(InvoiceType::class, 'invoice_type');
+    }
+
+    public function invoiceOption()
+    {
+        return $this->belongsTo(InvoiceOption::class, 'invoice_option');
+    }
 }
