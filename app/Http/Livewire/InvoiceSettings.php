@@ -30,6 +30,8 @@ class InvoiceSettings extends Component
         'invoice_category' => 'required'
     ];
 
+    protected $primaryKey = ['invoice_type', 'invoice_option'];
+
     public function render()
     {
         $categories = BillType::all();

@@ -9,6 +9,8 @@ class InvoiceSetting extends Model
 {
     use HasFactory;
 
+//    protected $primaryKey = ['invoice_type', 'invoice_option'];
+
     protected $fillable =
         [
             'invoice_type',

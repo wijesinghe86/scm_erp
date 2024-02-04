@@ -17,7 +17,7 @@
         <div class="form-group col-md-4">
             <label for="invoice_option">Invoice Option</label>
             <select wire:model="invoice_option" class="form-control item-select" id="invoice_option">
-                <option value="1">None</option>
+               
                 @foreach($options as $option)
                     <option value="{{ $option->id }}"
                         {{--                            @if($invoice_type == 1 || $invoice_type == 3 ) disabled @endif--}}
