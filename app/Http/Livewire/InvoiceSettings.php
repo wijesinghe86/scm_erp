@@ -40,9 +40,9 @@ class InvoiceSettings extends Component
 
     public function resetFields()
     {
-//        $this->invoice_type = '';
-//        $this->invoice_category = '';
-//        $this->invoice_option = '';
+        $this->invoice_type = '';
+        $this->invoice_category = '';
+        $this->invoice_option = '';
 ////        $this->updated_by = '';
     }
 
@@ -59,7 +59,7 @@ class InvoiceSettings extends Component
             ]);
             $response['alert-success'] = 'Invoice Settings created successfully';
             return redirect()->route('invoicesettings.all')->with($response);
-//            $this->resetFields();
+            $this->resetFields();
         } catch (Exception $e) {
             $this->resetFields();
         }
