@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -16,11 +15,15 @@ return new class extends Migration
         Schema::create('invoice_settings', function (Blueprint $table) {
             $table->id();
 //            $table->integer('invoice_type')->default(1);
-            $table->string('invoice_type',25);
-            $table->string('invoice_category',5)->nullable();
-            $table->string('invoice_option',1)->default(0);
+//            $table->string('invoice_type',25);
+            $table->string('invoice_category', 5)->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('invoice_type');
+            $table->unsignedBigInteger('invoice_option');
             $table->timestamps();
+
+            $table->foreign('invoice_type')->references('id')->on('invoice_types');
+            $table->foreign('invoice_option')->references('id')->on('invoice_options');
         });
     }
 
