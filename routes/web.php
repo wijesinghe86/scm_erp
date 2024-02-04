@@ -386,6 +386,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
 
     /* .....CREATING ROUTE FOR InvoiceSetting ....... */
     Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->prefix('invoicesettings')->group(function () {
+        Route::get('/new', [InvoiceSettingsController::class, 'new'])->name('invoicesettings.new');
         Route::get('/', [InvoiceSettingsController::class, 'all'])->name('invoicesettings.all');
         Route::post('/update', [InvoiceSettingsController::class, 'update'])->name('invoicesettings.update');
     });

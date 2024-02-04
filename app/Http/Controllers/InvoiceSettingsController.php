@@ -11,8 +11,13 @@ class InvoiceSettingsController extends ParentController
     public function all()
     {
         $categories = BillType::all();
-        $setting = InvoiceSetting::first();
-        return view('pages.InvoiceSettings.new', compact('categories', 'setting'));
+        $settings = InvoiceSetting::all();
+
+        return view('pages.InvoiceSettings.all', compact('categories', 'settings'));
+    }
+
+    public function new(){
+        return view('pages.InvoiceSettings.new');
     }
 
     public function update(Request $request)
