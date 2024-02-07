@@ -30,7 +30,7 @@ class InvoiceSettings extends Component
         'invoice_category' => 'required'
     ];
 
-    protected $primaryKey = ['invoice_type', 'invoice_option'];
+
 
     public function render()
     {
@@ -54,6 +54,7 @@ class InvoiceSettings extends Component
 
         try {
             InvoiceSetting::create([
+                
                 'invoice_type' => $this->invoice_type,
                 'invoice_category' => $this->invoice_category,
                 'invoice_option' => $this->invoice_option,

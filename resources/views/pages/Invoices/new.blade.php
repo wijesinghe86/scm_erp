@@ -71,14 +71,26 @@
 {{--                                        <input type="text" class="form-control" value="{{ $invoiceOption }}" readonly>--}}
 
                                        <label>Invoice Setting</label>
-                                        <select class="form-control item-select" name="" id="" >
+                                        <select class="form-control item-select" name="" id="setting_id" onchange="getInvoiceSettings()">
                                             <option selected disabled> Invoice Setting</option>
                                             @foreach ($settings as $setting)
                                                 <option value="{{ $setting->id }}">
-                                                    {{ $setting->invoice_category }} - {{$setting->invoice_option}}</option>
+                                                    {{ $setting->invoice_category }} - {{$setting->option->name}}</option>
                                             @endforeach
                                         </select>
-
+                                    </div>
+                                        <div class="form-group col-md-2">
+                                            <label>Invoice Type</label>
+                                            <input type="text" class="form-control" name="invoice_type", id="invoice_type" readonly>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label>Option</label>
+                                            <input type="text" class="form-control" name="invoice_option", id="invoice_option" readonly>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label>Invoice Category</label>
+                                            <input type="text" class="form-control" name="invoice_category", id="invoice_category" readonly>
+                                        </div>
 
                                     </div>
                                     {{-- <div class="form-group col-md-3">
@@ -86,14 +98,12 @@
                                     <input type="text" class="form-control" value="{{ $tax }}" name="tax",
                                         id="invoice_number" readonly>
                                 </div> --}}
-
+                                <div class="row">
                                     <div class="form-group col-md-3">
                                         <label>Date</label>
                                         <input type="date" class="form-control" name="invoice_date" id="invoice_date"
                                             value="{{ now()->format('Y-m-d') }}">
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="form-group col-md-3">
                                         <label>PO No</label>
                                         <input type="text" class="form-control" name="po_number", id="po_number">
@@ -474,6 +484,27 @@
                 data: data,
                 success: function(response) {
                     $('#employee_reg_no').val(response.employee_reg_no);
+                }
+            });
+        }
+
+        // get the invoice settings details
+        function getInvoiceSettings() {
+            var setting_id = $('#setting_id').val();
+            var data = {
+                setting_id: setting_id
+            };
+            $.ajax({
+                url: "{{ route('invoicesettings.get.data') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "GET",
+                data: data,
+                success: function(response) {
+                    $('#invoice_type').val(response.invoice_type);
+                    $('#invoice_option').val(response.invoice_option);
+                    $('#invoice_category').val(response.invoice_category);
                 }
             });
         }

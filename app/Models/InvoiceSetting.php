@@ -66,24 +66,24 @@ class InvoiceSetting extends Model
         return $this->hasOne(BillType::class, 'id', 'invoice_category');
     }
 
-//    public function InvoiceOption($invoice_number)
-//    {
-//        switch ($this->invoice_option) {
-//            case 0:
-//                return 'None';
-//                break;
-//            case 1:
-//                return 'Option A';
-//                break;
-//            case 2:
-//                return 'Option B';
-//                break;
-//            case 3:
-//                return 'Option C';
-//                break;
-//        }
-//        //
-//    }
+   public function InvoiceOption($invoice_number)
+   {
+       switch ($this->invoice_option) {
+           case 0:
+               return 'None';
+               break;
+           case 1:
+               return 'Option A';
+               break;
+           case 2:
+               return 'Option B';
+               break;
+           case 3:
+               return 'Option C';
+               break;
+       }
+
+   }
 
 
     public function invoiceType()
@@ -91,7 +91,7 @@ class InvoiceSetting extends Model
         return $this->belongsTo(InvoiceType::class, 'invoice_type');
     }
 
-    public function invoiceOption()
+    public function option()
     {
         return $this->belongsTo(InvoiceOption::class, 'invoice_option');
     }

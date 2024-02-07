@@ -33,7 +33,7 @@
                                         <td> {{$loop->iteration}} </td>
                                         <td> {{ $setting->invoiceType->name }}</td>
                                         <td> {{ $setting->invoice_category }}</td>
-                                        <td> {{ $setting->invoiceOption->name }}</td>
+                                        <td> {{ $setting->option->name }}</td>
                                         <td></td>
                                         {{-- <td>{{ $invoice->created_at }}</td> --}}
                                         <td>

@@ -31,4 +31,10 @@ class InvoiceSettingsController extends ParentController
         }
         return redirect()->route('invoices.new',['categories'=> $categories]);
     }
+
+    public function getData(Request $request)
+    {
+        $settings = InvoiceSetting::find($request->setting_id);
+        return $settings;
+    }
 }

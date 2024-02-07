@@ -389,6 +389,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::get('/new', [InvoiceSettingsController::class, 'new'])->name('invoicesettings.new');
         Route::get('/', [InvoiceSettingsController::class, 'all'])->name('invoicesettings.all');
         Route::post('/update', [InvoiceSettingsController::class, 'update'])->name('invoicesettings.update');
+        Route::get('/get/data', [InvoiceSettingsController::class, 'getData'])->name('invoicesettings.get.data');
     });
 
     // Sales and Marketing
