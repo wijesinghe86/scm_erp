@@ -132,6 +132,7 @@ class Invoice extends Model
 
     public function calculateTotal($invoice_number, $option, $discount_value = 0, $discount_type)
     {
+        // logger($option);
         $cartCollection =  Cart::session(request()->user()->id)->getContent();
         $items = $cartCollection->sortBy(function ($product, $key) {
             return $key;
@@ -146,13 +147,13 @@ class Invoice extends Model
         $vat = $subtotal * ($vatRate / 100);
         $exclude_vat = 0;
 
-        if ($option == "None" || $option == 0) {
+        if ($option == "None" || $option == 0 || $option == "0") {
             $total = $subtotal;
             $vat = 0;
             $vatRate = 0;
         }
 
-        if ($option == "Option B" || $option == 2) {
+        if ($option == "Option B" || $option == 2 || $option == "2") {
             $exclude_vat = $subtotal / ((100 + $vatRate) / 100);
             $vat = $exclude_vat * ($vatRate / 100);
             $total = $subtotal;
