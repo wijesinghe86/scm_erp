@@ -5,7 +5,7 @@
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="title">New {{ $setting->invoice_type_name }} Creation</h4>
+                        <h4 class="title">New Invoice Creation</h4>
                         <br>
                         <form id="invoiceCreateForm" action="{{ route('invoices.store') }}" method="POST">
                             @csrf
@@ -23,6 +23,46 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="row">
+                                    <div class="form-group col-md-3">
+                                        <label>Invoice Type</label>
+                                        <select  class="form-control" name="invoice_type" id="invoice_type">
+                                            <option value="">Select</option>
+                                            <option value="1">Non-Tax Invoice</option>
+                                            <option value="2">Tax Invoice</option>
+                                            <option value="3">Suspended Tax Invoice</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-md-3">
+                                        <label>Category</label>
+                                      <select  class="form-control" name="invoice_category" readonly id="invoice_category"
+                                            required>
+                                            <option value="">-</option>
+                                            @foreach ($billTypes as $category)
+                                                <option value="{{ $category->id }}">{{ $category->billtype_code }}</option>
+                                            @endforeach
+                                        </select>
+
+                                    </div>
+
+                                    <div class="form-group col-md-3">
+                                        <label>Invoice Option</label>
+                                        <select class="form-control" name="invoice_option" id="invoice_option">
+                                            <option value="">Select</option>
+                                           <option value="0">None</option>
+                                           <option value="1">Option A</option>
+                                           <option value="2">Option B</option>
+                                           <option value="3">Option C</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Invoice No</label>
+                                        <input type="text" class="form-control"
+                                            name="invoice_number", id="invoice_number" readonly>
+                                    </div>
+                                </div>
+                                <hr>
                                 {{-- Customer Selection Start here --}}
                                 <div class="row">
                                     <div class="form-group col-md-2">
@@ -40,11 +80,14 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                      {{-- Customer Selection End here --}}
                                     <div class="form-group col-md-6">
                                         <label>Customer Address</label>
                                         <input type="text" class="form-control" id="cus_address" name="cus_address"
                                             placeholder="Customer Address" disabled>
                                     </div>
+                                </div>
+                                <div class="row">
                                     <div class="form-group col-md-3">
                                         <label>Customer VAT Number</label>
                                         <input type="text" class="form-control" id="cus_vat_no" name="cus_vat_no"
@@ -56,37 +99,19 @@
                                         <input type="text" class="form-control" id="customer_credit_limit"
                                             placeholder="Customer Credit Limit" disabled>
                                     </div>
-                                </div>
-                                {{-- Customer Selection End here --}}
 
                                 {{-- Invoice Section Start here --}}
-                                <div class="row">
-                                    <div class="form-group col-md-3">
-                                        <label>Invoice No</label>
-                                        <input type="text" class="form-control" value="{{ $invoice_number }}"
-                                            name="invoice_number", id="invoice_number" readonly>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label>Invoice Category</label>
-                                        <input type="text" class="form-control" value="{{ $invoiceOption }}" readonly>
-                                    </div>
-                                    {{-- <div class="form-group col-md-3">
-                                    <label>Tax</label></label>
-                                    <input type="text" class="form-control" value="{{ $tax }}" name="tax",
-                                        id="invoice_number" readonly>
-                                </div> --}}
-
                                     <div class="form-group col-md-3">
                                         <label>Date</label>
                                         <input type="date" class="form-control" name="invoice_date" id="invoice_date"
                                             value="{{ now()->format('Y-m-d') }}">
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="form-group col-md-3">
                                         <label>PO No</label>
                                         <input type="text" class="form-control" name="po_number", id="po_number">
                                     </div>
+                                </div>
+                                <div class="row">
                                     <div class="form-group col-md-3">
                                         <label>Reference No</label>
                                         <input type="text" class="form-control" name="ref_number", id="ref_number">
@@ -104,11 +129,10 @@
                                             <option value="2">Credit</option> --}}
                                         </select>
                                     </div>
-                                </div>
                                 {{-- Invoice Section End here --}}
 
                                 {{-- Sales Staff Selection Start here --}}
-                                <div class="row">
+
                                     <div class="form-group col-md-2">
                                         <label>Sales Staff Code</label>
                                         <input type="text" class="form-control" id="employee_reg_no"
@@ -241,7 +265,7 @@
                                 </div> --}}
                                 <div class="form-group col-md-2">
                                     <label>Sub Total(Rs.)</label>
-                                    <input type="text" class="form-control js_subtotal" value="" readonly
+                                    <input type="text" class="form-control js_subtotal" value="0" readonly
                                         autocomplete="off" id="sub_total" name="sub_total">
                                 </div>
                                 <div class="form-group col-md-2">
@@ -308,6 +332,66 @@
 
 @push('scripts')
     <script>
+        const invoiceCategories = <?php echo json_encode($billTypes); ?>;
+            $(document).ready(function() {
+                let invoiceType = $('#invoice_type').val();
+                setinvoiceOption(invoiceType, "load");
+            })
+            $('#invoice_type').on('change', function() {
+                let invoiceType = $(this).val();
+                setinvoiceOption(invoiceType, "other");
+            })
+
+            function setinvoiceOption(invoiceType, runType) {
+                if (invoiceType == 1) {
+                    $('#invoice_option').val(0)
+                    $("#invoice_option").find(':not(:selected)').prop('disabled', true);
+                    const invoiceCategory = invoiceCategories?.find(row => row?.billtype_code == "GIN")
+                    if (invoiceCategory) {
+                        $('#invoice_category').val(invoiceCategory?.id)
+                        $('#invoice_category').trigger("change")
+                    }
+                    return
+                }
+                if (invoiceType == 2) {
+                    $("#invoice_option").find(':not(:selected)').prop('disabled', false);
+                    if (runType != "load") {
+                        $('#invoice_option').val("")
+                    }
+                    const invoiceCategory = invoiceCategories?.find(row => row?.billtype_code == "GTI")
+                    if (invoiceCategory) {
+                        $('#invoice_category').val(invoiceCategory?.id)
+                        $('#invoice_category').trigger("change")
+                    }
+                    return
+                }
+                if (invoiceType == 3) {
+                    $('#invoice_option').val(3)
+                    $("#invoice_option").find(':not(:selected)').prop('disabled', true);
+                    const invoiceCategory = invoiceCategories?.find(row => row?.billtype_code == "GSVT")
+                    if (invoiceCategory) {
+                        $('#invoice_category').val(invoiceCategory?.id)
+                        $('#invoice_category').trigger("change")
+                    }
+                    return
+                }
+            }
+
+            $('#invoice_category').on('change', function() {
+                const invoice_category = $(this).val();
+                $.ajax({
+                url: "{{ route('invoices.get.number') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "GET",
+                data: {invoice_category},
+                success: function(invoiceNumber) {
+                    $("#invoice_number").val(invoiceNumber);
+                }
+                 });
+            })
+
         let customerData = {};
         let stockItems = <?php echo json_encode($stockItems); ?>;
         let warehouses = <?php echo json_encode($warehouses); ?>;
@@ -385,16 +469,16 @@
                 },
                 type: "GET",
                 data: {
-                    invoice_no: "{{ $invoice_number }}",
+                    invoice_no:$('#invoice_number').val(),
                     discount_type: $('.js_discount_type').val(),
                     discount_amount: $('.js_discount_amount').val(),
-                    option: "{{ $invoiceOption }}"
+                    option: $('#invoice_option').val(),
                 },
                 success: function(response) {
-                    // if (customerData?.customer_payment_terms == '{{ $customer::$PAYMENT_TERM_CREDIT }}' &&
-                    //     response.subtotal > customerData?.customer_credit_limit && paymentTerm ==
-                    //     '{{ $customer::$PAYMENT_TERM_CREDIT }}') {
-                    //     alertDanger("Customer Credit Limit exeeded")
+                    // // if (customerData?.customer_payment_terms == '{{ $customer::$PAYMENT_TERM_CREDIT }}' &&
+                    // //     response.subtotal > customerData?.customer_credit_limit && paymentTerm ==
+                    // //     '{{ $customer::$PAYMENT_TERM_CREDIT }}') {
+                    // //     alertDanger("Customer Credit Limit exeeded")
                     // }
                     $(".js_subtotal").val(response.subtotal);
                     $(".js_vatRate").val(response.vatRate)
@@ -406,8 +490,9 @@
         }
 
         function calculateUnitPrice(elem) {
-            var category = "{{ $invoiceOption }}";
-            if (category != "Option A") {
+            var category = $('#invoice_option').val();
+            console.log(category);
+            if (category != "1") {
                 return;
             }
             var unitPrice = parseFloat($(elem).val());
@@ -415,6 +500,12 @@
             var newUnitPrice = unitPrice / ((100 + vatRate) / 100);
             $(elem).val(newUnitPrice.toFixed(2));
         }
+//get Invoice Number
+
+function onInvoiceTypeChange(){
+    const invoiceType = ('#invoice_type').val();
+}
+
 
         // get the Customer Details from Customer Table
         function getCustomer() {
@@ -518,7 +609,6 @@
             let currentSubTotal = $('#sub_total').val()
             let newSubTotal = parseFloat((unit_price * quantity) - parseFloat(item_discount_amount)) + parseFloat(
                 currentSubTotal)
-
 
             if (customerData?.customer_payment_terms == '{{ $customer::$PAYMENT_TERM_CREDIT }}' &&
                 newSubTotal > customerData?.customer_credit_limit && paymentTerm ==
