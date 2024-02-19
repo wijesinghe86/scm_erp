@@ -5,7 +5,8 @@
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="title">New Invoice Creation</h4>
+                        <h3 style="color: grey" class="title">New Invoice Creation</h4>
+                        <br>
                         <br>
                         <form id="invoiceCreateForm" action="{{ route('invoices.store') }}" method="POST">
                             @csrf
@@ -25,6 +26,11 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-3">
+                                        <label>Date</label>
+                                        <input type="date" class="form-control" name="invoice_date" id="invoice_date"
+                                            value="{{ now()->format('Y-m-d') }}">
+                                    </div>
+                                    <div class="form-group col-md-2">
                                         <label>Invoice Type</label>
                                         <select  class="form-control" name="invoice_type" id="invoice_type">
                                             <option value="">Select</option>
@@ -34,7 +40,7 @@
                                         </select>
                                     </div>
 
-                                    <div class="form-group col-md-3">
+                                    <div class="form-group col-md-2">
                                         <label>Category</label>
                                       <select  class="form-control" name="invoice_category" readonly id="invoice_category"
                                             required>
@@ -46,7 +52,7 @@
 
                                     </div>
 
-                                    <div class="form-group col-md-3">
+                                    <div class="form-group col-md-2">
                                         <label>Invoice Option</label>
                                         <select class="form-control" name="invoice_option" id="invoice_option">
                                             <option value="">Select</option>
@@ -81,17 +87,18 @@
                                         </select>
                                     </div>
                                       {{-- Customer Selection End here --}}
+                                      <div class="form-group col-md-3">
+                                        <label>Customer VAT Number</label>
+                                        <input type="text" class="form-control" id="cus_vat_no" name="cus_vat_no"
+                                            placeholder="Customer VAT Number" disabled>
+                                    </div>
+
+                                </div>
+                                <div class="row">
                                     <div class="form-group col-md-6">
                                         <label>Customer Address</label>
                                         <input type="text" class="form-control" id="cus_address" name="cus_address"
                                             placeholder="Customer Address" disabled>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-md-3">
-                                        <label>Customer VAT Number</label>
-                                        <input type="text" class="form-control" id="cus_vat_no" name="cus_vat_no"
-                                            placeholder="Customer VAT Number" disabled>
                                     </div>
                                     <div id="customer_credit_limit_wrapper" style="display:none;"
                                         class="form-group col-md-3">
@@ -99,23 +106,10 @@
                                         <input type="text" class="form-control" id="customer_credit_limit"
                                             placeholder="Customer Credit Limit" disabled>
                                     </div>
+                                </div>
 
                                 {{-- Invoice Section Start here --}}
-                                    <div class="form-group col-md-3">
-                                        <label>Date</label>
-                                        <input type="date" class="form-control" name="invoice_date" id="invoice_date"
-                                            value="{{ now()->format('Y-m-d') }}">
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label>PO No</label>
-                                        <input type="text" class="form-control" name="po_number", id="po_number">
-                                    </div>
-                                </div>
                                 <div class="row">
-                                    <div class="form-group col-md-3">
-                                        <label>Reference No</label>
-                                        <input type="text" class="form-control" name="ref_number", id="ref_number">
-                                    </div>
                                     <div class="form-group col-md-3">
                                         <label>Term</label>
                                         <select name="payment_terms" class="form-control" id="payment_terms">
@@ -129,10 +123,20 @@
                                             <option value="2">Credit</option> --}}
                                         </select>
                                     </div>
+                                    <div class="form-group col-md-3">
+                                        <label>PO No</label>
+                                        <input type="text" class="form-control" name="po_number", id="po_number">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Reference No</label>
+                                        <input type="text" class="form-control" name="ref_number", id="ref_number">
+                                    </div>
+                                </div>
+
                                 {{-- Invoice Section End here --}}
 
                                 {{-- Sales Staff Selection Start here --}}
-
+                                <div class="row">
                                     <div class="form-group col-md-2">
                                         <label>Sales Staff Code</label>
                                         <input type="text" class="form-control" id="employee_reg_no"
