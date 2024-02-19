@@ -7,6 +7,8 @@
                     <div class="card-body">
                         <h4 class="title">Customer Return Entry</h4>
                         <br>
+                        <form id="customerReturn" action="{{ route('returns.store') }}" method="POST">
+                        @csrf
                         <div class="row">
                             <div class="form-group col-md-2">
                                 <label>Customer Code</label>
@@ -15,7 +17,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label>Customer Name</label>
-                                <select class="form-control" name="customer_id" id="customer_id">
+                                <select class="form-control customer-select" name="customer_id" id="customer_id">
                                     <option value="">-</option>
                                     @foreach ($customers as $customer)
                                         <option value="{{ $customer->id }}">{{ $customer->customer_name }}</option>
@@ -193,7 +195,7 @@
             renderData()
             return
         }
-
+       
         function onRemoveFromCart(qty, index) {
             // $('#quantity_id').val(qty)
             cart.splice(index, 1);
@@ -255,8 +257,6 @@
                 }
             });
         }
-    </script>
-    <script>
         $(document).ready(function() {
             let customer = <?php echo json_encode($customer_data); ?>;
             let invoice_number = <?php echo json_encode($invoice_number); ?>;
@@ -303,5 +303,11 @@
             window.location.href =
                 `/returns/new?customer_id=${customerId}&invoice_date=${invoiceDate}&invoice_number=${invoiceNumber}&delivery_order_no=${deliveryOrderId}`
         });
-    </script>
+
+        $(document).ready(function() {
+            $('.customer-select').select2({
+                placeholder: "Select Customer",
+            });
+        });     
+</script>
 @endpush
