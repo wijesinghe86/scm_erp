@@ -34,8 +34,9 @@
                                         @endforeach
                                     </select>
                                 </div>
-
-                                <div class="form-group col-md-4">
+                                </div>
+                                <div class="row">
+                                <div class="form-group col-md-2">
                                     <label>From Location</label>
                                     <select class="form-control" name="from_location">
                                         <option value="">Select Location</option>
@@ -46,7 +47,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-2">
                                     <label>To Location</label>
                                     <select class="form-control" name="to_location">
                                         <option value="">Select Location</option>
@@ -57,12 +58,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label>Remarks</label>
-                                    <input type="text" class="form-control" name="remarks">
-                                </div>
-
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-2">
                                     <label>Fleet</label>
                                     <select class="form-control" name="fleet_id">
                                         <option value="">Select Fleet</option>
@@ -73,9 +69,13 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-2">
                                     <label>Driver Name</label>
                                     <input type="text" class="form-control" name="delivered_by">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Remarks</label>
+                                    <input type="text" class="form-control" name="remarks">
                                 </div>
                             </div>
                             {{-- </div> --}}
@@ -87,7 +87,7 @@
                                     <input type="text" readonly class="form-control" id="stock_no"
                                         placeholder="Stock No">
                                 </div>
-                                <div class="form-group col-md-7">
+                                <div class="form-group col-md-5">
                                     <label>Description</label>
                                     <select class="form-control item-select" id="stock_item_id">
                                         <option selected disabled>Select Item</option>
@@ -98,6 +98,8 @@
                                         @endforeach
                                     </select>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="form-group col-md-2">
                                     <label>U/M</label>
                                     <input type="text" readonly class="form-control" id="uom" placeholder="U/M">
@@ -136,10 +138,10 @@
                             <div id="item_list"></div>
                             <div class="text-right">
                                 <button type="submit" class="btn btn-success me-2">Complete Stock Location
-                                    Change</button>                                  
+                                    Change</button>
                             </div>
                         </form>
-                       
+
                     </div>
                 </div>
             </div>

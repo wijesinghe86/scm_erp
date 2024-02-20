@@ -41,19 +41,26 @@ class InvoiceController extends ParentController
         $stockItems = StockItem::all();
         $warehouses = Warehouse::all();
         $billTypes = BillType::all();
-        $invoice_number = $this->generateInvoiceNumber();
-        $invoiceOption = $setting->InvoiceOption($invoice_number);
+        $invoice_number = "";
+        // $invoiceOption = $setting->InvoiceOption($invoice_number);
         Cart::session(request()->user()->id)->clear();
 
-        return view('pages.Invoices.new', compact('customer', 'vatRates', 'customers', 'employees', 'stockItems', 'warehouses', 'billTypes', 'setting', 'invoice_number', 'invoiceOption'));
+        return view('pages.Invoices.new', compact('customer', 'vatRates', 'customers', 'employees', 'stockItems', 'warehouses', 'billTypes', 'setting', 'invoice_number'));
     }
 
-    public function generateInvoiceNumber()
+    public function generateInvoiceNumber(Request $request)
     {
-        $setting = InvoiceSetting::first();
-        $first_letter = $setting->category ? $setting->category->billtype_code : '';
-        $invoice_count = Invoice::where('category', $setting->invoice_category)->count();
-        return $first_letter . sprintf('%06d', $invoice_count + 1);
+        $invocieCategoryId = data_get($request, 'invoice_category');
+        $billType = BillType::find($invocieCategoryId);
+        $invoice_count = Invoice::where('category',$billType->id)->count();
+        $prefix = $billType->billtype_code;
+
+        return $prefix . sprintf('%06d', $invoice_count + 1);
+
+        // $setting = InvoiceSetting::first();
+        // $first_letter = $setting->category ? $setting->category->billtype_code : '';
+        // $invoice_count = Invoice::where('category', $setting->invoice_category)->count();
+        // return $first_letter . sprintf('%06d', $invoice_count + 1);
     }
 
     public function generateDeliveryOrderNumber()
@@ -88,11 +95,14 @@ class InvoiceController extends ParentController
 
             $request['created_by'] = Auth::id();
 
-            $setting = InvoiceSetting::first();
-            $request['category'] = $setting->invoice_category;
-            $request['type'] = $setting->invoice_type;
-            $request['option'] = $setting->invoice_option;
+            // $setting = InvoiceSetting::first();
+            // $request['category'] = $setting->invoice_category;
+            // $request['type'] = $setting->invoice_type;
+            // $request['option'] = $setting->invoice_option;
 
+            $request['category'] = $request->invoice_category;
+            $request['type'] = $request->invoice_type;
+            $request['option'] =$request->invoice_option;
             $data = $request->all();
 
             $billing = (new Invoice)->calculateTotal(
@@ -118,7 +128,7 @@ class InvoiceController extends ParentController
             // TODO::USE ON THE DUPLICATION
             $isInvoiceNumberTaken = Invoice::where('invoice_number',  $data['invoice_number'])->first();
             if ($isInvoiceNumberTaken) {
-                $data['invoice_number'] = $this->generateInvoiceNumber();
+                $data['invoice_number'] = $this->generateInvoiceNumber($request);
             }
 
 
@@ -263,8 +273,8 @@ class InvoiceController extends ParentController
         $option =  $request->option;
         $discount_amount =  $request->discount_amount ?? 0;
         $discount_type =  $request->discount_type ?? "fixed";
-
-        return (new Invoice)->calculateTotal($request->invoice_no, $option, $discount_amount, $discount_type);
+        $data = (new Invoice)->calculateTotal($request->invoice_no, $option, $discount_amount, $discount_type);
+        return $data;
     }
 
 

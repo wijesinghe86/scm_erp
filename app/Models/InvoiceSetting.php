@@ -16,28 +16,28 @@ class InvoiceSetting extends Model
         'updated_by'
     ];
 
-    protected $appends =
-    [
-        'invoice_type_name',
-    ];
+    // protected $appends =
+    // [
+    //     'invoice_type_name',
+    // ];
 
-    public function getInvoiceTypeNameAttribute()
-    {
-        switch ($this->invoice_type) {
-            case 1:
-                return 'Non Tax Invoice';
-                break;
-            case 2:
-                return 'Tax Invoice';
-                break;
-            case 3:
-                return 'Suspended Tax Invoice';
-                break;
-            default:
-                return 'N/A';
-                break;
-        }
-    }
+    // public function getInvoiceTypeNameAttribute()
+    // {
+    //     switch ($this->invoice_type) {
+    //         case 1:
+    //             return 'Non Tax Invoice';
+    //             break;
+    //         case 2:
+    //             return 'Tax Invoice';
+    //             break;
+    //         case 3:
+    //             return 'Suspended Tax Invoice';
+    //             break;
+    //         default:
+    //             return 'N/A';
+    //             break;
+    //     }
+    // }
 
     // public function calVatIncludedProduct($invoice_number){
     //     return 10;
@@ -58,26 +58,26 @@ class InvoiceSetting extends Model
     //    //
     // }
     
-    public function category()
-    {
-        return $this->hasOne(BillType::class, 'id', 'invoice_category');
-    }
+    // public function category()
+    // {
+    //     return $this->hasOne(BillType::class, 'id', 'invoice_category');
+    // }
 
-    public function InvoiceOption($invoice_number){
-            switch($this->invoice_option){
-                case 0:
-                    return 'None';
-                break;
-                case 1:
-                    return 'Option A';
-                break;
-                case 2:
-                    return 'Option B';
-                break;
-                case 3:
-                    return 'Option C';
-                break;
-            }
-           //
-        }
+    // public function InvoiceOption($invoice_number){
+    //         switch($this->invoice_option){
+    //             case 0:
+    //                 return 'None';
+    //             break;
+    //             case 1:
+    //                 return 'Option A';
+    //             break;
+    //             case 2:
+    //                 return 'Option B';
+    //             break;
+    //             case 3:
+    //                 return 'Option C';
+    //             break;
+    //         }
+    //        //
+    //     }
 }

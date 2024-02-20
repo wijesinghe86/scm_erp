@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 @section('content')
     <div class="content-wrapper">
         <div class="row">
@@ -33,7 +33,7 @@
                                     {{-- <input type="text" class="form-control item-select" name="invoice_category" readonly id="invoice_category"> --}}
                                     
                                     {{-- Downcodingswerecommentedtomakethecategoryfieldreadonly --}}
-                                  <select class="form-control item-select" name="invoice_category" readonly id="invoice_category" 
+                                  {{-- <select class="form-control item-select" name="invoice_category" readonly id="invoice_category" 
                                         required>
                                         <option value="">-</option> 
                                         @foreach ($categories as $category)
@@ -114,7 +114,7 @@
                     }
                     return
                 }
-            }
+            } --}} --}}
 
             // function setinvoiceOption(invoiceType, runType) {
             //     if (invoiceType == 1) {
@@ -149,6 +149,6 @@
             // }
 
             
-        </script>
+        {{-- </script>
     @endpush
-@endsection
+@endsection --}}

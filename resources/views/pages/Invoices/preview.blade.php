@@ -148,7 +148,7 @@
                         <div style="display: flex;justify-content: flex-end; align-items: center; margin: 20px 0">
                             <a target="_blank" href="{{ route('invoices.print', ['invoice_id' => $invoices->id]) }}"
                                 class="btn btn-secondary mr-5"> Print</a>
-                            <a href="{{ route('invoices.all') }}" class="btn btn-primary"> Previous</a>
+                            <a href="{{ route('invoices.new') }}" class="btn btn-primary"> Previous</a>
                         </div>
 
                     </div>
