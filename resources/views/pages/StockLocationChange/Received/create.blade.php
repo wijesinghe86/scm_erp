@@ -112,8 +112,7 @@
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label>Received by</label>
-                                            <select value="{{ $slc->received_by }}" class="form-control item-select"
-                                                name="received_by">
+                                            <select value="{{ $slc->received_by }}" class="form-control selection" name="received_by">
                                                 <option {{ $slc->received_by == null ? 'selected' : '' }} value="">
                                                     Select
                                                     Employee</option>
@@ -141,3 +140,13 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+<script>
+     $(document).ready(function() {
+            $('.selection').select2({
+                placeholder: "Select",
+            });
+        });   
+</script>
+    
+@endpush

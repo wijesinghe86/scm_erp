@@ -5,7 +5,7 @@
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h3 style="color: grey" class="title">New Invoice Creation</h4>
+                        <h3 style="color: grey" class="title">Invoice</h4>
                         <br>
                         <br>
                         <form id="invoiceCreateForm" action="{{ route('invoices.store') }}" method="POST">
@@ -760,6 +760,7 @@ function onInvoiceTypeChange(){
 
 
         });
+   
     </script>
 @endpush
 
