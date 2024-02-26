@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>Supervisor</label>
-                                    <select name="supervisor" class="form-control" id="supervisor">
+                                    <select name="supervisor" class="form-control select-emp" id="supervisor">
                                         <option selected disabled>Select</option>
                                         @foreach ($employees as $supervisor)
                                             <option value="{{ $supervisor->id }}">{{ $supervisor->employee_fullname }}
@@ -113,6 +113,10 @@
                     return
                 }
             }
+
+            $('.select-emp').select2({
+                placeholder: "select",
+            })
         </script>
     @endpush
 @endsection

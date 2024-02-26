@@ -38,7 +38,7 @@
                                 <div class="row">
                                 <div class="form-group col-md-2">
                                     <label>From Location</label>
-                                    <select class="form-control" name="from_location">
+                                    <select class="form-control selection" name="from_location">
                                         <option value="">Select Location</option>
                                         @foreach ($warehouses as $warehouse)
                                             <option value="{{ $warehouse->id }}">
@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label>To Location</label>
-                                    <select class="form-control" name="to_location">
+                                    <select class="form-control selection" name="to_location">
                                         <option value="">Select Location</option>
                                         @foreach ($warehouses as $warehouse)
                                             <option value="{{ $warehouse->id }}">
@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label>Fleet</label>
-                                    <select class="form-control" name="fleet_id">
+                                    <select class="form-control selection" name="fleet_id">
                                         <option value="">Select Fleet</option>
                                         @foreach ($fleets as $fleet)
                                             <option value="{{ $fleet->id }}">
@@ -115,7 +115,7 @@
                                         placeholder="Revd Qty">
                                 </div> --}}
 
-                                <div style="display:none; position: absolute; bottom:-20px; right:0; width: 400px;"
+                                <div style="display:none; position:absolute; top:7.5cm; bottom:-20px; left:18cm; right:20px; width: 400px;"
                                     id="stockView">
                                     <table class="table table-striped">
                                         <thead style="background-color: lightgray">
@@ -133,12 +133,18 @@
                             {{-- Invoice Items End here --}}
                             <button type="button" onclick="onAddClick()" class="btn btn-success me-2">Add</button>
                             <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
                             <hr>
                             <br>
                             <div id="item_list"></div>
                             <div class="text-right">
                                 <button type="submit" class="btn btn-success me-2">Complete Stock Location
                                     Change</button>
+
+                                    <a href="{{ route('stocklocationchange.index') }}" class="btn btn-success me-2">SLC Registry</a>
                             </div>
                         </form>
 
@@ -229,6 +235,13 @@
                 });
             }
 
+            $(document).ready(function() {
+            $('.selection').select2({
+                placeholder: "Select",
+            });
+        });   
+
+           
             function viewItemTable() {
                 $.ajax({
                     url: "{{ route('stocklocationchange.getItemTable') }}",
