@@ -125,7 +125,7 @@
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label>Approved by</label>
-                                            <select value="{{ $slc->approved_by }}" class="form-control item-select"
+                                            <select value="{{ $slc->approved_by }}" class="form-control selection"
                                                 name="approved_by">
                                                 <option {{ $slc->approved_by == null ? 'selected' : '' }} value="">
                                                     Select
@@ -167,3 +167,14 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+     $(document).ready(function() {
+            $('.selection').select2({
+                placeholder: "Select",
+            });
+        });   
+</script>
+    
+@endpush

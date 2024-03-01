@@ -30,6 +30,7 @@ public function request_items()
     public function df_items(){
         return $this->hasMany(DemandForecastingItems::class,'mr_id','id');
     }
+    
 
     public function prf_items(){
     return $this->hasMany(MrfPrfItem::class,'mr_id','id');

@@ -30,7 +30,7 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Requested By</label>
-                                    <select class="form-control" name="requested_by" placeholder="Reqested By">
+                                    <select class="form-control select-employee" name="requested_by" placeholder="Reqested By">
                                         <option value="" selected disabled>Select Requested By</option>
                                         @foreach ($employees as $employee)
                                        <option value="{{$employee->id}}"> {{$employee->employee_fullname}} - {{$employee->departmentData->department_name}} ({{$employee->sectionData->section_name}})</option>
@@ -75,6 +75,10 @@
                 }
             });
         });
+
+        $('.select-employee').select2({
+                placeholder: "Select",
+            });
 
         </script>
 @endpush

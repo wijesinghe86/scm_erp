@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Requested By</label>
-                                    <select class="form-control" name="requested_by" placeholder="Reqested By"
+                                    <select class="form-control select-emp" name="requested_by" placeholder="Reqested By"
                                         value="{{ old('requested_by') }}">
                                         @foreach ($employees as $employee)
                                             <option value="{{ $employee->id }}"> {{ $employee->employee_fullname }} -
@@ -268,6 +268,11 @@
                     }
                 });
             }
-        </script>
+
+            $('.select-emp').select2({
+                placeholder: "Select",
+            })
+
+    </script> 
     @endpush
 @endsection
