@@ -31,7 +31,7 @@ class DfController extends ParentController
         $employees = Employee::with(['departmentData', 'sectionData'])->get();
         $mr_list = MaterialRequest::with(['mr_approved', 'df_items'])
             ->whereHas('request_items.approval_production')
-            ->doesntHave('df_items')->where('df_items->mr_id', "==", 'mr_approve->item_id' && 'df_items->stock-item_id', "==", 'mr_approved->item_id')
+            ->doesntHave('df_items')
             ->get();
 
         $demandforecasting = new DemandForecasting;
