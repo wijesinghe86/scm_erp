@@ -55,6 +55,7 @@
                 <div style="margin-left: 20px; text-align:right;">{{ $delivery_order->location->warehouse_name }}</div>
             </td>
         </tr>
+        
     </table>
     <table style="height: 8mm">
         <tr></tr>
@@ -89,7 +90,8 @@
             <td style="width:50mm; text-align:right;" >{{ $item->issued->name }}</td>
             <td style="width:30mm; text-align:right;" >{{ date('Y-m-d H:i:s', strtotime($item->created_at)) }}</td>
         </tr>
-            {{-- <td style="width:30mm; text-align:right;" >{{ $delivery_order->invoice->sales_staff_code }} --}}
+    </table>
+    <table>
 
     </table>
 </body>

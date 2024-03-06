@@ -127,6 +127,11 @@
                         <td class style="width: 30mm; font-size: 13px; text-align:left;">Sales Executive:<td>
                         <td class style="width: 30mm; font-size: 13px; text-align:left;">{{ $invoices->SalesStaff->employee_fullname }}<td>
                     </tr>
+                    <tr>
+                        <td class style="width: 30mm; font-size: 13px; text-align:left;">Reference No:<td>
+                        <td class style="width: 20mm; font-size: 13px; text-align:left;">{{ $invoices->ref_number }}<td>
+                    </tr>
+                    
 
                     {{-- <tr>
                         <td>created at<td>
