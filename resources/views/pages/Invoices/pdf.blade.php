@@ -62,7 +62,7 @@
             <td style="height: 8mm; width:19mm; opacity:0;">Purchase Order No.</td>
             <td style="height: 8mm; width:24mm; text-align:center">{{ $invoices->po_number }}</td>
             <td style="height: 8mm; width:30mm; opacity:0;">D. N. No.</td>
-            <td style="height: 8mm; width:27mm; text-align:right">{{ $invoices->ref_number }}</td>
+            <td style="height: 8mm; width:27mm; text-align:right">{{ $invoices->ref_number }}</td> 
         </tr>
     </table>
   {{-- <table style="height: 6mm">
@@ -123,14 +123,14 @@
                         <td class style="width: 30mm; font-size: 13px; text-align:left;">Created Date|Time:<td>
                         <td class style="width: 30mm; font-size: 13px; text-align:left;">{{ $invoices->created_at }}<td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <td class style="width: 30mm; font-size: 13px; text-align:left;">Sales Executive:<td>
                         <td class style="width: 30mm; font-size: 13px; text-align:left;">{{ $invoices->SalesStaff->employee_fullname }}<td>
-                    </tr>
-                    <tr>
+                    </tr> --}}
+                    {{-- <tr>
                         <td class style="width: 30mm; font-size: 13px; text-align:left;">Reference No:<td>
                         <td class style="width: 20mm; font-size: 13px; text-align:left;">{{ $invoices->ref_number }}<td>
-                    </tr>
+                    </tr> --}}
                     
 
                     {{-- <tr>

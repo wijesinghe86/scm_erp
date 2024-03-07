@@ -63,8 +63,8 @@
     <table style="height:82mm">
         @foreach ($delivery_order->items as $item)
             <tr>
-                <td style="width:6mm">{{$loop->iteration}}</td>
-                <td style="width:15mm">{{ $item->stock_no }}</td>
+                <td style="width:4mm">{{$loop->iteration}}</td>
+                <td style="width:13mm">{{ $item->stock_no }}</td>
                 <td style="width:95mm">{{ $item->description }}</td>
                 <td style="width:15mm">{{ $item->uom }}</td>
                 <td style="width:25mm">{{ $item->qty }}</td>
@@ -73,7 +73,7 @@
             </tr>
         @endforeach
     </table>
-    <table style="height: 2mm">
+    <table style="height: 3mm">
         <tr>
             <td>
                 {{-- <div style="margin-left: 33mm">{{ $delivery_order->invoice->invoice_date }}</div> --}}
@@ -92,6 +92,12 @@
         </tr>
     </table>
     <table>
-
-    </table>
+<tr>
+<th style="text-align: left; width:2.8cm;"> Sales Executive:</th>
+<td style= "text-align:left; ">{{ $delivery_order->invoice->SalesStaff->employee_fullname }}</td>
+<th style="text-align: left;"> Inv.Ref.No:</th>
+<td style= "text-align:left; width:10cm;">{{ $delivery_order->invoice->ref_number}}</td>
+</tr>
+</table>
 </body>
+
