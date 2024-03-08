@@ -809,4 +809,6 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
 
     Route::get('sales_order', [SalesOrderController::class, 'index'])->name('sales_order.index');
     Route::get('/{invoice_id}/view', [SalesOrderController::class, 'view'])->name('sales_order.view');
+    Route::get('/{invoice_id}/print', [SalesOrderController::class, 'print'])->name('sales_order.print');
+    
 });
