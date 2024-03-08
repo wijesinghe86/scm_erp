@@ -6,7 +6,7 @@
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title"><a href="{{ route('dashboard') }}" ><i class="mdi mdi-home"></i></a>Invoice No: {{ $invoices->invoice_number }}</h2>
+                        <h4 class="card-title"><a href="{{ route('dashboard') }}" ><i class="mdi mdi-home"></i></a> Sales Order of Invoice No: {{ $invoices->invoice_number }}</h2>
                             <br>
 
                              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -38,11 +38,6 @@
                                     
                                 </tbody>
                             </table>
-                            {{-- <div style="display: flex;justify-content: flex-end; align-items: center; margin: 20px 0">
-                                <a target="_blank" href="{{ route('sales_order.print', ['invoice_id' => $invoices->id]) }}" class="btn btn-success mb-2 float-end mb-2"> Print</a> --}}
-                            {{-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <a href="{{ route('sales_order.print', ['invoice_id' => $invoices->id]) }}" class="btn btn-success mb-2 float-end mb-2"> Print</a> --}}
-                            </div>   
                     </div>
                 </div>
             </div>
