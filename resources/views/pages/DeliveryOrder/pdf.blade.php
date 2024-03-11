@@ -37,7 +37,8 @@
         <tr>
             <td colspan="4">
                 <div style="margin-left: 20px">
-                    {{ optional(optional(optional($delivery_order)->invoice)->customer)->customer_name }}
+                    {{ optional(optional(optional($delivery_order)->invoice)->customer)->customer_name }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vehicle No:{{$delivery_order->vehicle_no}}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NIC No:{{$delivery_order->nic_no}}
                 </div>
             </td>
         </tr>
