@@ -65,6 +65,21 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
+                                       <br>
+                                       <div class="row">
+                                        <div class="form-group col-md-3">
+                                            <label>Vehicle No</label>
+                                            <input type="text" class="form-control" name="vehicle_no" id="vehicle_no">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label>Driver Name</label>
+                                            <input type="text" class="form-control" name="driver_name" id="driver_name">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label>NIC No</label>
+                                            <input type="text" class="form-control" name="nic_no" id="nic_no">
+                                        </div>
+                                    </div>
                                         <div style="display:flex;justify-content: flex-end; align-items: center; gap:1rem;">
                                             <a href="{{ route('deliveryorders.view', $delivery_order->id) }}"
                                                 class="btn btn-danger">D/O Registry</a>
