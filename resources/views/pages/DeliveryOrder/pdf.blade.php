@@ -61,7 +61,7 @@
     <table style="height: 8mm">
         <tr></tr>
     </table>
-    <table style="height:82mm">
+    <table style="height:80mm">
         @foreach ($delivery_order->items as $item)
             <tr>
                 <td style="width:4mm">{{$loop->iteration}}</td>

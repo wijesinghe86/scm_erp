@@ -77,7 +77,7 @@
         </tr>
     </table> --}}
      {{-- item table hieght --}}
-    <table style="height:110mm;">
+    <table style="height:109mm;">
         <thead>
          <tr>
             <th style="width:6mm; opacity: 0;">No.</th>
