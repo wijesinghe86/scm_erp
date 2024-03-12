@@ -232,7 +232,7 @@
                     <li class="nav-item"> <a class="nav-link" href="{{ route('joborderapproval.index') }}">Job Order
                             Approval</a></li>
         @endhasanyrole
-                @hasanyrole('Super Admin|Admin|Factory Warehouse User|Factory Admin|Production Admin')
+                @hasanyrole('Super Admin|Admin|Factory Warehouse User|Factory Admin|Production Admin|Production User')
                     <li class="nav-item"> <a class="nav-link"
                             href="{{ route('rawmaterialsserialcodeassigning.index') }}">Raw Materials Serial Code <br>
                             Assigning</a></li>

@@ -598,11 +598,11 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin'])->get('/get-items', [PurchaseOrderMrApproveController::class, 'getItems'])->name('purchase_order_approve.getItems');
     });
 
-    Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin'])->prefix('rawmaterialsserialcodeassigning')->group(function () {
-        Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin'])->get('rawmaterialsserialcodeassigning', [App\Http\Controllers\RawMaterialsSerialCodeAssigningController::class, 'index'])->name('rawmaterialsserialcodeassigning.index');
-        Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin'])->get('/create', [App\Http\Controllers\RawMaterialsSerialCodeAssigningController::class, 'create'])->name('rawmaterialsserialcodeassigning.create');
-        Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin'])->post('/create', [App\Http\Controllers\RawMaterialsSerialCodeAssigningController::class, 'store'])->name('rawmaterialsserialcodeassigning.store');
-        Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin'])->get('/get-items', [App\Http\Controllers\RawMaterialsSerialCodeAssigningController::class, 'getGrnItems'])->name('rawmaterialsserialcodeassigning.getGrnItems');
+    Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin|Production User'])->prefix('rawmaterialsserialcodeassigning')->group(function () {
+        Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin|Production User'])->get('rawmaterialsserialcodeassigning', [App\Http\Controllers\RawMaterialsSerialCodeAssigningController::class, 'index'])->name('rawmaterialsserialcodeassigning.index');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin|Production User'])->get('/create', [App\Http\Controllers\RawMaterialsSerialCodeAssigningController::class, 'create'])->name('rawmaterialsserialcodeassigning.create');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin|Production User'])->post('/create', [App\Http\Controllers\RawMaterialsSerialCodeAssigningController::class, 'store'])->name('rawmaterialsserialcodeassigning.store');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin|Production User'])->get('/get-items', [App\Http\Controllers\RawMaterialsSerialCodeAssigningController::class, 'getGrnItems'])->name('rawmaterialsserialcodeassigning.getGrnItems');
     });
 
     Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin'])->prefix('RawMaterialIssueForProduction')->group(function () {
@@ -781,9 +781,9 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Procurement User'])->get('/get-items', [App\Http\Controllers\PurchaseOrderMrController::class, 'getMrfPrfItems'])->name('purchase_order_mr.getMrfPrfItems');
     });
     // This belongs to modal
-    Route::middleware(['role:Super Admin|Admin|Production Admin'])->prefix('raw-material-code-assign')->group(function () {
-        Route::middleware(['role:Super Admin|Admin|Production Admin'])->get('/', [App\Http\Controllers\RawMaterialCodeController::class, 'index'])->name('raw_material_code_assign.index');
-        Route::middleware(['role:Super Admin|Admin|Production Admin'])->post('/store', [App\Http\Controllers\RawMaterialCodeController::class, 'store'])->name('raw_material_code_assign.store');
+    Route::middleware(['role:Super Admin|Admin|Production Admin|Production User'])->prefix('raw-material-code-assign')->group(function () {
+        Route::middleware(['role:Super Admin|Admin|Production Admin|Production User'])->get('/', [App\Http\Controllers\RawMaterialCodeController::class, 'index'])->name('raw_material_code_assign.index');
+        Route::middleware(['role:Super Admin|Admin|Production Admin|Production User'])->post('/store', [App\Http\Controllers\RawMaterialCodeController::class, 'store'])->name('raw_material_code_assign.store');
         Route::post('/delete', [App\Http\Controllers\RawMaterialCodeController::class, 'delete'])->name('raw_material_code_assign.delete');
     });
 
@@ -809,4 +809,6 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
 
     Route::get('sales_order', [SalesOrderController::class, 'index'])->name('sales_order.index');
     Route::get('/{invoice_id}/view', [SalesOrderController::class, 'view'])->name('sales_order.view');
+    Route::get('/{invoice_id}/print', [SalesOrderController::class, 'print'])->name('sales_order.print');
+    
 });

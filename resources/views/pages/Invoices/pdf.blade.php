@@ -39,12 +39,12 @@
      {{-- invoice to  --}}
         <tr>
             <td rowspan="3">
-                <div style="margin-left: 10mm;">
+                <div style="font-size: 16px; margin-left: 10mm;">
                     <div>{{ $invoices->customer->customer_name }}</div>
-                    <small>{{ $invoices->customer->customer_address_line1 }}</small><br>
-                    <small>{{ $invoices->customer->customer_address_line2 }}</small><br>
-                    <small>{{ $invoices->customer->customer_mobile_number }}</small><br>
-                    <small>{{ $invoices->customer->customer_email }}</small><br>
+                    {{ $invoices->customer->customer_address_line1 }}<br>
+                    {{ $invoices->customer->customer_address_line2 }}<br>
+                    {{ $invoices->customer->customer_mobile_number }}<br>
+                    {{ $invoices->customer->customer_email }}<br>
                 </div>
             </td>
             <td style="height: 8mm; width:19mm">Vat No</td>
@@ -61,8 +61,8 @@
         <tr>
             <td style="height: 8mm; width:19mm; opacity:0;">Purchase Order No.</td>
             <td style="height: 8mm; width:24mm; text-align:center">{{ $invoices->po_number }}</td>
-            <td style="height: 8mm; width:30mm; opacity:0;">D. N. No.</td>
-            <td style="height: 8mm; width:27mm; text-align:right">{{ $invoices->ref_number }}</td>
+            <td style="height: 8mm; width:30mm; opacity:0;"> D. N. No.</td>
+            <td style="height: 8mm; width:27mm; text-align:right">Ref.No {{ $invoices->ref_number }}</td> 
         </tr>
     </table>
   {{-- <table style="height: 6mm">
@@ -77,7 +77,7 @@
         </tr>
     </table> --}}
      {{-- item table hieght --}}
-    <table style="height:106mm;">
+    <table style="height:109mm;">
         <thead>
          <tr>
             <th style="width:6mm; opacity: 0;">No.</th>
@@ -123,10 +123,15 @@
                         <td class style="width: 30mm; font-size: 13px; text-align:left;">Created Date|Time:<td>
                         <td class style="width: 30mm; font-size: 13px; text-align:left;">{{ $invoices->created_at }}<td>
                     </tr>
-                    <tr>
+                     <tr>
                         <td class style="width: 30mm; font-size: 13px; text-align:left;">Sales Executive:<td>
-                        <td class style="width: 30mm; font-size: 13px; text-align:left;">{{ $invoices->SalesStaff->employee_fullname }}<td>
-                    </tr>
+                        <td class style=" font-size: 13px; text-align:left;">{{ $invoices->SalesStaff->employee_fullname }} | {{ $invoices->SalesStaff->employee_reg_no }}<td>
+                    </tr> 
+                   {{-- <tr>
+                        <td class style="width: 30mm; font-size: 13px; text-align:left;">Reference No:<td>
+                        <td class style="width: 20mm; font-size: 13px; text-align:left;">{{ $invoices->ref_number }}<td>
+                    </tr> 
+                     --}}
 
                     {{-- <tr>
                         <td>created at<td>

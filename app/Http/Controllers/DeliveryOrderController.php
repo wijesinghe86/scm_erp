@@ -62,6 +62,9 @@ class DeliveryOrderController extends ParentController
             $balance_order->created_by = Auth::id();
 
             $delivery_order->issued_date = now();
+            $delivery_order->vehicle_no = $request->vehicle_no;
+            $delivery_order->driver_name = $request->driver_name;
+            $delivery_order->nic_no = $request->nic_no;
             $delivery_order->save();
 
             foreach ($request->items as $key => $item) {
