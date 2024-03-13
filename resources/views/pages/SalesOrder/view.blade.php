@@ -38,11 +38,11 @@
                                     
                                 </tbody>
                             </table>
-                            {{-- <div style="display: flex;justify-content: flex-end; align-items: center; margin: 20px 0">
-                                <a target="_blank" href="{{ route('sales_order.print', ['invoice_id' => $invoices->id]) }}" class="btn btn-success mb-2 float-end mb-2"> Print</a> --}}
-                            {{-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <a href="{{ route('sales_order.print', ['invoice_id' => $invoices->id]) }}" class="btn btn-success mb-2 float-end mb-2"> Print</a> --}}
-                            </div>   
+                             {{-- <div style="display: flex;justify-content: flex-end; align-items: center; margin: 20px 0"> --}}
+                                {{-- <a target="_blank" href="{{ route('sales_order.print', ['invoice_id' => $invoices->id]) }}" class="btn btn-success mb-2 float-end mb-2"> Print</a>  --}}
+                                <div style="display: flex;justify-content: flex-end; align-items: center; margin: 20px 0">
+                                    <a target="_blank" href="{{ route('sales_order.print', ['invoice_id' => $invoices->id]) }}"
+                                        class="btn btn-secondary mr-5"> Print</a>
                     </div>
                 </div>
             </div>
