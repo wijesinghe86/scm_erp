@@ -33,4 +33,6 @@ class InvoiceItem extends Model
     {
         return $this->hasOne(Warehouse::class, 'id', 'location_id');//location_id is from InvoiceItems tbl
     }
+
+    
 }
