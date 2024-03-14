@@ -6,6 +6,8 @@ use Cart;
 use App\Models\BillType;
 use App\Models\Customer;
 use App\Models\Employee;
+use App\Models\DeliveryOrder;
+use App\Models\DeliveryOrderItem;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -108,6 +110,12 @@ class Invoice extends Model
     {
         return $this->hasMany(InvoiceItem::class, 'invoice_id', 'id');
     }
+
+    // public function DeliveryOrderNo()
+    // {
+    //     return $this->hasMany(DeliveryOrderItem::class, 'id', 'invoice_id');
+    // }
+    
     /**
      * Calculate Discount
      *

@@ -8,6 +8,8 @@ use App\Models\Invoice;
 // use Barryvdh\DomPDF\PDF;
 use App\Models\InvoiceItem;
 use Illuminate\Http\Request;
+use App\Models\DeliveryOrder;
+use App\Models\DeliveryOrderItem;
 
 class SalesOrderController extends Controller
 {
@@ -22,6 +24,7 @@ class SalesOrderController extends Controller
     {
         $response['invoices'] = Invoice::with(['Items', 'Customer'])->find($invoice_id);
         $response['items'] = InvoiceItem::where('invoice_number', $invoice_id)->get();
+        // $response['deliveryorders'] = DeliveryOrderItem::all();
         if ($response['invoices'] == null) {
             return abort(404);
         }

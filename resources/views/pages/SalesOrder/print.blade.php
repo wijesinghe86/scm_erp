@@ -28,7 +28,7 @@
 
 <body>
   {{-- header --}}
-<strong><p style="font-size:20px; text-align:center;"> Sales Order of {{ $invoices->invoice_number }}</p></strong>
+<strong><p style="font-size:20px; text-align:center;"> Sales Order - {{ $invoices->invoice_number }}</p></strong>
    <br>
    <br>
    <div class="row">
