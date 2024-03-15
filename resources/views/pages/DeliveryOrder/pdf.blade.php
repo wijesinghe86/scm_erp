@@ -95,7 +95,7 @@
     <table>
 <tr>
 <th style="text-align: left; width:2.8cm;"> Sales Executive:</th>
-<td style= "text-align:left; ">{{ $delivery_order->invoice->SalesStaff->employee_fullname }} | {{ $delivery_order->invoice->SalesStaff->employee_reg_no }}</td>
+<td style= "text-align:left; width:10cm; ">{{ $delivery_order->invoice->SalesStaff->employee_fullname }} | {{ $delivery_order->invoice->SalesStaff->employee_reg_no }}</td>
 <th style="text-align: left;"> Inv.Ref.No:</th>
 <td style= "text-align:left; width:10cm;">{{ $delivery_order->invoice->ref_number}}</td>
 </tr>
