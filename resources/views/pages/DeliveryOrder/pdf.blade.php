@@ -74,17 +74,17 @@
             </tr>
         @endforeach
     </table>
-    <table style="height: 2mm">
+    {{-- <table style="height: 2mm">
         <tr>
-            <td>
+            <td> --}}
                 {{-- <div style="margin-left: 33mm">{{ $delivery_order->invoice->invoice_date }}</div> --}}
-            </td>
+            {{-- </td>
 
-            <td>
+            <td> --}}
                 {{-- <div style="margin-left: 33mm">{{ $delivery_order->invoice->invoice_date }}</div> --}}
-            </td>
+            {{-- </td>
         </tr>
-    </table>
+    </table> --}}
     <table>
         <tr>
             <td style="width:100%"></td>
