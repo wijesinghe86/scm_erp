@@ -676,12 +676,12 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::post('/create', [App\Http\Controllers\FinishedGoodsSerialCodeAssigningController::class, 'store'])->name('finishedgoodsserialcodeassigning.store');
     });
 
-    Route::middleware(['role:Super Admin|Admin|Warehouse User'])->prefix('BalanceOrder')->group(function () {
-        Route::get('BalanceOrder', [App\Http\Controllers\BalanceOrderController::class, 'index'])->name('balanceorder.index');
-        Route::get('{balance_order}/view', [App\Http\Controllers\BalanceOrderController::class, 'view'])->name('balanceorder.view');
-        Route::get('{balance_order}/delicery-order-create', [App\Http\Controllers\BalanceOrderController::class, 'deliveryOrderCreateIndex'])->name('balanceorder.delicery_order_create_index');
-        Route::post('{balance_order}/delicery-order-create', [App\Http\Controllers\BalanceOrderController::class, 'deliveryOrderCreate'])->name('balanceorder.delivery_order_create');
-        Route::get('/{balance_order_id}/print', [App\Http\Controllers\BalanceOrderController::class, 'print'])->name('balanceorder.print');
+    Route::middleware(['role:Super Admin|Admin|Warehouse User|Sale User|Sales Admin'])->prefix('BalanceOrder')->group(function () {
+        Route::middleware(['role:Super Admin|Admin|Warehouse User|Sale User|Sales Admin'])->get('BalanceOrder', [App\Http\Controllers\BalanceOrderController::class, 'index'])->name('balanceorder.index');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User|Sale User|Sales Admin'])->get('{balance_order}/view', [App\Http\Controllers\BalanceOrderController::class, 'view'])->name('balanceorder.view');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('{balance_order}/delicery-order-create', [App\Http\Controllers\BalanceOrderController::class, 'deliveryOrderCreateIndex'])->name('balanceorder.delicery_order_create_index');
+        Route::middleware(['role:Super Admin|Admin|Sale User|Sales Admin'])->post('{balance_order}/delicery-order-create', [App\Http\Controllers\BalanceOrderController::class, 'deliveryOrderCreate'])->name('balanceorder.delivery_order_create');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{balance_order_id}/print', [App\Http\Controllers\BalanceOrderController::class, 'print'])->name('balanceorder.print');
     });
 
     Route::middleware(['role:Super Admin|Admin|Production User|Production Admin'])->prefix('demand-forecasting')->group(function () {
@@ -810,5 +810,5 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
     Route::get('sales_order', [SalesOrderController::class, 'index'])->name('sales_order.index');
     Route::get('/{invoice_id}/view', [SalesOrderController::class, 'view'])->name('sales_order.view');
     Route::get('/{invoice_id}/print', [SalesOrderController::class, 'print'])->name('sales_order.print');
-    });  
+    });
 });
