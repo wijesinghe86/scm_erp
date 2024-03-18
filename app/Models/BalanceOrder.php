@@ -35,4 +35,8 @@ class BalanceOrder extends Model
     {
         return $this->hasOne(Warehouse::class, 'id', 'location_id');
     }
+    public function createUser()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by');
+    }
 }
