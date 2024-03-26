@@ -22,6 +22,7 @@ use App\Http\Controllers\MrApproveController;
 use App\Http\Controllers\PrApproveController;
 use App\Http\Controllers\StockItemController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\CreditNoteController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DfApprovalController;
 use App\Http\Controllers\SalesOrderController;
@@ -84,7 +85,7 @@ use App\Http\Controllers\OperationMachanismProductionAndTimeManagementController
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view ('welcome');
 });
 
 Auth::routes(['register' => false]);
@@ -810,5 +811,16 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
     Route::get('sales_order', [SalesOrderController::class, 'index'])->name('sales_order.index');
     Route::get('/{invoice_id}/view', [SalesOrderController::class, 'view'])->name('sales_order.view');
     Route::get('/{invoice_id}/print', [SalesOrderController::class, 'print'])->name('sales_order.print');
+    });
+
+    Route::prefix('credit_note')->group(function () {
+        Route::middleware(['role:Super Admin|Admin'])->get('customer', [CreditNoteController::class, 'index'])->name('credit_note.index');
+        Route::middleware(['role:Super Admin|Admin'])->get('/create', [App\Http\Controllers\CreditNoteController::class, 'create'])->name('credit_note.create');
+        Route::middleware(['role:Super Admin|Admin'])->post('/store', [App\Http\Controllers\CreditNoteController::class, 'store'])->name('credit_note.store');
+        Route::middleware(['role:Super Admin|Admin'])->post('/getInvoiceDetails', [App\Http\Controllers\CreditNoteController::class, 'getInvDetails'])->name('creditnote.getInvoiceDetails');
+        Route::middleware(['role:Super Admin|Admin'])->get('/getNonIssues', [App\Http\Controllers\CreditNoteController::class, 'nonIssues'])->name('creditnote.getNonIssues');
+        Route::middleware(['role:Super Admin|Admin'])->get('/getReturnItems', [App\Http\Controllers\CreditNoteController::class, 'getReturn'])->name('creditnote.getReturnItems');
+        Route::middleware(['role:Super Admin|Admin'])->get('/getBalanceOrders', [App\Http\Controllers\CreditNoteController::class, 'getBalanceItems'])->name('creditnote.getBalanceOrders');
+
     });
 });

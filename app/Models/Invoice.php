@@ -115,7 +115,7 @@ class Invoice extends Model
     // {
     //     return $this->hasMany(DeliveryOrderItem::class, 'id', 'invoice_id');
     // }
-    
+
     /**
      * Calculate Discount
      *

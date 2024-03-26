@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\DeliveryOrder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class DeliveryOrderItem extends Model
 {
@@ -39,9 +40,15 @@ class DeliveryOrderItem extends Model
     }
 
     public function issued()
-        {
-            return $this->hasOne(User::class, 'id', 'issued_by');
-        }
-    
+     {
+         return $this->hasOne(User::class, 'id', 'issued_by');
+    }
+
+    public function delivery_order_no()
+    {
+        return $this->hasOne(DeliveryOrder::class, 'id', 'delivery_order_no');
+    }
+
+
 
 }

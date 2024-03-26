@@ -2,10 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\StockItem;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class InvoiceReturnItem extends Model
 {
     use HasFactory;
+
+
+    public function stock_item()
+    {
+        return $this->hasOne(StockItem::class, 'id', 'item_id');
+    }
 }
+
+
+
