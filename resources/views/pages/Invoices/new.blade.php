@@ -760,6 +760,8 @@ function onInvoiceTypeChange(){
 
 
         });
+
+        
    
     </script>
 @endpush

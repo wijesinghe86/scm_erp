@@ -170,8 +170,12 @@
                     </li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('sales_order.index') }}">Sales Order</a>
                     </li>
-
-
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('credit_note.index') }}">Credit Note</a>
+                    </li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('credit_note_approval.index') }}">Credit Note Approve</a>
+                    </li>
+                    {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('credit_note_approval.index') }}">Credit Note Print</a>
+                    </li> --}}
                 </ul>
             </div>
         </li>
@@ -346,7 +350,7 @@
     </li>
     @endhasanyrole
     {{-- Warehouse --}}
-    @hasanyrole('Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin')
+    @hasanyrole('Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin|Sales User|Sales Admin')
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-inv" aria-expanded="false" aria-controls="ui-inv">
             <span class="menu-title">Warehouse</span>
@@ -372,7 +376,7 @@
                         Order</a>
                 </li>
                 @endhasanyrole
-                @hasanyrole('Super Admin|Admin|Warehouse User')
+                @hasanyrole('Super Admin|Admin|Warehouse User|Sales User|Sales Admin')
                 <li class="nav-item"> <a class="nav-link" href="{{ route('balanceorder.index') }}">Balance
                         Order</a></li>
                 @endhasanyrole
