@@ -22,6 +22,7 @@ use App\Http\Controllers\MrApproveController;
 use App\Http\Controllers\PrApproveController;
 use App\Http\Controllers\StockItemController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\CreditNoteController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DfApprovalController;
 use App\Http\Controllers\SalesOrderController;
@@ -34,6 +35,7 @@ use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\GoodsIssueNoteController;
 use App\Http\Controllers\ProductionCostController;
 use App\Http\Controllers\SemiProductionController;
+use App\Http\Controllers\CreditNotePrintController;
 use App\Http\Controllers\InvoiceSettingsController;
 use App\Http\Controllers\MaterialRequestController;
 use App\Http\Controllers\OpenningBalanceController;
@@ -49,6 +51,7 @@ use App\Http\Controllers\LocationBayDesigncontroller;
 use App\Http\Controllers\LocationRowDesignController;
 use App\Http\Controllers\PlantRegistrationController;
 use App\Http\Controllers\ProductionWastageController;
+use App\Http\Controllers\CreditNoteApprovalController;
 use App\Http\Controllers\LocationRackDesignController;
 use App\Http\Controllers\RawMaterialRequestController;
 use App\Http\Controllers\LocationShelfDesignController;
@@ -84,7 +87,7 @@ use App\Http\Controllers\OperationMachanismProductionAndTimeManagementController
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view ('welcome');
 });
 
 Auth::routes(['register' => false]);
@@ -676,12 +679,12 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::post('/create', [App\Http\Controllers\FinishedGoodsSerialCodeAssigningController::class, 'store'])->name('finishedgoodsserialcodeassigning.store');
     });
 
-    Route::middleware(['role:Super Admin|Admin|Warehouse User'])->prefix('BalanceOrder')->group(function () {
-        Route::get('BalanceOrder', [App\Http\Controllers\BalanceOrderController::class, 'index'])->name('balanceorder.index');
-        Route::get('{balance_order}/view', [App\Http\Controllers\BalanceOrderController::class, 'view'])->name('balanceorder.view');
-        Route::get('{balance_order}/delicery-order-create', [App\Http\Controllers\BalanceOrderController::class, 'deliveryOrderCreateIndex'])->name('balanceorder.delicery_order_create_index');
-        Route::post('{balance_order}/delicery-order-create', [App\Http\Controllers\BalanceOrderController::class, 'deliveryOrderCreate'])->name('balanceorder.delivery_order_create');
-        Route::get('/{balance_order_id}/print', [App\Http\Controllers\BalanceOrderController::class, 'print'])->name('balanceorder.print');
+    Route::middleware(['role:Super Admin|Admin|Warehouse User|Sale User|Sales Admin'])->prefix('BalanceOrder')->group(function () {
+        Route::middleware(['role:Super Admin|Admin|Warehouse User|Sale User|Sales Admin'])->get('BalanceOrder', [App\Http\Controllers\BalanceOrderController::class, 'index'])->name('balanceorder.index');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User|Sale User|Sales Admin'])->get('{balance_order}/view', [App\Http\Controllers\BalanceOrderController::class, 'view'])->name('balanceorder.view');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('{balance_order}/delicery-order-create', [App\Http\Controllers\BalanceOrderController::class, 'deliveryOrderCreateIndex'])->name('balanceorder.delicery_order_create_index');
+        Route::middleware(['role:Super Admin|Admin|Sale User|Sales Admin'])->post('{balance_order}/delicery-order-create', [App\Http\Controllers\BalanceOrderController::class, 'deliveryOrderCreate'])->name('balanceorder.delivery_order_create');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{balance_order_id}/print', [App\Http\Controllers\BalanceOrderController::class, 'print'])->name('balanceorder.print');
     });
 
     Route::middleware(['role:Super Admin|Admin|Production User|Production Admin'])->prefix('demand-forecasting')->group(function () {
@@ -810,5 +813,33 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
     Route::get('sales_order', [SalesOrderController::class, 'index'])->name('sales_order.index');
     Route::get('/{invoice_id}/view', [SalesOrderController::class, 'view'])->name('sales_order.view');
     Route::get('/{invoice_id}/print', [SalesOrderController::class, 'print'])->name('sales_order.print');
-    });  
+    });
+
+    Route::prefix('credit_note')->group(function () {
+        Route::middleware(['role:Super Admin|Admin'])->get('/', [CreditNoteController::class, 'index'])->name('credit_note.index');
+        Route::middleware(['role:Super Admin|Admin'])->get('/create', [App\Http\Controllers\CreditNoteController::class, 'create'])->name('credit_note.create');
+        Route::middleware(['role:Super Admin|Admin'])->post('/store', [App\Http\Controllers\CreditNoteController::class, 'store'])->name('credit_note.store');
+        Route::middleware(['role:Super Admin|Admin'])->post('/getInvoiceDetails', [App\Http\Controllers\CreditNoteController::class, 'getInvDetails'])->name('creditnote.getInvoiceDetails');
+        Route::middleware(['role:Super Admin|Admin'])->get('/getNonIssues', [App\Http\Controllers\CreditNoteController::class, 'nonIssues'])->name('creditnote.getNonIssues');
+        Route::middleware(['role:Super Admin|Admin'])->get('/getReturnItems', [App\Http\Controllers\CreditNoteController::class, 'getReturn'])->name('creditnote.getReturnItems');
+        Route::middleware(['role:Super Admin|Admin'])->get('/getBalanceOrders', [App\Http\Controllers\CreditNoteController::class, 'getBalanceItems'])->name('creditnote.getBalanceOrders');
+
+    });
+
+    Route::prefix('credit_note_Approval')->group(function () {
+        Route::middleware(['role:Super Admin|Admin'])->get('/', [CreditNoteApprovalController::class, 'index'])->name('credit_note_approval.index');
+        Route::middleware(['role:Super Admin|Admin'])->get('/create', [App\Http\Controllers\CreditNoteApprovalController::class, 'create'])->name('credit_note_approval.create');
+        Route::middleware(['role:Super Admin|Admin'])->post('/store', [App\Http\Controllers\CreditNoteApprovalController::class, 'store'])->name('credit_note_approval.store');
+        Route::middleware(['role:Super Admin|Admin'])->post('/getCreditNoteDetails', [App\Http\Controllers\CreditNoteApprovalController::class, 'getCnDetails'])->name('credit_note_approval.getCreditNoteDetails');
+        Route::middleware(['role:Super Admin|Admin'])->get('/getCnItems', [App\Http\Controllers\CreditNoteApprovalController::class, 'getCnItems'])->name('credit_note_approval.getCnItems');
 });
+
+Route::prefix('credit_note_print')->group(function () {
+    Route::get('/', [CreditNotePrintController::class, 'index'])->name('credit_note_print.index');
+    Route::get('/{creditnote_id}/view', [CreditNotePrintController::class, 'view'])->name('credit_note_print.view');
+    Route::get('/{creditnote_id}/print', [CreditNotePrintController::class, 'print'])->name('credit_note_print.print');
+
+});
+
+});
+

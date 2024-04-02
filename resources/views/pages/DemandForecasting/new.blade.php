@@ -13,7 +13,7 @@
                                     <label>DF No</label>
                                     <input type="text" class="form-control" name="df_no" id="df_no"
                                         placeholder="DF No" value="{{$next_number}}" readonly>
-                                </div>                               
+                                </div>
                                     <div class="form-group col-md-2">
                                       <label>Material Request No</label>
                                       <select class ="form-control mr_input" name="mrf_no" id="mrf_no" placeholder="MRF No" >
@@ -23,7 +23,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                
+
                                 <div class="form-group col-md-2">
                                     <label>DF Date</label>
                                     <input type="date" class="form-control" name="df_date" id="df_date">
@@ -42,8 +42,9 @@
                                     <input type="date" class="form-control" name="required_date" id="required_date">
                                 </div>
                             </div>
-                           
+
                             <div class="items_table"></div>
+                          
 
                             <button type="submit" class="btn btn-success me-2">Complete Demand Forecasting</button>
                             <a href="{{ route('demand-forecasting.index') }}" class="btn btn-danger">Go to DF Registry</a>

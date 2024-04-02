@@ -9,50 +9,57 @@
                         <h4 class="card-title"><a href="{{ route('dashboard') }}" ><i class="mdi mdi-home"></i></a>Credit Note Regsitry</h2>
                             <br>
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <a href="{{ route('invoices.new') }}" class="btn btn-success mb-2 float-end mb-2"> Add new </a>
+                                <a href="{{ route('credit_note.create') }}" class="btn btn-success mb-2 float-end mb-2"> Add new </a>
                             </div>
 
                             <table class="table bordered form-group">
-                            <table class="table table-bordered" id="invoices-table">
+                            <table class="table table-bordered" id="credit-table">
                                 <thead>
                                     <tr>
                                         <td>No</td>
-                                        <td>INVOICE DATE</td>
-                                        <th>INVOICE NO</th>
+                                        <td>CN NO</td>
+                                        <th>INVOICE NO</th> 
+                                        <th>REF.DOC.NO</th> 
                                         <th>CUSTOMER NAME</th>
-                                        <th>SALES STAFF NAME</th>
-                                        <th>STATUS</th>
-                                        <th>CREATED BY</th>
-                                        {{-- <th>CREATED AT</th> --}}
-                                        <td>Action</td>
+                                          <th>ITEM</th> 
+                                        {{-- <th>DESCRIPTION</th>
+                                        <th>U/M</th>   
+                                        <td>Action</td>    --}}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($invoices as $invoice)
-                                        <tr>
-                                            <td>{{$loop->iteration}}</td>
-                                            <td>{{ $invoice->invoice_date }}</td>
-                                            <td>{{ $invoice->invoice_number }}</td>
-                                            <td>{{ $invoice->Customer ? $invoice->Customer->customer_name : 'Customer not found' }}
-                                            </td>
-                                            <td>{{ $invoice->SalesStaff ? $invoice->SalesStaff->employee_name_with_intial : 'Sales Staff not found' }}
-                                            </td>
-                                            <td>{{ $invoice->status }}</td>
-                                            <td>{{ $invoice->createUser ? $invoice->createUser->name : 'User not found' }}
-                                            </td>
-                                            {{-- <td>{{ $invoice->created_at }}</td> --}}
-                                            <td>
-                                                <a href="{{ route('invoices.preview', $invoice->id) }}">
-                                                    <i class="fa-sharp fa-solid fa-eye text-info"></i>
-                                                </a>
-                                                <a href="">
-                                                    <i class="fa-sharp fa-solid fa-trash text-danger"></i>
-                                                </a>
-                                                <a href="">
-                                                    <i class="fa-sharp fa-solid fa-print"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                    @foreach ($creditNotes as $creditNote )
+                                    <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ optional($creditNote)->credit_note_no }}</td>
+                                    <td>{{ optional($creditNote->invoice)->invoice_number}}</td> 
+                                    <td>{{ optional($creditNote->getSource())->sourceNo}}</td> 
+                                    <td>{{ optional(optional($creditNote->invoice->customer))->customer_name}}</td>
+                                    <td>
+                                        <table class="table table-striped">
+                                            <tr>
+                                                <th scope="col" >#</th>
+                                                <th scope="col" >S/No</th>
+                                                <th scope="col" >Descrition</th>
+                                                <th scope="col" >U/M</th>
+                                                <th scope="col" >Qty</th>
+                                            </tr>
+                                            @foreach ($creditNote->items as $creditItem)
+                                                        <tr>
+                                                            <td>{{$loop->iteration}}</td>
+                                                            <td>{{ $creditItem->stockItems->stock_number }}</td>
+                                                            <td>{{ $creditItem->stockItems->description }}</td>
+                                                            <td>{{ $creditItem->stockItems->unit }}</td>
+                                                            <td>{{ $creditItem->credit_qty }}</td>
+                                                        </tr>
+                                                        @endforeach
+                                                        </table>
+
+                                    {{-- <td>{{ optional($creditNote->creditItem)->stock_no}}</td> --}}
+                                    {{-- <td>{{ optional(optional($creditNote->creditItem->stockItems))->stock_number }}</td>
+                                    <td>{{ optional(optional($creditNote->creditItem->stockItems))->description }}</td>
+                                    <td>{{ optional(optional($creditNote->creditItem->stockItems))->unit }}</td>   --}}
+                                    </tr>  
                                     @endforeach
                                 </tbody>
                             </table>
@@ -64,13 +71,11 @@
 @endsection
 
 @push('scripts')
-    <script>
-        $(document).ready(function() {
-            $('#invoices-table').DataTable(
-
-            );
-        });
-    </script>
+<script>
+    $(document).ready(function() {
+        $('#credit-table').DataTable();
+    });
+</script>
 @endpush
 
 @push('styles')

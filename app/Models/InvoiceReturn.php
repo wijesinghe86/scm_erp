@@ -13,7 +13,7 @@ class InvoiceReturn extends Model
     public function generateReturnOrderNumber()
     {
         $return_order_count  = self::get()->count();
-        return "RMS" . sprintf('%06d', $return_order_count + 1);
+        return "MRS" . sprintf('%06d', $return_order_count + 1);
     }
 
     public function items()
