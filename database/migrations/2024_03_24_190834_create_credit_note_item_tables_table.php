@@ -22,6 +22,10 @@ return new class extends Migration
             $table->decimal('sales_value', 15,2)->nullable();
             $table->decimal('vat_amount', 15,2)->nullable();
             $table->decimal('total_sales_value', 15,2)->nullable();
+            $table->string('status')->nullable();
+            $table->string('remarks')->nullable();
+            $table->unsignedBigInteger('status_updated_by')->nullable();
+            $table->dateTime('status_updated_date_time')->nullable();
             $table->timestamps();
         });
     }

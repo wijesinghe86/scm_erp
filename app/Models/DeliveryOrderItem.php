@@ -49,6 +49,11 @@ class DeliveryOrderItem extends Model
         return $this->hasOne(DeliveryOrder::class, 'id', 'delivery_order_no');
     }
 
+    public function delivery_order()
+    {
+        return $this->hasOne(DeliveryOrder::class, 'id', 'delivery_order_no');
+    }
+
 
 
 }

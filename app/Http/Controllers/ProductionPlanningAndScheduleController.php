@@ -50,6 +50,7 @@ class ProductionPlanningAndScheduleController extends Controller
             'start_date'=>'required',
             'end_date'=>'required'
         ]);
+        logger(request(all));
 
         $pps = new ProductionPlanning;
         $pps->pps_no = $request->pps_no;
@@ -71,6 +72,7 @@ class ProductionPlanningAndScheduleController extends Controller
             if (!isset($row['is_selected'])) {
                 continue;
             }
+            
             $pps_item = new ProductionPlaningItem();
             $pps_item->stock_item_id = $row['item_id'];
             $pps_item->pps_qty = $row['pps_qty'];

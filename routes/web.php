@@ -35,6 +35,7 @@ use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\GoodsIssueNoteController;
 use App\Http\Controllers\ProductionCostController;
 use App\Http\Controllers\SemiProductionController;
+use App\Http\Controllers\CreditNotePrintController;
 use App\Http\Controllers\InvoiceSettingsController;
 use App\Http\Controllers\MaterialRequestController;
 use App\Http\Controllers\OpenningBalanceController;
@@ -50,6 +51,7 @@ use App\Http\Controllers\LocationBayDesigncontroller;
 use App\Http\Controllers\LocationRowDesignController;
 use App\Http\Controllers\PlantRegistrationController;
 use App\Http\Controllers\ProductionWastageController;
+use App\Http\Controllers\CreditNoteApprovalController;
 use App\Http\Controllers\LocationRackDesignController;
 use App\Http\Controllers\RawMaterialRequestController;
 use App\Http\Controllers\LocationShelfDesignController;
@@ -814,7 +816,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
     });
 
     Route::prefix('credit_note')->group(function () {
-        Route::middleware(['role:Super Admin|Admin'])->get('customer', [CreditNoteController::class, 'index'])->name('credit_note.index');
+        Route::middleware(['role:Super Admin|Admin'])->get('/', [CreditNoteController::class, 'index'])->name('credit_note.index');
         Route::middleware(['role:Super Admin|Admin'])->get('/create', [App\Http\Controllers\CreditNoteController::class, 'create'])->name('credit_note.create');
         Route::middleware(['role:Super Admin|Admin'])->post('/store', [App\Http\Controllers\CreditNoteController::class, 'store'])->name('credit_note.store');
         Route::middleware(['role:Super Admin|Admin'])->post('/getInvoiceDetails', [App\Http\Controllers\CreditNoteController::class, 'getInvDetails'])->name('creditnote.getInvoiceDetails');
@@ -823,4 +825,21 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin'])->get('/getBalanceOrders', [App\Http\Controllers\CreditNoteController::class, 'getBalanceItems'])->name('creditnote.getBalanceOrders');
 
     });
+
+    Route::prefix('credit_note_Approval')->group(function () {
+        Route::middleware(['role:Super Admin|Admin'])->get('/', [CreditNoteApprovalController::class, 'index'])->name('credit_note_approval.index');
+        Route::middleware(['role:Super Admin|Admin'])->get('/create', [App\Http\Controllers\CreditNoteApprovalController::class, 'create'])->name('credit_note_approval.create');
+        Route::middleware(['role:Super Admin|Admin'])->post('/store', [App\Http\Controllers\CreditNoteApprovalController::class, 'store'])->name('credit_note_approval.store');
+        Route::middleware(['role:Super Admin|Admin'])->post('/getCreditNoteDetails', [App\Http\Controllers\CreditNoteApprovalController::class, 'getCnDetails'])->name('credit_note_approval.getCreditNoteDetails');
+        Route::middleware(['role:Super Admin|Admin'])->get('/getCnItems', [App\Http\Controllers\CreditNoteApprovalController::class, 'getCnItems'])->name('credit_note_approval.getCnItems');
 });
+
+Route::prefix('credit_note_print')->group(function () {
+    Route::get('/', [CreditNotePrintController::class, 'index'])->name('credit_note_print.index');
+    Route::get('/{creditnote_id}/view', [CreditNotePrintController::class, 'view'])->name('credit_note_print.view');
+    Route::get('/{creditnote_id}/print', [CreditNotePrintController::class, 'print'])->name('credit_note_print.print');
+
+});
+
+});
+

@@ -13,22 +13,54 @@
                             </div>
 
                             <table class="table bordered form-group">
-                            <table class="table table-bordered" id="invoices-table">
+                            <table class="table table-bordered" id="credit-table">
                                 <thead>
                                     <tr>
                                         <td>No</td>
-                                        <td>INVOICE DATE</td>
-                                        <th>INVOICE NO</th>
+                                        <td>CN NO</td>
+                                        <th>INVOICE NO</th> 
+                                        <th>REF.DOC.NO</th> 
                                         <th>CUSTOMER NAME</th>
-                                        <th>SALES STAFF NAME</th>
-                                        <th>STATUS</th>
-                                        <th>CREATED BY</th>
-                                        {{-- <th>CREATED AT</th> --}}
-                                        <td>Action</td>
+                                          <th>ITEM</th> 
+                                        {{-- <th>DESCRIPTION</th>
+                                        <th>U/M</th>   
+                                        <td>Action</td>    --}}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   
+                                    @foreach ($creditNotes as $creditNote )
+                                    <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ optional($creditNote)->credit_note_no }}</td>
+                                    <td>{{ optional($creditNote->invoice)->invoice_number}}</td> 
+                                    <td>{{ optional($creditNote->getSource())->sourceNo}}</td> 
+                                    <td>{{ optional(optional($creditNote->invoice->customer))->customer_name}}</td>
+                                    <td>
+                                        <table class="table table-striped">
+                                            <tr>
+                                                <th scope="col" >#</th>
+                                                <th scope="col" >S/No</th>
+                                                <th scope="col" >Descrition</th>
+                                                <th scope="col" >U/M</th>
+                                                <th scope="col" >Qty</th>
+                                            </tr>
+                                            @foreach ($creditNote->items as $creditItem)
+                                                        <tr>
+                                                            <td>{{$loop->iteration}}</td>
+                                                            <td>{{ $creditItem->stockItems->stock_number }}</td>
+                                                            <td>{{ $creditItem->stockItems->description }}</td>
+                                                            <td>{{ $creditItem->stockItems->unit }}</td>
+                                                            <td>{{ $creditItem->credit_qty }}</td>
+                                                        </tr>
+                                                        @endforeach
+                                                        </table>
+
+                                    {{-- <td>{{ optional($creditNote->creditItem)->stock_no}}</td> --}}
+                                    {{-- <td>{{ optional(optional($creditNote->creditItem->stockItems))->stock_number }}</td>
+                                    <td>{{ optional(optional($creditNote->creditItem->stockItems))->description }}</td>
+                                    <td>{{ optional(optional($creditNote->creditItem->stockItems))->unit }}</td>   --}}
+                                    </tr>  
+                                    @endforeach
                                 </tbody>
                             </table>
                     </div>
@@ -39,7 +71,11 @@
 @endsection
 
 @push('scripts')
-   
+<script>
+    $(document).ready(function() {
+        $('#credit-table').DataTable();
+    });
+</script>
 @endpush
 
 @push('styles')

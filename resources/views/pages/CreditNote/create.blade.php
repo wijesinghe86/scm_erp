@@ -6,6 +6,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h1 style="color:grey" class="card-title">Credit Note</h1>
+                       
                         <form class="forms-sample" method="POST" action="{{ route('credit_note.store') }}">
                             @csrf
                             <br>
@@ -25,7 +26,7 @@
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>Invoice Date</label>
-                                    <input type="text" class="form-control" name="invoice_date" id="invoice_date"
+                                    <input type="date" class="form-control" name="invoice_date" id="invoice_date"
                                         placeholder="invoice_date" readonly>
                                 </div>
                                 <div class="form-group col-md-3">
@@ -35,7 +36,7 @@
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>Credit Note Date</label>
-                                    <input type="date" class="form-control" name="invoice_no" placeholder="invoice_no"
+                                    <input type="date" class="form-control" name="credit_note_date" placeholder="Credit_Note_Date"
                                         value="{{ now()->format('Y-m-d') }}" readonly>
                                 </div>
                             </div>
@@ -72,9 +73,10 @@
                             <hr>
                             <p style="color:gray"> Select the Reference Document </p>
                             <div class="row">
+                                 {{-- @if (count($mrs) >0)  --}}
                                 <div class="form-group col-md-2 ">
                                     <label>MRS No</label>
-                                    <select class="form-control invoice-select mrs_input" name="mrs_no" id="mrs_no">
+                                    <select class="form-control invoice-select mrs_input" name="reference_no" id="mrs_no">
                                         <option value="" selected>Select</option>
                                         @foreach ($mrs as $return)
                                             <option value="{{ $return->id }}">
@@ -82,11 +84,14 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                </div>
+                                </div>    
+                                {{-- @endif  --}}
+                                
+                                 {{-- @if (count($deliveryOrders) >0)  --}}
                                 <div class="form-group col-md-2 ">
                                     <label>D/O No</label>
-                                    <select class="form-control invoice-select do_input" name="delivery_no" id="delivery_no">
-                                        <option value="" selected>Select Invoice</option>
+                                    <select class="form-control invoice-select do_input" name="reference_no" id="delivery_no">
+                                        <option value="" selected>Select</option>
                                         @foreach ($deliveryOrders as $delivery)
                                             <option value="{{ $delivery->id }}">
                                                 {{ $delivery->delivery_order_no }}
@@ -94,10 +99,13 @@
                                         @endforeach
                                     </select>
                                 </div>
+                              {{-- @endif  --}}
+                                
+                             {{-- @if (count($balanceOrders) >0)  --}}
                                 <div class="form-group col-md-2 ">
-                                    <label>B/O No</label>
-                                    <select class="form-control invoice-select bo_input" name="bal_no" id="bal_no">
-                                        <option value="" selected>Select Invoice</option>
+                                   <label>B/O No</label>
+                                    <select class="form-control invoice-select bo_input" name="reference_no" id="bal_no">
+                                        <option value="" selected>Select</option>
                                         @foreach ($balanceOrders as $balances)
                                             <option value="{{ $balances->id }}">
                                                 {{ $balances->balance_order_no }}
@@ -105,8 +113,11 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                {{-- @endif --}}
                                 </div>
-                            <hr>
+                                <button type="button" style="background-color: blue"  id="resetBtn" >Reset</button>
+                                <input type="hidden" name="reference_type" id="reference_type" />
+                                <hr>
                             <div class="items_table"></div>
                             <div class="return_items_table" ></div>
                             <div class="balance_items_table" ></div>
@@ -114,7 +125,7 @@
                             <br>
 
                             <button type="submit" class="btn btn-success me-2">Complete</button>
-                            <a href="{{ route('demand-forecasting.index') }}" class="btn btn-danger">Go to Credit Note Registry</a>
+                            <a href="{{ route('credit_note.index') }}" class="btn btn-danger">Go to Credit Note Registry</a>
                         </form>
                     </div>
                 </div>
@@ -133,6 +144,9 @@
         $(".do_input").change(function() {
             var id = $(this).val();
             // alert("Handler for .change() called." + id);
+        $('#mrs_no').attr('disabled', true)
+        $('#bal_no').attr('disabled', true)
+        $('#reference_type').val('DO')
 
             $(".items_table").load('/credit_note/getNonIssues?delivery_order_no=' + id, function() {
 
@@ -146,11 +160,28 @@
         $(".mrs_input").change(function() {
             var id = $(this).val();
             // alert("Handler for .change() called." + id);
-
+            // disaable or hide d/o and b/o when selecting mrs no
+            $('#delivery_no').attr('disabled', true)
+            $('#bal_no').attr('disabled', true)
+            $('#reference_type').val('MRS')
             $(".return_items_table").load('/credit_note/getReturnItems?return_id=' + id, function() {
         
             });
         });
+    $('#resetBtn').on('click', function(){
+        $('#delivery_no').attr('disabled', false)
+        $('#mrs_no').attr('disabled', false)
+        $('#bal_no').attr('disabled', false)
+        clearTables()
+    })
+
+
+    function clearTables(){
+        $(".items_table").empty() //clear item table
+        $(".return_items_table").empty() //clear item table
+        $(".balance_items_table").empty() //clear item table
+
+    }
 
         $(document).ready(function() {
             // alert("ss");
@@ -159,7 +190,9 @@
         $(".bo_input").change(function() {
             var id = $(this).val();
             // alert("Handler for .change() called." + id);
-
+            $('#mrs_no').attr('disabled', true)
+            $('#delivery_no').attr('disabled', true)
+            $('#reference_type').val('BO')
             $(".balance_items_table").load('/credit_note/getBalanceOrders?balance_order_id=' + id, function() {
 
             });
@@ -184,7 +217,8 @@
             }
 
             selectedInvoice = selectedInvoice[0];
-
+            clearTables() // clear all item tables when change the invoice number
+            
             $.ajax({
                 url: "{{ route('creditnote.getInvoiceDetails') }}",
                 headers: {
@@ -226,6 +260,7 @@
             document.getElementById("customer_code").value = selectedInvoice.customer.customer_code;
             document.getElementById("customer_name").value = selectedInvoice.customer.customer_name;
             document.getElementById("vat_no").value = selectedInvoice.customer.customer_vat_number;
+            document.getElementById("invOption").value = selectedInvoice.customer.customer_vat_number;
         }
 
         
