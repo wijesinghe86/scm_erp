@@ -54,7 +54,7 @@ class CreditNoteApprovalController extends Controller
                 $credit_item->save();
             }
         }
-        flash()->success("Product planing and schedule approval updated");
+        flash()->success("Credit Note approval updated");
         return redirect()->back();
     }
 }
