@@ -174,8 +174,8 @@
                     </li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('credit_note_approval.index') }}">Credit Note Approve</a>
                     </li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('credit_note_approval.index') }}">Credit Note Print</a>
-                    </li>
+                    {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('credit_note_approval.index') }}">Credit Note Print</a>
+                    </li> --}}
                 </ul>
             </div>
         </li>
