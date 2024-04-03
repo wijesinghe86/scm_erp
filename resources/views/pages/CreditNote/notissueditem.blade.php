@@ -7,11 +7,11 @@
                     <th style="width: 0.5mm">Description</th>
                     <th style="width: 1rem">U/M</th>
                     <th style="width: 2rem">Order Qty</th>
-                    <th style="width: 2rem">Unit Rate</th>
-                    <th style="width: 2rem">Credit Qty</th>
-                    <th style="width: 2rem">Sales Val </th>
-                    <th style="width: 2rem">Vat amount</th>
-                    <th style="width: 2rem">Total Value</th>
+                    <th style="width: 8rem;">Unit Rate</th>
+                    <th style="width: 6rem">Credit Qty</th>
+                    <th style="width: 15rem">Sales Val </th>
+                    <th style="width: 10rem">Vat amount</th>
+                    <th style="width: 10rem">Total Value</th>
                     <th style="width: 2rem"></th>
                 </tr>
             </thead>
@@ -26,16 +26,16 @@
                         <td style="width: 2rem">{{ $row->stock_item->stock_number }}</td>
                         <td style="width: 0.5mm">{{ $row->stock_item->description }}</td>
                         <td style="width: 1rem">{{ $row->stock_item->unit }}</td>
-                        <td style="width: 3rem">{{ $row->qty }}</td>
-                        <td style="width: 5rem">{{ $row->unit_price }}</td>
-                        <td style="width: 3rem;" ><input name="items[{{ $index }}][creditQty]" max="{{ $row->qty }}" id="items{{ $index }}creditQty"
+                        <td style="width: 10rem">{{ $row->qty }}</td>
+                        <td style="width: 10rem">{{ $row->unit_price }}</td>
+                        <td style="width: 20rem; align:left;" ><input name="items[{{ $index }}][creditQty]" max="{{ $row->qty }}" id="items{{ $index }}creditQty"
                                 onchange="onCreditQtyChange({{ $row->id }})" class="form-control" type="number"
                                 value="{{ $row->qty }}"></td>
-                                <td style="width: 5rem"><input name="items[{{ $index }}][saleValue]"  id="items{{ $index }}saleValue" readonly class="form-control" type="number">
+                                <td style="width:55rem; align:right;"><input name="items[{{ $index }}][saleValue]"  id="items{{ $index }}saleValue" readonly class="form-control" type="number">
                                 </td>
-                                <td style="width: 5rem"><input name="items[{{ $index }}][vatAmount]" id="items{{ $index }}vatAmount" readonly class="form-control" type="number">
+                                <td style="width:50rem; align:left;"><input name="items[{{ $index }}][vatAmount]" id="items{{ $index }}vatAmount" readonly class="form-control" type="number">
                                         </td>
-                                <td style="width: 5rem"><input name="items[{{ $index }}][totalValue]" id="items{{ $index }}totalValue" readonly class="form-control" type="number">
+                                <td style="width:50rem; align:left;"><input name="items[{{ $index }}][totalValue]" id="items{{ $index }}totalValue" readonly class="form-control" type="number">
                                         </td>
                                         <input type="hidden" name="items[{{ $index }}][stock_item_id]"
                                         value="{{ $row->stock_item->id }}" />
@@ -54,7 +54,7 @@
             <br>
         <div class="row">
             <div class="form-group col-md-2">
-            <label>Grand Total :</label>
+            <label>Grand Total(Rs.):</label>
             <br>
             <input style="background-color:palevioletred" name="grand_total" id="grandTotal" readonly class="form-control" type="number"
                                 value="0">
