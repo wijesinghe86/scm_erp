@@ -42,7 +42,7 @@ class CreditNotePrintController extends Controller
             return abort(404);
         }
 
-        $pdf = PDF::loadView('pages.CreditNote.CreditNotePrint.print', compact('creditnotes'))->setPaper('A5','landscape');
+        $pdf = PDF::loadView('pages.CreditNote.CreditNotePrint.print', compact('creditnotes'))->setPaper('A4','portrait');
         return $pdf->stream('credit_note_print.print');
     }
 

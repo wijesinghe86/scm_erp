@@ -124,6 +124,19 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
+                                        <label>Credit Days</label>
+                                        <select name="credit_days" class="form-control" id="credit_days">
+                                            <option selected value="" disabled>Select</option>
+                                            @foreach ($customer::$CREDIT_PERIODS as $item)
+                                                <option value="{{ $item['value'] }}">
+                                                    {{ $item['label'] }}
+                                                </option>
+                                            @endforeach
+                                            {{-- <option value="1">Cash</option>
+                                            <option value="2">Credit</option> --}}
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
                                         <label>PO No</label>
                                         <input type="text" class="form-control" name="po_number", id="po_number">
                                     </div>

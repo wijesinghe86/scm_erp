@@ -7,11 +7,9 @@
     <style>
         *{
             margin-top: 2mm;
-            margin-bottom: 0;
-            /* margin-left: 1cm;
-            margin-right: 1cm; */
 
         }
+        
         table {
             width: 100%;
            
@@ -35,25 +33,31 @@
 <body>
   {{-- header --}}
   <h2 style="text-align:center;">Janatha Steel Tube (Private) Limited</h2>
-  <h5 style="text-align:center">Pallegodawatta Industrial Village, Meegama Road, Mathugama</h5>
-  <h5 style="text-align:center">Vat Reg.No:174022291-7000</h5> <br>
+  <h4 style="text-align:center; margin-top:-5mm;">Pallegodawatta Industrial Village, Meegama Road, Mathugama</h4>
+  <h4 style="text-align:center; margin-top:-5mm;">Vat Reg.No:174022291-7000</h4>
   <p style="font-size: 20px; text-align:center">Credit Note</p>
   <hr>
+
    <table>
     <tr style="font-size: 13px">
-       <td><strong>Customer:</strong></td>
-        <td style="text-align: left; width:60mm"><strong>CN No:</strong>{{ $creditnotes->credit_note_no }}</td>
-        <td style="text-align: right; width:50mm"><strong>CN Date:</strong>{{ $creditnotes->credit_note_date }}</td>
+       <td style="text-align: left; width:40mm"><strong>Customer:</strong></td>
+       <td></td>
+       <td></td>
+       <td></td>
+        <td style="text-align: left; width:50mm"><strong>Credit Note No:</strong>{{ $creditnotes->credit_note_no }}</td>
+        
         
         
         
     </tr>
     <tr style="font-size: 13px">
-        <td>{{ $creditnotes->invoice->Customer->customer_name }}|{{ $creditnotes->invoice->Customer->customer_address_line1 }},{{ $creditnotes->invoice->Customer->customer_address_line2 }}</td><br>
-        <td><strong>Invoice No: </strong>{{ $creditnotes->invoice->invoice_number}}</td>
-        <td><strong>Invoice Date:</strong> {{ $creditnotes->invoice->invoice_date}}</td>
+        <td style="width:30mm">{{ $creditnotes->invoice->Customer->customer_name }}|{{ $creditnotes->invoice->Customer->customer_address_line1 }},{{ $creditnotes->invoice->Customer->customer_address_line2 }}</td><br>
+        <td style="width:45mm; text-align: left "><strong>Credit Note Date:</strong> {{ $creditnotes->credit_note_date}}</td></td>
+        <td style="width:35mm"><strong>Invoice No: </strong>{{ $creditnotes->invoice->invoice_number}}</td>
+        <td style="width:30mm"><strong>Invoice Date:</strong> {{ $creditnotes->invoice->invoice_date}}</td>
     </tr>
-    <tr style="font-size: 13px">
+    <br>
+    <tr style="font-size: 13px;">
     <td><strong>Vat No:</strong> {{ $creditnotes->invoice->Customer->customer_vat_number }}</td> 
     <td><strong>Ref.Doc.No:</strong> {{ $creditnotes->getSource()->sourceNo }}</td>
     <td><strong>Hand Chit No:</strong> {{ $creditnotes->hand_chit_no}}</td>
@@ -62,7 +66,9 @@
    </table>
    <hr>
    <br>
-    <table style="border-bottom:solid ">
+   <br>
+
+    <table style="border-bottom:solid font-size:13px; margin-top:-5mm; ">
         <thead >
          <tr style="border-style:solid">
             <th style="border-style: solid width:6mm;">No.</th>
@@ -117,8 +123,8 @@
                 </tr>
                 <tr>                 
                     <td><strong>Created Date|Time:</strong>{{ $item->credinotes->created_at }}</td>
-                        <td style="text-align:left"><strong>Approved Date|Time:</strong>{{ $item->status_updated_date_time }}</td>
+                        <td style="text-align: left"><strong>Approved Date|Time:</strong>{{ $item->status_updated_date_time }}</td>
         </table>
-     
+
      
       
