@@ -56,15 +56,15 @@ class Customer extends Model
 
     public static $CREDIT_PERIODS = [
         [
-            'value' => '30',
+            'value' => '30 days',
             'label' => '30 Days',
         ],
         [
-            'value' => '60',
+            'value' => '60 days',
             'label' => '60 Days',
         ],
         [
-            'value' => '90',
+            'value' => '90 days',
             'label' => '90 Days',
         ],
     ];

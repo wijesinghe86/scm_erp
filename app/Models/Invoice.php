@@ -36,7 +36,8 @@ class Invoice extends Model
         'net_total',
         'grand_total',
         'status',
-        'created_by'
+        'created_by',
+        'credit_days'
     ];
 
     public function getInvoiceTypeNameAttribute()

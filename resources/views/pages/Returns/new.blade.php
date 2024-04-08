@@ -162,6 +162,7 @@
                 qty: qunantity,
                 sub_total: parseFloat(item.unit_price) * parseFloat(qunantity),
                 total: parseFloat(item.unit_price) * parseFloat(qunantity),
+                
             }
 
             const quantitySum = cart.filter(row => row?.id == item?.id).reduce((acc, curr) => {
