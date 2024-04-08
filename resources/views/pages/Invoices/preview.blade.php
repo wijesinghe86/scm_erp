@@ -29,7 +29,7 @@
                             </tr>
                             <tr>
                                 <td class="info-td border" style="height: 8mm">
-                                    <small>Terms : {{ $invoices->getPaymentTerm() }} | {{ $invoices->credit_days }}</small>
+                                    <small>Terms : {{ $invoices->getPaymentTerm() }} {{ $invoices->credit_days }}</small>
                                 </td>
                                 <td class="info-td border" style="">
                                     <small>Invoice No. {{ $invoices->invoice_number }}</small>
