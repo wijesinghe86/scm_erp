@@ -5,12 +5,17 @@
 
 <head>
     <style>
+        *{
+            margin-top: 2mm;
+
+        }
+        
         table {
             width: 100%;
            
             margin: 0;
             padding: 0;
-            font-size: 15px;
+            font-size: 13px;
             
         }
 
@@ -27,28 +32,32 @@
 </head>
 <body>
   {{-- header --}}
-  <p style="font-size: 25px; text-align:center">Credit Note</p>
+  <h2 style="text-align:center;">Janatha Steel Tube (Private) Limited</h2>
+  <h4 style="text-align:center; margin-top:-5mm;">Pallegodawatta Industrial Village, Meegama Road, Mathugama</h4>
+  <h4 style="text-align:center; margin-top:-5mm;">Vat Reg.No:174022291-7000</h4>
+  <p style="font-size: 20px; text-align:center">Credit Note</p>
   <hr>
+
    <table>
-    <tr style="font-size: 15px">
-       <td><strong>Customer:</strong></td>
+    <tr style="font-size: 13px">
+       <td style="text-align: left; width:40mm"><strong>Customer:</strong></td>
        <td></td>
        <td></td>
        <td></td>
-        <td style="text-align: right"><strong>Credit Note No:</strong>{{ $creditnotes->credit_note_no }}</td>
+        <td style="text-align: left; width:50mm"><strong>Credit Note No:</strong>{{ $creditnotes->credit_note_no }}</td>
         
         
         
         
     </tr>
-    <tr style="font-size: 15px">
-        <td>{{ $creditnotes->invoice->Customer->customer_name }}|{{ $creditnotes->invoice->Customer->customer_address_line1 }},{{ $creditnotes->invoice->Customer->customer_address_line2 }}</td><br>
-        <td><strong>Credit Note Date:</strong> {{ $creditnotes->credit_note_date}}</td></td>
-        <td><strong>Invoice No: </strong>{{ $creditnotes->invoice->invoice_number}}</td>
-        <td><strong>Invoice Date:</strong> {{ $creditnotes->invoice->invoice_date}}</td>
+    <tr style="font-size: 13px">
+        <td style="width:30mm">{{ $creditnotes->invoice->Customer->customer_code }} | {{ $creditnotes->invoice->Customer->customer_name }}|{{ $creditnotes->invoice->Customer->customer_address_line1 }},{{ $creditnotes->invoice->Customer->customer_address_line2 }}</td><br>
+        <td style="width:45mm; text-align: left "><strong>Credit Note Date:</strong> {{ $creditnotes->credit_note_date}}</td></td>
+        <td style="width:35mm"><strong>Invoice No: </strong>{{ $creditnotes->invoice->invoice_number}}</td>
+        <td style="width:30mm"><strong>Invoice Date:</strong> {{ $creditnotes->invoice->invoice_date}}</td>
     </tr>
     <br>
-    <tr style="font-size: 15px">
+    <tr style="font-size: 13px;">
     <td><strong>Vat No:</strong> {{ $creditnotes->invoice->Customer->customer_vat_number }}</td> 
     <td><strong>Ref.Doc.No:</strong> {{ $creditnotes->getSource()->sourceNo }}</td>
     <td><strong>Hand Chit No:</strong> {{ $creditnotes->hand_chit_no}}</td>
@@ -59,7 +68,7 @@
    <br>
    <br>
 
-    <table style="border-bottom:solid ">
+    <table style="border-bottom:solid font-size:13px; margin-top:-5mm; ">
         <thead >
          <tr style="border-style:solid">
             <th style="border-style: solid width:6mm;">No.</th>
@@ -89,7 +98,7 @@
     </table>
     <table>
                 <tr>
-                    <td style="font-size: 15px"><strong>Grand Total</strong></td>
+                    <td style="font-size: 13px"><strong>Grand Total</strong></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -102,61 +111,20 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td style="width:18mm; align:left; font-size: 15px"><strong>{{ $item->credinotes->grand_total}}</td>
+                    <td style="width:12mm; align:left; font-size: 13px"><strong>{{ $item->credinotes->grand_total}}</td>
                 </tr>
 <br>
 <br>
                 <tr>
                     <td><strong>Created By:</strong> {{ $item->credinotes->createUser->name }}</td>
-                    <td style="text-align: right"><strong>Approved By:</strong>{{ $item->updateUser->name }}</td>
+                    <td style="text-align: left"><strong>Approved By:</strong>{{ $item->updateUser->name }}</td>
                     
                    
                 </tr>
                 <tr>                 
                     <td><strong>Created Date|Time:</strong>{{ $item->credinotes->created_at }}</td>
-                        <td style="text-align: right"><strong>Approved Date|Time:</strong>{{ $item->status_updated_date_time }}</td>
+                        <td style="text-align: left"><strong>Approved Date|Time:</strong>{{ $item->status_updated_date_time }}</td>
         </table>
-      {{-- <div class="form-group col-md-4">
-          <label>Customer Name&nbsp;&nbsp; :{{ $creditnotes->customer->customer_name }}</label>
-      </div> --}}
-      {{-- <div class="form-group col-md-4">
-          <label>Customer Name&nbsp;&nbsp; :{{ $creditnotes->customer->customer_name }}</label>
-      </div>
-      <div class="form-group col-md-4">
-          <label>Invoice No&nbsp;&nbsp;&nbsp; :{{ $creditnotes->invoice->invoice_number }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Invoice Date : {{ $creditnotes->invoice->invoice_date }}</label>
-      </div>
-  
-      <div class="form-group col-md-4">
-          <label>Reference No&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :{{ $invoices->ref_number  }}</label>
-      </div>
-      <br>
-      <hr> --}}
-      
-      {{-- <table style="border-style:solid; height:109mm; border-width:2px ">
-      <table style="height:109mm;">
-          <thead>
-           <tr>
-              <th style="width:6mm; ">No.</th>
-              <th style="width:86mm; ">Description</th>
-              <th style="width:14mm; ">U/M</th>
-              <th style="width:16mm; text-align:right;">Ord.Qty.</th>
-              <th style="width:20mm; text-align:right;">Location</th>
-              
-          </tr>
-  
-          </thead>
-          <tbody>
-          @foreach ($invoices->items as $key => $item)
-              <tr>
-                  <td style="width:6mm; text-align:left;">{{ $key + 1 }}</td>
-                  <td style="width:86mm; text-align:left;">{{ $item->description }}</td>
-                  <td style="width:14mm; text-align:left;">{{ $item->uom }}</td>
-                  <td style="width:16mm; text-align:right;">{{ $item->quantity }}</td>
-                  <td style="width:20mm; text-align:right;">{{ $item->location->warehouse_name}}</td>
-                  
-              </tr>
-          @endforeach
-          </tbody>
-      </table> --}}
+
      
       

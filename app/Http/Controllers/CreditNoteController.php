@@ -16,7 +16,7 @@ use App\Models\credit_note_item_table;
 class CreditNoteController extends Controller
 {
     public function index()
-    {   $creditNotes = Creditnote::with(['items', 'invoice'])->get();        
+    {   $creditNotes = Creditnote::with(['items', 'invoice'])->get();
         return view ('pages.CreditNote.index', compact('creditNotes'));
     }
     public function generateNextNumber()
@@ -47,7 +47,7 @@ class CreditNoteController extends Controller
             'balanceOrders'=>$balanceOrders,
             'deliveryOrders'=>$deliveryOrders,
         ];
-    }        
+    }
 
     public function nonIssues(Request $request)
     {
@@ -74,7 +74,7 @@ class CreditNoteController extends Controller
     }
 
     public function store(Request $request){
-       
+
         logger($request->all());
     $this->validate($request,[
     'invoice_no'=> 'required',
@@ -86,7 +86,7 @@ class CreditNoteController extends Controller
                 $data['credit_note_no'] = $this->generateNextNumber();
             }
 
-            
+
 
             $creditnote = new Creditnote;
             $creditnote->invoice_no = $request->invoice_no;
@@ -100,14 +100,14 @@ class CreditNoteController extends Controller
             $creditnote->grand_total = $request->grand_total;
             $creditnote->created_by = request()->user()->id;
             $creditnote->save();
-            
+
             $filter_is_selected = collect($request->items)->filter(function ($row) {
                 return isset($row['is_selected']);
             });
             if (count($filter_is_selected) == 0) {
                 throw ValidationException::withMessages(['items' => "The items list cannot be empty"]);
             }
-    
+
 
     foreach ($request->items as $row) {
             if (!isset($row['is_selected'])) {
@@ -118,7 +118,7 @@ class CreditNoteController extends Controller
             $credit_Note_items->credit_note_no = $creditnote->id;
             $credit_Note_items->stock_no = data_get($row,'stock_item_id');
             $credit_Note_items->credit_qty = data_get($row,'creditQty');
-            $credit_Note_items->unit_rate =  data_get($row,'stock_item_id');
+            $credit_Note_items->unit_rate =  data_get($row,'stock_item_unit_price');
             $credit_Note_items->sales_value = data_get($row,'saleValue');
             $credit_Note_items->vat_amount = data_get($row,'vatAmount');
             $credit_Note_items->total_sales_value = data_get($row,'totalValue');
@@ -126,7 +126,7 @@ class CreditNoteController extends Controller
     }
     flash()->success("New Credit Note Created");
         return redirect()->back();
-    
+
 }
 
 }

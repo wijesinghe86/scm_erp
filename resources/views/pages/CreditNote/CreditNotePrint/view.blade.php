@@ -31,6 +31,8 @@
   <hr>
    <table>
     <tr style="font-size: 20px">
+        <td>Customer Code:{{ $creditnotes->invoice->Customer->customer_code }} </td></tr>
+    <tr style="font-size: 20px">
        <td><strong>Customer:</strong></td> 
         <td><strong>Credit Note No: </strong>{{ $creditnotes->credit_note_no }}</td>
         <td><strong>Credit Note Date:</strong> {{ $creditnotes->credit_note_date}}</td></td>
@@ -39,7 +41,7 @@
         
     </tr>
     <tr style="font-size: 20px">
-        <td>{{ $creditnotes->invoice->Customer->customer_name }}|{{ $creditnotes->invoice->Customer->customer_address_line1 }},{{ $creditnotes->invoice->Customer->customer_address_line2 }}</td><br>
+        <td>{{ $creditnotes->invoice->Customer->customer_code }} | {{ $creditnotes->invoice->Customer->customer_name }}|{{ $creditnotes->invoice->Customer->customer_address_line1 }},{{ $creditnotes->invoice->Customer->customer_address_line2 }}</td><br>
         <td><strong>Invoice No: </strong>{{ $creditnotes->invoice->invoice_number}}</td>
         <td><strong>Invoice Date:</strong> {{ $creditnotes->invoice->invoice_date}}</td>
     </tr>
