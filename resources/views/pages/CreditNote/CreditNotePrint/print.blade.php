@@ -51,7 +51,7 @@
         
     </tr>
     <tr style="font-size: 13px">
-        <td style="width:30mm">{{ $creditnotes->invoice->Customer->customer_name }}|{{ $creditnotes->invoice->Customer->customer_address_line1 }},{{ $creditnotes->invoice->Customer->customer_address_line2 }}</td><br>
+        <td style="width:30mm">{{ $creditnotes->invoice->Customer->customer_code }} | {{ $creditnotes->invoice->Customer->customer_name }}|{{ $creditnotes->invoice->Customer->customer_address_line1 }},{{ $creditnotes->invoice->Customer->customer_address_line2 }}</td><br>
         <td style="width:45mm; text-align: left "><strong>Credit Note Date:</strong> {{ $creditnotes->credit_note_date}}</td></td>
         <td style="width:35mm"><strong>Invoice No: </strong>{{ $creditnotes->invoice->invoice_number}}</td>
         <td style="width:30mm"><strong>Invoice Date:</strong> {{ $creditnotes->invoice->invoice_date}}</td>

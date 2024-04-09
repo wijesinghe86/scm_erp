@@ -68,7 +68,7 @@ class MrApproveController extends ParentController
         $mr_approved->remaining_qty = $row['qty'];
         $mr_approved->status = $row['status'];
         $mr_approved->approved_for = $row['approved_for'];
-        $mr_approved->remark = $row['remark'] ?? "";
+        $mr_approved->remarks = $request->remarks;
         $mr_approved->created_user_id = request()->user()->id;
         $mr_approved->save();
 

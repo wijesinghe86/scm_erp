@@ -15,6 +15,7 @@ return [
     'mr_actions' => [
         ["id"=>"production","name"=>"Production"],
         ["id"=>"purchase","name"=>"Purchase"],
+        ["id"=>"reject","name"=>"Reject"],
     ],
     'df_action' => [
         ["id"=>"approved","name"=>"Approved"],
