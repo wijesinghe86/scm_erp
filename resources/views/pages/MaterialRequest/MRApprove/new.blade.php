@@ -30,14 +30,20 @@
                                   <div class="form-group col-md-2">
                                     <label>Estimated Total Value</label>
                                     <input type="number" readonly class="form-control" name="est_tot_value" id="est_tot_value" >
-                                   
+
                                   </div>
                             </div>
 
                             <div class="items_table"></div>
 
+                            <div class="row">
+                            <div class="form-group col-md-12">
+                                <label>Reason for Reject</label>
+                                <input type="text" class="form-control" name="remarks" id="remarks" >
+                              </div>
+                              </div>
 
-                            <button type="submit" class="btn btn-success me-2">Approved</button>
+                            <button type="submit" class="btn btn-success me-2">Complete</button>
                             <a href="{{ route('mr_request_approve.index') }}" class="btn btn-danger">Go to Approved Registry</a>
                         </form>
                     </div>

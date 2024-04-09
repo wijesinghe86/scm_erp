@@ -108,6 +108,7 @@
                                                 <button class="btn btn-primary "
                                                     onclick="addToCart({{ $item }},{{ $key }})">Add
                                                     </button>
+                                                   
                                             </td>
                                         </tr>
                                     @endforeach

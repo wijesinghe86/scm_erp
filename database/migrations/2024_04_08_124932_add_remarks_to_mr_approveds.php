@@ -13,9 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('invoices', function (Blueprint $table) {
-            $table->string('credit_days')->nullable();
-
+        Schema::table('mr_approveds', function (Blueprint $table) {
+            $table->string('remarks')->nullable();
         });
     }
 
@@ -26,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('invoices', function (Blueprint $table) {
-            $table->dropColumn('credit_days');
+        Schema::table('mr_approveds', function (Blueprint $table) {
+            $table->dropColumn('remarks');
         });
     }
 };
