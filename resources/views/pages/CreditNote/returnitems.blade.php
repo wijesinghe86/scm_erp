@@ -3,7 +3,7 @@
 <table class="table bordered">
     <thead>
         <tr>
-            <th></th> 
+            <th></th>
             <th>No</th>
             <th>Stock No</th>
             <th>Description</th>
@@ -77,19 +77,19 @@
                 getGrandTotal()
             });
 
-           
+
 
             function onCreditQtyChange(id) {
                 const index = mrsList?.findIndex(row => row.id == id)
                 const mrsData = mrsList?.find(row => row.id == id)
-               
+
 
                 const value = $(`#items${index}creditQty`).val()
                 const option = mrsData?.material_return?.invoice?.option
                 const itemTotal = parseFloat(value) * parseFloat(mrsData?.unit_price);
                 const {salesValue, total, vatAmount} = calculateAmounts(option, itemTotal)
-                
-                
+
+
                 $(`#items${index}saleValue`).val(salesValue)
                 $(`#items${index}vatAmount`).val(vatAmount)
                 $(`#items${index}totalValue`).val(total)
@@ -109,12 +109,12 @@
 
                 if([1,3].includes(option)){
                     salesValue = itemTotal
-                    vatAmount = itemTotal * 0.15
+                    vatAmount = itemTotal * 0.18
                     total = salesValue + vatAmount
                 }
                 if(option == 2){
-                    salesValue = itemTotal / 1.15
-                    vatAmount = salesValue * 0.15
+                    salesValue = itemTotal / 1.18
+                    vatAmount = salesValue * 0.18
                     total = salesValue + vatAmount
                 }
 

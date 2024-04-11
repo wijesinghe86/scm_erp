@@ -45,8 +45,8 @@
                                         value="{{ $row->quantity }}" />
                                         <input type="hidden" name="items[{{ $index }}][stock_item_unit_price]"
                                         value="{{ $row->unit_price }}" />
-                                        
-                                
+
+
                 @endforeach
             </tbody>
         </table>
@@ -77,19 +77,19 @@
                 getGrandTotal()
             });
 
-           
+
 
             function onCreditQtyChange(id) {
                 const index = doList?.findIndex(row => row.id == id)
                 const doData = doList?.find(row => row.id == id)
-               
+
 
                 const value = $(`#items${index}creditQty`).val()
                 const option = doData?.delivery_order?.invoice?.option
                 const itemTotal = parseFloat(value) * parseFloat(doData?.unit_price);
                 const {salesValue, total, vatAmount} = calculateAmounts(option, itemTotal)
-                
-                
+
+
                 $(`#items${index}saleValue`).val(salesValue)
                 $(`#items${index}vatAmount`).val(vatAmount)
                 $(`#items${index}totalValue`).val(total)
@@ -109,12 +109,12 @@
 
                 if([1,3].includes(option)){
                     salesValue = itemTotal
-                    vatAmount = itemTotal * 0.15
+                    vatAmount = itemTotal * 0.18
                     total = salesValue + vatAmount
                 }
                 if(option == 2){
-                    salesValue = itemTotal / 1.15
-                    vatAmount = salesValue * 0.15
+                    salesValue = itemTotal / 1.18
+                    vatAmount = salesValue * 0.18
                     total = salesValue + vatAmount
                 }
 
