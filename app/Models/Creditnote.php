@@ -14,27 +14,27 @@ class Creditnote extends Model
 {
     use HasFactory;
 
-    
+
 public function getSource(){
     if($this->reference_type == 'DO'){
         $data = DeliveryOrder::find($this->reference_no);
 
         $data['sourceNo'] = $data->delivery_order_no;
-        return $data;   
+        return $data;
     }
     if($this->reference_type == 'MRS'){
         $data = InvoiceReturn::find($this->reference_no);
 
         $data['sourceNo'] = $data->return_no;
-        return $data;   
+        return $data;
     }
     if($this->reference_type == 'BO'){
         $data = BalanceOrder::find($this->reference_no);
 
         $data['sourceNo'] = $data->balance_order_no;
-        return $data;   
+        return $data;
     }
-    
+
     }
     public function invoice()
     {
@@ -61,12 +61,9 @@ public function createUser()
         return $this->hasOne(User::class, 'id', 'created_by');
     }
 
-    public function approvals()
-    {
-        return $this->hasMany(DfApproved::class,'df_id','id');
-    }
-
     
+
+
 
 
 }
