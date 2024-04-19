@@ -12,13 +12,20 @@
                                         Delivery Order List</h4>
                                     {{-- <p class="category">This displays all active invoices in the system</p> --}}
                                 </div>
-                                {{-- <div class="col-md-4" style="display:flex;justify-content: flex-end;">
-                                    <a href="{{ route('deliveryorders.new') }}"
-                                        class="btn btn-success btn-round new-invoice-button">Issue Delivery Order</a>
-                                </div> --}}
-                            </div>
+                                <br>
+                                <br>
+
+                            <div class="container mt-3">
+                                <div class="row">
+                                  <div class="col-md-2">
+                            <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                            <br><br>
+                                  </div>
+                                </div>
+
+
                             <div class="content table-responsive table-full-width">
-                                <table class="table table-striped" id="invoices-table">
+                                <table class="table table-striped">
                                     <thead>
                                         <tr>
                                             <td>No</td>
@@ -34,7 +41,7 @@
 
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody  id="invoices-table">
                                         @foreach ($deliveryOrders as $key => $deliveryOrder)
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
@@ -68,6 +75,7 @@
 
                                     </tbody>
                                 </table>
+                                {{ $deliveryOrders->links('pagination::bootstrap-5') }}
                             </div>
                         </div>
                     </div>
@@ -76,10 +84,14 @@
 
             @push('scripts')
                 <script>
-                    $(document).ready(function() {
-                        $('#invoices-table').DataTable(
+     $(document).ready(function(){
+         $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#invoices-table tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
 
-                        );
-                    });
                 </script>
             @endpush

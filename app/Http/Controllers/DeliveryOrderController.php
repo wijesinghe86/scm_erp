@@ -23,10 +23,10 @@ use PDF;
 class DeliveryOrderController extends ParentController
 {
     public function all()
-    {
-        $deliveryOrders = DeliveryOrder::all();
-        $deliveryOrderItems = DeliveryOrderItem::all();
-        return view('pages.DeliveryOrder.all', compact('deliveryOrders', 'deliveryOrderItems'));
+     {
+        // $deliveryOrders = DeliveryOrder::all();
+        $deliveryOrders = DeliveryOrder::latest()->paginate(50);
+        return view('pages.DeliveryOrder.all', compact('deliveryOrders'));
     }
 
     public function view(DeliveryOrder $delivery_order)
