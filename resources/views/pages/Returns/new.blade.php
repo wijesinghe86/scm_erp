@@ -24,10 +24,10 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group col-md-3">
+                            {{-- <div class="form-group col-md-3">
                                 <label>Invoice Date</label>
                                 <input type="date" class="form-control" name="invoice_date" id="invoice_date">
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="row">
                             <div class="form-group col-md-3">
@@ -105,10 +105,10 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <button class="btn btn-primary "
+                                                <button type="button" button class="btn btn-primary "
                                                     onclick="addToCart({{ $item }},{{ $key }})">Add
                                                     </button>
-                                                   
+
                                             </td>
                                         </tr>
                                     @endforeach
@@ -138,7 +138,7 @@
                             </table>
                             </table>
 
-                            <button onclick="onSubmit()" class="btn btn-success me-2">Create Return</button>
+                            <button type="button" button onclick="onSubmit()" class="btn btn-success me-2">Create Return</button>
                         @endif
 
                     </div>
@@ -163,7 +163,7 @@
                 qty: qunantity,
                 sub_total: parseFloat(item.unit_price) * parseFloat(qunantity),
                 total: parseFloat(item.unit_price) * parseFloat(qunantity),
-                
+
             }
 
             const quantitySum = cart.filter(row => row?.id == item?.id).reduce((acc, curr) => {
@@ -197,7 +197,7 @@
             renderData()
             return
         }
-       
+
         function onRemoveFromCart(qty, index) {
             // $('#quantity_id').val(qty)
             cart.splice(index, 1);
@@ -310,6 +310,6 @@
             $('.customer-select').select2({
                 placeholder: "Select Customer",
             });
-        });     
+        });
 </script>
 @endpush
