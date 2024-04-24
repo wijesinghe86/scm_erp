@@ -138,7 +138,7 @@
                             </table>
                             </table>
 
-                            <button onclick="onSubmit()" class="btn btn-success me-2">Create Return</button>
+                            <button type="button" button onclick="onSubmit()" class="btn btn-success me-2">Create Return</button>
                         @endif
 
                     </div>
