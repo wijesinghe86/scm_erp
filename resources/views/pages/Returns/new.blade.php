@@ -24,10 +24,10 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group col-md-3">
+                            {{-- <div class="form-group col-md-3">
                                 <label>Invoice Date</label>
                                 <input type="date" class="form-control" name="invoice_date" id="invoice_date">
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="row">
                             <div class="form-group col-md-3">
@@ -138,7 +138,7 @@
                             </table>
                             </table>
 
-                            <button onclick="onSubmit()" class="btn btn-success me-2">Create Return</button>
+                            <button type="button" button onclick="onSubmit()" class="btn btn-success me-2">Create Return</button>
                         @endif
 
                     </div>
