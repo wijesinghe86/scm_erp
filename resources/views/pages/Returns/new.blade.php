@@ -105,10 +105,10 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <button class="btn btn-primary "
+                                                <button type="button" button class="btn btn-primary "
                                                     onclick="addToCart({{ $item }},{{ $key }})">Add
                                                     </button>
-                                                   
+
                                             </td>
                                         </tr>
                                     @endforeach
@@ -163,7 +163,7 @@
                 qty: qunantity,
                 sub_total: parseFloat(item.unit_price) * parseFloat(qunantity),
                 total: parseFloat(item.unit_price) * parseFloat(qunantity),
-                
+
             }
 
             const quantitySum = cart.filter(row => row?.id == item?.id).reduce((acc, curr) => {
@@ -197,7 +197,7 @@
             renderData()
             return
         }
-       
+
         function onRemoveFromCart(qty, index) {
             // $('#quantity_id').val(qty)
             cart.splice(index, 1);
@@ -310,6 +310,6 @@
             $('.customer-select').select2({
                 placeholder: "Select Customer",
             });
-        });     
+        });
 </script>
 @endpush
