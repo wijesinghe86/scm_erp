@@ -118,8 +118,8 @@ class InvoiceController extends ParentController
             $data['net_total'] = $billing['netTotal'];
             $data['discount'] = $billing['discount'];
             $data['grand_total'] = $billing['grandTotal'];
-          
-            
+
+
 
             $customer =  Customer::where('id', $request['customer_id'])->first();
 
