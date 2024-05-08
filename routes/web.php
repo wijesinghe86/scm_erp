@@ -411,7 +411,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
 
     /* .....CREATING ROUTE FOR Delivery Order ....... */
     Route::middleware(['role:Super Admin|Admin|Warehouse User'])->prefix('deliveryorders')->group(function () {
-        Route::get('/', [DeliveryOrderController::class, 'all'])->name('deliveryorders.all');
+        Route::get('/all', [DeliveryOrderController::class, 'all'])->name('deliveryorders.all');
         Route::get('/new', [DeliveryOrderController::class, 'new'])->name('deliveryorders.new');
         Route::post('/new', [DeliveryOrderController::class, 'store'])->name('deliveryorders.store');
         Route::get('/{delivery_order}/view', [DeliveryOrderController::class, 'view'])->name('deliveryorders.view');

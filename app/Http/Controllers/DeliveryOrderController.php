@@ -22,11 +22,44 @@ use PDF;
 
 class DeliveryOrderController extends ParentController
 {
-    public function all()
-     {
-        // $deliveryOrders = DeliveryOrder::all();
-        $deliveryOrders = DeliveryOrder::latest()->paginate(50);
-        return view('pages.DeliveryOrder.all', compact('deliveryOrders'));
+    public function all(Request $request)
+     { 
+        $deliveryOrders = DeliveryOrder::with(['customer', 'location'])
+                          ->when($request->search, function($q) use ($request){
+                            $q->where('delivery_order_no', 'like', '%' . $request->search . '%')
+                            ->orwhere('invoice_number', 'like', '%' . $request->search . '%')
+                            ->orWhere(function ($qr) use ($request){
+                                return $qr->whereHas('location', function ($location) use ($request){
+                                $location->where('warehouse_name', 'like', '%' . $request->search . '%');    
+                            });
+                              })
+                              ->orWhere(function ($query) use ($request){
+                                    return $query->whereHas('customer', function ($customer) use ($request){
+                                        $customer->where('customer_name', 'like', '%' . $request->search . '%');
+                        });
+                    });
+                })
+                                     
+                          ->latest()
+                          ->paginate(50);
+                          return view('pages.DeliveryOrder.all', compact('deliveryOrders'));
+       
+        // $search = $request['search']?? "";
+        // if(request('search' ) !="")
+        // {
+        //     $deliveryOrders = DeliveryOrder::with(['customer', 'location'])
+        //                                     ->where('delivery_order_no', 'like', '%' . request('search') . '%')
+        //                                     ->orwhere('invoice_number', 'like', '%' . request('search') . '%')
+        //                                     ->latest()->paginate();
+                                           
+        // }
+        // else
+        // {
+        //     $deliveryOrders = DeliveryOrder::paginate(50);
+        // }
+        // return view('pages.DeliveryOrder.all', compact('deliveryOrders', 'search'));
+
+        
     }
 
     public function view(DeliveryOrder $delivery_order)

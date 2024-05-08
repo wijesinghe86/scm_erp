@@ -14,53 +14,61 @@
                                 </div>
                                 <br>
                                 <br>
-
-                            <div class="container mt-3">
-                                <div class="row">
-                                  <div class="col-md-2">
-                            <input class="form-control" id="myInput" type="text" placeholder="Search..">
-                            <br><br>
-                                  </div>
-                                </div>
-
-
-                            <div class="content table-responsive table-full-width">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <td>No</td>
-                                            <th>CUSTOMER NAME</th>
-                                            <th>DELIVERY ORDER NUMBER</th>
-                                            <th>INVOICE NUMBER</th>
-                                            <th>INVOICE DATE</th>
-                                            <th>LOCATION</th>
-                                            <th>ISSUED DATE</th>
-                                            <th>ISSUED BY</th>
-                                            <th>ACTION</th>
-
-
-                                        </tr>
-                                    </thead>
-                                    <tbody  id="invoices-table">
-                                        @foreach ($deliveryOrders as $key => $deliveryOrder)
-                                            <tr>
-                                                <td>{{ $key + 1 }}</td>
-                                                <td>{{ $deliveryOrder->customer->customer_name }}</td>
-                                                <td>{{ $deliveryOrder->delivery_order_no }}</td>
-                                                <td>{{ $deliveryOrder->invoice_number }}</td>
-                                                <td>{{ $deliveryOrder->invoice_date }}</td>
-                                                <td>{{ optional($deliveryOrder->location)->warehouse_name }}</td>
-                                                <td>{{ $deliveryOrder->issued_date? $deliveryOrder->issued_date: "Not Issued" }}</td>
-                                                <td>{{ optional($deliveryOrder->items[0]->issued)->name }}
-                                                </td>
-                                                <td align="right">
-                                                    <a class="h4"
-                                                        href="{{ route('deliveryorders.view', $deliveryOrder->id) }}">
-                                                        <i class="fa-sharp fa-solid fa-eye"></i>
-                                                    </a>
+                                <div class ="container">
+                                    <div class="row m-2">
+                                        <form action="" class="col-9">
+                                            <div class="form-group">
+                                                <input type="text" name="search" id="" class="form-control"
+                                                    placeholder="Search by DO No / Invoice No / Customer / Location"
+                                                    value="{{ request('search') }}">
+                                            </div>
+                                            <button class="btn btn-primary">Search</button>
+                                            <a href="{{ route('deliveryorders.all') }}">
+                                                <button class="btn btn-primary" type="button">Reset</button>
+                                            </a>
+                                        </form>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <div class="content table-responsive table-full-width">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <td>No</td>
+                                                        <th>CUSTOMER NAME</th>
+                                                        <th>DELIVERY ORDER NUMBER</th>
+                                                        <th>INVOICE NUMBER</th>
+                                                        <th>INVOICE DATE</th>
+                                                        <th>LOCATION</th>
+                                                        <th>ISSUED DATE</th>
+                                                        <th>ISSUED BY</th>
+                                                        <th>ACTION</th>
 
 
-                                                    {{-- <a class="h4"
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="invoices-table">
+                                                    @foreach ($deliveryOrders as $key => $deliveryOrder)
+                                                        <tr>
+                                                            <td>{{ $key + 1 }}</td>
+                                                            <td>{{ $deliveryOrder->customer->customer_name }}</td>
+                                                            <td>{{ $deliveryOrder->delivery_order_no }}</td>
+                                                            <td>{{ $deliveryOrder->invoice_number }}</td>
+                                                            <td>{{ $deliveryOrder->invoice_date }}</td>
+                                                            <td>{{ optional($deliveryOrder->location)->warehouse_name }}
+                                                            </td>
+                                                            <td>{{ $deliveryOrder->issued_date ? $deliveryOrder->issued_date : 'Not Issued' }}
+                                                            </td>
+                                                            <td>{{ optional($deliveryOrder->items[0]->issued)->name }}
+                                                            </td>
+                                                            <td align="right">
+                                                                <a class="h4"
+                                                                    href="{{ route('deliveryorders.view', $deliveryOrder->id) }}">
+                                                                    <i class="fa-sharp fa-solid fa-eye"></i>
+                                                                </a>
+
+
+                                                                {{-- <a class="h4"
                                                         href="{{ route('stockitem.edit', $deliveryOrder->id) }}">
                                                         <i class="fa-solid fa-pen-to-square"></i>
                                                     </a>
@@ -69,29 +77,27 @@
                                                         href="{{ route('stockitem.delete', $deliveryOrder->id) }}">
                                                         <i class="fa-solid fa-trash-can text-danger"></i>
                                                     </a> --}}
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
 
-                                    </tbody>
-                                </table>
-                                {{ $deliveryOrders->links('pagination::bootstrap-5') }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endsection
+                                                </tbody>
+                                            </table>
+                                             {{ $deliveryOrders->links('pagination::bootstrap-5') }}  
+                                        </div>
+                                    </div>
+                                </div>
+                            @endsection
 
-            @push('scripts')
-                <script>
-     $(document).ready(function(){
-         $("#myInput").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("#invoices-table tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
-});
-
-                </script>
-            @endpush
+                            @push('scripts')
+                                <script>
+                                    $(document).ready(function() {
+                                        $("#myInput").on("keyup", function() {
+                                            var value = $(this).val().toLowerCase();
+                                            $("#invoices-table tr").filter(function() {
+                                                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                                            });
+                                        });
+                                    });
+                                </script>
+                            @endpush
