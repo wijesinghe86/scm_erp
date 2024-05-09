@@ -23,6 +23,7 @@ class Customer extends Model
         'customer_fixed_phone_number',
         'customer_email',
         'customer_payment_terms',
+        'initial_credit_limit',
         'customer_credit_limit',
         'customer_credit_period',
         'customer_contact_person_name',
