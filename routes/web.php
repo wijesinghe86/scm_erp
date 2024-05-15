@@ -28,6 +28,7 @@ use App\Http\Controllers\DfApprovalController;
 use App\Http\Controllers\SalesOrderController;
 use App\Http\Controllers\StorageAreaController;
 use App\Http\Controllers\TaxCreationController;
+use App\Http\Controllers\CreditLimitLogContrller;
 use App\Http\Controllers\DeliveryOrderController;
 use App\Http\Controllers\FinishedGoodsController;
 use App\Http\Controllers\GoodsReceivedController;
@@ -843,11 +844,15 @@ Route::prefix('credit_note_print')->group(function () {
 });
 
 Route::middleware(['role:Super Admin|Admin'])->prefix('customerpayment')->group(function () {
-    Route::get('/index', [CustomerPaymentUpdateController::class, 'all'])->name('customerpayment.index');
+    Route::get('/index', [CustomerPaymentUpdateController::class, 'index'])->name('customerpayment.index');
     Route::get('/create', [CustomerPaymentUpdateController::class, 'create'])->name('customerpayment.create');
     Route::post('/create', [CustomerPaymentUpdateController::class, 'store'])->name('customerpayment.store');
     Route::post('/getCustomerDetails', [CustomerPaymentUpdateController::class, 'getCusDetails'])->name('customerpayment.getCustomerDetails');
 });
+
+Route::middleware(['role:Super Admin|Admin'])->prefix('creditlimtlog')->group(function () {
+    Route::get('/index', [CreditLimitLogContrller::class, 'index'])->name('creditlimtlog.index');
+}); 
 
 });
 

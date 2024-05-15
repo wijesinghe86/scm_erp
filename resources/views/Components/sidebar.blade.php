@@ -174,7 +174,11 @@
                     </li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('credit_note.index') }}">Credit Note</a>
                     </li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('customerpayment.create') }}">Customer Payment Update</a>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('credit_note_approval.index') }}">Credit Note Approve</a>
+                    </li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('customerpayment.index') }}">Customer Payment Update</a>
+                    </li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('creditlimtlog.index') }}">Credit Limit Log</a>
                     </li>
                     {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('credit_note_approval.index') }}">Credit Note Print</a>
                     </li> --}}

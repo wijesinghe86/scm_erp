@@ -6,6 +6,7 @@ use Cart;
 use App\Models\BillType;
 use App\Models\Customer;
 use App\Models\Employee;
+use App\Models\Creditnote;
 use App\Models\DeliveryOrder;
 use App\Models\DeliveryOrderItem;
 use Illuminate\Foundation\Auth\User;
@@ -188,5 +189,10 @@ class Invoice extends Model
             "discount" =>  number_format((float)$discount, 2, '.', ''),
             "grandTotal" => number_format((float)$grandTotal, 2, '.', ''),
         ];
+    }
+
+    public function credit_notes()
+    {
+        return $this->hasMany(Creditnote::class,'invoice_no','id');
     }
 }

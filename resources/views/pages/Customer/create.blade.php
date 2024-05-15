@@ -93,16 +93,6 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <label> Initial Credit Limit </label>
-                                    <input type="text" class="form-control" name="initial_credit_limit"
-                                        placeholder="Initial Credit Limit">
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label> Available Credit Limit </label>
-                                    <input type="text" class="form-control" name="customer_credit_limit"
-                                        placeholder="Available/ Credit Limit">
-                                </div>
-                                <div class="form-group col-md-3">
                                     <label>Credit Period</label>
                                     <select class="form-control" name="customer_credit_period">
                                         <option value="">Select</option>
@@ -111,6 +101,16 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    {{-- <label> Initial Credit Limit </label> --}}
+                                    <input type="hidden" class="form-control" name="initial_credit_limit"
+                                        placeholder="Initial Credit Limit" default = 0>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    {{-- <label> Available Credit Limit </label> --}}
+                                    <input type="hidden" class="form-control" name="customer_credit_limit"
+                                        placeholder="Available/ Credit Limit">
                                 </div>
                             </div>
                             <div class="row">

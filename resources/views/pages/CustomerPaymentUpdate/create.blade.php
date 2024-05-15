@@ -6,7 +6,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h1 style="color:grey" class="card-title">Customer Payment Update</h1>
-                       
+
                         <form class="forms-sample" method="POST" action="{{ route('customerpayment.store') }}">
                             @csrf
                             <br>
@@ -55,9 +55,9 @@
                             <div> Payment Received Update </div>
                             <br>
                             <div class="row">
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-2">
                                     <label>Select Invoice</label>
-                                    <select class="form-control customer-select" name="invoice_no" id="invoice_no">
+                                    <select class="form-control invoice-select" name="invoice_no" id="invoice_no" onchange="invoiceOnChange(this)">
                                         <option value="" selected>Select Invoice</option>
                                         @foreach ($invoices as $invoice)
                                             <option value="{{ $invoice->id }}">
@@ -66,27 +66,36 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-2">
                                     <label>Reference No</label>
                                     <input type="text" class="form-control" name="reference_no" id="reference_no"
                                         placeholder="reference_no">
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>Received Amount (Rs.)</label>
-                                    <input type="number" class="form-control" name="received_amount" id="received_amount"
+                                    <input type="text" class="form-control" name="received_amount" id="received_amount"
                                         placeholder="received_amount">
                                 </div>
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-2">
                                     <label>Received Date</label>
                                     <input type="date" class="form-control" name="received_date" id="received_date"
                                         placeholder="date">
                                 </div>
                             </div>
-                               
-                                
+                            {{-- <div class="row">
+                                <div class="form-group col-md-2">
+                                    <label>Current Outstanding</label>
+                                    <input type="text" class="form-control" name="current_outstanding_amount" id="current_outstanding_amount"
+                                        placeholder="current_outstanding_amount" readonly>
+                                </div> --}}
+                                <div>
+                                <input type="hidden" name="customer_id" id="customer_id" />
+                            </div>
+
+
 
                             <button type="submit" class="btn btn-success me-2">Complete</button>
-                           
+                            <a href="{{ route('customerpayment.index') }}" class="btn btn-danger">Customer Payment Registry</a>
                         </form>
                     </div>
                 </div>
@@ -99,9 +108,8 @@
 @push('scripts')
     <script>
         let customers = <?php echo json_encode($customers); ?>;
-        
+
         $(document).ready(function() {
-            //console.log(invoices);
             $('.customer-select').select2({
                 placeholder: "Select",
             });
@@ -118,7 +126,7 @@ if (selectedCustomer.length == 0) {
 }
 
 selectedCustomer = selectedCustomer[0];
-// clearTables() // clear all item tables when change the invoice number
+
 
 $.ajax({
     url: "{{ route('customerpayment.getCustomerDetails') }}",
@@ -140,15 +148,36 @@ $.ajax({
                     '">' + element?.invoice_number + '</option>');
             })
 
-      
+
     }
 
 });
 
 document.getElementById("available_credit").value = selectedCustomer.customer_credit_limit;
 document.getElementById("customer_code").value = selectedCustomer.customer_code;
+document.getElementById("customer_id").value = selectedCustomer.id;
 document.getElementById("initial_credit_limit").value = selectedCustomer.initial_credit_limit;
+document.getElementById("outstanding_amount").value = selectedCustomer.initial_credit_limit - selectedCustomer.customer_credit_limit ;
+
 }
-    </script>
+
+$(document).ready(function() {
+            $('.invoice-select').select2({
+                placeholder: "Select",
+            });
+        });
+
+
+
+// function currentOutstanding()
+// { 
+//     let outstaingAmount = $(`#outstanding_amount`).val();
+//     let recieved_amount = $(`#receieved_amount`).val();
+//     current_outstanding = outstaingAmount + recieved_amount;
+//     $(`#current_outstanding_amount`).val(current_outstanding);
+
+// }   
+
+</script>
 @endpush
 

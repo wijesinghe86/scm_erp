@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('customers', function (Blueprint $table) {
-            $table->decimal('initial_credit_limit')->nullable();
+            $table->decimal('initial_credit_limit', 15,2)->default(0);
         });
     }
 

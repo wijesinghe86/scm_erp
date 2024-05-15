@@ -99,7 +99,7 @@
                                 <div class="form-group col-md-3">
                                     <label>Available Credit Limit</label>
                                     <input type="text" class="form-control" name="customer_credit_limit"
-                                        value="{{ $customers->customer_credit_limit }}" placeholder="Available Credit Limit">
+                                        value="{{ $customers->customer_credit_limit }}" placeholder="Available Credit Limit" readonly>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>Credit Period</label>

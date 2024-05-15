@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('payment_code')->nullable();
             $table->string('customer_code')->nullable();
+            $table->string('customer_id')->nullable();
             $table->decimal('outstanding_amount', 15,2)->nullable();
             $table->decimal('received_amount', 15,2)->nullable();
             $table->string('invoice_no')->nullable();
