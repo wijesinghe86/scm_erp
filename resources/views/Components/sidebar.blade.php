@@ -180,8 +180,7 @@
                     </li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('creditlimtlog.index') }}">Credit Limit Log</a>
                     </li>
-                    {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('credit_note_approval.index') }}">Credit Note Print</a>
-                    </li> --}}
+                    
                 </ul>
             </div>
         </li>
