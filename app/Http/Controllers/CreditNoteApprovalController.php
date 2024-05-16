@@ -16,7 +16,8 @@ class CreditNoteApprovalController extends Controller
 
     public function create(Request $request)
     {
-        $list = Creditnote::with(['invoice','invoice.Customer'])->get();
+        $list = Creditnote::with(['invoice','invoice.Customer'])
+        ->get();
        logger($list);
         return view('pages.CreditNote.CreditNoteApproval.create', compact('list'));
     }

@@ -22,6 +22,7 @@
                                         <th>CUSTOMER NAME</th>
                                         <th>SALES STAFF NAME</th>
                                         <th>STATUS</th>
+                                        <th>INVOICE TYPE</th>
                                         <th>CREATED BY</th>
                                         {{-- <th>CREATED AT</th> --}}
                                         <td>Action</td>
@@ -38,6 +39,7 @@
                                             <td>{{ $invoice->SalesStaff ? $invoice->SalesStaff->employee_name_with_intial : 'Sales Staff not found' }}
                                             </td>
                                             <td>{{ $invoice->status }}</td>
+                                            <td>{{ $invoice->payment_terms }}</td>
                                             <td>{{ $invoice->createUser ? $invoice->createUser->name : 'User not found' }}
                                             </td>
                                             {{-- <td>{{ $invoice->created_at }}</td> --}}

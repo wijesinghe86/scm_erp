@@ -79,7 +79,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-3">
                                     <label>Payment Terms *</label>
                                     <select class="form-control" name="customer_payment_terms"
                                         value="{{ $customers->customer_payment_terms }}">
@@ -91,12 +91,17 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label>Credit Limit</label>
-                                    <input type="text" class="form-control" name="customer_credit_limit"
-                                        value="{{ $customers->customer_credit_limit }}" placeholder="Customer E-mail">
+                                <div class="form-group col-md-3">
+                                    <label>Initial Credit Limit</label>
+                                    <input type="text" class="form-control" name="initial_credit_limit"
+                                        value="{{ $customers->initial_credit_limit }}" placeholder="Customer E-mail">
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-3">
+                                    <label>Available Credit Limit</label>
+                                    <input type="text" class="form-control" name="customer_credit_limit"
+                                        value="{{ $customers->customer_credit_limit }}" placeholder="Available Credit Limit" readonly>
+                                </div>
+                                <div class="form-group col-md-3">
                                     <label>Credit Period</label>
                                     <select class="form-control" name="customer_credit_period">
                                         @foreach ($customers::$CREDIT_PERIODS as $item)

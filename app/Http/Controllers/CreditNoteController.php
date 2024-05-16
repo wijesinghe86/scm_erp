@@ -25,8 +25,9 @@ class CreditNoteController extends Controller
     }
 
     public function create(Request $request)
-    {   $invoices = Invoice::with(['customer'])->get();
-        $mrs = []; //not loading mrs no withour selecting invoice
+    {   $invoices = Invoice::with(['customer'])
+        ->get();
+        $mrs = []; //not loading mrs no without selecting invoice
         $balanceOrders = [];//not loading balance orders no without selecting invoice
         $deliveryOrders = [];//not loading delivery orders no without selecting invoice
         $creditNote = new Creditnote();
