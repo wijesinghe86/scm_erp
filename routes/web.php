@@ -599,7 +599,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin'])->get('/create', [PurchaseOrderMrApproveController::class, 'create'])->name('purchase_order_approve.create');
         Route::middleware(['role:Super Admin|Admin'])->post('/create', [PurchaseOrderMrApproveController::class, 'store'])->name('purchase_order_approve.store');
         Route::middleware(['role:Super Admin|Admin'])->get('/get-items', [PurchaseOrderMrApproveController::class, 'getItems'])->name('purchase_order_approve.getItems');
-    });
+    });Route::middleware(['role:Super Admin|Admin'])->get('{item_id}/view', [PurchaseOrderMrApproveController::class, 'view'])->name('purchase_order_approve.view');
 
     Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin|Production User'])->prefix('rawmaterialsserialcodeassigning')->group(function () {
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin|Production User'])->get('rawmaterialsserialcodeassigning', [App\Http\Controllers\RawMaterialsSerialCodeAssigningController::class, 'index'])->name('rawmaterialsserialcodeassigning.index');

@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>RMI Item</label>
-                                    <select id="rmi_item_id" class="form-control item-select">
+                                    <select id="rmi_item_id" class="form-control item-select" name="rmi_item[]" multiple = "multiple">
                                         <option selected disabled>Select Request Item</option>
                                     </select>
                                 </div>
@@ -226,12 +226,21 @@
                 });
             })
             $('#rmi_item_id').on('change', function() {
+                const rmi_id_array =  $('#rmi_item_id').val();
+                let sum = rmi_id_array.reduce(myFunction);
+
+        document.getElementById("rmi_qty").innerHTML = sum;
+
+function myFunction(total, value, index, array) {
+  return total + value;
+}
+
                 let rmi_item_id = $(this).val();
                 let rmiItemData = selectedRmiItems?.find(row => row?.id == rmi_item_id)
                 $('#rmi_item_stock_number').val(rmiItemData?.semi_product_item?.semi_product_stock_item?.stock_number);
-                $('#rmi_qty').val(rmiItemData?.semi_product_qty);
-                $('#rmi_weight').val(rmiItemData?.semi_product_weight);
-
+                // $('#rmi_qty').val(rmiItemData?.semi_product_qty);
+                // $('#rmi_weight').val(rmiItemData?.semi_product_weight);
+                console.log($(this).val())
             })
 
             function addToFinishGoodTable() {

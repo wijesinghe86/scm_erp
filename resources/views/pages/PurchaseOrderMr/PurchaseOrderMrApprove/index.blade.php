@@ -23,11 +23,12 @@
                                             <td>Item</td>
                                             <td>U/M</td>
                                             <td>Quantity</td>
-                                            <td>Created By</td> 
+                                            <td>Created By</td>
                                             <td>Status</td>
                                             <td>Approved By</td>
                                             <td>Approved Date</td>
                                             <td>Remark</td>
+                                            <td>Action</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -40,13 +41,18 @@
                                                 <td>{{ optional(optional($item)->item)->description }}</td>
                                                 <td>{{ optional(optional($item)->item)->unit }}</td>
                                                 <td>{{ $item->po_qty }}</td>
-                                               <td>{{ $item->purchase_order->createUser->name }}</td> 
+                                               <td>{{ $item->purchase_order->createUser->name }}</td>
                                                 <td>{{ $item->approval_status }}</td>
                                                 <td>{{ optional(optional($item)->approvedBy)->name }}</td>
                                                 <td>{{ $item->approval_status_changed_at }}</td>
-                                                <td>{{ $item->remark }}</td>  
+                                                <td>{{ $item->remark }}</td>
+                                                <td>
+                                                <a href="{{ route('purchase_order_approve.view', $item->id) }}">
+                                                    <i class="fa-sharp fa-solid fa-eye text-info"></i>
+                                                </a>
+                                            </td>
                                             </tr>
-                                        @endforeach 
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
