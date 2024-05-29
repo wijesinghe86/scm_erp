@@ -21,7 +21,7 @@
                                         <th>CUSTOMER NAME</th>
                                         <th>INVOICE NO</th>
                                         <th>INVOICE AMOUNT</th>
-                                        <th>PAID AMOUNT</th>
+                                        <th>PAID AMOUNT</th>juj
                                         <th>CREATED BY </th>
 
                                     </tr>
@@ -31,7 +31,7 @@
                                     <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ optional($customerPaymentUpdate)->customer_code }}</td>
-                                    <td>{{ optional(optional($customerPaymentUpdate->invoice->customer))->customer_name}}</td>
+                                    <td>{{ optional($customerPaymentUpdate->customer)->customer_name}}</td>
                                     <td>{{ optional($customerPaymentUpdate->invoice)->invoice_number}}</td>
                                     <td>{{ optional($customerPaymentUpdate->invoice)->grand_total}}</td>
                                     <td>{{ optional($customerPaymentUpdate)->received_amount}}</td>

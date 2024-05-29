@@ -11,9 +11,10 @@
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                 <a href="{{ route('invoices.new') }}" class="btn btn-success mb-2 float-end mb-2"> Add new </a>
                             </div>
-
+                            <div class="content table-responsive table-full-width">
                             <table class="table bordered form-group">
                             <table class="table table-bordered" id="invoices-table">
+
                                 <thead>
                                     <tr>
                                         <td>No</td>
@@ -58,6 +59,8 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            </table>
+                            </div>
                     </div>
                 </div>
             </div>

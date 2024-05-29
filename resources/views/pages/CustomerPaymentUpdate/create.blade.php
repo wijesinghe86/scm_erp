@@ -82,12 +82,6 @@
                                         placeholder="date">
                                 </div>
                             </div>
-                            {{-- <div class="row">
-                                <div class="form-group col-md-2">
-                                    <label>Current Outstanding</label>
-                                    <input type="text" class="form-control" name="current_outstanding_amount" id="current_outstanding_amount"
-                                        placeholder="current_outstanding_amount" readonly>
-                                </div> --}}
                                 <div>
                                 <input type="hidden" name="customer_id" id="customer_id" />
                             </div>
@@ -169,14 +163,6 @@ $(document).ready(function() {
 
 
 
-// function currentOutstanding()
-// { 
-//     let outstaingAmount = $(`#outstanding_amount`).val();
-//     let recieved_amount = $(`#receieved_amount`).val();
-//     current_outstanding = outstaingAmount + recieved_amount;
-//     $(`#current_outstanding_amount`).val(current_outstanding);
-
-// }   
 
 </script>
 @endpush
