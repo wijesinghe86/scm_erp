@@ -45,7 +45,7 @@
                                 <div class="form-group col-md-4">
                                     <label>Production End Date Time</label>
                                     <input type="datetime-local" class="form-control" name="pro_end_date_time">
-                                </div>   
+                                </div>
                             </div>
                             <hr>
                             <h5>Finish Product Entry</h5>
@@ -136,7 +136,7 @@
                             <hr>
                             <br>
                             @php
-                                
+
                             @endphp
                             <div class="row">
                                 <div class="form-group col-md-4">
@@ -192,6 +192,10 @@
                 });
             });
 
+            // $(document).ready(function() {
+            //     $('.form-control rmi-item-select').select2();
+            // });
+
             $('#rmi_no').on('change', function() {
                 let rmi_id = $(this).val();
                 const rmiDataItem = rmiData?.find(row => row?.id == rmi_id)
@@ -236,6 +240,7 @@ function myFunction(total, value, index, array) {
 }
 
                 let rmi_item_id = $(this).val();
+                logger(rmi_item_id);
                 let rmiItemData = selectedRmiItems?.find(row => row?.id == rmi_item_id)
                 $('#rmi_item_stock_number').val(rmiItemData?.semi_product_item?.semi_product_stock_item?.stock_number);
                 // $('#rmi_qty').val(rmiItemData?.semi_product_qty);

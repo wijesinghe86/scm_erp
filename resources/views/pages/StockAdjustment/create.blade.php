@@ -192,6 +192,7 @@
             let qty = $('#qty').val();
             let weight = $('#weight').val();
             let type = $('#type').val();
+            // $('#from_after').val("");
 
             $.ajax({
                 url: "{{ route('stockadjustment.addToTable') }}",
