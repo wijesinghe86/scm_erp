@@ -260,8 +260,8 @@ class FinishedGoodsController extends Controller
         $wastage_items = session('finish_good_wastage.items') ?? [];
 
         $tot_issued_weight =  collect($finish_good_items)->unique('semi_product_serial_no')->sum('rmi_qty');
-        $tot_pro_qty =  collect($finish_good_items)->sum('pro_qty');
-        $tot_pro_weight =  collect($finish_good_items)->sum('pro_weight');
+        $tot_pro_qty =  collect($finish_good_items)->unique('pro_stock_no')->sum('pro_qty');
+        $tot_pro_weight =  collect($finish_good_items)->unique('pro_stock_no')->sum('pro_weight');
 
         $tot_waste = collect($wastage_items)->sum('wastage_qty');
         $remaining = $tot_issued_weight - ($tot_pro_weight + $tot_waste);
