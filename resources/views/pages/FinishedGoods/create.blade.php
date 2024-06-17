@@ -52,6 +52,10 @@
                             <br>
                             <div class="row">
                                 <div class="form-group col-md-3">
+                                    <label>Each qty</label>
+                                    <input readonly type="text" class="form-control" id="eachQty" placeholder="">
+                                </div>
+                                <div class="form-group col-md-3">
                                     <label>RMI Item Stock No</label>
                                     <input readonly type="text" class="form-control" id="rmi_item_stock_number"
                                         placeholder="">
@@ -236,6 +240,7 @@
 
                 const mappedStockNumbers = filteredItems?.map(row => row?.semi_product_item?.semi_product_stock_item
                     ?.stock_number)
+                const mappedQty = filteredItems?.map(row => row?.semi_product_qty)
 
                 const totalRmiQty = filteredItems.reduce((acc, curr) => {
                     return acc + parseFloat(curr?.semi_product_qty)
@@ -245,35 +250,87 @@
                     return acc + parseFloat(curr?.semi_product_weight)
                 }, 0)
 
+
+                $('#eachQty').val(mappedQty?.join(","));
                 $('#rmi_item_stock_number').val(mappedStockNumbers?.join(","));
                 $('#rmi_qty').val(totalRmiQty);
                 $('#rmi_weight').val(totalRmiWeight);
             })
 
-            function clearAddFields(){
-                        alertSuccess("Item added successfully")
-                        $('#pro_item_id').val("").trigger('change');
-                        $('#pro_qty').val("");
-                        $('#pro_weight').val("");
-                        $('#batch_no').val("");
-                        $('#rmi_qty').val("");
-                        $('#rmi_weight').val("");
-                        $('#rmi_item_id').val("").trigger('change');
-                        $('#rmi_item_stock_number').val("");
+            function clearAddFields() {
+                alertSuccess("Item added successfully")
+                $('#pro_item_id').val("").trigger('change');
+                $('#pro_qty').val("");
+                $('#pro_weight').val("");
+                $('#batch_no').val("");
+                $('#rmi_qty').val("");
+                $('#rmi_weight').val("");
+                $('#rmi_item_id').val("").trigger('change');
+                $('#rmi_item_stock_number').val("");
             }
 
             async function addItemsToFinishGoodTable() {
                 const rmi_item_ids = $('#rmi_item_id').val();
                 const filteredItems = selectedRmiItems.filter(row => rmi_item_ids.includes(row?.id?.toString()))
 
-                await Promise.all(
-                    filteredItems?.map(async (row) => {
-                    await addItemToFishGoodTable(row?.semi_product_item?.semi_product_stock_item
-                    ?.stock_number, row?.id,row?.semi_product_qty,row?.semi_product_weight)
-                })
-            )
-                clearAddFields()
+
+                const totalRmiQty = filteredItems.reduce((acc, curr) => {
+                    return acc + parseFloat(curr?.semi_product_qty)
+                }, 0)
+
+                const totalRmiWeight = filteredItems.reduce((acc, curr) => {
+                    return acc + parseFloat(curr?.semi_product_weight)
+                }, 0)
+
+                let pro_item_id = $('#pro_item_id').val();
+                let pro_qty = $('#pro_qty').val();
+                let pro_weight = $('#pro_weight').val();
+                let batch_no = $('#batch_no').val();
+                let eachQty = $('#eachQty').val();
+
+                const filtered_rmi_item_ids = filteredItems?.map(row => row?.id)
+                $.ajax({
+                    url: "{{ route('finished_goods.addToFinishGoodTableBulk') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: "POST",
+                    data: {
+                        rmi_item_ids: filtered_rmi_item_ids,
+                        rmi_qty: totalRmiQty,
+                        rmi_weight: totalRmiWeight,
+                        pro_item_id,
+                        pro_qty,
+                        pro_weight,
+                        batch_no,
+                        eachQty,
+                    },
+                    success: function(response) {
+                        clearAddFields()
+                        viewCartFinishGoodTable();
+
+                    },
+                    error: function(data) {
+                        $.each(data.responseJSON?.errors, function(key, value) {
+                            alertDanger(value);
+                        });
+                    }
+                });
+
             }
+
+            // async function addItemsToFinishGoodTable() {
+            //     const rmi_item_ids = $('#rmi_item_id').val();
+            //     const filteredItems = selectedRmiItems.filter(row => rmi_item_ids.includes(row?.id?.toString()))
+
+            //     await Promise.all(
+            //         filteredItems?.map(async (row) => {
+            //         await addItemToFishGoodTable(row?.semi_product_item?.semi_product_stock_item
+            //         ?.stock_number, row?.id,row?.semi_product_qty,row?.semi_product_weight)
+            //     })
+            // )
+            //     clearAddFields()
+            // }
 
             async function addItemToFishGoodTable(rmi_item_stock_number, rmi_item_id, rmi_qty, rmi_weight) {
                 let pro_item_id = $('#pro_item_id').val();
@@ -352,7 +409,7 @@
                 });
             }
 
-            function removeFromFinishGoodTable(e, pro_stock_no, rmi_item_stock_number, semi_product_serial_no) {
+            function removeFromFinishGoodTable(e, batch_no) {
                 $.ajax({
                     url: "{{ route('finishedgoods.removeFromFinishGoodTable') }}",
                     headers: {
@@ -360,9 +417,7 @@
                     },
                     type: "POST",
                     data: {
-                        rmi_item_stock_number,
-                        semi_product_serial_no,
-                        pro_stock_no,
+                        batch_no
                     },
                     success: function(response) {
                         alertSuccess("Item removed successfully")
