@@ -23,6 +23,9 @@ return new class extends Migration
             $table->string('invoice_no')->nullable();
             $table->string('reference_no')->nullable();
             $table->string('received_date')->nullable();
+            $table->string('payment_mode')->nullable();
+            $table->string('bank')->nullable();
+            $table->string('cheque_no')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
         });

@@ -628,7 +628,7 @@ function onInvoiceTypeChange(){
                 currentSubTotal)
 
             if (customerData?.customer_payment_terms == '{{ $customer::$PAYMENT_TERM_CREDIT }}' &&
-                newSubTotal > customerData?.customer_credit_limit && paymentTerm ==
+                newSubTotal >= customerData?.customer_credit_limit && paymentTerm ==
                 '{{ $customer::$PAYMENT_TERM_CREDIT }}') {
                 alertDanger("Customer Credit Limit exeeded")
                 return
@@ -774,8 +774,8 @@ function onInvoiceTypeChange(){
 
         });
 
-        
-   
+
+
     </script>
 @endpush
 

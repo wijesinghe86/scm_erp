@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use App\Models\MrPurchase;
 use Illuminate\Http\Request;
 use App\Models\MrPurchaseItem;
@@ -58,5 +59,19 @@ class PurchaseOrderMrApproveController extends ParentController
         }
         flash()->success("Purchase Request approval updated");
         return redirect()->back();
+    }
+
+    public function view($item_id)
+    {
+        $purchaseApproved = MrPurchase::with(['items', 'get_supplier'])->find($item_id);
+        $purchaseitems = MrPurchaseItem::where('po_id', $item_id)
+        ->where('approval_status','approved')->get();
+        if (['purchaseApproved'] == null) {
+            return abort(404);
+
+        }
+        // $pdf = PDF::loadView('pages.PurchaseOrderMr.PurchaseOrderMrApprove.view', compact('purchaseApproved', 'purchaseitems'))->setPaper('A4','portrait');
+        // return $pdf->stream('purchase_order_approve.view');
+        return view('pages.PurchaseOrderMr.PurchaseOrderMrApprove.view', compact('purchaseApproved', 'purchaseitems'));
     }
 }
