@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Warehouse;
+use App\Models\Creditnote;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -61,5 +62,10 @@ class DeliveryOrder extends Model
     {
         $delivery_order_count  = self::get()->count();
         return "DO" . sprintf('%06d', $delivery_order_count + 1);
+    }
+
+    public function creditNotes()
+    {
+        return $this->hasOne(Creditnote::class, 'id', 'reference_no');
     }
 }

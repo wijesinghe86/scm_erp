@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use PDF;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\CustomerCreditLimitLog;
 use App\Http\Controllers\ParentController;
 
 class CustomerController extends ParentController
@@ -59,9 +61,15 @@ class CustomerController extends ParentController
             }
 
         $request['created_by'] = Auth::id();
+        $request['initial_credit_limit'] = $request['initial_credit_limit']  ?? 0;
         Customer::create($request->all());
 
-
+        $credit_log = new CustomerCreditLimitLog;
+        $credit_log->customer_code = $request->customer_code;
+        $credit_log->customer_name = $request->customer_name;
+        $credit_log->credit_limit = $request->initial_credit_limit;
+        $credit_log->created_by = request()->user()->name;
+        $credit_log->save();
 
         $response['alert-success'] = 'New Customer created successfully!';
         return redirect()->route('customer.index')->with($response);
@@ -76,16 +84,43 @@ class CustomerController extends ParentController
         $customers = Customer::find($customer_id);
         return view('pages.Customer.edit', compact('customers'));
     }
-
     public function update(Request $request, $customer_id)
     {
-        $customers = Customer::find($customer_id);
-        $request['updated_by'] = Auth::id();
-        $customers->update($request->all());
+         try {
+             DB::beginTransaction();
+            $customers = Customer::find($customer_id);
+
+if(
+    $customers->customer_type_of_customer == 'credit' || $customers->customer_payment_terms == 'credit'
+    )
+    {
+            $new_credit_limit  = $request->initial_credit_limit;
+            $old_credit_limit = $customers->initial_credit_limit;
+            $credit_dif = $new_credit_limit - $old_credit_limit;
+            $request['customer_credit_limit'] = $request->customer_credit_limit + $credit_dif;
+    }
+            $request['updated_by'] = Auth::id();
+            $customers->update($request->all());
+
+        $credit_log = new CustomerCreditLimitLog;
+        $credit_log->customer_code = $request->customer_code;
+        $credit_log->customer_name = $request->customer_name;
+        $credit_log->credit_limit = $request->initial_credit_limit;
+        $credit_log->created_by = request()->user()->name;
+        $credit_log->save();
 
         $response['alert-success'] = 'Customer updated successfully!';
+        DB::commit();
         return redirect()->route('customer.index')->with($response);
-    }
+}
+    catch (Exception $error) {
+        logger($error);
+        DB::rollback();
+        $response['alert-danger'] = $error->getMessage();
+        return redirect()->back()->with($response);
+ }
+}
+
 
     public function delete($customer_id)
     {

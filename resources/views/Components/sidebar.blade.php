@@ -170,12 +170,17 @@
                     </li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('sales_order.index') }}">Sales Order</a>
                     </li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('sales_order.index') }}">Sales Order</a>
+                    </li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('credit_note.index') }}">Credit Note</a>
                     </li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('credit_note_approval.index') }}">Credit Note Approve</a>
                     </li>
-                    {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('credit_note_approval.index') }}">Credit Note Print</a>
-                    </li> --}}
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('customerpayment.index') }}">Customer Payment Update</a>
+                    </li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('creditlimtlog.index') }}">Credit Limit Log</a>
+                    </li>
+                    
                 </ul>
             </div>
         </li>
@@ -334,10 +339,10 @@
                 Location Change <br> Approval</a></li>
         <li class="nav-item"> <a class="nav-link" href="{{ route('stocklocationchange_received.index') }}">Stock
                 Location Change <br> Recived</a></li>
-        <li class="nav-item"> <a class="nav-link" href="{{ route('finishedgoods.index') }}">Finished
+        {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('finishedgoods.index') }}">Finished
                 Goods</a></li>
         <li class="nav-item"> <a class="nav-link" href="{{ route('finished_goods_approval.index') }}">Finished
-                Goods Inspect</a></li>
+                Goods Inspect</a></li> --}}
         {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('overshortanddamage.index') }}">Over
                         Short And Damage Details Creation</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ route('disposal.index') }}">Disposal</a></li>
@@ -412,14 +417,14 @@
     <li class="nav-item"> <a class="nav-link" href="{{ route('stocklocationchange_received.index') }}">Stock
             Location Change <br> Recived</a></li>
     @endhasanyrole
-    @hasanyrole('Super Admin|Admin|Production User')
+    {{-- @hasanyrole('Super Admin|Admin|Production User')
     <li class="nav-item"> <a class="nav-link" href="{{ route('finishedgoods.index') }}">Finished
             Goods</a></li>
     @endhasanyrole
     @hasanyrole('Super Admin|Admin|Production Admin')
     <li class="nav-item"> <a class="nav-link" href="{{ route('finished_goods_approval.index') }}">Finished
             Goods Inspect</a></li>
-    @endhasanyrole
+    @endhasanyrole --}}
     {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('overshortanddamage.index') }}">Over
                         Short And Damage Details Creation</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ route('disposal.index') }}">Disposal</a></li>

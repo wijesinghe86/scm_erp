@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Invoice;
 use App\Models\Customer;
 use App\Models\BalanceOrder;
+use App\Models\DeliveryOrder;
 use App\Models\InvoiceReturn;
 use App\Models\credit_note_item_table;
 use Illuminate\Database\Eloquent\Model;
@@ -62,6 +63,10 @@ public function createUser()
     }
 
     
+
+    
+
+
 
 
 

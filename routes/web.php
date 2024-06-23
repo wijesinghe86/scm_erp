@@ -28,6 +28,7 @@ use App\Http\Controllers\DfApprovalController;
 use App\Http\Controllers\SalesOrderController;
 use App\Http\Controllers\StorageAreaController;
 use App\Http\Controllers\TaxCreationController;
+use App\Http\Controllers\CreditLimitLogContrller;
 use App\Http\Controllers\DeliveryOrderController;
 use App\Http\Controllers\FinishedGoodsController;
 use App\Http\Controllers\GoodsReceivedController;
@@ -60,6 +61,7 @@ use App\Http\Controllers\PlantTimeManagementController;
 use App\Http\Controllers\RawMaterialReceivedController;
 use App\Http\Controllers\StockLocationChangeController;
 use App\Http\Controllers\WarehouseAreaDesignController;
+use App\Http\Controllers\CustomerPaymentUpdateController;
 use App\Http\Controllers\EquipmentRegistrationController;
 use App\Http\Controllers\FinishedGoodsApprovalController;
 use App\Http\Controllers\ManAndEquipmentSafetyController;
@@ -521,7 +523,8 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Production User'])->post('/create', [App\Http\Controllers\FinishedGoodsController::class, 'store'])->name('finishedgoods.store');
 
         Route::middleware(['role:Super Admin|Admin|Production User'])->get('/get-rmi-items', [App\Http\Controllers\FinishedGoodsController::class, 'getRmiItems'])->name('finishedgoods.getRmiItems');
-        Route::middleware(['role:Super Admin|Admin|Production User'])->post('/add-to-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'addToFinishGoodTable'])->name('finished_goods.addToFinishGoodTable');
+        // Route::middleware(['role:Super Admin|Admin|Production User'])->post('/add-to-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'addToFinishGoodTable'])->name('finished_goods.addToFinishGoodTable');
+        Route::middleware(['role:Super Admin|Admin|Production User'])->post('/add-to-finish-good-table/bulk', [App\Http\Controllers\FinishedGoodsController::class, 'addToFinishGoodTableBulk'])->name('finished_goods.addToFinishGoodTableBulk');
         Route::middleware(['role:Super Admin|Admin|Production User'])->post('/remove-from-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'removeFromFinishGoodTable'])->name('finishedgoods.removeFromFinishGoodTable');
         Route::middleware(['role:Super Admin|Admin|Production User'])->get('/get-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'getFinishGoodTable'])->name('finishedgoods.getFinishGoodTable');
 
@@ -599,7 +602,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin'])->get('/create', [PurchaseOrderMrApproveController::class, 'create'])->name('purchase_order_approve.create');
         Route::middleware(['role:Super Admin|Admin'])->post('/create', [PurchaseOrderMrApproveController::class, 'store'])->name('purchase_order_approve.store');
         Route::middleware(['role:Super Admin|Admin'])->get('/get-items', [PurchaseOrderMrApproveController::class, 'getItems'])->name('purchase_order_approve.getItems');
-    });
+    });Route::middleware(['role:Super Admin|Admin'])->get('{item_id}/view', [PurchaseOrderMrApproveController::class, 'view'])->name('purchase_order_approve.view');
 
     Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin|Production User'])->prefix('rawmaterialsserialcodeassigning')->group(function () {
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin|Production User'])->get('rawmaterialsserialcodeassigning', [App\Http\Controllers\RawMaterialsSerialCodeAssigningController::class, 'index'])->name('rawmaterialsserialcodeassigning.index');
@@ -840,6 +843,17 @@ Route::prefix('credit_note_print')->group(function () {
     Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/{creditnote_id}/print', [CreditNotePrintController::class, 'print'])->name('credit_note_print.print');
 
 });
+
+Route::middleware(['role:Super Admin|Admin'])->prefix('customerpayment')->group(function () {
+    Route::get('/index', [CustomerPaymentUpdateController::class, 'index'])->name('customerpayment.index');
+    Route::get('/create', [CustomerPaymentUpdateController::class, 'create'])->name('customerpayment.create');
+    Route::post('/create', [CustomerPaymentUpdateController::class, 'store'])->name('customerpayment.store');
+    Route::post('/getCustomerDetails', [CustomerPaymentUpdateController::class, 'getCusDetails'])->name('customerpayment.getCustomerDetails');
+});
+
+Route::middleware(['role:Super Admin|Admin'])->prefix('creditlimtlog')->group(function () {
+    Route::get('/index', [CreditLimitLogContrller::class, 'index'])->name('creditlimtlog.index');
+}); 
 
 });
 
