@@ -37,17 +37,17 @@
                             <div class="row">
                                 <div class="form-group col-md-3">
                                     <label>Initial Credit Limit</label>
-                                    <input type="text" class="form-control" name="initial_credit_limit" id="initial_credit_limit"
+                                    <input type="number" class="form-control" name="initial_credit_limit" id="initial_credit_limit" 
                                         placeholder="initial_credit_limit" readonly>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>Outstanding Amount</label>
-                                    <input type="text" class="form-control" name="outstanding_amount" id="outstanding_amount"
+                                    <input type="number" class="form-control" name="outstanding_amount" id="outstanding_amount"
                                         placeholder="outstanding_amount" readonly>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>Available Credit</label>
-                                    <input type="text" class="form-control" name="available_credit" id="available_credit"
+                                    <input type="number" class="form-control" name="available_credit" id="available_credit"
                                         placeholder="available_credit" readonly>
                                 </div>
                             </div>
@@ -76,6 +76,11 @@
                                     <input type="text" class="form-control" name="received_amount" id="received_amount"
                                         placeholder="received_amount">
                                 </div>
+                                {{-- <div class="form-group col-md-3">
+                                    <label>New Credit Limit</label>
+                                    <input type="text" class="form-control" name="new_limit" id="new_limit"
+                                        placeholder="new_limit">
+                                </div> --}}
                                 <div class="form-group col-md-2">
                                     <label>Received Date</label>
                                     <input type="date" class="form-control" name="received_date" id="received_date"
@@ -152,7 +157,6 @@ document.getElementById("customer_code").value = selectedCustomer.customer_code;
 document.getElementById("customer_id").value = selectedCustomer.id;
 document.getElementById("initial_credit_limit").value = selectedCustomer.initial_credit_limit;
 document.getElementById("outstanding_amount").value = selectedCustomer.initial_credit_limit - selectedCustomer.customer_credit_limit ;
-
 }
 
 $(document).ready(function() {

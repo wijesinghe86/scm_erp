@@ -123,7 +123,7 @@ class InvoiceController extends ParentController
 
             $customer =  Customer::where('id', $request['customer_id'])->first();
 
-            if ($request->payment_terms == 2 &&  $customer->customer_credit_limit < $data['sub_total']) {
+            if ($request->payment_terms == 2 &&  $customer->customer_credit_limit <= $data['sub_total']) {
                 throw new Exception("Customer Credit Limit Exceeded");
             }
 

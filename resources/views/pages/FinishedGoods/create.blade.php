@@ -92,7 +92,7 @@
 
                                 <div class="form-group col-md-3">
                                     <label>Batch Number</label>
-                                    <input type="text" class="form-control" id="batch_no" placeholder="">
+                                    <input type="text" class="form-control" name="batch_no" id="batch_no" placeholder="">
                                 </div>
                             </div>
                             <button onclick="addItemsToFinishGoodTable()" type="button" class="btn btn-success me-2"
@@ -266,39 +266,38 @@
                 const rmi_item_ids = $('#rmi_item_id').val();
                 const filteredItems = selectedRmiItems.filter(row => rmi_item_ids.includes(row?.id?.toString()))
 
-                await Promise.all(
-                    filteredItems?.map(async (row) => {
-                    await addItemToFishGoodTable(row?.semi_product_item?.semi_product_stock_item
-                    ?.stock_number, row?.id,row?.semi_product_qty,row?.semi_product_weight)
-                })
-            )
-                clearAddFields()
-            }
 
-            async function addItemToFishGoodTable(rmi_item_stock_number, rmi_item_id, rmi_qty, rmi_weight) {
+                const totalRmiQty = filteredItems.reduce((acc, curr) => {
+                    return acc + parseFloat(curr?.semi_product_qty)
+                }, 0)
+
+                const totalRmiWeight = filteredItems.reduce((acc, curr) => {
+                    return acc + parseFloat(curr?.semi_product_weight)
+                }, 0)
+
                 let pro_item_id = $('#pro_item_id').val();
                 let pro_qty = $('#pro_qty').val();
                 let pro_weight = $('#pro_weight').val();
                 let batch_no = $('#batch_no').val();
 
-
+                const filtered_rmi_item_ids = filteredItems?.map(row => row?.id)
                 $.ajax({
-                    url: "{{ route('finished_goods.addToFinishGoodTable') }}",
+                    url: "{{ route('finished_goods.addToFinishGoodTableBulk') }}",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type: "POST",
                     data: {
-                        rmi_item_stock_number,
-                        rmi_item_id,
-                        rmi_qty,
-                        rmi_weight,
+                        rmi_item_ids: filtered_rmi_item_ids,
+                        rmi_qty: totalRmiQty,
+                        rmi_weight: totalRmiWeight,
                         pro_item_id,
                         pro_qty,
                         pro_weight,
                         batch_no,
                     },
                     success: function(response) {
+                        clearAddFields()
                         viewCartFinishGoodTable();
 
                     },
@@ -308,50 +307,9 @@
                         });
                     }
                 });
+
             }
-
-            function addToFinishGoodTable() {
-                let rmi_item_stock_number = $('#rmi_item_stock_number').val();
-                let rmi_item_id = $('#rmi_item_id').val();
-                let rmi_qty = $('#rmi_qty').val();
-                let rmi_weight = $('#rmi_weight').val();
-                let pro_item_id = $('#pro_item_id').val();
-                let pro_qty = $('#pro_qty').val();
-                let pro_weight = $('#pro_weight').val();
-                let batch_no = $('#batch_no').val();
-
-                $.ajax({
-                    url: "{{ route('finished_goods.addToFinishGoodTable') }}",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    type: "POST",
-                    data: {
-                        rmi_item_stock_number,
-                        rmi_item_id,
-                        rmi_qty,
-                        rmi_weight,
-                        pro_item_id,
-                        pro_qty,
-                        pro_weight,
-                        batch_no,
-                    },
-                    success: function(response) {
-                        alertSuccess("Item added successfully")
-                        viewCartFinishGoodTable();
-                        $('#pro_item_id').val("").trigger('change');
-                        $('#pro_qty').val("");
-                        $('#pro_weight').val("");
-                        $('#batch_no').val("");
-                    },
-                    error: function(data) {
-                        $.each(data.responseJSON?.errors, function(key, value) {
-                            alertDanger(value);
-                        });
-                    }
-                });
-            }
-
+            
             function removeFromFinishGoodTable(e, pro_stock_no, rmi_item_stock_number, semi_product_serial_no) {
                 $.ajax({
                     url: "{{ route('finishedgoods.removeFromFinishGoodTable') }}",

@@ -89,12 +89,12 @@ class CustomerController extends ParentController
          try {
              DB::beginTransaction();
             $customers = Customer::find($customer_id);
-           
+
 if(
     $customers->customer_type_of_customer == 'credit' || $customers->customer_payment_terms == 'credit'
     )
-    {      
-         $new_credit_limit  = $request->initial_credit_limit;
+    {
+            $new_credit_limit  = $request->initial_credit_limit;
             $old_credit_limit = $customers->initial_credit_limit;
             $credit_dif = $new_credit_limit - $old_credit_limit;
             $request['customer_credit_limit'] = $request->customer_credit_limit + $credit_dif;
@@ -120,7 +120,7 @@ if(
         return redirect()->back()->with($response);
  }
 }
-    
+
 
     public function delete($customer_id)
     {

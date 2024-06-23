@@ -141,43 +141,89 @@ class FinishedGoodsController extends Controller
         return $items;
     }
 
-    public function addToFinishGoodTable(Request $request)
+    // public function addToFinishGoodTable(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'rmi_item_id' => 'required',
+    //         'pro_item_id' => 'required',
+    //         'pro_qty' => 'required',
+    //         'pro_weight' => 'required',
+    //         'batch_no' => 'required',
+    //     ], [
+    //         "rmi_item_id.required" => 'The rmi item field is required',
+    //         "pro_item_id.required" => 'The finish good field is required',
+    //         "pro_qty.required" => 'The finish food qty field is required',
+    //         "pro_weight.required" => 'The finish food weight field is required',
+    //         "batch_no.required" => 'The batch number field is required',
+    //     ]);
+
+    //     $items = session('finish_good.items') ?? [];
+    //     $rmi_item = RawMaterialIssueItem::with(['semi_product_item.semi_product_stock_item'])->find($request->rmi_item_id);
+    //     $pro_stock_item = StockItem::find($request->pro_item_id);
+    //     $items[] = [
+    //         'pro_description' => $pro_stock_item->description,
+    //         'pro_stock_no' => $pro_stock_item->stock_number,
+    //         'stock_item_id' => $pro_stock_item->id,
+    //         'semi_product_serial_no' => $rmi_item->semi_product_serial_no,
+    //         'pro_qty' => $request->pro_qty,
+    //         'pro_weight' => $request->pro_weight,
+    //         'batch_no' => $request->batch_no,
+    //         'rmi_item_stock_id' => optional(optional(optional($rmi_item)->semi_product_item)->semi_product_stock_item)->id,
+    //         'rmi_item_stock_number' => optional(optional(optional($rmi_item)->semi_product_item)->semi_product_stock_item)->stock_number,
+    //         'rmi_item_stock_description' => optional(optional(optional($rmi_item)->semi_product_item)->semi_product_stock_item)->description,
+    //         'rmi_qty' => $request->rmi_qty,
+    //         'rmi_weight' => $request->rmi_weight,
+    //     ];
+
+    //     session(['finish_good.items' => $items]);
+    //     request()->tot_issued_weight = "10000";
+    //     return [
+    //         'success' => true,
+    //         'message' => 'Item Added',
+    //     ];
+    // }
+
+public function addToFinishGoodTableBulk(Request $request)
     {
         $this->validate($request, [
-            'rmi_item_id' => 'required',
+            'rmi_item_ids' => 'required|array',
             'pro_item_id' => 'required',
             'pro_qty' => 'required',
             'pro_weight' => 'required',
             'batch_no' => 'required',
         ], [
-            "rmi_item_id.required" => 'The rmi item field is required',
+            "rmi_item_ids.required" => 'The rmi item field is required',
             "pro_item_id.required" => 'The finish good field is required',
             "pro_qty.required" => 'The finish food qty field is required',
             "pro_weight.required" => 'The finish food weight field is required',
             "batch_no.required" => 'The batch number field is required',
         ]);
 
+
         $items = session('finish_good.items') ?? [];
-        // $result = collect($items)->where('rmi_item_id', $request->rmi_item_id)->where('pro_item_id', $request->pro_item_id)->first();
-        // if ($result != null) {
-        //     throw ValidationException::withMessages(['items' => "The items already exist"]);
-        // }
-        $rmi_item = RawMaterialIssueItem::with(['semi_product_item.semi_product_stock_item'])->find($request->rmi_item_id);
+
         $pro_stock_item = StockItem::find($request->pro_item_id);
-        $items[] = [
-            'pro_description' => $pro_stock_item->description,
-            'pro_stock_no' => $pro_stock_item->stock_number,
-            'stock_item_id' => $pro_stock_item->id,
-            'semi_product_serial_no' => $rmi_item->semi_product_serial_no,
-            'pro_qty' => $request->pro_qty,
-            'pro_weight' => $request->pro_weight,
-            'batch_no' => $request->batch_no,
-            'rmi_item_stock_id' => optional(optional(optional($rmi_item)->semi_product_item)->semi_product_stock_item)->id,
-            'rmi_item_stock_number' => optional(optional(optional($rmi_item)->semi_product_item)->semi_product_stock_item)->stock_number,
-            'rmi_item_stock_description' => optional(optional(optional($rmi_item)->semi_product_item)->semi_product_stock_item)->description,
-            'rmi_qty' => $request->rmi_qty,
-            'rmi_weight' => $request->rmi_weight,
-        ];
+
+        foreach ($request->rmi_item_ids as $key => $rmi_item_id) {
+            $rmi_item = RawMaterialIssueItem::with(['semi_product_item.semi_product_stock_item'])->find($rmi_item_id);
+            $newItem = [
+                'pro_description' => $pro_stock_item->description,
+                'pro_stock_no' => $pro_stock_item->stock_number,
+                'stock_item_id' => $pro_stock_item->id,
+                'semi_product_serial_no' => $rmi_item->semi_product_serial_no,
+                'pro_qty' => $request->pro_qty,
+                'pro_weight' => $request->pro_weight,
+                'batch_no' => $request->batch_no,
+                'rmi_item_stock_id' => optional(optional(optional($rmi_item)->semi_product_item)->semi_product_stock_item)->id,
+                'rmi_item_stock_number' => optional(optional(optional($rmi_item)->semi_product_item)->semi_product_stock_item)->stock_number,
+                'rmi_item_stock_description' => optional(optional(optional($rmi_item)->semi_product_item)->semi_product_stock_item)->description,
+                'rmi_qty' => $request->rmi_qty,
+                'rmi_weight' => $request->rmi_weight,
+            ];
+            // logger($newItem);
+            $items[] = $newItem;
+        }
+
 
         session(['finish_good.items' => $items]);
         request()->tot_issued_weight = "10000";
@@ -205,6 +251,7 @@ class FinishedGoodsController extends Controller
     public function getFinishGoodTable()
     {
         $finish_good_items =  session('finish_good.items') ?? [];
+        logger($finish_good_items);
         return view('pages.FinishedGoods.item_list', compact('finish_good_items'));
     }
 
@@ -276,3 +323,5 @@ class FinishedGoodsController extends Controller
         ];
     }
 }
+
+    

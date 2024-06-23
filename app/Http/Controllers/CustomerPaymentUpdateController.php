@@ -33,7 +33,7 @@ class CustomerPaymentUpdateController extends Controller
     // public function currentOutstanding(Request $request)
     // {
     //     $currOutstanding = $request->outstanding_amount - $request->payment_amount;
-        
+
     // }
 
     public function getCusDetails(Request $request)
@@ -63,13 +63,34 @@ class CustomerPaymentUpdateController extends Controller
                 $customer =  Customer::where('id', $request['customer_id'])->first();
                 $customer = Customer::find($request->customer_id);
                 $received_amount = $request->received_amount;
-                if (
-                    $customer && $customer->customer_payment_terms == $customerObject::$PAYMENT_TERM_CREDIT
-                )
+                if
+                   (
+                    $customer && $customer->customer_payment_terms == $customerObject::$PAYMENT_TERM_CREDIT && $customer->customer_credit_limit != $customer->initial_credit_limit && $customer->customer_credit_limit < $customer->initial_credit_limit
+
+                    )
+
                 {
-                    $customer->customer_credit_limit = (float) $customer->customer_credit_limit + (float) $received_amount;
-                    $customer->save();
+                    $new_credit_limit = (float) $customer->customer_credit_limit + (float) $received_amount;
+
+                    // $customer->customer_credit_limit = (float) $customer->customer_credit_limit + (float) $received_amount;
+                    // $customer->save();
                 }
+                else{
+                    flash()->error("DATA MISMATCHED! Customer Payment cannot be Updated");
+                    return redirect()->back();
+                }
+
+                if ($new_credit_limit <= $customer->initial_credit_limit)
+                {
+                $customer->customer_credit_limit = $new_credit_limit;
+                $customer->save();
+                }
+
+                else{
+                    flash()->error("OOPS!! Initial Credit Limit Exceeded");
+                    return redirect()->back();
+                }
+                
 
         $isCpExist = CustomerPaymentUpdate::where('payment_code', $request->payment_code)->first();
             if ($isCpExist) {
@@ -88,6 +109,7 @@ class CustomerPaymentUpdateController extends Controller
             $customerPayment->received_date = $request->received_date;
             $customerPayment->created_by = request()->user()->id;
             $customerPayment->save();
+
         flash()->success("Customer Payment Updated");
         DB::commit();
         return redirect()->back();
