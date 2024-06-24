@@ -830,28 +830,28 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
     });
 
     Route::prefix('credit_note_Approval')->group(function () {
-        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/', [CreditNoteApprovalController::class, 'index'])->name('credit_note_approval.index');
-        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/create', [App\Http\Controllers\CreditNoteApprovalController::class, 'create'])->name('credit_note_approval.create');
-        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->post('/store', [App\Http\Controllers\CreditNoteApprovalController::class, 'store'])->name('credit_note_approval.store');
-        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->post('/getCreditNoteDetails', [App\Http\Controllers\CreditNoteApprovalController::class, 'getCnDetails'])->name('credit_note_approval.getCreditNoteDetails');
-        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/getCnItems', [App\Http\Controllers\CreditNoteApprovalController::class, 'getCnItems'])->name('credit_note_approval.getCnItems');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->get('/', [CreditNoteApprovalController::class, 'index'])->name('credit_note_approval.index');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->get('/create', [App\Http\Controllers\CreditNoteApprovalController::class, 'create'])->name('credit_note_approval.create');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->post('/store', [App\Http\Controllers\CreditNoteApprovalController::class, 'store'])->name('credit_note_approval.store');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->post('/getCreditNoteDetails', [App\Http\Controllers\CreditNoteApprovalController::class, 'getCnDetails'])->name('credit_note_approval.getCreditNoteDetails');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->get('/getCnItems', [App\Http\Controllers\CreditNoteApprovalController::class, 'getCnItems'])->name('credit_note_approval.getCnItems');
 });
 
 Route::prefix('credit_note_print')->group(function () {
-    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/', [CreditNotePrintController::class, 'index'])->name('credit_note_print.index');
-    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/{creditnote_id}/view', [CreditNotePrintController::class, 'view'])->name('credit_note_print.view');
-    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/{creditnote_id}/print', [CreditNotePrintController::class, 'print'])->name('credit_note_print.print');
+    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->get('/', [CreditNotePrintController::class, 'index'])->name('credit_note_print.index');
+    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->get('/{creditnote_id}/view', [CreditNotePrintController::class, 'view'])->name('credit_note_print.view');
+    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->get('/{creditnote_id}/print', [CreditNotePrintController::class, 'print'])->name('credit_note_print.print');
 
 });
 
-Route::middleware(['role:Super Admin|Admin'])->prefix('customerpayment')->group(function () {
+Route::middleware(['role:Super Admin|Admin|Executive User'])->prefix('customerpayment')->group(function () {
     Route::get('/index', [CustomerPaymentUpdateController::class, 'index'])->name('customerpayment.index');
     Route::get('/create', [CustomerPaymentUpdateController::class, 'create'])->name('customerpayment.create');
     Route::post('/create', [CustomerPaymentUpdateController::class, 'store'])->name('customerpayment.store');
     Route::post('/getCustomerDetails', [CustomerPaymentUpdateController::class, 'getCusDetails'])->name('customerpayment.getCustomerDetails');
 });
 
-Route::middleware(['role:Super Admin|Admin'])->prefix('creditlimtlog')->group(function () {
+Route::middleware(['role:Super Admin|Admin|Executive User'])->prefix('creditlimtlog')->group(function () {
     Route::get('/index', [CreditLimitLogContrller::class, 'index'])->name('creditlimtlog.index');
 }); 
 
