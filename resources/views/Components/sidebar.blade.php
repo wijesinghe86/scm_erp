@@ -150,7 +150,7 @@
         </li>
         @endhasanyrole
         {{-- Sales and Marketing --}}
-        @hasanyrole('Super Admin|Admin|Sales User|Sales Admin')
+        @hasanyrole('Super Admin|Admin|Sales User|Sales Admin|Executive User')
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-sale" aria-expanded="false"
                 aria-controls="ui-sale">
@@ -170,17 +170,22 @@
                     </li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('sales_order.index') }}">Sales Order</a>
                     </li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('sales_order.index') }}">Sales Order</a>
-                    </li>
+                    @hasanyrole('Super Admin|Admin|Executive User')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('credit_note.index') }}">Credit Note</a>
                     </li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Executive User')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('credit_note_approval.index') }}">Credit Note Approve</a>
                     </li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Executive User')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('customerpayment.index') }}">Customer Payment Update</a>
                     </li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Executive User')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('creditlimtlog.index') }}">Credit Limit Log</a>
                     </li>
-                    
+                    @endhasanyrole
                 </ul>
             </div>
         </li>

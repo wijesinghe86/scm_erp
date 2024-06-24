@@ -6,7 +6,7 @@
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title"><a href="{{ route('dashboard') }}" ><i class="mdi mdi-home"></i></a>Credit Note Regsitry</h2>
+                        <h4 class="card-title"><a href="{{ route('dashboard') }}" ><i class="mdi mdi-home"></i></a>Customer Payment Regsitry</h2>
                             <br>
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                 <a href="{{ route('customerpayment.create') }}" class="btn btn-success mb-2 float-end mb-2"> New Payment </a>
