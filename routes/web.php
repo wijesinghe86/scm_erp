@@ -812,10 +812,10 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::get('/password-chanege', [UserController::class, 'passwordChangeIndex'])->name('users.passwordChangeIndex');
         Route::post('/password-chanege/{user}', [UserController::class, 'passwordChange'])->name('users.passwordChange');
     });
-    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->group(function () {
-    Route::get('sales_order', [SalesOrderController::class, 'index'])->name('sales_order.index');
-    Route::get('/{invoice_id}/view', [SalesOrderController::class, 'view'])->name('sales_order.view');
-    Route::get('/{invoice_id}/print', [SalesOrderController::class, 'print'])->name('sales_order.print');
+    Route::prefix('sales_order')->group(function () {
+    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('sales_order', [SalesOrderController::class, 'index'])->name('sales_order.index');
+    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/{invoice_id}/view', [SalesOrderController::class, 'view'])->name('sales_order.view');
+    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/{invoice_id}/print', [SalesOrderController::class, 'print'])->name('sales_order.print');
     });
 
     Route::prefix('credit_note')->group(function () {
@@ -851,7 +851,7 @@ Route::middleware(['role:Super Admin|Admin|Executive User'])->prefix('customerpa
     Route::post('/getCustomerDetails', [CustomerPaymentUpdateController::class, 'getCusDetails'])->name('customerpayment.getCustomerDetails');
 });
 
-Route::middleware(['role:Super Admin|Admin|Executive User'])->prefix('creditlimtlog')->group(function () {
+Route::middleware(['role:Super Admin|Admin'])->prefix('creditlimtlog')->group(function () {
     Route::get('/index', [CreditLimitLogContrller::class, 'index'])->name('creditlimtlog.index');
 }); 
 
