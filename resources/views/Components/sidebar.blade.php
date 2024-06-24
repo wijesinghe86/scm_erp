@@ -170,8 +170,6 @@
                     </li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('sales_order.index') }}">Sales Order</a>
                     </li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('sales_order.index') }}">Sales Order</a>
-                    </li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('credit_note.index') }}">Credit Note</a>
                     </li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('credit_note_approval.index') }}">Credit Note Approve</a>

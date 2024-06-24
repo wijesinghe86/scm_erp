@@ -21,7 +21,7 @@
                                         <th>CUSTOMER NAME</th>
                                         {{-- <th>SALES STAFF NAME</th> --}}
                                         <th>INVOICE DATE</th>
-                                        {{-- <th>CREATED BY</th> --}}
+                                        <th>CREATED BY</th> 
                                         {{-- <th>CREATED AT</th> --}}
                                         <td>VIEW</td>
                                     </tr>
@@ -36,8 +36,8 @@
                                             {{-- <td>{{ $invoice->SalesStaff ? $invoice->SalesStaff->employee_name_with_intial : 'Sales Staff not found' }}
                                             </td> --}}
                                             <td>{{ $invoice->invoice_date }}</td>
-                                            {{-- <td>{{ $invoice->createUser ? $invoice->createUser->name : 'User not found' }}
-                                            </td> --}}
+                                             <td>{{ $invoice->createUser ? $invoice->createUser->name : 'User not found' }}
+                                            </td> 
                                             {{-- <td>{{ $invoice->created_at }}</td> --}}
                                             <td>
                                                 <a href="{{ route('sales_order.view', $invoice->id) }}">

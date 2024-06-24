@@ -32,7 +32,7 @@
 </head>
 <body>
   {{-- header --}}
-  <h2 style="text-align:center;">Janatha Steel Tube (Private) Limited</h2>
+  <h2 style="text-align:center;">ABC (Private) Limited</h2>
   <h4 style="text-align:center; margin-top:-5mm;">Pallegodawatta Industrial Village, Meegama Road, Mathugama</h4>
   <h4 style="text-align:center; margin-top:-5mm;">Vat Reg.No:174022291-7000</h4>
   <hr>
