@@ -123,7 +123,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Master Data Editor'])->get('/{customer_id}/active', [App\Http\Controllers\CustomerController::class, 'active'])->name('customer.active');
         Route::middleware(['role:Super Admin|Admin|Master Data Editor'])->get('/{customer_id}/deactive', [App\Http\Controllers\CustomerController::class, 'deactive'])->name('customer.deactive');
         Route::middleware(['role:Super Admin|Admin|Master Data Editor'])->get('/print', [App\Http\Controllers\CustomerController::class, 'print'])->name('customer.print');
-        Route::middleware(['role:Super Admin|Admin|Sales User|Warehouse User'])->get('/get/data', [CustomerController::class, 'getData'])->name('customer.get.data');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Warehouse User|Executive User'])->get('/get/data', [CustomerController::class, 'getData'])->name('customer.get.data');
     });
 
     /* .....CREATING ROUTE FOR Supplier Registration ....... */
@@ -812,10 +812,10 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::get('/password-chanege', [UserController::class, 'passwordChangeIndex'])->name('users.passwordChangeIndex');
         Route::post('/password-chanege/{user}', [UserController::class, 'passwordChange'])->name('users.passwordChange');
     });
-    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->group(function () {
-    Route::get('sales_order', [SalesOrderController::class, 'index'])->name('sales_order.index');
-    Route::get('/{invoice_id}/view', [SalesOrderController::class, 'view'])->name('sales_order.view');
-    Route::get('/{invoice_id}/print', [SalesOrderController::class, 'print'])->name('sales_order.print');
+    Route::prefix('sales_order')->group(function () {
+    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('sales_order', [SalesOrderController::class, 'index'])->name('sales_order.index');
+    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/{invoice_id}/view', [SalesOrderController::class, 'view'])->name('sales_order.view');
+    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/{invoice_id}/print', [SalesOrderController::class, 'print'])->name('sales_order.print');
     });
 
     Route::prefix('credit_note')->group(function () {
@@ -830,21 +830,21 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
     });
 
     Route::prefix('credit_note_Approval')->group(function () {
-        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/', [CreditNoteApprovalController::class, 'index'])->name('credit_note_approval.index');
-        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/create', [App\Http\Controllers\CreditNoteApprovalController::class, 'create'])->name('credit_note_approval.create');
-        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->post('/store', [App\Http\Controllers\CreditNoteApprovalController::class, 'store'])->name('credit_note_approval.store');
-        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->post('/getCreditNoteDetails', [App\Http\Controllers\CreditNoteApprovalController::class, 'getCnDetails'])->name('credit_note_approval.getCreditNoteDetails');
-        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/getCnItems', [App\Http\Controllers\CreditNoteApprovalController::class, 'getCnItems'])->name('credit_note_approval.getCnItems');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->get('/', [CreditNoteApprovalController::class, 'index'])->name('credit_note_approval.index');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->get('/create', [App\Http\Controllers\CreditNoteApprovalController::class, 'create'])->name('credit_note_approval.create');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->post('/store', [App\Http\Controllers\CreditNoteApprovalController::class, 'store'])->name('credit_note_approval.store');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->post('/getCreditNoteDetails', [App\Http\Controllers\CreditNoteApprovalController::class, 'getCnDetails'])->name('credit_note_approval.getCreditNoteDetails');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->get('/getCnItems', [App\Http\Controllers\CreditNoteApprovalController::class, 'getCnItems'])->name('credit_note_approval.getCnItems');
 });
 
 Route::prefix('credit_note_print')->group(function () {
-    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/', [CreditNotePrintController::class, 'index'])->name('credit_note_print.index');
-    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/{creditnote_id}/view', [CreditNotePrintController::class, 'view'])->name('credit_note_print.view');
-    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/{creditnote_id}/print', [CreditNotePrintController::class, 'print'])->name('credit_note_print.print');
+    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->get('/', [CreditNotePrintController::class, 'index'])->name('credit_note_print.index');
+    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->get('/{creditnote_id}/view', [CreditNotePrintController::class, 'view'])->name('credit_note_print.view');
+    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->get('/{creditnote_id}/print', [CreditNotePrintController::class, 'print'])->name('credit_note_print.print');
 
 });
 
-Route::middleware(['role:Super Admin|Admin'])->prefix('customerpayment')->group(function () {
+Route::middleware(['role:Super Admin|Admin|Executive User'])->prefix('customerpayment')->group(function () {
     Route::get('/index', [CustomerPaymentUpdateController::class, 'index'])->name('customerpayment.index');
     Route::get('/create', [CustomerPaymentUpdateController::class, 'create'])->name('customerpayment.create');
     Route::post('/create', [CustomerPaymentUpdateController::class, 'store'])->name('customerpayment.store');

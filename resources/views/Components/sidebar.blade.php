@@ -150,7 +150,7 @@
         </li>
         @endhasanyrole
         {{-- Sales and Marketing --}}
-        @hasanyrole('Super Admin|Admin|Sales User|Sales Admin')
+        @hasanyrole('Super Admin|Admin|Sales User|Sales Admin|Executive User')
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-sale" aria-expanded="false"
                 aria-controls="ui-sale">
@@ -160,27 +160,38 @@
             </a>
             <div class="collapse" id="ui-sale">
                 <ul class="nav flex-column sub-menu">
+                    @hasanyrole('Super Admin|Admin|Sales User|Sales Admin')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('billtypes.all') }}">Bill Type
                             Creations</a>
                     </li>
+                    @endhasanyrole
                     {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('invoicesettings.all') }}">Invoice
                             Setting</a>
                     </li> --}}
+                    @hasanyrole('Super Admin|Admin|Sales User|Sales Admin')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('invoices.all') }}">Invoice</a>
                     </li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Sales User|Sales Admin')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('sales_order.index') }}">Sales Order</a>
                     </li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('sales_order.index') }}">Sales Order</a>
-                    </li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Executive User')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('credit_note.index') }}">Credit Note</a>
                     </li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Executive User')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('credit_note_approval.index') }}">Credit Note Approve</a>
                     </li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Executive User')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('customerpayment.index') }}">Customer Payment Update</a>
                     </li>
+                    @endhasanyrole
+                    @hasanyrole('Super Admin|Admin')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('creditlimtlog.index') }}">Credit Limit Log</a>
                     </li>
-                    
+                    @endhasanyrole
                 </ul>
             </div>
         </li>
