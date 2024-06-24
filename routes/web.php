@@ -123,7 +123,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Master Data Editor'])->get('/{customer_id}/active', [App\Http\Controllers\CustomerController::class, 'active'])->name('customer.active');
         Route::middleware(['role:Super Admin|Admin|Master Data Editor'])->get('/{customer_id}/deactive', [App\Http\Controllers\CustomerController::class, 'deactive'])->name('customer.deactive');
         Route::middleware(['role:Super Admin|Admin|Master Data Editor'])->get('/print', [App\Http\Controllers\CustomerController::class, 'print'])->name('customer.print');
-        Route::middleware(['role:Super Admin|Admin|Sales User|Warehouse User'])->get('/get/data', [CustomerController::class, 'getData'])->name('customer.get.data');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Warehouse User|Executive User'])->get('/get/data', [CustomerController::class, 'getData'])->name('customer.get.data');
     });
 
     /* .....CREATING ROUTE FOR Supplier Registration ....... */
