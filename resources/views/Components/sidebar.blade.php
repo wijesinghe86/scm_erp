@@ -350,10 +350,10 @@
                 Location Change <br> Approval</a></li>
         <li class="nav-item"> <a class="nav-link" href="{{ route('stocklocationchange_received.index') }}">Stock
                 Location Change <br> Recived</a></li>
-        {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('finishedgoods.index') }}">Finished
+        <li class="nav-item"> <a class="nav-link" href="{{ route('finishedgoods.index') }}">Finished
                 Goods</a></li>
         <li class="nav-item"> <a class="nav-link" href="{{ route('finished_goods_approval.index') }}">Finished
-                Goods Inspect</a></li> --}}
+                Goods Inspect</a></li>
         {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('overshortanddamage.index') }}">Over
                         Short And Damage Details Creation</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ route('disposal.index') }}">Disposal</a></li>
