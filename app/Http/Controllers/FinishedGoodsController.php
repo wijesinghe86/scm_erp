@@ -30,7 +30,7 @@ class FinishedGoodsController extends Controller
     public function create()
     {
         session(['finish_good.items' => []]);
-        session(['finish_good_wastage.items' => []]);
+       session(['finish_good_wastage.items' => []]);
         $stock_items = StockItem::get();
         $warehouses = Warehouse::get();
         $next_number = $this->generateNextNumber();
@@ -43,7 +43,13 @@ class FinishedGoodsController extends Controller
 
     public function store(Request $request)
     {
-
+        logger($request->all());
+        $finish_goods = session('finish_good.items') ?? [];
+        foreach (collect($finish_goods)->groupBy('batch_no')  as $batch_no => $finish_good) {
+            logger($batch_no);
+            logger($finish_good);
+        }
+        return redirect()->route('finishedgoods.create');
         $this->validate($request, [
             'date' => 'required',
             'fgrn_no' => 'required',
@@ -141,47 +147,47 @@ class FinishedGoodsController extends Controller
         return $items;
     }
 
-    // public function addToFinishGoodTable(Request $request)
-    // {
-    //     $this->validate($request, [
-    //         'rmi_item_id' => 'required',
-    //         'pro_item_id' => 'required',
-    //         'pro_qty' => 'required',
-    //         'pro_weight' => 'required',
-    //         'batch_no' => 'required',
-    //     ], [
-    //         "rmi_item_id.required" => 'The rmi item field is required',
-    //         "pro_item_id.required" => 'The finish good field is required',
-    //         "pro_qty.required" => 'The finish food qty field is required',
-    //         "pro_weight.required" => 'The finish food weight field is required',
-    //         "batch_no.required" => 'The batch number field is required',
-    //     ]);
+    public function addToFinishGoodTable(Request $request)
+    {
+        $this->validate($request, [
+            'rmi_item_id' => 'required',
+            'pro_item_id' => 'required',
+            'pro_qty' => 'required',
+            'pro_weight' => 'required',
+            'batch_no' => 'required',
+        ], [
+            "rmi_item_id.required" => 'The rmi item field is required',
+            "pro_item_id.required" => 'The finish good field is required',
+            "pro_qty.required" => 'The finish food qty field is required',
+            "pro_weight.required" => 'The finish food weight field is required',
+            "batch_no.required" => 'The batch number field is required',
+        ]);
 
-    //     $items = session('finish_good.items') ?? [];
-    //     $rmi_item = RawMaterialIssueItem::with(['semi_product_item.semi_product_stock_item'])->find($request->rmi_item_id);
-    //     $pro_stock_item = StockItem::find($request->pro_item_id);
-    //     $items[] = [
-    //         'pro_description' => $pro_stock_item->description,
-    //         'pro_stock_no' => $pro_stock_item->stock_number,
-    //         'stock_item_id' => $pro_stock_item->id,
-    //         'semi_product_serial_no' => $rmi_item->semi_product_serial_no,
-    //         'pro_qty' => $request->pro_qty,
-    //         'pro_weight' => $request->pro_weight,
-    //         'batch_no' => $request->batch_no,
-    //         'rmi_item_stock_id' => optional(optional(optional($rmi_item)->semi_product_item)->semi_product_stock_item)->id,
-    //         'rmi_item_stock_number' => optional(optional(optional($rmi_item)->semi_product_item)->semi_product_stock_item)->stock_number,
-    //         'rmi_item_stock_description' => optional(optional(optional($rmi_item)->semi_product_item)->semi_product_stock_item)->description,
-    //         'rmi_qty' => $request->rmi_qty,
-    //         'rmi_weight' => $request->rmi_weight,
-    //     ];
+        $items = session('finish_good.items') ?? [];
+        $rmi_item = RawMaterialIssueItem::with(['semi_product_item.semi_product_stock_item'])->find($request->rmi_item_id);
+        $pro_stock_item = StockItem::find($request->pro_item_id);
+        $items[] = [
+            'pro_description' => $pro_stock_item->description,
+            'pro_stock_no' => $pro_stock_item->stock_number,
+            'stock_item_id' => $pro_stock_item->id,
+            'semi_product_serial_no' => $rmi_item->semi_product_serial_no,
+            'pro_qty' => $request->pro_qty,
+            'pro_weight' => $request->pro_weight,
+            'batch_no' => $request->batch_no,
+            'rmi_item_stock_id' => optional(optional(optional($rmi_item)->semi_product_item)->semi_product_stock_item)->id,
+            'rmi_item_stock_number' => optional(optional(optional($rmi_item)->semi_product_item)->semi_product_stock_item)->stock_number,
+            'rmi_item_stock_description' => optional(optional(optional($rmi_item)->semi_product_item)->semi_product_stock_item)->description,
+            'rmi_qty' => $request->rmi_qty,
+            'rmi_weight' => $request->rmi_weight,
+        ];
 
-    //     session(['finish_good.items' => $items]);
-    //     request()->tot_issued_weight = "10000";
-    //     return [
-    //         'success' => true,
-    //         'message' => 'Item Added',
-    //     ];
-    // }
+        session(['finish_good.items' => $items]);
+        request()->tot_issued_weight = "10000";
+        return [
+            'success' => true,
+            'message' => 'Item Added',
+        ];
+    }
 
 public function addToFinishGoodTableBulk(Request $request)
     {
@@ -204,6 +210,8 @@ public function addToFinishGoodTableBulk(Request $request)
 
         $pro_stock_item = StockItem::find($request->pro_item_id);
 
+        $eachQtyList = explode(',', $request->eachQty);
+
         foreach ($request->rmi_item_ids as $key => $rmi_item_id) {
             $rmi_item = RawMaterialIssueItem::with(['semi_product_item.semi_product_stock_item'])->find($rmi_item_id);
             $newItem = [
@@ -219,6 +227,7 @@ public function addToFinishGoodTableBulk(Request $request)
                 'rmi_item_stock_description' => optional(optional(optional($rmi_item)->semi_product_item)->semi_product_stock_item)->description,
                 'rmi_qty' => $request->rmi_qty,
                 'rmi_weight' => $request->rmi_weight,
+                'each_qty' => $eachQtyList[$key],
             ];
             // logger($newItem);
             $items[] = $newItem;
@@ -237,11 +246,10 @@ public function addToFinishGoodTableBulk(Request $request)
     public function removeFromFinishGoodTable(Request $request)
     {
         $items =  session('finish_good.items') ?? [];
-        $index = collect($items)->search(function ($item) use ($request) {
-            return $item['rmi_item_stock_number'] == $request->rmi_item_stock_number && $item['semi_product_serial_no'] == $request->semi_product_serial_no && $item['pro_stock_no'] == $request->pro_stock_no;
+        $filteredItems = collect($items)->filter(function ($item) use ($request) {
+            return data_get($item, 'batch_no') != $request->batch_no;
         });
-        unset($items[$index]);
-        session(['finish_good.items' => $items]);
+        session(['finish_good.items' => $filteredItems->toArray()]);
         return [
             'success' => true,
             'message' => 'Item Removed'
@@ -251,7 +259,7 @@ public function addToFinishGoodTableBulk(Request $request)
     public function getFinishGoodTable()
     {
         $finish_good_items =  session('finish_good.items') ?? [];
-        logger($finish_good_items);
+        // logger($finish_good_items);
         return view('pages.FinishedGoods.item_list', compact('finish_good_items'));
     }
 
@@ -306,9 +314,9 @@ public function addToFinishGoodTableBulk(Request $request)
         $finish_good_items = session('finish_good.items') ?? [];
         $wastage_items = session('finish_good_wastage.items') ?? [];
 
-        $tot_issued_weight =  collect($finish_good_items)->unique('semi_product_serial_no')->sum('rmi_qty');
-        $tot_pro_qty =  collect($finish_good_items)->unique('pro_stock_no')->sum('pro_qty');
-        $tot_pro_weight =  collect($finish_good_items)->unique('pro_stock_no')->sum('pro_weight');
+        $tot_issued_weight =  collect($finish_good_items)->unique('batch_no')->sum('rmi_qty');
+        $tot_pro_qty =  collect($finish_good_items)->unique('batch_no')->sum('pro_qty');
+        $tot_pro_weight =  collect($finish_good_items)->unique('batch_no')->sum('pro_weight');
 
         $tot_waste = collect($wastage_items)->sum('wastage_qty');
         $remaining = $tot_issued_weight - ($tot_pro_weight + $tot_waste);
@@ -324,4 +332,4 @@ public function addToFinishGoodTableBulk(Request $request)
     }
 }
 
-    
+

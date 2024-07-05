@@ -14,15 +14,15 @@ use App\Models\PlantRegistration;
 use App\Services\StockLogService;
 use App\Models\SemiProductionItem;
 use App\Models\RawMaterialSerialCode;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class SemiProductionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-
-        
         $semi_productions = SemiProduction::get();
+        //$semi_productions = SemiProduction::latest()->paginate(2);
         return view('pages.SemiProduction.index', compact('semi_productions'));
     }
     public function generateNextNumber()
