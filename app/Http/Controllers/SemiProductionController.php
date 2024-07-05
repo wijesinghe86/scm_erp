@@ -21,8 +21,8 @@ class SemiProductionController extends Controller
 {
     public function index(Request $request)
     {
-
-        $semi_productions = SemiProduction::latest()->paginate(2);
+        $semi_productions = SemiProduction::get();
+        //$semi_productions = SemiProduction::latest()->paginate(2);
         return view('pages.SemiProduction.index', compact('semi_productions'));
     }
     public function generateNextNumber()
