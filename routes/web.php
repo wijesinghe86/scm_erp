@@ -523,7 +523,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Production User'])->post('/create', [App\Http\Controllers\FinishedGoodsController::class, 'store'])->name('finishedgoods.store');
 
         Route::middleware(['role:Super Admin|Admin|Production User'])->get('/get-rmi-items', [App\Http\Controllers\FinishedGoodsController::class, 'getRmiItems'])->name('finishedgoods.getRmiItems');
-        // Route::middleware(['role:Super Admin|Admin|Production User'])->post('/add-to-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'addToFinishGoodTable'])->name('finished_goods.addToFinishGoodTable');
+        Route::middleware(['role:Super Admin|Admin|Production User'])->post('/add-to-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'addToFinishGoodTable'])->name('finished_goods.addToFinishGoodTable');
         Route::middleware(['role:Super Admin|Admin|Production User'])->post('/add-to-finish-good-table/bulk', [App\Http\Controllers\FinishedGoodsController::class, 'addToFinishGoodTableBulk'])->name('finished_goods.addToFinishGoodTableBulk');
         Route::middleware(['role:Super Admin|Admin|Production User'])->post('/remove-from-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'removeFromFinishGoodTable'])->name('finishedgoods.removeFromFinishGoodTable');
         Route::middleware(['role:Super Admin|Admin|Production User'])->get('/get-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'getFinishGoodTable'])->name('finishedgoods.getFinishGoodTable');
@@ -853,7 +853,7 @@ Route::middleware(['role:Super Admin|Admin|Executive User'])->prefix('customerpa
 
 Route::middleware(['role:Super Admin|Admin'])->prefix('creditlimtlog')->group(function () {
     Route::get('/index', [CreditLimitLogContrller::class, 'index'])->name('creditlimtlog.index');
-}); 
+});
 
 });
 

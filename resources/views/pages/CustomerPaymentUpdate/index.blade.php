@@ -21,7 +21,7 @@
                                         <th>CUSTOMER NAME</th>
                                         <th>INVOICE NO</th>
                                         <th>INVOICE AMOUNT</th>
-                                        <th>PAID AMOUNT</th>juj
+                                        <th>PAID AMOUNT</th>
                                         <th>CREATED BY </th>
 
                                     </tr>
