@@ -19,9 +19,9 @@
                                     <input value="{{ date('Y-m-d') }}" type="date" class="form-control"
                                         name="stock_adjustment_date " placeholder="Stock Adjustment Date">
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-4 ">
                                     <label>Type</label>
-                                    <select class="form-control " name="type" id="type">
+                                    <select class="form-control record-select" name="type" id="type">
                                         <option value="">Select Type</option>
                                         <option value="short">Short</option>
                                         <option value="excess">Excess</option>
@@ -30,9 +30,10 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Created By</label>
-                                    <select class="form-control " name="created_by">
+                                    <select class="form-control record-select" name="created_by">
                                         @foreach ($employees as $employee)
                                             <option value="{{ $employee->id }}">{{ $employee->employee_fullname }}</option>
+
                                         @endforeach
                                     </select>
                                 </div>
@@ -46,7 +47,7 @@
                             <div style="display: none;" class="main-container row">
                                 <div class="form-group col-md-4">
                                     <label>From Warehouse</label>
-                                    <select class="form-control " id="from_warehouse">
+                                    <select class="form-control" id="from_warehouse">
                                         @foreach ($warehouses as $warehouse)
                                             <option value="{{ $warehouse->id }}">{{ $warehouse->warehouse_name }}
                                             </option>
@@ -55,7 +56,7 @@
                                 </div>
                                 <div style="display: none;" class="transfer-show  form-group col-md-4">
                                     <label>To Warehouse</label>
-                                    <select class="form-control " id="to_warehouse">
+                                    <select class="form-control" id="to_warehouse">
                                         @foreach ($warehouses as $warehouse)
                                             <option value="{{ $warehouse->id }}">{{ $warehouse->warehouse_name }}
                                             </option>
@@ -161,6 +162,11 @@
                 placeholder: "Select Item",
             });
         });
+            $(document).ready(function() {
+            $('.record-select').select2({
+                placeholder: "Select one",
+            });
+        });
 
         $('#type').on('change', function() {
             let type = $(this).val();
@@ -211,13 +217,15 @@
                     type
                 },
                 success: function(response) {
-                    $('#from_warehouse').val("").trigger('change');
-                    $('#to_warehouse').val("").trigger('change');
-                    $('#justification').val("")
+                    // $('#from_warehouse').val("").trigger('change');
+                    // $('#to_warehouse').val("").trigger('change');
+                    // $('#justification').val("")
                     $('#from_stock_id').val("").trigger('change');
                     $('#to_stock_id').val("").trigger('change');
                     $('#qty').val("");
                     $('#weight').val("");
+                    $('#from_after').val("");
+                    $('#to_after').val("");
                     viewItemTable();
                 },
                 error: function(data) {

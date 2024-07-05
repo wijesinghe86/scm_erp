@@ -30,7 +30,7 @@ class FinishedGoodsController extends Controller
     public function create()
     {
         session(['finish_good.items' => []]);
-        session(['finish_good_wastage.items' => []]);
+       session(['finish_good_wastage.items' => []]);
         $stock_items = StockItem::get();
         $warehouses = Warehouse::get();
         $next_number = $this->generateNextNumber();
@@ -43,7 +43,13 @@ class FinishedGoodsController extends Controller
 
     public function store(Request $request)
     {
-
+        logger($request->all());
+        $finish_goods = session('finish_good.items') ?? [];
+        foreach (collect($finish_goods)->groupBy('batch_no')  as $batch_no => $finish_good) {
+            logger($batch_no);
+            logger($finish_good);
+        }
+        return redirect()->route('finishedgoods.create');
         $this->validate($request, [
             'date' => 'required',
             'fgrn_no' => 'required',
