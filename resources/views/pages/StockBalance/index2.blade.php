@@ -5,7 +5,7 @@
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4><a href="{{ route('dashboard') }}" ><i class="mdi mdi-home"></i></a>  Stock Nill Item List</h2>
+                        <h4><a href="{{ route('dashboard') }}" ><i class="mdi mdi-home"></i></a>Stock On Hand Balance</h2>
 
                         <div class="table-responsive">
                             <table class="table bordered form-group">
@@ -23,7 +23,7 @@
                                 </thead>
 
                                 <tbody>
-                                    @foreach ($stock_balance as $stock)
+                                    @foreach ($stock_balance2 as $stock)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{optional(optional( $stock)->item)->stock_number }}</td>

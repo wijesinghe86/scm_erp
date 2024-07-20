@@ -51,7 +51,7 @@ class StockLocationChangeController extends Controller
 
         $this->validate($request, [
             'slc_date' => 'required|date',
-            'issued_by' => 'required',
+            //'issued_by' => 'required',
             'issued_date' => 'required',
             'from_location' => 'required',
             'to_location' => 'required',
@@ -85,7 +85,7 @@ class StockLocationChangeController extends Controller
                 $slc_item->qty = $item['issue_qty'];
                 $slc_item->save();
 
-                //stock 
+                //stock
                 // $stock_from = Stock::where('stock_item_id', $item['stock_item_id'])->where('warehouse_id', $slc->from_location)->first();
                 // $stock_from->qty = $stock_from->qty - $item['issue_qty'];
                 // $stock_from->save();
@@ -191,7 +191,7 @@ class StockLocationChangeController extends Controller
         $slc->save();
 
         if ($request->approved_status == "approved") {
-            //stock 
+            //stock
             foreach ($slc->items as $key => $item) {
                 $stock_from = Stock::where('stock_item_id', $item['stock_item_id'])->where('warehouse_id', $slc->from_location)->first();
                 $stock_from->qty = $stock_from->qty - $item['qty'];
@@ -226,7 +226,7 @@ class StockLocationChangeController extends Controller
         $slc->received_remark = $request->received_remark;
         $slc->save();
 
-        //stock 
+        //stock
         foreach ($slc->items as $key => $item) {
             $stock_to = Stock::where('stock_item_id', $item['stock_item_id'])->where('warehouse_id', $slc->to_location)->first();
             $stock_to->qty = $stock_to->qty + $item['qty'];

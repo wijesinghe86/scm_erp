@@ -350,10 +350,10 @@
                 Location Change <br> Approval</a></li>
         <li class="nav-item"> <a class="nav-link" href="{{ route('stocklocationchange_received.index') }}">Stock
                 Location Change <br> Recived</a></li>
-        {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('finishedgoods.index') }}">Finished
+        <li class="nav-item"> <a class="nav-link" href="{{ route('finishedgoods.index') }}">Finished
                 Goods</a></li>
         <li class="nav-item"> <a class="nav-link" href="{{ route('finished_goods_approval.index') }}">Finished
-                Goods Inspect</a></li> --}}
+                Goods Inspect</a></li>
         {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('overshortanddamage.index') }}">Over
                         Short And Damage Details Creation</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ route('disposal.index') }}">Disposal</a></li>
@@ -381,8 +381,11 @@
                 <li class="nav-item"> <a class="nav-link" href="{{ route('obentry.index') }}">Openning Balance Entry</a></li>
                 @endhasanyrole
                 @hasanyrole('Super Admin|Admin|Production Admin')
-                <li class="nav-item"> <a class="nav-link" href="{{ route('stock.index') }}">On Hand Balance</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('stock.index2') }}">On Hand Balance</a></li>
                 @endhasanyrole
+                {{-- @hasanyrole('Super Admin|Admin|Production Admin')
+                <li class="nav-item"> <a class="nav-link" href="{{ route('stock.index1') }}">Stock Nill Item List</a></li>
+                @endhasanyrole --}}
                 @hasanyrole('Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin')
                 <li class="nav-item"> <a class="nav-link" href="{{ route('goodsreceived.index') }}">Goods
                         Received</a></li>
@@ -428,6 +431,14 @@
     <li class="nav-item"> <a class="nav-link" href="{{ route('stocklocationchange_received.index') }}">Stock
             Location Change <br> Recived</a></li>
     @endhasanyrole
+    @hasanyrole('Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin||Production Admin')
+    <li class="nav-item"> <a class="nav-link" href="{{ route('finishedgoods.index') }}">Finished
+        Goods</a></li>
+        @endhasanyrole
+        @hasanyrole('Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin||Production Admin')
+<li class="nav-item"> <a class="nav-link" href="{{ route('finished_goods_approval.index') }}">Finished
+        Goods Inspect</a></li>
+        @endhasanyrole
     {{-- @hasanyrole('Super Admin|Admin|Production User')
     <li class="nav-item"> <a class="nav-link" href="{{ route('finishedgoods.index') }}">Finished
             Goods</a></li>

@@ -13,4 +13,8 @@ class FinishGoodItem extends Model
     {
         return $this->hasOne(StockItem::class, 'id', 'stock_item_id');
     }
+    public function stock_item_by_stockNumber()
+    {
+        return $this->hasOne(StockItem::class, 'stock_number', 'rmi_item_stock_number');
+    }
 }

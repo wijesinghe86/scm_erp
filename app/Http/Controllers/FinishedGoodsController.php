@@ -6,12 +6,13 @@ use Exception;
 use App\Models\StockItem;
 use App\Models\Warehouse;
 use App\Models\FinishGood;
-use App\Models\FinishGoodItem;
-use App\Models\FinishGoodWastage;
 use Illuminate\Http\Request;
+use App\Models\FinishGoodItem;
 use App\Models\RawMaterialIssue;
+use App\Models\FinishGoodWastage;
 use Illuminate\Support\Facades\DB;
 use App\Models\RawMaterialIssueItem;
+use App\Models\FinishedGoodsItemDetails;
 use Illuminate\Validation\ValidationException;
 
 class FinishedGoodsController extends Controller
@@ -24,7 +25,8 @@ class FinishedGoodsController extends Controller
     public function index()
     {
         $fgrns = FinishGood::get();
-        return view('pages.FinishedGoods.index', compact('fgrns'));
+        $fgrn_items = FinishedGoodsItemDetails::get();
+        return view('pages.FinishedGoods.index', compact('fgrns', 'fgrn_items'));
     }
 
     public function create()
@@ -43,13 +45,14 @@ class FinishedGoodsController extends Controller
 
     public function store(Request $request)
     {
-        logger($request->all());
-        $finish_goods = session('finish_good.items') ?? [];
-        foreach (collect($finish_goods)->groupBy('batch_no')  as $batch_no => $finish_good) {
-            logger($batch_no);
-            logger($finish_good);
-        }
-        return redirect()->route('finishedgoods.create');
+        // //logger($request->all());
+        // $finish_goods = session('finish_good.items') ?? [];
+        // //logger($finish_goods);
+        // foreach (collect($finish_goods)->groupBy('batch_no')  as $batch_no => $finish_good) {
+        // //logger($batch_no);
+        // logger($finish_good);
+        //  }
+        
         $this->validate($request, [
             'date' => 'required',
             'fgrn_no' => 'required',
@@ -86,6 +89,10 @@ class FinishedGoodsController extends Controller
             $finished_good->pro_start_date_time = $request->pro_start_date_time;
             $finished_good->pro_end_date_time = $request->pro_end_date_time;
             $finished_good->rmi_no = $request->rmi_no;
+            $finished_good->rmi_stock_no = $finish_goods[0]['rmi_item_stock_number'];
+            $finished_good->pro_stock_no = $finish_goods[0]['pro_stock_no'];
+            $finished_good->rmi_stock_id = $finish_goods[0]['rmi_item_stock_id'];
+            $finished_good->pro_stock_id = $finish_goods[0]['stock_item_id'];
             $finished_good->tot_issue_weight = $request->tot_issued_weight;
             $finished_good->tot_pro_qty = $request->tot_pro_qty;
             $finished_good->tot_pro_weight = $request->tot_pro_weight;
@@ -94,21 +101,29 @@ class FinishedGoodsController extends Controller
             $finished_good->created_by = request()->user()->id;
             $finished_good->save();
 
+            foreach (collect($finish_goods)->groupBy('batch_no') as $batch_no => $finish_good) {
+            $finished_goods_item_detail = new FinishedGoodsItemDetails;
+            $finished_goods_item_detail->fgrn_no =$request->fgrn_no;
+            $finished_goods_item_detail->rmi_stock_no = ($finish_good[0]['rmi_item_stock_number']);
+            $finished_goods_item_detail->issued_qty = ($finish_good[0]['rmi_qty']);
+            $finished_goods_item_detail->issued_weight = ($finish_good[0]['rmi_weight']);
+            $finished_goods_item_detail->pro_stock_no = ($finish_good[0]['pro_stock_no']);
+            $finished_goods_item_detail->pro_description = ($finish_good[0]['pro_description']);
+            $finished_goods_item_detail->pro_qty = ($finish_good[0]['pro_qty']);
+            $finished_goods_item_detail->pro_weight = ($finish_good[0]['pro_weight']);
+            $finished_goods_item_detail->batch_no = ($finish_good[0]['batch_no']);
+            $finished_goods_item_detail->save();
+            }
+
             foreach ($finish_goods as $key => $finish_good) {
                 $finished_good_item = new FinishGoodItem;
                 $finished_good_item->fgrn_no = $data['fgrn_no'];
-                $finished_good_item->warehouse_id = $request->warehouse_id;
                 $finished_good_item->rmi_no = $request->rmi_no;
                 $finished_good_item->rmi_item_stock_description = $finish_good['rmi_item_stock_description'];
                 $finished_good_item->rmi_item_stock_number = $finish_good['rmi_item_stock_number'];
-                $finished_good_item->rmi_qty = $finish_good['rmi_qty'];
-                $finished_good_item->stock_item_id =  $finish_good['stock_item_id'];
+                $finished_good_item->rmi_qty = $finish_good['each_qty'];
                 $finished_good_item->semi_product_serial_no = $finish_good['semi_product_serial_no'];
-                $finished_good_item->pro_qty = $finish_good['pro_qty'];
-                $finished_good_item->pro_weight = $finish_good['pro_weight'];
                 $finished_good_item->batch_no = $finish_good['batch_no'];
-                $finished_good_item->pro_description = $finish_good['pro_description'];
-                $finished_good_item->pro_stock_no = $finish_good['pro_stock_no'];
                 $finished_good_item->save();
             }
 

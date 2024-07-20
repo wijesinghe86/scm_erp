@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label>RMI Item Stock No</label>
-                                    <input readonly type="text" class="form-control" id="rmi_item_stock_number"
+                                    <input readonly type="text" class="form-control" name="rmi_item_stock_number" id="rmi_item_stock_number"
                                         placeholder="">
                                 </div>
                                 <div class="form-group col-md-3">
