@@ -444,7 +444,8 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
     });
 /* .....CREATING ROUTE FOR On Hand Balance Report ....... */
     Route::middleware(['role:Super Admin|Admin|Production Admin'])->prefix('stock')->group(function () {
-        Route::get('/', [StockController::class, 'index'])->name('stock.index');
+    Route::get('/', [StockController::class, 'index'])->name('stock.index1');
+    Route::get('/', [StockController::class, 'index2'])->name('stock.index2');
 
     });
     /* .....CREATING ROUTE FOR Miscellaneous Received ....... */

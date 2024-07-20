@@ -86,25 +86,84 @@
                                             <td>
                                                 <table class="table">
                                                     <tr>
-                                                        <td align="center" colspan="2">Finished Product</td>
+                                                        <td align="center" colspan="5">Finished Product</td>
                                                     </tr>
                                                     <tr>
                                                         <td style="min-width: 150px; width: 150px;">Stock No</td>
                                                         <td style="min-width: 150px; width: 150px;">Description</td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                            <th style="min-width: 100px; width: 100px;">Production Qty</th>
+                                                    {{-- </tr> --}}
+                                                {{-- </table> --}}
+                                            {{-- </td> --}}
+                                            <td style="min-width: 100px; width: 100px;">Production Qty</td>
+                                            <td style="min-width: 100px; width: 100px;">Production Weight</td>
+                                            <td style="min-width: 130px; width: 130px;">Batch No</td>
+                                            {{-- <th style="min-width: 100px; width: 100px;">Production Qty</th>
                                             <th style="min-width: 100px; width: 100px;">Production Weight</th>
-                                            <th style="min-width: 130px; width: 130px;">Batch No</th>
+                                            <th style="min-width: 130px; width: 130px;">Batch No</th> --}}
                                         </tr>
-                                    </thead>
+                                    </table>
+                                    {{-- </thead> --}}
+                                </td>
                                     <tbody>
-                                        @foreach (collect($finished_good->items)->groupBy('rmi_item_stock_number') as $rmi_item_stock_number => $items)
+                                        @foreach (collect($finished_good->items)->groupBy('batch_no') as $batch_no => $items)
                                             <tr>
-                                                <td class="align-top">{{ $rmi_item_stock_number }}</td>
+                                                <td class="align-top">{{ $items[0]['rmi_item_stock_number'] }}</td>
                                                 <td class="align-top">{{ $items[0]['rmi_item_stock_description'] }}</td>
-                                                <td colspan="7">
+                                                
+                                                <td colspan="2">
+                                                    <table class="table">
+                                                        @foreach (collect($items)->groupBy('semi_product_serial_no') as $semi_product_serial_no => $items)
+                                                            <tr>
+                                                                <td style="min-width: 150px; width: 150px;"
+                                                                    class="align-top">
+                                                                    {{ $semi_product_serial_no }}
+                                                                </td>
+                                                                <td style="min-width: 150px; width: 150px;"
+                                                                    class="align-top">
+                                                                    {{ $items[0]['rmi_qty'] }}
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </table>
+                                                    <td colspan="5">
+                                                       
+                                                        <table class="table table-striped">
+                                                            @php
+                                                                $fgd = $finished_good_detail->filter(function ($value,$key) use ($batch_no) {
+                                                                            return data_get($value, 'batch_no') == $batch_no;
+                                                                        });
+                                                            @endphp
+                                                            @foreach ($fgd as $index => $item)
+                                                                <tr>
+                                                                    <td style="min-width: 150px; width: 150px;" class="align-top">
+                                                                        {{ $item['pro_stock_no'] }}</td>
+                                                                    <td style="min-width: 150px; width: 150px;" class="align-top">
+                                                                        {{ $item['pro_description'] }}</td>
+                                                                    <td style="min-width: 100px; width: 100px;" class="align-top">
+                                                                        {{ $item['pro_qty'] }}</td>
+                                                                    <td style="min-width: 100px; width: 100px;" class="align-top">
+                                                                        {{ $item['pro_weight'] }}</td>
+                                                                    <td align="right" style="min-width: 100px; width: 100px;" class="align-top">
+                                                                        {{ $item['batch_no'] }}</td>
+                                                                       
+                                                                </tr>
+                                                            @endforeach
+                                                        </table>
+                                                        {{-- </td> --}}
+                                                    </td>
+                                               </td>
+                                            </tr>
+                                        @endforeach
+                                        
+
+
+                                        {{-- @foreach (collect($finished_good->items)->groupBy('batch_no') as $batch_no => $items) --}}
+                                        {{-- @foreach (collect($finished_good_detail) as $key => $items)
+
+                                            <tr>
+                                                <td class="align-top">{{ $items[0]['$rmi_item_stock_number'] }}</td>
+                                                <td class="align-top">{{ $items[0]['rmi_item_stock_description'] }}</td>
+                                                 <td colspan="7">
                                                     <table class="table">
                                                         @foreach (collect($items)->groupBy('semi_product_serial_no') as $semi_product_serial_no => $items)
                                                             <tr>
@@ -116,7 +175,8 @@
                                                                     {{ $items[0]['rmi_qty'] }}</td>
                                                                 <td>
                                                                     <table class="table table-striped">
-                                                                        @foreach ($items as $index => $item)
+
+                                                                        @foreach ($finished_good_detail as $index => $item)
                                                                             <tr>
                                                                                 <td style="min-width: 150px; width: 150px;"
                                                                                     class="align-top">
@@ -143,7 +203,7 @@
                                                     </table>
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                        @endforeach --}}
                                     </tbody>
                                 </table>
                             </div>
@@ -179,7 +239,7 @@
                                 <form style="margin-top: 20px;" method="POST"
                                     action="{{ route('finished_goods_approval.store', $finished_good->id) }}">
                                     @csrf
-                                    <div class="row" > 
+                                    <div class="row">
                                         <div class="form-group col-md-3">
                                             <label>Status</label>
                                             <select required name="status" class="form-control item-select">
