@@ -75,10 +75,10 @@
                                                 {{-- <td>
                                                     <a href="{{ route('semiproduction.edit', $semiproduction->id) }}">
                                                     <i class="mdi mdi-pencil text-dark"></i></a>
-        
+
                                                     <a href="{{ route('semiproduction.delete', $semiproduction->id) }}">
                                                     <i class="mdi mdi-delete text-danger"></i></a>
-        
+
                                                     <a href="{{ route('semiproduction.view', $semiproduction->id) }}">
                                                     <i class="mdi mdi-eye text-dark"></i></a>
                                                 </td> --}}
@@ -87,6 +87,7 @@
                                     </tbody>
 
                                 </table>
+                                {{ $semi_productions->links('pagination::bootstrap-5') }}
                             </div>
                     </div>
                 </div>
@@ -97,8 +98,8 @@
 
 @push('scripts')
     <script>
-        $(document).ready(function() {
-            $('#tbl_semiproduction').DataTable();
-        });
+        // $(document).ready(function() {
+        //     $('#tbl_semiproduction').DataTable();
+        // });
     </script>
 @endpush

@@ -23,6 +23,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($finished_goods_list as $fgrn)
+                                  
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $fgrn->fgrn_no }}</td>
@@ -38,6 +39,7 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                   
                                 </tbody>
                             </table>
                         </div>

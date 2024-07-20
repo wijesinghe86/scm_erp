@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\RawMaterialReceived;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class RawMaterialIssueItem extends Model
 {
@@ -28,5 +29,10 @@ class RawMaterialIssueItem extends Model
     public function received()
     {
         return $this->hasOne(RawMaterialReceivedItem::class, 'serial_no', 'semi_product_serial_no');
+    }
+
+    public function raw_material_received()
+    {
+        return $this->hasOne(RawMaterialReceived::class, 'rmi_no', 'rmi_no');
     }
 }

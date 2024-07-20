@@ -6,6 +6,8 @@
             <tr>
                 <th>RMI Stock No</th>
                 <th>Description</th>
+                <th>Issued Qty</th>
+                <th>Issued Weight</th>
                 <th style="min-width: 150px; width: 150px;">Issued Serial No</th>
                 <th style="min-width: 100px; width: 100px;">Issued Weight</th>
                 <td>
@@ -32,6 +34,8 @@
                 <tr>
                     <td class="align-top">{{ data_get($items[0], 'rmi_item_stock_number') }}</td>
                     <td class="align-top">{{ data_get($items[0], 'rmi_item_stock_description') }}</td>
+                    <td class="align-top">{{ data_get($items[0], 'rmi_qty') }}</td>
+                    <td class="align-top">{{ data_get($items[0], 'rmi_weight') }}</td>
                     <td colspan="2">
                         <table class="table">
                             @foreach (collect($items)->groupBy('semi_product_serial_no') as $semi_product_serial_no => $items)

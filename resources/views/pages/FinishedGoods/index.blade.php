@@ -48,21 +48,22 @@
                                                 <td>{{ optional(optional($fgrn)->createdBy)->name }}</td>
                                                 <td>
                                                     <table class="table table-striped">
+
                                                         <tr>
                                                             <td>#</td>
                                                             <td>Stock Number</td>
                                                             <td>Description</td>
                                                             <td>Qty</td>
-                                                            <td>Weight</td>
+                                                            {{-- <td>Weight</td> --}}
                                                             <td>Batch</td>
                                                         </tr>
-                                                        @foreach ($fgrn->items as $item)
+                                                        @foreach ($fgrn_items as $item)
                                                             <tr>
                                                                 <td>{{ $loop->iteration }}</td>
-                                                                <td>{{ $item->stock_item->stock_number }}</td>
-                                                                <td>{{ $item->stock_item->description }}</td>
+                                                               <td>{{ optional(optional($item)->stock_item_by_stockNumber)->stock_number }}</td>
+                                                                <td>{{optional(optional($item)->stock_item_by_stockNumber)->description }}</td>
                                                                 <td>{{ $item->pro_qty }}</td>
-                                                                <td>{{ $item->pro_weight }}</td>
+                                                                {{-- <td>{{ $item->pro_weight }}</td> --}}
                                                                 <td>{{ $item->batch_no }}
                                                                 </td>
                                                             </tr>
@@ -71,9 +72,10 @@
                                                 </td>
                                             </tr>
                                         @endforeach
+
                                     </tbody>
                                 </table>
-                            </div>
+                           </div>
                     </div>
                 </div>
             </div>

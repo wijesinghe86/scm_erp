@@ -25,7 +25,7 @@
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>Issued by</label>
-                                    <select class="form-control item-select" name="issued_by">
+                                    <select class="form-control selection" name="issued_by">
                                         <option value="">Select Employee</option>
                                         @foreach ($employees as $employee)
                                             <option value="{{ $employee->id }}">
@@ -89,7 +89,7 @@
                                 </div>
                                 <div class="form-group col-md-5">
                                     <label>Description</label>
-                                    <select class="form-control item-select" id="stock_item_id">
+                                    <select class="form-control selection" id="stock_item_id">
                                         <option selected disabled>Select Item</option>
                                         @foreach ($stockItems as $stockItem)
                                             <option value="{{ $stockItem->id }}">
@@ -165,6 +165,7 @@
                 });
             });
 
+           
 
             $('#stock_item_id').on('change', function() {
                 let stockItemId = $(this).val();
