@@ -200,6 +200,18 @@ class InvoiceController extends ParentController
         }
     }
 
+    public function cancel($invoice_id)
+    {
+        $invoices = Invoice::find($invoice_id);
+        $invoices->cancel_status = 'cancelled';
+        $response['alert-success'] = 'Invoice Cancelled and generate Credit Note';
+        $invoices->cancel_date = now();
+        $invoices->cancelled_by = request()->user()->name;
+        $invoices->save();
+        return redirect()->route('invoices.all')->with($response);
+
+}
+
     public function preview($invoice_id)
     {
         $response['invoices'] = Invoice::with(['Items', 'Customer'])->find($invoice_id);

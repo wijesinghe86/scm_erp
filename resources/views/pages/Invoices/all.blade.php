@@ -39,7 +39,7 @@
                                             </td>
                                             <td>{{ $invoice->SalesStaff ? $invoice->SalesStaff->employee_name_with_intial : 'Sales Staff not found' }}
                                             </td>
-                                            <td>{{ $invoice->status }}</td>
+                                            <td style="color: red">{{ $invoice->cancel_status }}</td>
                                             <td>{{ $invoice->payment_terms }}</td>
                                             <td>{{ $invoice->createUser ? $invoice->createUser->name : 'User not found' }}
                                             </td>
@@ -53,6 +53,10 @@
                                                 </a>
                                                 <a href="">
                                                     <i class="fa-sharp fa-solid fa-print"></i>
+                                                </a>
+                                                <a href="{{ route('invoices.cancel', $invoice->id) }}">
+
+                                                <i class="fa-solid fa-rectangle-xmark text-danger"></i>
                                                 </a>
                                             </td>
                                         </tr>
