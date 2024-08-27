@@ -172,6 +172,10 @@
                     <li class="nav-item"> <a class="nav-link" href="{{ route('invoices.all') }}">Invoice</a>
                     </li>
                     @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Sales Admin')
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('invoices_cancel.create') }}">Invoice Cancellation</a>
+                    </li>
+                    @endhasanyrole
                     @hasanyrole('Super Admin|Sales User|Sales Admin')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('sales_order.index') }}">Sales Order</a>
                     </li>

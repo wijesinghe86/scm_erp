@@ -32,6 +32,7 @@ use App\Http\Controllers\CreditLimitLogContrller;
 use App\Http\Controllers\DeliveryOrderController;
 use App\Http\Controllers\FinishedGoodsController;
 use App\Http\Controllers\GoodsReceivedController;
+use App\Http\Controllers\InvoiceCancelController;
 use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\GoodsIssueNoteController;
 use App\Http\Controllers\ProductionCostController;
@@ -406,9 +407,15 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::get('/get/items/table', [InvoiceController::class, 'itemsTable'])->name('invoices.item.table');
         Route::get('/{invoice_id}/preview', [InvoiceController::class, 'preview'])->name('invoices.preview');
         Route::get('/{invoice_id}/print', [InvoiceController::class, 'print'])->name('invoices.print');
+        Route::get('/{invoice_id}/cancel', [InvoiceController::class, 'cancel'])->name('invoices.cancel');
         Route::get('/get/data', [InvoiceController::class, 'getData'])->name('invoices.get.data');
         Route::get('/get/total', [InvoiceController::class, 'getInvoiceTotal'])->name('invoices.get.total');
         Route::get('/get/invoice_no', [InvoiceController::class, 'generateInvoiceNumber'])->name('invoices.get.number');
+    });
+    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->prefix('invoices')->group(function () {
+        Route::get('/create', [InvoiceCancelController::class, 'create'])->name('invoices_cancel.create');
+        Route::get('/store', [InvoiceCancelController::class, 'store'])->name('invoices_cancel.store');
+        Route::post('/getInvoiceDetails', [InvoiceCancelController::class, 'getInvDetails'])->name('invoices_cancel.getInvoiceDetails');
     });
 
     /* .....CREATING ROUTE FOR Delivery Order ....... */
@@ -422,6 +429,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::post('/{delivery_order}/issue_delivery_order', [DeliveryOrderController::class, 'issueStore'])->name('deliveryorders.issueStore');
         Route::get('/{delivery_order}/get', [DeliveryOrderController::class, 'getById'])->name('deliveryorders.getById');
         Route::get('/{delivery_order_id}/print', [DeliveryOrderController::class, 'print'])->name('deliveryorders.print');
+        Route::get('/{delivery_order_id}/cancel', [DeliveryOrderController::class, 'cancel'])->name('deliveryorders.cancel');
     });
 
     Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin'])->prefix('returns')->group(function () {

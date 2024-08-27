@@ -23,14 +23,14 @@ use PDF;
 class DeliveryOrderController extends ParentController
 {
     public function all(Request $request)
-     { 
+     {
         $deliveryOrders = DeliveryOrder::with(['customer', 'location'])
                           ->when($request->search, function($q) use ($request){
                             $q->where('delivery_order_no', 'like', '%' . $request->search . '%')
                             ->orwhere('invoice_number', 'like', '%' . $request->search . '%')
                             ->orWhere(function ($qr) use ($request){
                                 return $qr->whereHas('location', function ($location) use ($request){
-                                $location->where('warehouse_name', 'like', '%' . $request->search . '%');    
+                                $location->where('warehouse_name', 'like', '%' . $request->search . '%');
                             });
                               })
                               ->orWhere(function ($query) use ($request){
@@ -39,11 +39,11 @@ class DeliveryOrderController extends ParentController
                         });
                     });
                 })
-                                     
+
                           ->latest()
                           ->paginate(50);
                           return view('pages.DeliveryOrder.all', compact('deliveryOrders'));
-       
+
         // $search = $request['search']?? "";
         // if(request('search' ) !="")
         // {
@@ -51,7 +51,7 @@ class DeliveryOrderController extends ParentController
         //                                     ->where('delivery_order_no', 'like', '%' . request('search') . '%')
         //                                     ->orwhere('invoice_number', 'like', '%' . request('search') . '%')
         //                                     ->latest()->paginate();
-                                           
+
         // }
         // else
         // {
@@ -59,7 +59,7 @@ class DeliveryOrderController extends ParentController
         // }
         // return view('pages.DeliveryOrder.all', compact('deliveryOrders', 'search'));
 
-        
+
     }
 
     public function view(DeliveryOrder $delivery_order)
@@ -77,6 +77,11 @@ class DeliveryOrderController extends ParentController
         $delivery_order->loadMissing('items.warehouse');
         if ($delivery_order == null || $delivery_order->issued_date != null) {
             abort(404);
+        }
+        if ($delivery_order->status == 1 ) {
+            $response['alert-success'] = 'Delivery Order already cancelled';
+            return redirect()->route('deliveryorders.all')->with($response);
+
         }
         // return $delivery_order;
         return view('pages.DeliveryOrder.issue', compact('delivery_order'));
@@ -203,5 +208,24 @@ class DeliveryOrderController extends ParentController
         }
         $pdf = PDF::loadView('pages.DeliveryOrder.pdf', compact('delivery_order'));
         return $pdf->stream('delivery_order.pdf');
+    }
+
+    public function cancel($delivery_order_id)
+    {
+        $delivery_order = DeliveryOrder::with(['items', 'invoice'])->find($delivery_order_id);
+        if($delivery_order->issued_date == null)
+        // if (($delivery_order->issued_date != null) && ($delivery_order->items->issued_qty == 0))
+        {
+        $delivery_order->cancel_status = 'cancelled';
+        $response['alert-success'] = 'Delivery Order Cancelled successfully!';
+        $delivery_order->cancelled_by = request()->user()->name;
+        $delivery_order->cancel_date = now();
+        }
+        else
+        $response['alert-danger'] = 'Invalid';
+
+        $delivery_order->save();
+        return redirect()->route('deliveryorders.all')->with($response);
+
     }
 }
