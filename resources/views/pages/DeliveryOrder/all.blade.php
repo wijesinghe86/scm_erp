@@ -42,7 +42,7 @@
                                                         <th>LOCATION</th>
                                                         <th>ISSUED DATE</th>
                                                         <th>ISSUED BY</th>
-                                                        <th>STATTU</th>
+                                                        <th>STATUS</th>
                                                         <th>ACTION</th>
 
 

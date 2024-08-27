@@ -78,7 +78,7 @@ class DeliveryOrderController extends ParentController
         if ($delivery_order == null || $delivery_order->issued_date != null) {
             abort(404);
         }
-        if ($delivery_order->status == 1 ) {
+        if ($delivery_order->cancel_status =="cancelled") {
             $response['alert-success'] = 'Delivery Order already cancelled';
             return redirect()->route('deliveryorders.all')->with($response);
 
