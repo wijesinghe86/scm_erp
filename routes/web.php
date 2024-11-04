@@ -872,7 +872,7 @@ Route::middleware(['role:Super Admin|Admin'])->prefix('creditlimtlog')->group(fu
 Route::middleware(['role:Super Admin|Admin'])->prefix('MaterialsReturnReports')->group(function () {
     Route::get('MaterialsReturnReports', [MrsReportController::class, 'index'])->name('mrsreports.index');
     Route::post('filter', [MrsReportController::class, 'filter'])->name('mrsreports.filter');
-    Route::post('date_filter', [MrsReportController::class, 'date_filter'])->name('mrsreports.date_filter');
+    //Route::post('date_filter', [MrsReportController::class, 'date_filter'])->name('mrsreports.date_filter');
     // Route::get('/create', [App\Http\Controllers\MrsReportController::class, 'create'])->name('materialsreturnbycustomer.create');
     // Route::post('/create', [App\Http\Controllers\MrsReportController::class, 'store'])->name('materialsreturnbycustomer.store');
 });
