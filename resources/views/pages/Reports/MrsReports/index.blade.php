@@ -45,7 +45,7 @@
                                     <button type="submit" class="btn btn-success me-2" style="position: center"> View and Print</button>
                                 </div>
                             </div>
-                            <h4><b>2.Date-wise Return Status</b></h4>
+                            {{-- <h4><b>2.Date-wise Return Status</b></h4>
                             <hr>
                             <div class="row">
                                 <div class="form-group col-md-2">
@@ -61,7 +61,7 @@
                                 <div class="form-group col-md-2">
                                     <button type="submit" class="btn btn-success me-2" style="position: center"> View and Print</button>
                                 </div>
-                            </div>
+                            </div> --}}
                         </form>
                     </div>
                 </div>
