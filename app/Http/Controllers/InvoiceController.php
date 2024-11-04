@@ -50,17 +50,27 @@ class InvoiceController extends ParentController
 
     public function generateInvoiceNumber(Request $request)
     {
+        // $invocieCategoryId = data_get($request, 'invoice_category');
+        // $billType = BillType::find($invocieCategoryId);
+        // $invoice_count = Invoice::where('category',$billType->id)->count();
+        // $prefix = $billType->billtype_code;
+
+        // return $prefix . sprintf('%06d', $invoice_count + 1);
+
         $invocieCategoryId = data_get($request, 'invoice_category');
         $billType = BillType::find($invocieCategoryId);
-        $invoice_count = Invoice::where('category',$billType->id)->count();
         $prefix = $billType->billtype_code;
+        $latestOrder = Invoice::where('category',$billType->id)->latest()->first();
+        if ($latestOrder) {
+            $lastNumber = (int) str_replace($prefix, '', $latestOrder->id);
+            $nextNumber = $lastNumber + 1;
+        } else {
+            $nextNumber = 1;
+        }
+        $nextNumberFormatted = str_pad($nextNumber, 6, '0', STR_PAD_LEFT);
 
-        return $prefix . sprintf('%06d', $invoice_count + 1);
+        return $prefix . $nextNumberFormatted;
 
-        // $setting = InvoiceSetting::first();
-        // $first_letter = $setting->category ? $setting->category->billtype_code : '';
-        // $invoice_count = Invoice::where('category', $setting->invoice_category)->count();
-        // return $first_letter . sprintf('%06d', $invoice_count + 1);
     }
 
     public function generateDeliveryOrderNumber()
@@ -232,8 +242,13 @@ class InvoiceController extends ParentController
         }
 
         // return view('pages.Invoices.pdf', compact('invoices'));
+
         $pdf = PDF::loadView('pages.Invoices.pdf', compact('invoices'));
+        $invoices->status = '123';
+        $invoices->save();
         return $pdf->stream('invoice.pdf');
+
+
     }
 
     public function storeItem(Request $request)

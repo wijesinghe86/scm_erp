@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Warehouse;
+use App\Models\InvoiceReturnItem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -21,6 +22,7 @@ class InvoiceReturn extends Model
         return $this->hasMany(InvoiceReturnItem::class, "return_id", "id");
     }
 
+    
     public function invoice()
     {
         return $this->hasOne(Invoice::class, "id", "invoice_id");

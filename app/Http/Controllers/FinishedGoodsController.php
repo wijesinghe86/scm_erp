@@ -29,6 +29,13 @@ class FinishedGoodsController extends Controller
         return view('pages.FinishedGoods.index', compact('fgrns', 'fgrn_items'));
     }
 
+    public function view()
+    {
+        $fgrns = FinishGood::get();
+        $fgrn_items = FinishedGoodsItemDetails::get();
+        return view('pages.FinishedGoods.view', compact('fgrns','fgrn_items'));
+    }
+
     public function create()
     {
         session(['finish_good.items' => []]);
@@ -52,7 +59,7 @@ class FinishedGoodsController extends Controller
         // //logger($batch_no);
         // logger($finish_good);
         //  }
-        
+
         $this->validate($request, [
             'date' => 'required',
             'fgrn_no' => 'required',

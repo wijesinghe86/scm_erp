@@ -14,11 +14,12 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\BillTypeController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DispatchController;
-use App\Http\Controllers\DisposalController;
+//use App\Http\Controllers\DisposalController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MrequestController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\MrApproveController;
+use App\Http\Controllers\MrsReportController;
 use App\Http\Controllers\PrApproveController;
 use App\Http\Controllers\StockItemController;
 use App\Http\Controllers\WarehouseController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\CreditNoteController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DfApprovalController;
 use App\Http\Controllers\SalesOrderController;
+use App\Http\Controllers\StockReportController;
 use App\Http\Controllers\StorageAreaController;
 use App\Http\Controllers\TaxCreationController;
 use App\Http\Controllers\CreditLimitLogContrller;
@@ -530,6 +532,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Production User|Production Admin'])->get('FinishedGoods', [App\Http\Controllers\FinishedGoodsController::class, 'index'])->name('finishedgoods.index');
         Route::middleware(['role:Super Admin|Admin|Production User'])->get('/create', [FinishedGoodsController::class, 'create'])->name('finishedgoods.create');
         Route::middleware(['role:Super Admin|Admin|Production User'])->post('/create', [App\Http\Controllers\FinishedGoodsController::class, 'store'])->name('finishedgoods.store');
+        Route::middleware(['role:Super Admin|Admin|Production User'])->get('/view/{$fgrn->id}', [FinishedGoodsController::class, 'view'])->name('finishedgoods.view');
 
         Route::middleware(['role:Super Admin|Admin|Production User'])->get('/get-rmi-items', [App\Http\Controllers\FinishedGoodsController::class, 'getRmiItems'])->name('finishedgoods.getRmiItems');
         Route::middleware(['role:Super Admin|Admin|Production User'])->post('/add-to-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'addToFinishGoodTable'])->name('finished_goods.addToFinishGoodTable');
@@ -550,11 +553,11 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Production Admin'])->post('/inspect/{finished_good}', [FinishedGoodsApprovalController::class, 'store'])->name('finished_goods_approval.store');
     });
 
-    Route::middleware(['role:Super Admin|Admin'])->prefix('Disposal')->group(function () {
-        Route::get('Disposal', [App\Http\Controllers\DisposalController::class, 'index'])->name('disposal.index');
-        Route::get('/create', [DisposalController::class, 'create'])->name('disposal.create');
-        Route::post('/create', [App\Http\Controllers\DisposalController::class, 'store'])->name('disposal.store');
-    });
+    // Route::middleware(['role:Super Admin|Admin'])->prefix('Disposal')->group(function () {
+    //     Route::get('Disposal', [App\Http\Controllers\DisposalController::class, 'index'])->name('disposal.index');
+    //     Route::get('/create', [DisposalController::class, 'create'])->name('disposal.create');
+    //     Route::post('/create', [App\Http\Controllers\DisposalController::class, 'store'])->name('disposal.store');
+    // });
 
     Route::middleware(['role:Super Admin|Admin'])->prefix('GoodsIssueNote')->group(function () {
         Route::get('GoodsIssueNote', [GoodsIssueNoteController::class, 'index'])->name('goodsissuenote.index');
@@ -575,6 +578,8 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::get('/create', [App\Http\Controllers\MaterialsReturnByCustomerController::class, 'create'])->name('materialsreturnbycustomer.create');
         Route::post('/create', [App\Http\Controllers\MaterialsReturnByCustomerController::class, 'store'])->name('materialsreturnbycustomer.store');
     });
+
+
 
     Route::middleware(['role:Super Admin|Admin'])->prefix('OverShortageAndDamage')->group(function () {
         Route::get('OverShortageAndDamage', [OverShortageAndDamageController::class, 'index'])->name('overshortanddamage.index');
@@ -862,6 +867,22 @@ Route::middleware(['role:Super Admin|Admin|Executive User'])->prefix('customerpa
 
 Route::middleware(['role:Super Admin|Admin'])->prefix('creditlimtlog')->group(function () {
     Route::get('/index', [CreditLimitLogContrller::class, 'index'])->name('creditlimtlog.index');
+});
+
+Route::middleware(['role:Super Admin|Admin'])->prefix('MaterialsReturnReports')->group(function () {
+    Route::get('MaterialsReturnReports', [MrsReportController::class, 'index'])->name('mrsreports.index');
+    Route::post('filter', [MrsReportController::class, 'filter'])->name('mrsreports.filter');
+    Route::post('date_filter', [MrsReportController::class, 'date_filter'])->name('mrsreports.date_filter');
+    // Route::get('/create', [App\Http\Controllers\MrsReportController::class, 'create'])->name('materialsreturnbycustomer.create');
+    // Route::post('/create', [App\Http\Controllers\MrsReportController::class, 'store'])->name('materialsreturnbycustomer.store');
+});
+
+Route::middleware(['role:Super Admin|Admin'])->prefix('StockReports')->group(function () {
+    Route::get('/', [StockReportController::class, 'index'])->name('stockreports.index');
+    Route::post('item_wise', [StockReportController::class, 'generate_history_report'])->name('stockreports.generate_history_report');
+    //Route::post('date_filter', [MrsReportController::class, 'date_filter'])->name('mrsreports.date_filter');
+    // Route::get('/create', [App\Http\Controllers\MrsReportController::class, 'create'])->name('materialsreturnbycustomer.create');
+    // Route::post('/create', [App\Http\Controllers\MrsReportController::class, 'store'])->name('materialsreturnbycustomer.store');
 });
 
 });

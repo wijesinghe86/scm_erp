@@ -124,7 +124,7 @@
                             <br>
                             <br>
                             <div id="item_cart"></div>
-                            <button type="submit" class="btn btn-success me-2">
+                            <button type="submit" class="btn btn-success me-2" >
                                 Complete Materials Request
                             </button>
                         </form>
@@ -273,6 +273,6 @@
                 placeholder: "Select",
             })
 
-    </script> 
+    </script>
     @endpush
 @endsection

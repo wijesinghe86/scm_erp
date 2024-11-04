@@ -8,16 +8,17 @@ use App\Models\Employee;
 use App\Models\StockItem;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
+use function PHPSTORM_META\type;
 use App\Models\FleetRegistration;
+use App\Services\StockLogService;
 use Illuminate\Support\Facades\DB;
 use App\Models\StockLocationChange;
 use Illuminate\Support\Facades\Auth;
 use App\Models\StockLocationChangeItem;
 use App\Models\StockLocationChangeIssued;
+
 use App\Models\StockLocationChangeReceived;
 use Illuminate\Validation\ValidationException;
-
-use function PHPSTORM_META\type;
 
 class StockLocationChangeController extends Controller
 {
@@ -178,6 +179,8 @@ class StockLocationChangeController extends Controller
 
     public function approvalStore(Request $request, StockLocationChange $slc)
     {
+        $stockLog = new StockLogService;
+
         $this->validate($request, [
             'approved_date' => 'required|date',
             'approved_by' => 'required',
@@ -190,6 +193,19 @@ class StockLocationChangeController extends Controller
         $slc->approved_remark = $request->approved_remark;
         $slc->save();
 
+        foreach($slc->items as $item){
+        $stockLog->createLog(
+            StockLogService::$STOCK_LOCATION_ISSUED,
+            $slc->from_location,
+            data_get($item,'stock_item_id'),
+            data_get($item,'qty'),
+            StockLogService::$DEDUCT,
+            $slc->slc_number,
+            $request->user()->id,
+            null,
+        );
+
+    }
         if ($request->approved_status == "approved") {
             //stock
             foreach ($slc->items as $key => $item) {
@@ -216,6 +232,8 @@ class StockLocationChangeController extends Controller
 
     public function receivedStore(Request $request, StockLocationChange $slc)
     {
+        $stockLog = new StockLogService;
+
         $this->validate($request, [
             'received_date' => 'required|date',
             'received_by' => 'required',
@@ -225,6 +243,20 @@ class StockLocationChangeController extends Controller
         $slc->received_date = $request->received_date;
         $slc->received_remark = $request->received_remark;
         $slc->save();
+
+        foreach($slc->items as $item)
+    {
+        $stockLog->createLog(
+            StockLogService::$STOCK_LOCATION_RECEIVED,
+            $slc->to_location,
+            data_get($item,'stock_item_id'),
+           data_get($item,'qty'),
+            StockLogService::$ADD,
+            $slc->slc_number,
+            $request->user()->id,
+            null,
+        );
+    }
 
         //stock
         foreach ($slc->items as $key => $item) {

@@ -24,7 +24,7 @@ class DisposalController extends Controller
 
         // $request['created_by'] = Auth::id();
 
-        Disposal::create($request->all());
+       // Disposal::create($request->all());
 
         $response['alert-success'] = 'Disposal Details created successfully!';
         return redirect()->route('disposal.index')->with($response);

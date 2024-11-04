@@ -2,22 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use Exception;
+use App\Models\Stock;
 use App\Models\Invoice;
 use App\Models\Customer;
-use App\Models\Employee;
-use App\Models\Warehouse;
 // use App\Models\Item;
+use App\Models\Employee;
+use App\Models\StockItem;
+use App\Models\Warehouse;
+use App\Models\InvoiceItem;
 use App\Models\BalanceOrder;
 use Illuminate\Http\Request;
 use App\Models\DeliveryOrder;
-use App\Models\StockItem;
 use App\Models\BalanceOrderItem;
 use App\Models\DeliveryOrderItem;
-use App\Models\Stock;
+use App\Services\StockLogService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use PDF;
+use App\Http\Controllers\ParentController;
 
 
 class DeliveryOrderController extends ParentController
@@ -89,6 +92,8 @@ class DeliveryOrderController extends ParentController
 
     public function issueStore(Request $request, DeliveryOrder $delivery_order)
     {
+        $stockLog = new StockLogService;
+
         try {
             DB::beginTransaction();
             $balance_order =  new BalanceOrder;
@@ -116,6 +121,18 @@ class DeliveryOrderController extends ParentController
 
 
                 $delivery_order_item->save();
+
+                $stockLog->createLog(
+                    StockLogService::$DELIVERY_ORDER,
+                    $delivery_order->location_id,
+                    $delivery_order_item->item_id,
+                    data_get($item, 'issue_quantity'),
+                    StockLogService::$DEDUCT,
+                    $delivery_order->delivery_order_no,
+                    $request->user()->id,
+                    null,
+                );
+
 
                 //stock reduce
                 $stock = Stock::where('stock_item_id', $delivery_order_item->item_id)->where('warehouse_id', $delivery_order->location_id)->first();
