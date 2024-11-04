@@ -50,26 +50,26 @@ class InvoiceController extends ParentController
 
     public function generateInvoiceNumber(Request $request)
     {
-        // $invocieCategoryId = data_get($request, 'invoice_category');
-        // $billType = BillType::find($invocieCategoryId);
-        // $invoice_count = Invoice::where('category',$billType->id)->count();
-        // $prefix = $billType->billtype_code;
-
-        // return $prefix . sprintf('%06d', $invoice_count + 1);
-
         $invocieCategoryId = data_get($request, 'invoice_category');
         $billType = BillType::find($invocieCategoryId);
+        $invoice_count = Invoice::where('category',$billType->id)->count();
         $prefix = $billType->billtype_code;
-        $latestOrder = Invoice::where('category',$billType->id)->latest()->first();
-        if ($latestOrder) {
-            $lastNumber = (int) str_replace($prefix, '', $latestOrder->id);
-            $nextNumber = $lastNumber + 1;
-        } else {
-            $nextNumber = 1;
-        }
-        $nextNumberFormatted = str_pad($nextNumber, 6, '0', STR_PAD_LEFT);
 
-        return $prefix . $nextNumberFormatted;
+        return $prefix . sprintf('%06d', $invoice_count + 1);
+
+        // $invocieCategoryId = data_get($request, 'invoice_category');
+        // $billType = BillType::find($invocieCategoryId);
+        // $prefix = $billType->billtype_code;
+        // $latestOrder = Invoice::where('category',$billType->id)->latest()->first();
+        // if ($latestOrder) {
+        //     $lastNumber = (int) str_replace($prefix, '', $latestOrder->id);
+        //     $nextNumber = $lastNumber + 1;
+        // } else {
+        //     $nextNumber = 1;
+        // }
+        // $nextNumberFormatted = str_pad($nextNumber, 6, '0', STR_PAD_LEFT);
+
+        // return $prefix . $nextNumberFormatted;
 
     }
 
@@ -214,7 +214,7 @@ class InvoiceController extends ParentController
     {
         $invoices = Invoice::find($invoice_id);
         $invoices->cancel_status = 'cancelled';
-        $response['alert-success'] = 'Invoice Cancelled and generate Credit Note';
+        $response['alert-success'] = 'Invoice Cancelled!';
         $invoices->cancel_date = now();
         $invoices->cancelled_by = request()->user()->name;
         $invoices->save();
