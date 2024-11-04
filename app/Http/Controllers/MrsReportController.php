@@ -21,13 +21,13 @@ class MrsReportController extends ParentController
         $request->validate([
             "frm_date" => 'required|date',
             "to_date" => 'required|date',
-            //"cus_code"=>'required',
+            "cus_code"=>'required',
 
         ]);
         $fromdate = $request->frm_date;
         $todate = $request->to_date;
-        $mrsdata = InvoiceReturn::with(['invoice'])->whereDate('created_at', '>=', $fromdate)
-            ->whereDate('created_at', '<=', $todate)
+        $mrsdata = InvoiceReturn::with(['invoice'])->whereDate('created_at', '>=', '$fromdate')
+            ->whereDate('created_at', '<=', '$todate')
             ->whereHas('invoice', function ($query) use ($request) {
                 return $query->when($request->cus_code, function ($q) use ($request) {
                     return $q->where('customer_id', $request->cus_code);
@@ -48,7 +48,7 @@ class MrsReportController extends ParentController
         return $pdf->stream();
     }
 
-    
+
     public function date_filter(Request $request)
     {
         $date1 = $request->frm_date;
