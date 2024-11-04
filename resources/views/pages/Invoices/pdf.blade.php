@@ -1,3 +1,9 @@
+
+@if ($invoices->status != null)
+                            <div style="display: flex; justify-content: flex-end; color:red;"> <span
+                                    style="font-size:16px;text-transform: uppercase"
+                                    class="badge badge-primary float-right">Duplicate Print</span></div>
+                        @endif
 <!DOCTYPE html>
 <html lang="en">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,6 +28,7 @@
         th {
              /* border: 1px solid black; */
         }
+
     </style>
     <title>{{ $invoices->invoice_number }} | {{ $invoices->getInvoiceTypeNameAttribute() }}</title>
 </head>
@@ -62,7 +69,7 @@
             <td style="height: 8mm; width:19mm; opacity:0;">Purchase Order No.</td>
             <td style="height: 8mm; width:24mm; text-align:center">{{ $invoices->po_number }}</td>
             <td style="height: 8mm; width:30mm; opacity:0;"> D. N. No.</td>
-            <td style="height: 8mm; width:27mm; text-align:right">Ref.No {{ $invoices->ref_number }}</td> 
+            <td style="height: 8mm; width:27mm; text-align:right">Ref.No {{ $invoices->ref_number }}</td>
         </tr>
     </table>
   {{-- <table style="height: 6mm">
@@ -126,11 +133,11 @@
                      <tr>
                         <td class style="width: 30mm; font-size: 13px; text-align:left;">Sales Executive:<td>
                         <td class style=" font-size: 13px; text-align:left;">{{ $invoices->SalesStaff->employee_fullname }} | {{ $invoices->SalesStaff->employee_reg_no }}<td>
-                    </tr> 
+                    </tr>
                    {{-- <tr>
                         <td class style="width: 30mm; font-size: 13px; text-align:left;">Reference No:<td>
                         <td class style="width: 20mm; font-size: 13px; text-align:left;">{{ $invoices->ref_number }}<td>
-                    </tr> 
+                    </tr>
                      --}}
 
                     {{-- <tr>

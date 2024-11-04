@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use App\Models\Stock;
 use App\Models\Invoice;
 use App\Models\Customer;
 use App\Models\Warehouse;
@@ -11,7 +12,8 @@ use App\Models\DeliveryOrder;
 use App\Models\InvoiceReturn;
 use App\Models\DeliveryOrderItem;
 use App\Models\InvoiceReturnItem;
-use App\Models\Stock;
+//use App\Services\StockLogService;
+use App\Services\StockLogService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\In;
 
@@ -65,6 +67,7 @@ class ReturnController extends Controller
 
     public function store(Request $request)
     {
+
         try {
             DB::beginTransaction();
             $delivery_order = DeliveryOrder::find($request->delivery_order);
@@ -77,6 +80,7 @@ class ReturnController extends Controller
                 $invoice_return->delivery_order_id = $delivery_order->id;
                 $invoice_return->created_by = request()->user()->id;
                 $invoice_return->payment_method = $request->payment_method;
+
                 $invoice_return->save();
 
                 array_push($returnIds, $invoice_return->id);
@@ -101,12 +105,7 @@ class ReturnController extends Controller
                     $invoice_return_item->sub_total = data_get($item, 'sub_total');
                     $invoice_return_item->save();
 
-                    //stock restore
-                    $stock = Stock::where('stock_item_id', data_get($item, 'item_id'))
-                        ->where('warehouse_id', data_get($item, 'location_id'))
-                        ->first();
-                    $stock->qty = $stock->qty + data_get($item, 'qty');
-                    $stock->save();
+
                 }
             }
             $delivery_order->returned_ids = json_encode($returnIds);
@@ -135,9 +134,34 @@ class ReturnController extends Controller
 
     public function approval(Request $request, InvoiceReturn $invoice_return)
     {
+        $stockLog = new StockLogService;
+
         $invoice_return->is_approved = true;
         $invoice_return->approved_by = request()->user()->id;
         $invoice_return->save();
+
+        foreach($invoice_return->items as $item)
+        {
+            //logger($item);
+            $stock = Stock::where('stock_item_id', data_get($item, 'item_id'))
+                        ->where('warehouse_id', data_get($item, 'location_id'))
+                        ->first();
+                    $stock->qty = $stock->qty + data_get($item, 'quantity');
+                    $stock->save();
+
+                    $stockLog->createLog(
+                            StockLogService::$MATERIAL_RETURN,
+                            data_get($item, 'location_id'),
+                            data_get($item, 'item_id'),
+                            data_get($item, 'quantity'),
+                            StockLogService::$ADD,
+                            $invoice_return->return_no,
+                            $request->user()->id,
+                            null,
+                        );
+
+
+        }
 
         // TODO: Restore Stock
 

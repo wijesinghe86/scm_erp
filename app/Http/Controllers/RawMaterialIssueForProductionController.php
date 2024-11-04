@@ -12,6 +12,7 @@ use App\Models\RawMaterialRequest;
 use App\Models\SemiProductionItem;
 use Illuminate\Support\Facades\DB;
 use App\Models\RawMaterialIssueItem;
+use App\Services\StockLogService;
 use Illuminate\Validation\ValidationException;
 
 
@@ -51,6 +52,8 @@ class RawMaterialIssueForProductionController extends Controller
 
     public function store(Request $request)
     {
+        $stockLog = new StockLogService;
+
         $this->validate($request, [
             'date' => 'required',
             'rmi_no' => 'required',
@@ -93,6 +96,17 @@ class RawMaterialIssueForProductionController extends Controller
                 $rmi_item->semi_product_weight = $item['semi_product_weight'];
                 $rmi_item->remarks = $item['remarks'];
                 $rmi_item->save();
+
+                $stockLog->createLog(
+                    StockLogService::$RAWMATERIAL_ISSUE,
+                    $request->warehouse_code,
+                    $item['issued_item_no'],
+                    $item['semi_product_qty'],
+                    StockLogService::$DEDUCT,
+                    $rmi->rmi_no,
+                    $request->user()->id,
+                    null,
+                );
 
                 // reduce Stock
                 $semiProduct = SemiProductionItem::find($item['semi_product_item_id']);

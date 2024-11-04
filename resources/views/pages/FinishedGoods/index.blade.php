@@ -28,7 +28,7 @@
                                             <td>Prod End Date</td>
                                             <td>Status</td>
                                             <td>Created By</td>
-                                            <td>Items</td>
+                                            <td>View</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -47,14 +47,16 @@
                                                 <td>{{ $fgrn->status }}</td>
                                                 <td>{{ optional(optional($fgrn)->createdBy)->name }}</td>
                                                 <td>
-                                                    <table class="table table-striped">
+                                                    <a href="{{ route('finishedgoods.view', $fgrn->id) }}"
+                                                        class="btn btn-primary">View More</a>
+                                                </td>
+                                                    {{-- <table class="table table-striped">
 
                                                         <tr>
                                                             <td>#</td>
                                                             <td>Stock Number</td>
                                                             <td>Description</td>
                                                             <td>Qty</td>
-                                                            {{-- <td>Weight</td> --}}
                                                             <td>Batch</td>
                                                         </tr>
                                                         @foreach ($fgrn_items as $item)
@@ -63,13 +65,12 @@
                                                                <td>{{ optional(optional($item)->stock_item_by_stockNumber)->stock_number }}</td>
                                                                 <td>{{optional(optional($item)->stock_item_by_stockNumber)->description }}</td>
                                                                 <td>{{ $item->pro_qty }}</td>
-                                                                {{-- <td>{{ $item->pro_weight }}</td> --}}
                                                                 <td>{{ $item->batch_no }}
                                                                 </td>
                                                             </tr>
                                                         @endforeach
                                                     </table>
-                                                </td>
+                                                </td> --}}
                                             </tr>
                                         @endforeach
 

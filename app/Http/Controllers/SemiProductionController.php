@@ -66,6 +66,8 @@ class SemiProductionController extends Controller
 
     public function store(Request $request)
     {
+        $stockLog = new StockLogService;
+
         $isSemiProduction = SemiProduction::where('semi_pro_No', $request->semi_product_no)->first();
             if ($isSemiProduction) {
                 $data['semi_pro_No'] = $this->generateNextNumber();
@@ -105,6 +107,9 @@ class SemiProductionController extends Controller
             $semiProductions->diff_raw_mat_qty = $request->remaining_qty;
             $semiProductions->created_by = request()->user()->id;
             $semiProductions->save();
+
+
+
             //reduce stock from stock_item_id use actual_weight
             $stock = Stock::where('stock_item_id', $request->stock_item_id)->where('warehouse_id',$request->warehouse)->first();
             if(!$stock){
@@ -112,9 +117,19 @@ class SemiProductionController extends Controller
             }
             $stock->qty = $stock->qty - $request->actual_weight;
 
-
             $stock->save();
 
+            // add records to stock_log table
+            $stockLog->createLog(
+                StockLogService::$SLITTING,
+                $request->warehouse,
+                $request->stock_item_id,
+                $request->actual_weight,
+                StockLogService::$DEDUCT,
+                $semiProductions->semi_pro_No,
+                $request->user()->id,
+                null,
+            );
 
             // (new StockLogService())->createLog("smi_product.create",$stock->qty,$stock->qty - $request->actual_weight,json_encode($request->all()),json_encode($stock));
 
@@ -129,6 +144,17 @@ class SemiProductionController extends Controller
                 $semiProductionItems->semi_pro_serial_no = $item['semi_serial_no'];
                 $semiProductionItems->save();
 
+
+                $stockLog->createLog(
+                    StockLogService::$SEMI_PRODUCTION,
+                    $semiProductions->warehouse_id,
+                    $item['semi_stock_item_id'],
+                    $item['semi_qty'],
+                    StockLogService::$ADD,
+                    $semiProductions->semi_pro_No,
+                    $request->user()->id,
+                    null,
+                );
                 // add stock from $item['stock_item_id'] use $item['semi_qty']
                 $item_stock = Stock::where('stock_item_id', $item['semi_stock_item_id'])->where('warehouse_id',$request->warehouse)->first();
                 if(!$item_stock){

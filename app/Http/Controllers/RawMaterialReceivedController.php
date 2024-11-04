@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use App\Models\Stock;
 use App\Models\Employee;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use App\Models\RawMaterialIssue;
+use App\Services\StockLogService;
 use Illuminate\Support\Facades\DB;
 use App\Models\RawMaterialReceived;
 use App\Models\RawMaterialIssueItem;
 use App\Models\RawMaterialReceivedItem;
-use App\Models\Stock;
 use Illuminate\Validation\ValidationException;
 
 class RawMaterialReceivedController extends Controller
@@ -41,6 +42,8 @@ class RawMaterialReceivedController extends Controller
 
     public function store(Request $request)
     {
+        $stockLog = new StockLogService;
+
         $filter_is_selected = collect($request->items)->filter(function ($row) {
             return isset($row['is_selected']);
         });
@@ -72,6 +75,17 @@ class RawMaterialReceivedController extends Controller
                 $rma_item->remarks = $row['remarks'];
                 $rma_item->save();
 
+
+                $stockLog->createLog(
+                    StockLogService::$RAWMATERIAL_RECEIVE,
+                    $request->warehouse_code,
+                    $row['stock_item_no'],
+                    $row['received_qty'],
+                    StockLogService::$ADD,
+                    $rma->rma_no,
+                    $request->user()->id,
+                    null,
+                );
 
                 // add Stock
                 $stock = Stock::where('stock_item_id', $row['stock_item_no'])
