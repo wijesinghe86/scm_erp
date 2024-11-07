@@ -42,6 +42,7 @@
                                                         <th>LOCATION</th>
                                                         <th>ISSUED DATE</th>
                                                         <th>ISSUED BY</th>
+                                                        <th>STATUS</th>
                                                         <th>ACTION</th>
 
 
@@ -61,11 +62,18 @@
                                                             </td>
                                                             <td>{{ optional($deliveryOrder->items[0]->issued)->name }}
                                                             </td>
+                                                            <td style="color: red" >{{ $deliveryOrder->cancel_status }}</td>
+
                                                             <td align="right">
                                                                 <a class="h4"
                                                                     href="{{ route('deliveryorders.view', $deliveryOrder->id) }}">
                                                                     <i class="fa-sharp fa-solid fa-eye"></i>
                                                                 </a>
+                                                            </a>
+                                                            <a href="{{ route('deliveryorders.cancel', $deliveryOrder->id) }}">
+
+                                                            <i class="fa-solid fa-rectangle-xmark text-danger"></i>
+                                                            </a>
 
 
                                                                 {{-- <a class="h4"
@@ -83,7 +91,7 @@
 
                                                 </tbody>
                                             </table>
-                                             {{ $deliveryOrders->links('pagination::bootstrap-5') }}  
+                                             {{ $deliveryOrders->links('pagination::bootstrap-5') }}
                                         </div>
                                     </div>
                                 </div>

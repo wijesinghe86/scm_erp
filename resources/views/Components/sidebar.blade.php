@@ -172,6 +172,10 @@
                     <li class="nav-item"> <a class="nav-link" href="{{ route('invoices.all') }}">Invoice</a>
                     </li>
                     @endhasanyrole
+                    @hasanyrole('Super Admin|Admin|Sales Admin')
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('invoices_cancel.create') }}">Invoice Cancellation</a>
+                    </li>
+                    @endhasanyrole
                     @hasanyrole('Super Admin|Sales User|Sales Admin')
                     <li class="nav-item"> <a class="nav-link" href="{{ route('sales_order.index') }}">Sales Order</a>
                     </li>
@@ -803,14 +807,16 @@
         </a>
         <div class="collapse" id="ui-pps">
             <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href=""> Stock Items Catalogue </a></li>
+                <li class="nav-item"> <a class="nav-link"
+                    href="{{ route('mrsreports.index') }}"> Material Return Reports </a></li>
+                <li class="nav-item"> <a class="nav-link" href=""> Stock Items Catalogue </a></li> <li class="nav-item"> <a class="nav-link" href=""> Stock Items Catalogue </a></li>
                 <li class="nav-item"> <a class="nav-link"
                         href="{{ route('productionplanningandschedule.index') }}"> Stock Items Status </a></li>
                 <li class="nav-item"> <a class="nav-link"
                         href="{{ route('productionplanningandschedule.index') }}"> Stock Items-wise <br>On Hand
                         Balance </a></li>
                 <li class="nav-item"> <a class="nav-link"
-                        href="{{ route('productionplanningandschedule.index') }}"> Stock Items-wise<br>Transaction
+                        href="{{ route('stockreports.index') }}"> Stock Items-wise<br>Transaction
                         History </a></li>
                 <li class="nav-item"> <a class="nav-link"
                         href="{{ route('productionplanningandschedule.index') }}"> Stock Items Catalogue </a></li>

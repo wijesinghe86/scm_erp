@@ -7,11 +7,12 @@ use App\Models\Stock;
 use App\Models\Employee;
 use App\Models\StockItem;
 use App\Models\Warehouse;
+use Illuminate\Log\Logger;
 use Illuminate\Http\Request;
 use App\Models\StockAdjustment;
+use App\Services\StockLogService;
 use Illuminate\Support\Facades\DB;
 use App\Models\StockAdjustmentItem;
-use Illuminate\Log\Logger;
 use Illuminate\Validation\ValidationException;
 
 class StockAdjustmentController extends Controller
@@ -166,6 +167,8 @@ class StockAdjustmentController extends Controller
 
     public function approval(Request $request, StockAdjustment $stock_adjustment)
     {
+        $stockLog = new StockLogService;
+
         $this->validate($request, [
             'approved_by' => 'required',
             'approved_status' => 'required',
@@ -176,16 +179,39 @@ class StockAdjustmentController extends Controller
         $stock_adjustment->approved_at = now();
         $stock_adjustment->save();
 
+
         foreach ($stock_adjustment->items as $key => $item) {
             if ($stock_adjustment->type == "short" && $request->approved_status == "approved") {
                 $from_stock = Stock::where('stock_item_id', $item['from_stock_number'])->where('warehouse_id', $item['from_warehouse'])->first();
                 $from_stock->qty = $from_stock->qty - $item['qty'];
                 $from_stock->save();
+
+                $stockLog->createLog(
+                    StockLogService::$STOCK_ADJUSTMENT_SHORT,
+                    data_get($item,'from_warehouse'),
+                    data_get($item,'from_stock_number'),
+                    data_get($item,'qty'),
+                    StockLogService::$DEDUCT,
+                    $stock_adjustment->stock_adjustment_number,
+                    $request->user()->id,
+                    null,
+                );
             }
             if ($stock_adjustment->type == "excess" && $request->approved_status == "approved") {
                 $from_stock = Stock::where('stock_item_id', $item['from_stock_number'])->where('warehouse_id', $item['from_warehouse'])->first();
                 $from_stock->qty = $from_stock->qty + $item['qty'];
                 $from_stock->save();
+
+                $stockLog->createLog(
+                    StockLogService::$STOCK_ADJUSTMENT_EXCESS,
+                    data_get($item,'from_warehouse'),
+                    data_get($item,'from_stock_number'),
+                    data_get($item,'qty'),
+                    StockLogService::$ADD,
+                    $stock_adjustment->stock_adjustment_number,
+                    $request->user()->id,
+                    null,
+                );
             }
 
             if ($stock_adjustment->type == "transfer" && $request->approved_status == "approved") {
@@ -193,9 +219,32 @@ class StockAdjustmentController extends Controller
                 $from_stock->qty = $from_stock->qty - $item['qty'];
                 $from_stock->save();
 
+
+                $stockLog->createLog(
+                    StockLogService::$STOCK_ADJUSTMENT_SHORT,
+                    data_get($item,'from_warehouse'),
+                    data_get($item,'from_stock_number'),
+                    data_get($item,'qty'),
+                    StockLogService::$DEDUCT,
+                    $stock_adjustment->stock_adjustment_number,
+                    $request->user()->id,
+                    null,
+                );
+
                 $to_stock = Stock::where('stock_item_id', $item['to_stock_number'])->where('warehouse_id', $item['to_warehouse'])->first();
                 $to_stock->qty = $to_stock->qty + $item['qty'];
                 $to_stock->save();
+
+                $stockLog->createLog(
+                    StockLogService::$STOCK_ADJUSTMENT_EXCESS,
+                    data_get($item,'to_warehouse'),
+                    data_get($item,'to_stock_number'),
+                    data_get($item,'qty'),
+                    StockLogService::$ADD,
+                    $stock_adjustment->stock_adjustment_number,
+                    $request->user()->id,
+                    null,
+                );
 
                 logger($from_stock);
                 logger($to_stock);

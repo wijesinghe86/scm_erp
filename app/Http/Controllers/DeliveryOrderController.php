@@ -2,35 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use Exception;
+use App\Models\Stock;
 use App\Models\Invoice;
 use App\Models\Customer;
-use App\Models\Employee;
-use App\Models\Warehouse;
 // use App\Models\Item;
+use App\Models\Employee;
+use App\Models\StockItem;
+use App\Models\Warehouse;
+use App\Models\InvoiceItem;
 use App\Models\BalanceOrder;
 use Illuminate\Http\Request;
 use App\Models\DeliveryOrder;
-use App\Models\StockItem;
 use App\Models\BalanceOrderItem;
 use App\Models\DeliveryOrderItem;
-use App\Models\Stock;
+use App\Services\StockLogService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use PDF;
+use App\Http\Controllers\ParentController;
 
 
 class DeliveryOrderController extends ParentController
 {
     public function all(Request $request)
-     { 
+     {
         $deliveryOrders = DeliveryOrder::with(['customer', 'location'])
                           ->when($request->search, function($q) use ($request){
                             $q->where('delivery_order_no', 'like', '%' . $request->search . '%')
                             ->orwhere('invoice_number', 'like', '%' . $request->search . '%')
                             ->orWhere(function ($qr) use ($request){
                                 return $qr->whereHas('location', function ($location) use ($request){
-                                $location->where('warehouse_name', 'like', '%' . $request->search . '%');    
+                                $location->where('warehouse_name', 'like', '%' . $request->search . '%');
                             });
                               })
                               ->orWhere(function ($query) use ($request){
@@ -39,11 +42,11 @@ class DeliveryOrderController extends ParentController
                         });
                     });
                 })
-                                     
+
                           ->latest()
                           ->paginate(50);
                           return view('pages.DeliveryOrder.all', compact('deliveryOrders'));
-       
+
         // $search = $request['search']?? "";
         // if(request('search' ) !="")
         // {
@@ -51,7 +54,7 @@ class DeliveryOrderController extends ParentController
         //                                     ->where('delivery_order_no', 'like', '%' . request('search') . '%')
         //                                     ->orwhere('invoice_number', 'like', '%' . request('search') . '%')
         //                                     ->latest()->paginate();
-                                           
+
         // }
         // else
         // {
@@ -59,7 +62,7 @@ class DeliveryOrderController extends ParentController
         // }
         // return view('pages.DeliveryOrder.all', compact('deliveryOrders', 'search'));
 
-        
+
     }
 
     public function view(DeliveryOrder $delivery_order)
@@ -78,12 +81,19 @@ class DeliveryOrderController extends ParentController
         if ($delivery_order == null || $delivery_order->issued_date != null) {
             abort(404);
         }
+        if ($delivery_order->cancel_status =="cancelled") {
+            $response['alert-success'] = 'Delivery Order already cancelled';
+            return redirect()->route('deliveryorders.all')->with($response);
+
+        }
         // return $delivery_order;
         return view('pages.DeliveryOrder.issue', compact('delivery_order'));
     }
 
     public function issueStore(Request $request, DeliveryOrder $delivery_order)
     {
+        $stockLog = new StockLogService;
+
         try {
             DB::beginTransaction();
             $balance_order =  new BalanceOrder;
@@ -111,6 +121,18 @@ class DeliveryOrderController extends ParentController
 
 
                 $delivery_order_item->save();
+
+                $stockLog->createLog(
+                    StockLogService::$DELIVERY_ORDER,
+                    $delivery_order->location_id,
+                    $delivery_order_item->item_id,
+                    data_get($item, 'issue_quantity'),
+                    StockLogService::$DEDUCT,
+                    $delivery_order->delivery_order_no,
+                    $request->user()->id,
+                    null,
+                );
+
 
                 //stock reduce
                 $stock = Stock::where('stock_item_id', $delivery_order_item->item_id)->where('warehouse_id', $delivery_order->location_id)->first();
@@ -203,5 +225,24 @@ class DeliveryOrderController extends ParentController
         }
         $pdf = PDF::loadView('pages.DeliveryOrder.pdf', compact('delivery_order'));
         return $pdf->stream('delivery_order.pdf');
+    }
+
+    public function cancel($delivery_order_id)
+    {
+        $delivery_order = DeliveryOrder::with(['items', 'invoice'])->find($delivery_order_id);
+        if($delivery_order->issued_date == null)
+        // if (($delivery_order->issued_date != null) && ($delivery_order->items->issued_qty == 0))
+        {
+        $delivery_order->cancel_status = 'cancelled';
+        $response['alert-success'] = 'Delivery Order Cancelled successfully!';
+        $delivery_order->cancelled_by = request()->user()->name;
+        $delivery_order->cancel_date = now();
+        }
+        else
+        $response['alert-danger'] = 'Invalid';
+
+        $delivery_order->save();
+        return redirect()->route('deliveryorders.all')->with($response);
+
     }
 }

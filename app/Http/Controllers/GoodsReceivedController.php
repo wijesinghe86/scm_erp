@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Stock;
 use App\Models\Employee;
 use App\Models\Supplier;
 use App\Models\Warehouse;
@@ -10,7 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\GoodsReceived;
 use App\Models\MrPurchaseItem;
 use App\Models\GoodsReceivedItem;
-use App\Models\Stock;
+use App\Services\StockLogService;
 
 class GoodsReceivedController extends Controller
 {
@@ -64,6 +65,8 @@ class GoodsReceivedController extends Controller
 
     public function store(Request $request)
     {
+        $stockLog = new StockLogService;
+
         $isGrnExist = GoodsReceived::where('grn_no', $request->grn_number)->first();
         if ($isGrnExist) {
             $data['grn_no'] = $this->generateNextNumber();
@@ -104,6 +107,17 @@ class GoodsReceivedController extends Controller
             $grn_item->expiry_date = $item['expiry_date'];
             $grn_item->po_id = $grn->po_id;
             $grn_item->save();
+
+            $stockLog->createLog(
+                StockLogService::$GOODS_RECCEIVED,
+                $grn->warehouse,
+                data_get($item, 'item_id'),
+                data_get($item, 'rec_qty'),
+                StockLogService::$ADD,
+                $grn->grn_no,
+                $request->user()->id,
+                null,
+            );
 
             $is_stock_existing = Stock::where('stock_item_id', $item['item_id'])->where('warehouse_id', $request->warehouse)->first();
             if ($is_stock_existing) {

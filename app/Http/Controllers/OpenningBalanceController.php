@@ -8,6 +8,7 @@ use App\Models\OpBalance;
 use App\Models\StockItem;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
+use App\Services\StockLogService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
@@ -32,6 +33,8 @@ class OpenningBalanceController extends Controller
 
     public function store(Request $request)
     {
+        $stockLog = new StockLogService;
+
         $this->validate($request, [
             'ob_date'=>'required|date',
             'ref_no'=>'required',
@@ -59,6 +62,17 @@ class OpenningBalanceController extends Controller
         $opBal->qty = $request->qty;
         $opBal->created_by = request()->user()->id;
         $opBal->save();
+
+        $stockLog->createLog(
+            StockLogService::$OPENNING_BALANCE,
+            $request->warehouse,
+            $opBal->items->id,
+            $request->qty,
+            StockLogService::$ADD,
+            $request->ref_no,
+            $request->user()->id,
+            null,
+        );
 
         //Stock
         $stock= Stock::where('stock_item_id',$request->stock_id)->where('warehouse_id',$request->warehouse)->first();

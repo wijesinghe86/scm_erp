@@ -195,4 +195,11 @@ class Invoice extends Model
     {
         return $this->hasMany(Creditnote::class,'invoice_no','id');
     }
+
+    public function delivery_orders()
+    {
+        return $this->hasMany(DeliveryOrder::class, 'invoice_number', 'invoice_number');  
+    }
+
+
 }
