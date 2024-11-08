@@ -29,7 +29,7 @@
 <body>
     <h2>Item-wise Transaction History Report </h2>
   {{-- header --}}
-    <hr>
+   <hr>
 
     {{-- <table style="border-style:solid; height:109mm; border-width:2px "> --}}
     <table>
@@ -39,6 +39,14 @@
             <th>U/M</th>
             <th>Location</th>
         </tr>
+        <tr>
+
+        <td>{{  $items->stock_number }}</td>
+        <td>{{  $items->description }}</td>
+        <td>{{  $items->unit }}</td>
+        <td>{{  $warehouses->warehouse_name }}</td>
+        </tr>
+
     </table>
 
     <br>

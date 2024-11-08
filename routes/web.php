@@ -5,6 +5,7 @@ use App\Http\Controllers\DfController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SfgrnController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\MrfPrfController;
@@ -13,8 +14,8 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\BillTypeController;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\DispatchController;
 //use App\Http\Controllers\DisposalController;
+use App\Http\Controllers\DispatchController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MrequestController;
 use App\Http\Controllers\SupplierController;
@@ -34,6 +35,7 @@ use App\Http\Controllers\CreditLimitLogContrller;
 use App\Http\Controllers\DeliveryOrderController;
 use App\Http\Controllers\FinishedGoodsController;
 use App\Http\Controllers\GoodsReceivedController;
+use App\Http\Controllers\InternalIssueController;
 use App\Http\Controllers\InvoiceCancelController;
 use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\GoodsIssueNoteController;
@@ -55,6 +57,7 @@ use App\Http\Controllers\LocationBayDesigncontroller;
 use App\Http\Controllers\LocationRowDesignController;
 use App\Http\Controllers\PlantRegistrationController;
 use App\Http\Controllers\ProductionWastageController;
+use App\Http\Controllers\BalanceOrderReportController;
 use App\Http\Controllers\CreditNoteApprovalController;
 use App\Http\Controllers\LocationRackDesignController;
 use App\Http\Controllers\RawMaterialRequestController;
@@ -401,20 +404,20 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
     // Sales and Marketing
     /* .....CREATING ROUTE FOR Invoice ....... */
     Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->prefix('invoices')->group(function () {
-        Route::get('/', [InvoiceController::class, 'all'])->name('invoices.all');
-        Route::get('/new', [InvoiceController::class, 'new'])->name('invoices.new');
-        Route::post('/new', [InvoiceController::class, 'store'])->name('invoices.store');
-        Route::post('/item/store', [InvoiceController::class, 'storeItem'])->name('invoices.item.store');
-        Route::post('/item/delete', [InvoiceController::class, 'deleteItem'])->name('invoices.item.delete');
-        Route::get('/get/items/table', [InvoiceController::class, 'itemsTable'])->name('invoices.item.table');
-        Route::get('/{invoice_id}/preview', [InvoiceController::class, 'preview'])->name('invoices.preview');
-        Route::get('/{invoice_id}/print', [InvoiceController::class, 'print'])->name('invoices.print');
-        Route::get('/{invoice_id}/cancel', [InvoiceController::class, 'cancel'])->name('invoices.cancel');
-        Route::get('/get/data', [InvoiceController::class, 'getData'])->name('invoices.get.data');
-        Route::get('/get/total', [InvoiceController::class, 'getInvoiceTotal'])->name('invoices.get.total');
-        Route::get('/get/invoice_no', [InvoiceController::class, 'generateInvoiceNumber'])->name('invoices.get.number');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/', [InvoiceController::class, 'all'])->name('invoices.all');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/new', [InvoiceController::class, 'new'])->name('invoices.new');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->post('/new', [InvoiceController::class, 'store'])->name('invoices.store');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->post('/item/store', [InvoiceController::class, 'storeItem'])->name('invoices.item.store');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->post('/item/delete', [InvoiceController::class, 'deleteItem'])->name('invoices.item.delete');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/get/items/table', [InvoiceController::class, 'itemsTable'])->name('invoices.item.table');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/{invoice_id}/preview', [InvoiceController::class, 'preview'])->name('invoices.preview');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/{invoice_id}/print', [InvoiceController::class, 'print'])->name('invoices.print');
+        Route::middleware(['role:Super Admin|Admin'])->get('/{invoice_id}/cancel', [InvoiceController::class, 'cancel'])->name('invoices.cancel');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/get/data', [InvoiceController::class, 'getData'])->name('invoices.get.data');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/get/total', [InvoiceController::class, 'getInvoiceTotal'])->name('invoices.get.total');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/get/invoice_no', [InvoiceController::class, 'generateInvoiceNumber'])->name('invoices.get.number');
     });
-    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->prefix('invoices')->group(function () {
+    Route::middleware(['role:Super Admin|Admin|Sales User'])->prefix('invoices')->group(function () {
         Route::get('/create', [InvoiceCancelController::class, 'create'])->name('invoices_cancel.create');
         Route::get('/store', [InvoiceCancelController::class, 'store'])->name('invoices_cancel.store');
         Route::post('/getInvoiceDetails', [InvoiceCancelController::class, 'getInvDetails'])->name('invoices_cancel.getInvoiceDetails');
@@ -422,23 +425,23 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
 
     /* .....CREATING ROUTE FOR Delivery Order ....... */
     Route::middleware(['role:Super Admin|Admin|Warehouse User'])->prefix('deliveryorders')->group(function () {
-        Route::get('/all', [DeliveryOrderController::class, 'all'])->name('deliveryorders.all');
-        Route::get('/new', [DeliveryOrderController::class, 'new'])->name('deliveryorders.new');
-        Route::post('/new', [DeliveryOrderController::class, 'store'])->name('deliveryorders.store');
-        Route::get('/{delivery_order}/view', [DeliveryOrderController::class, 'view'])->name('deliveryorders.view');
-        Route::get('/get-items', [DeliveryOrderController::class, 'getInvoiceItems'])->name('deliveryorders.getInvoiceItems');
-        Route::get('/{delivery_order}/issue_delivery_order', [DeliveryOrderController::class, 'issueIndex'])->name('deliveryorders.issueIndex');
-        Route::post('/{delivery_order}/issue_delivery_order', [DeliveryOrderController::class, 'issueStore'])->name('deliveryorders.issueStore');
-        Route::get('/{delivery_order}/get', [DeliveryOrderController::class, 'getById'])->name('deliveryorders.getById');
-        Route::get('/{delivery_order_id}/print', [DeliveryOrderController::class, 'print'])->name('deliveryorders.print');
-        Route::get('/{delivery_order_id}/cancel', [DeliveryOrderController::class, 'cancel'])->name('deliveryorders.cancel');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/all', [DeliveryOrderController::class, 'all'])->name('deliveryorders.all');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/new', [DeliveryOrderController::class, 'new'])->name('deliveryorders.new');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->post('/new', [DeliveryOrderController::class, 'store'])->name('deliveryorders.store');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{delivery_order}/view', [DeliveryOrderController::class, 'view'])->name('deliveryorders.view');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/get-items', [DeliveryOrderController::class, 'getInvoiceItems'])->name('deliveryorders.getInvoiceItems');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{delivery_order}/issue_delivery_order', [DeliveryOrderController::class, 'issueIndex'])->name('deliveryorders.issueIndex');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->post('/{delivery_order}/issue_delivery_order', [DeliveryOrderController::class, 'issueStore'])->name('deliveryorders.issueStore');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{delivery_order}/get', [DeliveryOrderController::class, 'getById'])->name('deliveryorders.getById');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{delivery_order_id}/print', [DeliveryOrderController::class, 'print'])->name('deliveryorders.print');
+        Route::middleware(['role:Super Admin|Admin'])->get('/{delivery_order_id}/cancel', [DeliveryOrderController::class, 'cancel'])->name('deliveryorders.cancel');
     });
 
     Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin'])->prefix('returns')->group(function () {
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin'])->get('/', [ReturnController::class, 'all'])->name('returns.all');
         Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/new', [ReturnController::class, 'new'])->name('returns.new');
         Route::middleware(['role:Super Admin|Admin|Warehouse User'])->post('/new', [ReturnController::class, 'store'])->name('returns.store');
-        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{invoice_return}/view', [ReturnController::class, 'view'])->name('returns.view');
+                                                                                Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{invoice_return}/view', [ReturnController::class, 'view'])->name('returns.view');
 
         Route::middleware(['role:Super Admin|Admin|Warehouse Admin'])->get('/approval', [ReturnController::class, 'approvalIndex'])->name('returns.approvalIndex');
         Route::middleware(['role:Super Admin|Admin|Warehouse Admin'])->post('{invoice_return}/approval', [ReturnController::class, 'approval'])->name('returns.approval');
@@ -528,11 +531,11 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::get('/get-items', [App\Http\Controllers\PurchaseOrderController::class, 'getPrfItems'])->name('purchase_order.getPrfItems');
     });
 
-    Route::middleware(['role:Super Admin|Admin|Production User|Production Admin'])->prefix('FinishedGoods')->group(function () {
+        Route::middleware(['role:Super Admin|Admin|Production User|Production Admin'])->prefix('FinishedGoods')->group(function () {
         Route::middleware(['role:Super Admin|Admin|Production User|Production Admin'])->get('FinishedGoods', [App\Http\Controllers\FinishedGoodsController::class, 'index'])->name('finishedgoods.index');
         Route::middleware(['role:Super Admin|Admin|Production User'])->get('/create', [FinishedGoodsController::class, 'create'])->name('finishedgoods.create');
         Route::middleware(['role:Super Admin|Admin|Production User'])->post('/create', [App\Http\Controllers\FinishedGoodsController::class, 'store'])->name('finishedgoods.store');
-        Route::middleware(['role:Super Admin|Admin|Production User'])->get('/view/{$fgrn->id}', [FinishedGoodsController::class, 'view'])->name('finishedgoods.view');
+        Route::middleware(['role:Super Admin|Admin|Production User'])->get('/view/{$fgrn->id}', [App\Http\Controllers\FinishedGoodsController::class,'view'])->name('finishedgoods.view');
 
         Route::middleware(['role:Super Admin|Admin|Production User'])->get('/get-rmi-items', [App\Http\Controllers\FinishedGoodsController::class, 'getRmiItems'])->name('finishedgoods.getRmiItems');
         Route::middleware(['role:Super Admin|Admin|Production User'])->post('/add-to-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'addToFinishGoodTable'])->name('finished_goods.addToFinishGoodTable');
@@ -885,5 +888,28 @@ Route::middleware(['role:Super Admin|Admin'])->prefix('StockReports')->group(fun
     // Route::post('/create', [App\Http\Controllers\MrsReportController::class, 'store'])->name('materialsreturnbycustomer.store');
 });
 
+Route::middleware(['role:Super Admin|Admin'])->prefix('internal_issue')->group(function () {
+    Route::middleware(['role:Super Admin|Admin'])->get('/', [InternalIssueController::class, 'index'])->name('internal_issue.index');
+    Route::middleware(['role:Super Admin|Admin'])->get('/create', [InternalIssueController::class, 'create'])->name('internal_issue.create');
+    Route::middleware(['role:Super Admin|Admin'])->post('/create', [InternalIssueController::class, 'store'])->name('internal_issue.store');
+    Route::middleware(['role:Super Admin|Admin'])->get('internal_issue/delete/{index}', [InternalIssueController::class, 'deleteSessionItem'])->name('internal_issue.delete_item');
+    Route::middleware(['role:Super Admin|Admin'])->get('/{internal_issue}/view', [InternalIssueController::class, 'view'])->name('internal_issue.view');
+
+    Route::middleware(['role:Super Admin|Admin '])->get('/approval', [InternalIssueController::class, 'approvalIndex'])->name('internal_issue.approvalIndex');
+    Route::middleware(['role:Super Admin|Admin '])->post('{internal_issue}/approval', [InternalIssueController::class, 'approval'])->name('internal_issue.approval');
+});
+    Route::middleware(['role:Super Admin|Admin'])->prefix('BalanceOrder')->group(function () {
+    Route::get('/', [BalanceOrderReportController::class, 'index'])->name('BalanceOrder.index');
+    Route::post('date_wise', [BalanceOrderReportController::class, 'date_filter'])->name('BalanceOrder.datewise_balance_order_report');
+
 });
 
+Route::middleware(['role:Super Admin|Admin'])->prefix('Sfgrn')->group(function () {
+    Route::middleware(['role:Super Admin|Admin'])->get('/', [SfgrnController::class, 'index'])->name('Sfgrn.index');
+    Route::middleware(['role:Super Admin|Admin'])->get('/create', [SfgrnController::class, 'create'])->name('Sfgrn.create');
+    Route::middleware(['role:Super Admin|Admin'])->post('/create', [SfgrnController::class, 'store'])->name('Sfgrn.store');
+    Route::middleware(['role:Super Admin|Admin'])->get('/view/{$fgrn->id}', [SfgrnController::class, 'view'])->name('Sfgrn.view');
+
+});
+
+});

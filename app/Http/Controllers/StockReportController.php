@@ -20,15 +20,17 @@ class StockReportController extends Controller
 
     public function generate_history_report(Request $request)
     {
-        // $request->validate([
-        //     'warehouse_name' => 'required',
-        //     'stock_item' => 'required',
-        //     'frm_date' => 'required',
-        //     'to_date' => 'required',
-        // ]);
+        $request->validate([
+            'warehouse_name' => 'required',
+            'stock_item' => 'required',
+            'frm_date' => 'required',
+            'to_date' => 'required',
+        ]);
 
         logger($request->all());
 
+        $items = StockItem::find($request->stock_item);
+        $warehouses = Warehouse::find($request->warehouse_name);
         $stockLogs = StockLog::with('item', 'warehouse')->where('stock_id', $request->stock_item)
             ->whereDate('created_at', ">=", $request->frm_date)
             ->whereDate('created_at', "<=", $request->to_date)
@@ -78,7 +80,7 @@ class StockReportController extends Controller
         logger(count($mappedStockLogs));
         logger($mappedStockLogs);
 
-        $pdf = PDF::loadView('pages.Reports.StockStatusReports.historyreport', compact('stockLogs', 'mappedStockLogs'))->setPaper('A4','landscape');
+        $pdf = PDF::loadView('pages.Reports.StockStatusReports.historyreport', compact('stockLogs', 'mappedStockLogs', 'items', 'warehouses'))->setPaper('A4','landscape');
         return $pdf->stream();
     }
 }

@@ -13,7 +13,7 @@ class MrsReportController extends ParentController
     {
         $customer_lists = Customer::get();
         $returns = InvoiceReturn::get();
-        return view('pages.Reports.MrsReports.index', compact(['customer_lists', 'returns']));
+        return view('pages.Reports.MrsReports.index', compact('customer_lists', 'returns'));
     }
     public function filter(Request $request)
     {

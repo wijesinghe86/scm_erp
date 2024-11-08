@@ -48,7 +48,7 @@
                                                 <td>{{ optional(optional($fgrn)->createdBy)->name }}</td>
                                                 <td>
                                                     <a href="{{ route('finishedgoods.view', $fgrn->id) }}"
-                                                        class="btn btn-primary">View More</a>
+                                                        class="btn btn-primary"> View More </a>
                                                 </td>
                                                     {{-- <table class="table table-striped">
 

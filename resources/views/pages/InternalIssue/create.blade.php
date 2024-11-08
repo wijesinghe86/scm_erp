@@ -5,32 +5,49 @@
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Materials Request Form Entry</h4>
-                        <form class="forms-sample" method="POST" action="{{ route('material_request.store') }}">
+                        <h4 class="card-title">Internal Raw Material Issuance</h4>
+                        <form class="forms-sample" method="POST" action="{{ route('internal_issue.store') }}">
                             @csrf
                             <br>
                             <div class="row">
+                                <div class="form-group col-md-3">
+                                    <label>IID No</label>
+                                    <input type="text" class="form-control" name="iid_no" placeholder="IID No"
+                                        value="{{ $next_number }}" readonly >
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Issue Date</label>
+                                    <input type="date" class="form-control" name="issue_date"
+                                         id="issue_date" value="{{ old('issue_date') }}">
+                                </div>
                                 <div class="form-group col-md-2">
-                                    <label>MRF Date</label>
-                                    <input type="date" class="form-control" name="mrf_date" value="{{ old('mrf_date') }}"
-                                        placeholder="MRF date">
+                                    <label>Issue Warehouse</label>
+                                    {{-- <option value="{{$classes->id}}" {{($classes->id == old('class_id')) ? 'selected' : ''}}>{{$classes->title}}</option> --}}
+                                    <select name="issue_warehouse_id" class="form-control" id="issue_warehouse_id" placeholder="Issue Warehouse">
+                                        @foreach ($warehouses as $warehouse)
+                                            <option value="{{ $warehouse->id }}"{{($warehouse->id == old('issue_warehouse_id')) ? 'selected' : ''}}>{{ $warehouse->warehouse_name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <div class="form-group col-md-3">
-                                    <label>MRF No</label>
-                                    <input type="text" class="form-control" name="mrf_no" placeholder="MRF No"
-                                        value="{{ $next_number }}" readonly>
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label>Required Date</label>
-                                    <input type="date" class="form-control" name="required_date"
-                                        value="{{ old('required_date') }}" id="required_date">
-                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>Plant</label>
+                                    <select name="plant_id" class="form-control" id="plant_id" placeholder="Plant">
+                                        @foreach ($plants as $plant)
+                                            <option value="{{ $plant->id }}"{{($plant->id == old('plant_id')) ? 'selected' : ''}}>
+                                                {{ $plant->plant_name }}</option>
+                                        @endforeach
+                                    </select>
                             </div>
                             <div class="row">
-                                <div class="form-group col-md-12">
+                                <div class="form-group col-md-10">
                                     <label>Justification</label>
                                     <input type="text" class="form-control" name="justification"
                                         value="{{ old('justification') }}" placeholder="Justification">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>Reference No</label>
+                                    <input type="text" class="form-control" name="reference_no"
+                                        value="{{ old('reference_no') }}" placeholder="Reference No">
                                 </div>
                             </div>
                             <div class="row">
@@ -54,37 +71,23 @@
                                     <input type="text" readonly class="form-control" name="uom" id="uom"
                                         placeholder="U/M">
                                 </div>
-                               <div class="form-group col-md-2">
-                                    <label>Unit Price</label>
-                                    <input type="number" readonly class="form-control" name="unprice" id="unprice"
-                                        placeholder="Unit Price">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-2">
-                                    <label>Priority</label>
-                                    <select name="priority" class="form-control">
-                                        @foreach (config('scm.priorities') as $priority)
-                                            <option value="{{ $priority['id'] }}">{{ $priority['name'] }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label>MRF Qty</label>
-                                    <input type="number" class="form-control" name="mrf_qty" id="mrf_qty"
-                                        placeholder="MRF Qty" >
-                                </div>
-                                <div class="form-group col-md-2">
-                                    <label>Value</label>
-                                    <input type="number" readonly class="form-control" name="item_value" id="item_value"
-                                        placeholder="Value">
-                                </div>
-                            </div>
 
+                                    <div class="form-group col-md-2">
+                                    <label>Issue Qty</label>
+                                    <input type="number" class="form-control" name="issue_qty" id="issue_qty"
+                                        placeholder="Issue Qty" >
+                                </div>
+                                    <div class="form-group col-md-2">
+                                    <label>Issue Weight</label>
+                                    <input type="number" class="form-control" name="issue_weight" id="issue_weight"
+                                        placeholder="Isssue Weight" >
+                                </div>
+                            </div>
+                            </div>
                             <button type="submit" class="btn btn-success me-2" name="button" value="add">Add</button>
                             {{-- <button class="btn btn-danger">Cancel</button> --}}
                             {{-- devide the page and table --}}
-                            <hr />
+                            <hr/>
 
                             <table class="table bordered">
                                 <thead>
@@ -92,10 +95,9 @@
                                         <th>Stock No</th>
                                         <th>Description</th>
                                         <th>U/M</th>
-                                        <th>Priority</th>
-                                        <th>MRF Qty</th>
-                                        <th>Unit Price(Rs)</th>
-                                        <th>Value(Rs)</th>
+                                        <th>Issue Qty</th>
+                                        <th>Issue Weight</th>
+                                        <th>Issued Warehouse</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -106,11 +108,10 @@
                                                 <td>{{ $item['stock_no'] }}</td>
                                                 <td>{{ $item['description'] }}</td>
                                                 <td>{{ $item['uom'] }}</td>
-                                                <td>{{ $item['priority'] }}</td>
-                                                <td>{{ $item['mrf_qty'] }}</td>
-                                               <td>{{ $item['unit_price'] }}</td>
-                                               <td>{{ $item['item_value'] }}</td>
-                                                <td><a href="{{ route('material_request.delete_item', $index) }}"
+                                                <td>{{ $item['issue_qty'] }}</td>
+                                               <td>{{ $item['issue_weight'] }}</td>
+                                               <td>{{ $item['issue_warehouse_id'] }}</td>
+                                                <td><a href="{{ route('internal_issue.delete_item', $index) }}"
                                                         class="btn btn-danger">Delete</a></td>
                                             </tr>
                                         @endforeach
@@ -118,24 +119,21 @@
                                 </tbody>
                             </table>
                             <br>
+                            <br>
+                            <div class="row">
                             <div class="form-group col-md-3">
-                                <label>Estimated Total Value(Rs)</label>
-                                <input type="number" class="form-control" name="tot_value" id="tot_value"
-                                    placeholder="MRF Qty" value= {{collect($items)->sum('item_value')}} readonly>
+                                <label>Total Issued Qty</label>
+                                <input type="number" class="form-control" name="tot_qty" id="tot_qty"
+                                    placeholder="Total Issued Weight" value= {{collect($items)->sum('issue_qty')}} readonly>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label>Requested By</label>
-                                <select class="form-control emp-select" name="requested_by" value="{{ old('requested_by') }}">
-                                    {{-- <option selected disabled>Select</option> --}}
-                                    @foreach ($employees as $employee)
-                                        <option value="{{$employee->id}}"> {{ $employee->employee_fullname }} -
-                                            {{ $employee->departmentData->department_name }}
-                                            ({{ $employee->sectionData->section_name }})</option>
-                                    @endforeach
-                                </select>
+                            <div class="form-group col-md-3">
+                                <label>Total Issued Weight</label>
+                                <input type="number" class="form-control" name="tot_weight" id="tot_weight"
+                                    placeholder="Total Issued Weight" value= {{collect($items)->sum('issue_weight')}} readonly>
                             </div>
-                            <button type="submit" class="btn btn-success me-2" name="button" value="complete">Complete
-                                Materials Request</button>
+                            </div>
+                            <br>
+                            <button type="submit" class="btn btn-success me-2" name="button" value="complete">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -149,13 +147,6 @@
         $(document).ready(function() {
             $('.item-select').select2({
                 placeholder: "Select Item",
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('.emp-select').select2({
-                placeholder: "Select",
             });
         });
     </script>
@@ -181,20 +172,6 @@
           document.getElementById("uom").value = selectedItem.unit;
           document.getElementById("unprice").value = selectedItem.cost_price;
         }
-
-        $('#mrf_qty').on('input', function() {
-
-            let quantity = $(this).val();
-            let price = $('#unprice').val();
-
-            let total = parseFloat(quantity) * parseFloat(price)
-            $('#item_value').val(total)
-
-        })
-
-
-
-
 
       </script>
 @endpush
