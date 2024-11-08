@@ -23,6 +23,7 @@ class StockLogService
     public static $SEMI_PRODUCTION = "semi_production";
     public static $FINISHED_GOODS = "finished_goods";
     public static $GFRN_WASTAGE = "fgrn_wastage";
+    public static $INTERNAL_ISSUE = "internal_issue";
     public static $ADD = "add";
     public static $DEDUCT = "deduct";
 

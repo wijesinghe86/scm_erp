@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\InternalGoodsIssuance;
+use App\Models\MaterialRequestItem;
+
 
 class InternalGoodsIssuance extends Controller
 {

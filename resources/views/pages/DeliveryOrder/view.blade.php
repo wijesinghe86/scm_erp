@@ -73,8 +73,9 @@
                                     </table>
                                 </div>
                             </div>
+
                             <a target="_blank" href="{{ route('deliveryorders.print', ['delivery_order_id' => $delivery_order->id]) }}"
-                                class="btn btn-secondary mr-5"> Print</a>
+                                class="btn btn-secondary mr-5" type="sub" name="button"> Print</a>
                             <a class="btn btn-danger" href="{{route('deliveryorders.all')}}" >D/O Registry</a>
                         </div>
                     </div>

@@ -310,6 +310,32 @@
             </div>
         </li>
         @endhasanyrole
+
+{{-- S Location Production --}}
+@hasanyrole('Super Admin|Admin')
+<li class="nav-item">
+    <a class="nav-link" data-bs-toggle="collapse" href="#ui-iid" aria-expanded="false"
+        aria-controls="ui-iid">
+        <span class="menu-title">S Location Production</span>
+        {{-- <i class="menu-arrow"></i> --}}
+        <i class="mdi mdi-contacts menu-icon"></i>
+    </a>
+    <div class="collapse" id="ui-iid">
+        <ul class="nav flex-column sub-menu">
+@hasanyrole('Super Admin|Admin')
+            <li class="nav-item"> <a class="nav-link"
+                    href="{{ route('internal_issue.index') }}">Internal Issue Entry</a></li>
+                    @endhasanyrole
+
+                    @hasanyrole('Super Admin|Admin')
+        <li class="nav-item"> <a class="nav-link"
+                href="{{ route('Sfgrn.index') }}">Finished Goods Entry</a></li>
+                @endhasanyrole
+                 </ul>
+    </div></li>
+@endhasanyrole
+
+
         {{-- Inventory Control --}}
         @hasanyrole('Super Admin|Admin')
         <li class="nav-item">
@@ -809,6 +835,8 @@
             <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link"
                     href="{{ route('mrsreports.index') }}"> Material Return Reports </a></li>
+                    <li class="nav-item"> <a class="nav-link"
+                        href="{{ route('BalanceOrder.index') }}"> Balancce Order Reports </a></li>
                 <li class="nav-item"> <a class="nav-link" href=""> Stock Items Catalogue </a></li> <li class="nav-item"> <a class="nav-link" href=""> Stock Items Catalogue </a></li>
                 <li class="nav-item"> <a class="nav-link"
                         href="{{ route('productionplanningandschedule.index') }}"> Stock Items Status </a></li>
