@@ -137,11 +137,11 @@ class MaterialRequestController extends Controller
             'item_value'=>$request->item_value,
         ];
 
-        logger($request->all());
+        //logger($request->all());
 
         session(['mr.items'=>$items]);
         return redirect()->back()->withInput();
-        
+
         //dd("add line item success ");
 
 
