@@ -94,6 +94,9 @@ class DeliveryOrderController extends ParentController
     {
         $stockLog = new StockLogService;
 
+        // if ($delivery_order == null || $delivery_order->issued_date != null) {
+        //     abort(404);
+        // }
         try {
             DB::beginTransaction();
             $balance_order =  new BalanceOrder;
@@ -225,14 +228,14 @@ class DeliveryOrderController extends ParentController
         if ($delivery_order == null) {
             return abort(404);
         }
-        if($delivery_order->driver_name ='oK')
+        elseif($delivery_order->driver_name ='oK')
         {
-            $response['alert-success'] = 'Already Printed!';
+
         }
 
         $pdf = PDF::loadView('pages.DeliveryOrder.pdf', compact('delivery_order'));
         return $pdf->stream('delivery_order.pdf');
-        
+
     }
 
     public function cancel($delivery_order_id)

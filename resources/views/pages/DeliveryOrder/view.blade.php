@@ -75,7 +75,7 @@
                             </div>
 
                             <a target="_blank" href="{{ route('deliveryorders.print', ['delivery_order_id' => $delivery_order->id]) }}"
-                                class="btn btn-secondary mr-5" type="sub" name="button"> Print</a>
+                               type="submit" class="btn btn-secondary mr-5" name="button"> Print</a>
                             <a class="btn btn-danger" href="{{route('deliveryorders.all')}}" >D/O Registry</a>
                         </div>
                     </div>
@@ -90,4 +90,15 @@
             gap: 1rem;
         }
     </style>
+
+@push('scripts')
+<script type="text/javascripti">
+    $(document).ready(function(){
+        $(".button").click(function(){
+        $(this).prop('disabled', true);
+        });
+    });
+</script>
+@endpush
+
 @endsection

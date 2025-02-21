@@ -22,6 +22,16 @@
                                         <input type="text" class="form-control border-input" name="billtype_description" id="billtype_description" required autocomplete="off">
                                     </div>
                                 </div>
+                               
+                                <div class="form-group col-md-4">
+                                    <label>Type</label>
+                                    <select class="form-control" name="type">
+                                        <option value="">Select type</option>
+                                        <option value="invoice">Invoice</option>
+                                        <option value="urgent">Urgent</option>
+                                       
+                                    </select>
+                                </div>
                                 {{-- <div class="col-md-2">
                                     <div class="form-group">
                                         <label class="item-name-label">Invoice Number</label>

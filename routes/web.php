@@ -38,6 +38,7 @@ use App\Http\Controllers\GoodsReceivedController;
 use App\Http\Controllers\InternalIssueController;
 use App\Http\Controllers\InvoiceCancelController;
 use App\Http\Controllers\PurchaseOrderController;
+use App\Http\Controllers\UrgentInvoiceController;
 use App\Http\Controllers\GoodsIssueNoteController;
 use App\Http\Controllers\ProductionCostController;
 use App\Http\Controllers\SemiProductionController;
@@ -67,6 +68,7 @@ use App\Http\Controllers\PlantTimeManagementController;
 use App\Http\Controllers\RawMaterialReceivedController;
 use App\Http\Controllers\StockLocationChangeController;
 use App\Http\Controllers\WarehouseAreaDesignController;
+use App\Http\Controllers\ReverseDeliveryOrderController;
 use App\Http\Controllers\CustomerPaymentUpdateController;
 use App\Http\Controllers\EquipmentRegistrationController;
 use App\Http\Controllers\FinishedGoodsApprovalController;
@@ -76,6 +78,7 @@ use App\Http\Controllers\OverShortageAndDamageController;
 use App\Http\Controllers\PurchaseOrderMrApproveController;
 use App\Http\Controllers\MaterialsReturnByCustomerController;
 use App\Http\Controllers\RawMaterialRequestApproveController;
+use App\Http\Controllers\StockLocationChangeReportController;
 use App\Http\Controllers\ProductionPlanningApprovalController;
 use App\Http\Controllers\OperationMechanismByProductController;
 use App\Http\Controllers\ProductionPlanningAndScheduleController;
@@ -909,6 +912,28 @@ Route::middleware(['role:Super Admin|Admin'])->prefix('Sfgrn')->group(function (
     Route::middleware(['role:Super Admin|Admin'])->get('/create', [SfgrnController::class, 'create'])->name('Sfgrn.create');
     Route::middleware(['role:Super Admin|Admin'])->post('/create', [SfgrnController::class, 'store'])->name('Sfgrn.store');
     Route::middleware(['role:Super Admin|Admin'])->get('/view/{$fgrn->id}', [SfgrnController::class, 'view'])->name('Sfgrn.view');
+
+});
+
+Route::middleware(['role:Super Admin|Admin'])->prefix('StockLoctionChange')->group(function () {
+    Route::get('/', [StockLocationChangeReportController::class, 'index'])->name('StockLoctionChange.index');
+    Route::post('date_wise', [StockLocationChangeReportController::class, 'date_filter'])->name('StockLoctionChange.datewise_slc_report');
+
+});
+
+Route::middleware(['role:Super Admin|Admin'])->prefix('reverse_delivery')->group(function () {
+    Route::middleware(['role:Super Admin|Admin'])->get('/', [App\Http\Controllers\ReverseDeliveryOrderController::class, 'index'])->name('reverse_delivery.index');
+    Route::middleware(['role:Super Admin|Admin'])->get('/create', [App\Http\Controllers\ReverseDeliveryOrderController::class, 'create'])->name('reverse_delivery.create');
+    Route::middleware(['role:Super Admin|Admin'])->post('/create', [App\Http\Controllers\ReverseDeliveryOrderController::class, 'store'])->name('reverse_delivery.store');
+    Route::middleware(['role:Super Admin|Admin'])->get('reverse_delivery/delete/{index}', [ReverseDeliveryOrderController::class, 'deleteSessionItem'])->name('reverse_delivery.delete_item');
+});
+
+Route::middleware(['role:Super Admin|Admin'])->prefix('urgent_invoice')->group(function () {
+    Route::middleware(['role:Super Admin|Admin'])->get('/', [UrgentInvoiceController::class, 'index'])->name('urgent_invoice.index');
+    Route::middleware(['role:Super Admin|Admin'])->get('/create', [App\Http\Controllers\UrgentInvoiceController::class, 'create'])->name('urgent_invoice.create');
+    Route::middleware(['role:Super Admin|Admin'])->post('/create', [App\Http\Controllers\UrgentInvoiceController::class, 'store'])->name('urgent_invoice.store');
+    Route::middleware(['role:Super Admin|Admin'])->get('/get-items', [App\Http\Controllers\UrgentInvoiceController::class, 'getIsuuedItems'])->name('urgent_invoice.getIssuedItems');
+    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/get/invoice_no', [App\Http\Controllers\UrgentInvoiceController::class, 'generateInvoiceNumber'])->name('urgent_invoice.get.number');
 
 });
 

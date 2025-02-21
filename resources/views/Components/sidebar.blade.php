@@ -200,6 +200,29 @@
             </div>
         </li>
         @endhasanyrole
+    {{-- Invoice_DeliveryOrder Reverse Process --}}
+    @hasanyrole('Super Admin|Admin')
+    <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="collapse" href="#ui-sale" aria-expanded="false"
+            aria-controls="ui-sale">
+            <span class="menu-title">Urgent Sales</span>
+            {{-- <i class="menu-arrow"></i> --}}
+            <i class="mdi mdi-contacts menu-icon"></i>
+        </a>
+        <div class="collapse" id="ui-sale">
+            <ul class="nav flex-column sub-menu">
+                @hasanyrole('Super Admin|Admin|Sales User|Sales Admin')
+                <li class="nav-item"> <a class="nav-link" href="{{ route('reverse_delivery.create') }}">Urgent Issuance</a>
+                </li>
+                @endhasanyrole
+                @hasanyrole('Super Admin|Admin|Sales User|Sales Admin')
+                <li class="nav-item"> <a class="nav-link" href="{{ route('urgent_invoice.create') }}">Urgent Invoice</a>
+                </li>
+                @endhasanyrole
+            </ul>
+        </div>
+    </li>
+    @endhasanyrole
         {{-- Demand Forecasting --}}
         @hasanyrole('Super Admin|Admin|Production User|Production Admin')
         <li class="nav-item">
@@ -835,8 +858,10 @@
             <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link"
                     href="{{ route('mrsreports.index') }}"> Material Return Reports </a></li>
-                    <li class="nav-item"> <a class="nav-link"
+                <li class="nav-item"> <a class="nav-link"
                         href="{{ route('BalanceOrder.index') }}"> Balancce Order Reports </a></li>
+                <li class="nav-item"> <a class="nav-link"
+                        href="{{ route('StockLoctionChange.index') }}"> Stock Location Change Reports </a></li>
                 <li class="nav-item"> <a class="nav-link" href=""> Stock Items Catalogue </a></li> <li class="nav-item"> <a class="nav-link" href=""> Stock Items Catalogue </a></li>
                 <li class="nav-item"> <a class="nav-link"
                         href="{{ route('productionplanningandschedule.index') }}"> Stock Items Status </a></li>

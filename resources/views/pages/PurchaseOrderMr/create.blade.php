@@ -10,7 +10,6 @@
                             @csrf
                             <div class="row">
                                 <div class="form-group col-md-3">
-                                    <label>PO NO</label>
                                     <label>Purchase Reference Number</label>
                                     <select class="form-control item-select  prf_input" name="prf_id">
                                         <option value="" selected disabled>Select</option>

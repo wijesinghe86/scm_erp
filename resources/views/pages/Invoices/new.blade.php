@@ -49,7 +49,6 @@
                                                 <option value="{{ $category->id }}">{{ $category->billtype_code }}</option>
                                             @endforeach
                                         </select>
-
                                     </div>
 
                                     <div class="form-group col-md-2">
@@ -119,9 +118,7 @@
                                                     {{ $item['label'] }}
                                                 </option>
                                             @endforeach
-                                            {{-- <option value="1">Cash</option>
-                                            <option value="2">Credit</option> --}}
-                                        </select>
+                                            </select>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Credit Days</label>
@@ -363,7 +360,7 @@
                 if (invoiceType == 1) {
                     $('#invoice_option').val(0)
                     $("#invoice_option").find(':not(:selected)').prop('disabled', true);
-                    const invoiceCategory = invoiceCategories?.find(row => row?.billtype_code == "GIN")
+                    const invoiceCategory = invoiceCategories?.find(row => ['GIN','IIN'].includes(row?.billtype_code))
                     if (invoiceCategory) {
                         $('#invoice_category').val(invoiceCategory?.id)
                         $('#invoice_category').trigger("change")
@@ -375,7 +372,7 @@
                     if (runType != "load") {
                         $('#invoice_option').val("")
                     }
-                    const invoiceCategory = invoiceCategories?.find(row => row?.billtype_code == "GTI")
+                    const invoiceCategory = invoiceCategories?.find(row => ['GTI','ITI'].includes(row?.billtype_code))
                     if (invoiceCategory) {
                         $('#invoice_category').val(invoiceCategory?.id)
                         $('#invoice_category').trigger("change")
@@ -385,7 +382,7 @@
                 if (invoiceType == 3) {
                     $('#invoice_option').val(3)
                     $("#invoice_option").find(':not(:selected)').prop('disabled', true);
-                    const invoiceCategory = invoiceCategories?.find(row => row?.billtype_code == "GSVT")
+                    const invoiceCategory = invoiceCategories?.find(row => ['GSVT','ISVT'].includes(row?.billtype_code))
                     if (invoiceCategory) {
                         $('#invoice_category').val(invoiceCategory?.id)
                         $('#invoice_category').trigger("change")
