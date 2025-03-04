@@ -44,6 +44,7 @@
                                                         <th>ISSUED BY</th>
                                                         <th>STATUS</th>
                                                         <th>ACTION</th>
+                                                        <th>CANCEL</th>
 
 
                                                     </tr>
@@ -64,15 +65,17 @@
                                                             </td>
                                                             <td style="color: red" >{{ $deliveryOrder->cancel_status }}</td>
 
-                                                            <td align="right">
+                                                            <td align="center">
                                                                 <a class="h4"
                                                                     href="{{ route('deliveryorders.view', $deliveryOrder->id) }}">
                                                                     <i class="fa-sharp fa-solid fa-eye"></i>
                                                                 </a>
                                                             </a>
+                                                            </td>
+                                                            <td align="center">
                                                             <a href="{{ route('deliveryorders.cancel', $deliveryOrder->id) }}">
 
-                                                            <i class="fa-solid fa-rectangle-xmark text-danger"></i>
+                                                            <i class="fa-solid fa-rectangle-xmark text-danger" onclick="return confirm('Do you want to cancel this Invoice?')"></i>
                                                             </a>
 
 
