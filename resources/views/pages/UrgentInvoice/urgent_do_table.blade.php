@@ -1,7 +1,6 @@
-{{-- @php
-    logger($lists);
-@endphp --}}
-
+@php
+    $list =  session('urgentInvoice.items') ?? [];
+@endphp
 <div class="table-responsive">
     <table class="table bordered form-group">
 
@@ -14,15 +13,14 @@
                 <th>Issue Qty</th>
                 <th>Invoice Qty</th>
                 <th>Unit Rate</th>
+                <th>Weight</th>
                 <th>Item Amount</th>
-                <th>Discount</th>
                 <th>Item Total</th>
-                <th>Location</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($lists as $index => $row)
+            @foreach ($list as $index => $row)
                 <tr>
                     <td><input type="checkbox" name="items[{{ $index }}][is_selected]" /></td>
 
@@ -45,23 +43,33 @@
                             value="{{ $row->item->id }}" />
                     </td>
                     <td>
-                        <input class="form-control" name="items[{{ $index }}][weight]" type="number">
+                        <input class="form-control" name="items[{{ $index }}][weight]" type="number" id="weight-{{ $index }}">
                         <input type="hidden" name="items[{{ $index }}][item_id]"
                             value="{{ $row->item->id }}" />
                     </td>
                     <td>
-                        <input onclick="Invvalue(this,{{ $index }})" class="form-control"
-                            name="items[{{ $index }}][Value]" type="number" id="total-{{ $index }}">
+                        <input  class="form-control"
+                          name="items[{{ $index }}][Value]" type="number" id="total-{{ $index }}">
                         <input type="hidden" name="items[{{ $index }}][item_id]"
                             value="{{ $row->item->id }}" />
                     </td>
-
-
-
-
+                    <td>
+                        <input class="form-control" name="items[{{ $index }}][discount]" type="number" id="discount-{{ $index }}">
+                        <input type="hidden" name="items[{{ $index }}][item_id]"
+                            value="{{ $row->item->id }}" />
+                    </td>
+                    <td>
+                        <input onchange="onValueChangeTest()"  placeholder="TTTT" class="form-control"
+                          name="items[{{ $index }}][total_value]" type="number" id="total_value-{{ $index }}" >
+                        <input type="hidden" name="items[{{ $index }}][item_id]"
+                            value="{{ $row->item->id }}" />
+                    </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 </div>
+
+
+
 

@@ -443,7 +443,7 @@
                 <li class="nav-item"> <a class="nav-link" href="{{ route('goodsreceived.index') }}">Goods
                         Received</a></li>
                 @endhasanyrole
-                @hasanyrole('Super Admin|Admin|Warehouse User')
+                @hasanyrole('Super Admin|Admin|Warehouse User|Sales Admin')
                 <li class="nav-item"> <a class="nav-link" href="{{ route('deliveryorders.all') }}">Delivery
                         Order</a>
                 </li>

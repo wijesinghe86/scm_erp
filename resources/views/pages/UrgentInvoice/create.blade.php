@@ -135,7 +135,7 @@
                                 </select>
                             </div>
                         </div>
-                                   <div class="items_table"></div>
+                                   <div class="items_table" id="items_table"></div>
                                     <br>
                                     <hr>
                                     <div class="row">
@@ -271,7 +271,31 @@ function calculateUnitPrice(elem) {
             var newUnitPrice = unitPrice / ((100 + vatRate) / 100);
             $(elem).val(newUnitPrice.toFixed(2));
         }
-    </script>
+function onValueChangeTest(){
+    console.log("Test Triggered");
+    syncCalculations()
+}
+
+function syncCalculations(){
+    $.ajax({
+                url: "{{ route('urgent_invoice.syncCalculations') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "GET",
+                data: {
+                    option: $('#invoice_option').val(),
+                    discount_value: "0",
+                    discount_type: 'fixed'
+                },
+                success: function(data) {
+                  console.log(data);
+                  $('#sub_total').val(data?.grandTotal)
+                }
+                 });
+}
+
+
 
 
 </script>
@@ -299,5 +323,6 @@ function calculateUnitPrice(elem) {
     document.getElementById("cus_vat_no").value = selectedDo.get_customer.customer_vat_number;
 
     }
+
     </script>
 @endpush

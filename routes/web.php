@@ -406,19 +406,19 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
 
     // Sales and Marketing
     /* .....CREATING ROUTE FOR Invoice ....... */
-    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->prefix('invoices')->group(function () {
-        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/', [InvoiceController::class, 'all'])->name('invoices.all');
-        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/new', [InvoiceController::class, 'new'])->name('invoices.new');
-        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->post('/new', [InvoiceController::class, 'store'])->name('invoices.store');
-        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->post('/item/store', [InvoiceController::class, 'storeItem'])->name('invoices.item.store');
-        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->post('/item/delete', [InvoiceController::class, 'deleteItem'])->name('invoices.item.delete');
-        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/get/items/table', [InvoiceController::class, 'itemsTable'])->name('invoices.item.table');
-        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/{invoice_id}/preview', [InvoiceController::class, 'preview'])->name('invoices.preview');
-        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/{invoice_id}/print', [InvoiceController::class, 'print'])->name('invoices.print');
-        Route::middleware(['role:Super Admin|Admin'])->get('/{invoice_id}/cancel', [InvoiceController::class, 'cancel'])->name('invoices.cancel');
-        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/get/data', [InvoiceController::class, 'getData'])->name('invoices.get.data');
-        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/get/total', [InvoiceController::class, 'getInvoiceTotal'])->name('invoices.get.total');
-        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/get/invoice_no', [InvoiceController::class, 'generateInvoiceNumber'])->name('invoices.get.number');
+    Route::middleware(['role:Super Admin|Admin|Sales User'])->prefix('invoices')->group(function () {
+        Route::middleware(['role:Super Admin|Admin|Sales User'])->get('/', [InvoiceController::class, 'all'])->name('invoices.all');
+        Route::middleware(['role:Super Admin|Admin|Sales User'])->get('/new', [InvoiceController::class, 'new'])->name('invoices.new');
+        Route::middleware(['role:Super Admin|Admin|Sales User'])->post('/new', [InvoiceController::class, 'store'])->name('invoices.store');
+        Route::middleware(['role:Super Admin|Admin|Sales User'])->post('/item/store', [InvoiceController::class, 'storeItem'])->name('invoices.item.store');
+        Route::middleware(['role:Super Admin|Admin|Sales User'])->post('/item/delete', [InvoiceController::class, 'deleteItem'])->name('invoices.item.delete');
+        Route::middleware(['role:Super Admin|Admin|Sales User'])->get('/get/items/table', [InvoiceController::class, 'itemsTable'])->name('invoices.item.table');
+        Route::middleware(['role:Super Admin|Admin|Sales User'])->get('/{invoice_id}/preview', [InvoiceController::class, 'preview'])->name('invoices.preview');
+        Route::middleware(['role:Super Admin|Admin|Sales User'])->get('/{invoice_id}/print', [InvoiceController::class, 'print'])->name('invoices.print');
+        Route::middleware(['role:Super Admin|Admin|Sales Admin'])->get('/{invoice_id}/cancel', [InvoiceController::class, 'cancel'])->name('invoices.cancel');
+        Route::middleware(['role:Super Admin|Admin|Sales User'])->get('/get/data', [InvoiceController::class, 'getData'])->name('invoices.get.data');
+        Route::middleware(['role:Super Admin|Admin|Sales User'])->get('/get/total', [InvoiceController::class, 'getInvoiceTotal'])->name('invoices.get.total');
+        Route::middleware(['role:Super Admin|Admin|Sales User'])->get('/get/invoice_no', [InvoiceController::class, 'generateInvoiceNumber'])->name('invoices.get.number');
     });
     Route::middleware(['role:Super Admin|Admin|Sales User'])->prefix('invoices')->group(function () {
         Route::get('/create', [InvoiceCancelController::class, 'create'])->name('invoices_cancel.create');
@@ -427,8 +427,8 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
     });
 
     /* .....CREATING ROUTE FOR Delivery Order ....... */
-    Route::middleware(['role:Super Admin|Admin|Warehouse User'])->prefix('deliveryorders')->group(function () {
-        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/all', [DeliveryOrderController::class, 'all'])->name('deliveryorders.all');
+    Route::middleware(['role:Super Admin|Admin|Warehouse User|Sales Admin'])->prefix('deliveryorders')->group(function () {
+        Route::middleware(['role:Super Admin|Admin|Warehouse User|Sales Admin'])->get('/all', [DeliveryOrderController::class, 'all'])->name('deliveryorders.all');
         Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/new', [DeliveryOrderController::class, 'new'])->name('deliveryorders.new');
         Route::middleware(['role:Super Admin|Admin|Warehouse User'])->post('/new', [DeliveryOrderController::class, 'store'])->name('deliveryorders.store');
         Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{delivery_order}/view', [DeliveryOrderController::class, 'view'])->name('deliveryorders.view');
@@ -437,7 +437,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Warehouse User'])->post('/{delivery_order}/issue_delivery_order', [DeliveryOrderController::class, 'issueStore'])->name('deliveryorders.issueStore');
         Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{delivery_order}/get', [DeliveryOrderController::class, 'getById'])->name('deliveryorders.getById');
         Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{delivery_order_id}/print', [DeliveryOrderController::class, 'print'])->name('deliveryorders.print');
-        Route::middleware(['role:Super Admin|Admin'])->get('/{delivery_order_id}/cancel', [DeliveryOrderController::class, 'cancel'])->name('deliveryorders.cancel');
+        Route::middleware(['role:Super Admin|Admin|Sales Admin'])->get('/{delivery_order_id}/cancel', [DeliveryOrderController::class, 'cancel'])->name('deliveryorders.cancel');
     });
 
     Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin'])->prefix('returns')->group(function () {
@@ -929,10 +929,11 @@ Route::middleware(['role:Super Admin|Admin'])->prefix('reverse_delivery')->group
 });
 
 Route::middleware(['role:Super Admin|Admin'])->prefix('urgent_invoice')->group(function () {
-    Route::middleware(['role:Super Admin|Admin'])->get('/', [UrgentInvoiceController::class, 'index'])->name('urgent_invoice.index');
-    Route::middleware(['role:Super Admin|Admin'])->get('/create', [App\Http\Controllers\UrgentInvoiceController::class, 'create'])->name('urgent_invoice.create');
-    Route::middleware(['role:Super Admin|Admin'])->post('/create', [App\Http\Controllers\UrgentInvoiceController::class, 'store'])->name('urgent_invoice.store');
-    Route::middleware(['role:Super Admin|Admin'])->get('/get-items', [App\Http\Controllers\UrgentInvoiceController::class, 'getIsuuedItems'])->name('urgent_invoice.getIssuedItems');
+    Route::get('/', [UrgentInvoiceController::class, 'index'])->name('urgent_invoice.index');
+    Route::get('/create', [App\Http\Controllers\UrgentInvoiceController::class, 'create'])->name('urgent_invoice.create');
+    Route::post('/create', [App\Http\Controllers\UrgentInvoiceController::class, 'store'])->name('urgent_invoice.store');
+    Route::get('/get-items', [App\Http\Controllers\UrgentInvoiceController::class, 'getIsuuedItems'])->name('urgent_invoice.getIssuedItems');
+    Route::get('/syncCalculations', [App\Http\Controllers\UrgentInvoiceController::class, 'syncCalculations'])->name('urgent_invoice.syncCalculations');
     Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/get/invoice_no', [App\Http\Controllers\UrgentInvoiceController::class, 'generateInvoiceNumber'])->name('urgent_invoice.get.number');
 
 });

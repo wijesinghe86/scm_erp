@@ -49,6 +49,7 @@
                                         <th>CREATED BY</th>
                                         {{-- <th>CREATED AT</th> --}}
                                         <td>Action</td>
+                                        <td>Cancel</td>
                                     </tr>
                                 </thead>
                                 <tbody id="invoices-table">
@@ -76,9 +77,11 @@
                                                 <a href="">
                                                     <i class="fa-sharp fa-solid fa-print"></i>
                                                 </a>
+                                            </td>
+                                            <td>
                                                 <a href="{{ route('invoices.cancel', $invoice->id) }}">
 
-                                                    <i class="fa-solid fa-rectangle-xmark text-danger"></i>
+                                                    <i class="fa-solid fa-rectangle-xmark text-danger" onclick="return confirm('Do you want to cancel this Invoice?')"></i>
                                                 </a>
                                             </td>
                                         </tr>

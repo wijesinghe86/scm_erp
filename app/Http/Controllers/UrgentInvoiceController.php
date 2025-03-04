@@ -47,17 +47,36 @@ class UrgentInvoiceController extends Controller
     }
 
     public function getIsuuedItems(Request $request){
-        $lists =  UrgentDeliveryItem::with('item')
+        $list =  UrgentDeliveryItem::with('item')
                 ->where('delivery_order_id', $request->delivery_order_id)
                 ->get();
 
-        return view('pages.UrgentInvoice.urgent_do_table',compact('lists'));
+                // get
+                // $items =  session('urgentInvoice.items') ?? [];
+
+                // set
+                // session(['mr.items'=>$items]);
+                session(['urgentInvoice.items'=>$list]);
+        return view('pages.UrgentInvoice.urgent_do_table');
     }
 
     public function store(Request $request)
     {
 
     }
-    
 
+public function syncCalculations(Request $request){
+    // return (new UrgentInvoice)->syncCalculations($request->option,$request->discount_value,$request->discount_type);
+
+    $items =  session('urgentInvoice.items') ?? [];
+
+    //Test
+    $grandTotal = collect($items)->reduce(function ($carry, $item) {
+        return $carry + $item->issued_qty;
+    }, 0);
+    
+    return [
+        "grandTotal" => $grandTotal,
+    ];
+}
 }
