@@ -98,7 +98,7 @@ use App\Http\Controllers\OperationMachanismProductionAndTimeManagementController
 */
 
 Route::get('/', function () {
-    return view ('welcome');
+    return view('welcome');
 });
 
 Auth::routes(['register' => false]);
@@ -444,7 +444,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin'])->get('/', [ReturnController::class, 'all'])->name('returns.all');
         Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/new', [ReturnController::class, 'new'])->name('returns.new');
         Route::middleware(['role:Super Admin|Admin|Warehouse User'])->post('/new', [ReturnController::class, 'store'])->name('returns.store');
-                                                                                Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{invoice_return}/view', [ReturnController::class, 'view'])->name('returns.view');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{invoice_return}/view', [ReturnController::class, 'view'])->name('returns.view');
 
         Route::middleware(['role:Super Admin|Admin|Warehouse Admin'])->get('/approval', [ReturnController::class, 'approvalIndex'])->name('returns.approvalIndex');
         Route::middleware(['role:Super Admin|Admin|Warehouse Admin'])->post('{invoice_return}/approval', [ReturnController::class, 'approval'])->name('returns.approval');
@@ -458,11 +458,10 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::post('/create', [OpenningBalanceController::class, 'store'])->name('obentry.store');
         Route::post('/get-stock', [OpenningBalanceController::class, 'getStock'])->name('obentry.stock');
     });
-/* .....CREATING ROUTE FOR On Hand Balance Report ....... */
+    /* .....CREATING ROUTE FOR On Hand Balance Report ....... */
     Route::middleware(['role:Super Admin|Admin|Production Admin'])->prefix('stock')->group(function () {
-    Route::get('/', [StockController::class, 'index'])->name('stock.index1');
-    Route::get('/', [StockController::class, 'index2'])->name('stock.index2');
-
+        Route::get('/', [StockController::class, 'index'])->name('stock.index1');
+        Route::get('/', [StockController::class, 'index2'])->name('stock.index2');
     });
     /* .....CREATING ROUTE FOR Miscellaneous Received ....... */
     Route::middleware(['role:Super Admin|Admin|'])->prefix('miscreceived')->group(function () {
@@ -534,11 +533,11 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::get('/get-items', [App\Http\Controllers\PurchaseOrderController::class, 'getPrfItems'])->name('purchase_order.getPrfItems');
     });
 
-        Route::middleware(['role:Super Admin|Admin|Production User|Production Admin'])->prefix('FinishedGoods')->group(function () {
+    Route::middleware(['role:Super Admin|Admin|Production User|Production Admin'])->prefix('FinishedGoods')->group(function () {
         Route::middleware(['role:Super Admin|Admin|Production User|Production Admin'])->get('FinishedGoods', [App\Http\Controllers\FinishedGoodsController::class, 'index'])->name('finishedgoods.index');
         Route::middleware(['role:Super Admin|Admin|Production User'])->get('/create', [FinishedGoodsController::class, 'create'])->name('finishedgoods.create');
         Route::middleware(['role:Super Admin|Admin|Production User'])->post('/create', [App\Http\Controllers\FinishedGoodsController::class, 'store'])->name('finishedgoods.store');
-        Route::middleware(['role:Super Admin|Admin|Production User'])->get('/view/{$fgrn->id}', [App\Http\Controllers\FinishedGoodsController::class,'view'])->name('finishedgoods.view');
+        Route::middleware(['role:Super Admin|Admin|Production User'])->get('/view/{$fgrn->id}', [App\Http\Controllers\FinishedGoodsController::class, 'view'])->name('finishedgoods.view');
 
         Route::middleware(['role:Super Admin|Admin|Production User'])->get('/get-rmi-items', [App\Http\Controllers\FinishedGoodsController::class, 'getRmiItems'])->name('finishedgoods.getRmiItems');
         Route::middleware(['role:Super Admin|Admin|Production User'])->post('/add-to-finish-good-table', [App\Http\Controllers\FinishedGoodsController::class, 'addToFinishGoodTable'])->name('finished_goods.addToFinishGoodTable');
@@ -611,18 +610,19 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Production Admin'])->get('/get-items', [ProductionPlanningApprovalController::class, 'getItems'])->name('production_planning_and_schedule_approval.getItems');
     });
 
-        Route::middleware(['role:Super Admin|Admin|Procurement User'])->prefix('pr_request_approve')->group(function () {
+    Route::middleware(['role:Super Admin|Admin|Procurement User'])->prefix('pr_request_approve')->group(function () {
         Route::middleware(['role:Super Admin|Admin|Procurement User'])->get('', [PrApproveController::class, 'index'])->name('pr_request_approve.index');
         Route::middleware(['role:Super Admin|Admin'])->get('/create', [PrApproveController::class, 'create'])->name('pr_request_approve.create');
         Route::middleware(['role:Super Admin|Admin'])->post('/create', [PrApproveController::class, 'store'])->name('pr_request_approve.store');
         Route::middleware(['role:Super Admin|Admin'])->get('/get-items', [PrApproveController::class, 'getItems'])->name('pr_request_approve.getItems');
     });
-        Route::middleware(['role:Super Admin|Admin|Procurement User'])->prefix('purchase_order_approve')->group(function () {
+    Route::middleware(['role:Super Admin|Admin|Procurement User'])->prefix('purchase_order_approve')->group(function () {
         Route::middleware(['role:Super Admin|Admin|Procurement User'])->get('', [PurchaseOrderMrApproveController::class, 'index'])->name('purchase_order_approve.index');
         Route::middleware(['role:Super Admin|Admin'])->get('/create', [PurchaseOrderMrApproveController::class, 'create'])->name('purchase_order_approve.create');
         Route::middleware(['role:Super Admin|Admin'])->post('/create', [PurchaseOrderMrApproveController::class, 'store'])->name('purchase_order_approve.store');
         Route::middleware(['role:Super Admin|Admin'])->get('/get-items', [PurchaseOrderMrApproveController::class, 'getItems'])->name('purchase_order_approve.getItems');
-    });Route::middleware(['role:Super Admin|Admin'])->get('{item_id}/view', [PurchaseOrderMrApproveController::class, 'view'])->name('purchase_order_approve.view');
+    });
+    Route::middleware(['role:Super Admin|Admin'])->get('{item_id}/view', [PurchaseOrderMrApproveController::class, 'view'])->name('purchase_order_approve.view');
 
     Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin|Production User'])->prefix('rawmaterialsserialcodeassigning')->group(function () {
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin|Production User'])->get('rawmaterialsserialcodeassigning', [App\Http\Controllers\RawMaterialsSerialCodeAssigningController::class, 'index'])->name('rawmaterialsserialcodeassigning.index');
@@ -635,7 +635,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin'])->get('RawMaterialIssueForProduction', [RawMaterialIssueForProductionController::class, 'index'])->name('rawmaterialissueforproduction.index');
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin'])->get('/create', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'create'])->name('rawmaterialissueforproduction.create');
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin'])->post('/create', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'store'])->name('rawmaterialissueforproduction.store');
-        Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin'])->get('/get-semi-product-serials', [App\Http\Controllers\RawMaterialIssueForProductionController::class,'getSemiProductSerials'])->name('rawmaterialissueforproduction.getSemiProductSerials');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin'])->get('/get-semi-product-serials', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'getSemiProductSerials'])->name('rawmaterialissueforproduction.getSemiProductSerials');
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin'])->post('/add-item', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'addItem'])->name('rawmaterialissueforproduction.addItem');
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin'])->post('/delete-item', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'deleteItem'])->name('rawmaterialissueforproduction.deleteItem');
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User|Factory Admin|Production Admin'])->get('/view-table', [App\Http\Controllers\RawMaterialIssueForProductionController::class, 'viewCartTable'])->name('rawmaterialissueforproduction.viewCartTable');
@@ -833,9 +833,9 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::post('/password-chanege/{user}', [UserController::class, 'passwordChange'])->name('users.passwordChange');
     });
     Route::prefix('sales_order')->group(function () {
-    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('sales_order', [SalesOrderController::class, 'index'])->name('sales_order.index');
-    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/{invoice_id}/view', [SalesOrderController::class, 'view'])->name('sales_order.view');
-    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/{invoice_id}/print', [SalesOrderController::class, 'print'])->name('sales_order.print');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('sales_order', [SalesOrderController::class, 'index'])->name('sales_order.index');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/{invoice_id}/view', [SalesOrderController::class, 'view'])->name('sales_order.view');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/{invoice_id}/print', [SalesOrderController::class, 'print'])->name('sales_order.print');
     });
 
     Route::prefix('credit_note')->group(function () {
@@ -846,7 +846,6 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/getNonIssues', [App\Http\Controllers\CreditNoteController::class, 'nonIssues'])->name('creditnote.getNonIssues');
         Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/getReturnItems', [App\Http\Controllers\CreditNoteController::class, 'getReturn'])->name('creditnote.getReturnItems');
         Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/getBalanceOrders', [App\Http\Controllers\CreditNoteController::class, 'getBalanceItems'])->name('creditnote.getBalanceOrders');
-
     });
 
     Route::prefix('credit_note_Approval')->group(function () {
@@ -855,87 +854,79 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->post('/store', [App\Http\Controllers\CreditNoteApprovalController::class, 'store'])->name('credit_note_approval.store');
         Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->post('/getCreditNoteDetails', [App\Http\Controllers\CreditNoteApprovalController::class, 'getCnDetails'])->name('credit_note_approval.getCreditNoteDetails');
         Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->get('/getCnItems', [App\Http\Controllers\CreditNoteApprovalController::class, 'getCnItems'])->name('credit_note_approval.getCnItems');
-});
+    });
 
-Route::prefix('credit_note_print')->group(function () {
-    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->get('/', [CreditNotePrintController::class, 'index'])->name('credit_note_print.index');
-    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->get('/{creditnote_id}/view', [CreditNotePrintController::class, 'view'])->name('credit_note_print.view');
-    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->get('/{creditnote_id}/print', [CreditNotePrintController::class, 'print'])->name('credit_note_print.print');
+    Route::prefix('credit_note_print')->group(function () {
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->get('/', [CreditNotePrintController::class, 'index'])->name('credit_note_print.index');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->get('/{creditnote_id}/view', [CreditNotePrintController::class, 'view'])->name('credit_note_print.view');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin|Executive User'])->get('/{creditnote_id}/print', [CreditNotePrintController::class, 'print'])->name('credit_note_print.print');
+    });
 
-});
+    Route::middleware(['role:Super Admin|Admin|Executive User'])->prefix('customerpayment')->group(function () {
+        Route::get('/index', [CustomerPaymentUpdateController::class, 'index'])->name('customerpayment.index');
+        Route::get('/create', [CustomerPaymentUpdateController::class, 'create'])->name('customerpayment.create');
+        Route::post('/create', [CustomerPaymentUpdateController::class, 'store'])->name('customerpayment.store');
+        Route::post('/getCustomerDetails', [CustomerPaymentUpdateController::class, 'getCusDetails'])->name('customerpayment.getCustomerDetails');
+    });
 
-Route::middleware(['role:Super Admin|Admin|Executive User'])->prefix('customerpayment')->group(function () {
-    Route::get('/index', [CustomerPaymentUpdateController::class, 'index'])->name('customerpayment.index');
-    Route::get('/create', [CustomerPaymentUpdateController::class, 'create'])->name('customerpayment.create');
-    Route::post('/create', [CustomerPaymentUpdateController::class, 'store'])->name('customerpayment.store');
-    Route::post('/getCustomerDetails', [CustomerPaymentUpdateController::class, 'getCusDetails'])->name('customerpayment.getCustomerDetails');
-});
+    Route::middleware(['role:Super Admin|Admin'])->prefix('creditlimtlog')->group(function () {
+        Route::get('/index', [CreditLimitLogContrller::class, 'index'])->name('creditlimtlog.index');
+    });
 
-Route::middleware(['role:Super Admin|Admin'])->prefix('creditlimtlog')->group(function () {
-    Route::get('/index', [CreditLimitLogContrller::class, 'index'])->name('creditlimtlog.index');
-});
+    Route::middleware(['role:Super Admin|Admin'])->prefix('MaterialsReturnReports')->group(function () {
+        Route::get('MaterialsReturnReports', [MrsReportController::class, 'index'])->name('mrsreports.index');
+        Route::post('filter', [MrsReportController::class, 'filter'])->name('mrsreports.filter');
+        //Route::post('date_filter', [MrsReportController::class, 'date_filter'])->name('mrsreports.date_filter');
+        // Route::get('/create', [App\Http\Controllers\MrsReportController::class, 'create'])->name('materialsreturnbycustomer.create');
+        // Route::post('/create', [App\Http\Controllers\MrsReportController::class, 'store'])->name('materialsreturnbycustomer.store');
+    });
 
-Route::middleware(['role:Super Admin|Admin'])->prefix('MaterialsReturnReports')->group(function () {
-    Route::get('MaterialsReturnReports', [MrsReportController::class, 'index'])->name('mrsreports.index');
-    Route::post('filter', [MrsReportController::class, 'filter'])->name('mrsreports.filter');
-    //Route::post('date_filter', [MrsReportController::class, 'date_filter'])->name('mrsreports.date_filter');
-    // Route::get('/create', [App\Http\Controllers\MrsReportController::class, 'create'])->name('materialsreturnbycustomer.create');
-    // Route::post('/create', [App\Http\Controllers\MrsReportController::class, 'store'])->name('materialsreturnbycustomer.store');
-});
+    Route::middleware(['role:Super Admin|Admin'])->prefix('StockReports')->group(function () {
+        Route::get('/', [StockReportController::class, 'index'])->name('stockreports.index');
+        Route::post('item_wise', [StockReportController::class, 'generate_history_report'])->name('stockreports.generate_history_report');
+        //Route::post('date_filter', [MrsReportController::class, 'date_filter'])->name('mrsreports.date_filter');
+        // Route::get('/create', [App\Http\Controllers\MrsReportController::class, 'create'])->name('materialsreturnbycustomer.create');
+        // Route::post('/create', [App\Http\Controllers\MrsReportController::class, 'store'])->name('materialsreturnbycustomer.store');
+    });
 
-Route::middleware(['role:Super Admin|Admin'])->prefix('StockReports')->group(function () {
-    Route::get('/', [StockReportController::class, 'index'])->name('stockreports.index');
-    Route::post('item_wise', [StockReportController::class, 'generate_history_report'])->name('stockreports.generate_history_report');
-    //Route::post('date_filter', [MrsReportController::class, 'date_filter'])->name('mrsreports.date_filter');
-    // Route::get('/create', [App\Http\Controllers\MrsReportController::class, 'create'])->name('materialsreturnbycustomer.create');
-    // Route::post('/create', [App\Http\Controllers\MrsReportController::class, 'store'])->name('materialsreturnbycustomer.store');
-});
+    Route::middleware(['role:Super Admin|Admin'])->prefix('internal_issue')->group(function () {
+        Route::middleware(['role:Super Admin|Admin'])->get('/', [InternalIssueController::class, 'index'])->name('internal_issue.index');
+        Route::middleware(['role:Super Admin|Admin'])->get('/create', [InternalIssueController::class, 'create'])->name('internal_issue.create');
+        Route::middleware(['role:Super Admin|Admin'])->post('/create', [InternalIssueController::class, 'store'])->name('internal_issue.store');
+        Route::middleware(['role:Super Admin|Admin'])->get('internal_issue/delete/{index}', [InternalIssueController::class, 'deleteSessionItem'])->name('internal_issue.delete_item');
+        Route::middleware(['role:Super Admin|Admin'])->get('/{internal_issue}/view', [InternalIssueController::class, 'view'])->name('internal_issue.view');
 
-Route::middleware(['role:Super Admin|Admin'])->prefix('internal_issue')->group(function () {
-    Route::middleware(['role:Super Admin|Admin'])->get('/', [InternalIssueController::class, 'index'])->name('internal_issue.index');
-    Route::middleware(['role:Super Admin|Admin'])->get('/create', [InternalIssueController::class, 'create'])->name('internal_issue.create');
-    Route::middleware(['role:Super Admin|Admin'])->post('/create', [InternalIssueController::class, 'store'])->name('internal_issue.store');
-    Route::middleware(['role:Super Admin|Admin'])->get('internal_issue/delete/{index}', [InternalIssueController::class, 'deleteSessionItem'])->name('internal_issue.delete_item');
-    Route::middleware(['role:Super Admin|Admin'])->get('/{internal_issue}/view', [InternalIssueController::class, 'view'])->name('internal_issue.view');
-
-    Route::middleware(['role:Super Admin|Admin '])->get('/approval', [InternalIssueController::class, 'approvalIndex'])->name('internal_issue.approvalIndex');
-    Route::middleware(['role:Super Admin|Admin '])->post('{internal_issue}/approval', [InternalIssueController::class, 'approval'])->name('internal_issue.approval');
-});
+        Route::middleware(['role:Super Admin|Admin '])->get('/approval', [InternalIssueController::class, 'approvalIndex'])->name('internal_issue.approvalIndex');
+        Route::middleware(['role:Super Admin|Admin '])->post('{internal_issue}/approval', [InternalIssueController::class, 'approval'])->name('internal_issue.approval');
+    });
     Route::middleware(['role:Super Admin|Admin'])->prefix('BalanceOrder')->group(function () {
-    Route::get('/', [BalanceOrderReportController::class, 'index'])->name('BalanceOrder.index');
-    Route::post('date_wise', [BalanceOrderReportController::class, 'date_filter'])->name('BalanceOrder.datewise_balance_order_report');
+        Route::get('/', [BalanceOrderReportController::class, 'index'])->name('BalanceOrder.index');
+        Route::post('date_wise', [BalanceOrderReportController::class, 'date_filter'])->name('BalanceOrder.datewise_balance_order_report');
+    });
 
-});
+    Route::middleware(['role:Super Admin|Admin'])->prefix('Sfgrn')->group(function () {
+        Route::middleware(['role:Super Admin|Admin'])->get('/', [SfgrnController::class, 'index'])->name('Sfgrn.index');
+        Route::middleware(['role:Super Admin|Admin'])->get('/create', [SfgrnController::class, 'create'])->name('Sfgrn.create');
+        Route::middleware(['role:Super Admin|Admin'])->post('/create', [SfgrnController::class, 'store'])->name('Sfgrn.store');
+        Route::middleware(['role:Super Admin|Admin'])->get('/view/{$fgrn->id}', [SfgrnController::class, 'view'])->name('Sfgrn.view');
+    });
 
-Route::middleware(['role:Super Admin|Admin'])->prefix('Sfgrn')->group(function () {
-    Route::middleware(['role:Super Admin|Admin'])->get('/', [SfgrnController::class, 'index'])->name('Sfgrn.index');
-    Route::middleware(['role:Super Admin|Admin'])->get('/create', [SfgrnController::class, 'create'])->name('Sfgrn.create');
-    Route::middleware(['role:Super Admin|Admin'])->post('/create', [SfgrnController::class, 'store'])->name('Sfgrn.store');
-    Route::middleware(['role:Super Admin|Admin'])->get('/view/{$fgrn->id}', [SfgrnController::class, 'view'])->name('Sfgrn.view');
+    Route::middleware(['role:Super Admin|Admin'])->prefix('StockLoctionChange')->group(function () {
+        Route::get('/', [StockLocationChangeReportController::class, 'index'])->name('StockLoctionChange.index');
+        Route::post('date_wise', [StockLocationChangeReportController::class, 'date_filter'])->name('StockLoctionChange.datewise_slc_report');
+    });
 
-});
+    Route::middleware(['role:Super Admin|Admin'])->prefix('reverse_delivery')->group(function () {
+        Route::middleware(['role:Super Admin|Admin'])->get('/', [App\Http\Controllers\ReverseDeliveryOrderController::class, 'index'])->name('reverse_delivery.index');
+        Route::middleware(['role:Super Admin|Admin'])->get('/create', [App\Http\Controllers\ReverseDeliveryOrderController::class, 'create'])->name('reverse_delivery.create');
+        Route::middleware(['role:Super Admin|Admin'])->post('/create', [App\Http\Controllers\ReverseDeliveryOrderController::class, 'store'])->name('reverse_delivery.store');
+        Route::middleware(['role:Super Admin|Admin'])->get('reverse_delivery/delete/{index}', [ReverseDeliveryOrderController::class, 'deleteSessionItem'])->name('reverse_delivery.delete_item');
+    });
 
-Route::middleware(['role:Super Admin|Admin'])->prefix('StockLoctionChange')->group(function () {
-    Route::get('/', [StockLocationChangeReportController::class, 'index'])->name('StockLoctionChange.index');
-    Route::post('date_wise', [StockLocationChangeReportController::class, 'date_filter'])->name('StockLoctionChange.datewise_slc_report');
-
-});
-
-Route::middleware(['role:Super Admin|Admin'])->prefix('reverse_delivery')->group(function () {
-    Route::middleware(['role:Super Admin|Admin'])->get('/', [App\Http\Controllers\ReverseDeliveryOrderController::class, 'index'])->name('reverse_delivery.index');
-    Route::middleware(['role:Super Admin|Admin'])->get('/create', [App\Http\Controllers\ReverseDeliveryOrderController::class, 'create'])->name('reverse_delivery.create');
-    Route::middleware(['role:Super Admin|Admin'])->post('/create', [App\Http\Controllers\ReverseDeliveryOrderController::class, 'store'])->name('reverse_delivery.store');
-    Route::middleware(['role:Super Admin|Admin'])->get('reverse_delivery/delete/{index}', [ReverseDeliveryOrderController::class, 'deleteSessionItem'])->name('reverse_delivery.delete_item');
-});
-
-Route::middleware(['role:Super Admin|Admin'])->prefix('urgent_invoice')->group(function () {
-    Route::get('/', [UrgentInvoiceController::class, 'index'])->name('urgent_invoice.index');
-    Route::get('/create', [App\Http\Controllers\UrgentInvoiceController::class, 'create'])->name('urgent_invoice.create');
-    Route::post('/create', [App\Http\Controllers\UrgentInvoiceController::class, 'store'])->name('urgent_invoice.store');
-    Route::get('/get-items', [App\Http\Controllers\UrgentInvoiceController::class, 'getIsuuedItems'])->name('urgent_invoice.getIssuedItems');
-    Route::get('/syncCalculations', [App\Http\Controllers\UrgentInvoiceController::class, 'syncCalculations'])->name('urgent_invoice.syncCalculations');
-    Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/get/invoice_no', [App\Http\Controllers\UrgentInvoiceController::class, 'generateInvoiceNumber'])->name('urgent_invoice.get.number');
-
-});
-
+    Route::middleware(['role:Super Admin|Admin'])->prefix('urgent_invoice')->group(function () {
+        Route::get('/', [UrgentInvoiceController::class, 'index'])->name('urgent_invoice.index');
+        Route::get('/create', [App\Http\Controllers\UrgentInvoiceController::class, 'create'])->name('urgent_invoice.create');
+        Route::post('/create', [App\Http\Controllers\UrgentInvoiceController::class, 'store'])->name('urgent_invoice.store');
+        Route::get('/get/invoice_no', [App\Http\Controllers\UrgentInvoiceController::class, 'generateInvoiceNumber'])->name('urgent_invoice.get.number');
+    });
 });
