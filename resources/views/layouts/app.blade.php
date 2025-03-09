@@ -11,7 +11,8 @@
 
     @include('libraries.styles')
 
-
+    @viteReactRefresh
+    @vite('resources/js/app.jsx')
 
 </head>
 <body>
