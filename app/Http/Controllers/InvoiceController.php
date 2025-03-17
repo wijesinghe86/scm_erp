@@ -25,10 +25,27 @@ use Illuminate\Validation\ValidationException;
 
 class InvoiceController extends ParentController
 {
-    public function all()
+    public function all(Request $request)
     {
-        $response['invoices'] = Invoice::all();
-        return view('pages.Invoices.all')->with($response);
+        
+        $invoices = Invoice::with(['Customer', 'SalesStaff'])
+        ->when($request->search, function($q) use ($request){
+            $q->where('invoice_number', 'like', '%' . $request->search. '%')
+            ->orwhere('payment_terms', 'like', '%' . $request->search. '%')
+            ->orWhere(function ($qr) use ($request){
+                return $qr->whereHas('SalesStaff', function ($SalesStaff) use ($request){
+                $SalesStaff->where('employee_name_with_intial', 'like', '%' . $request->search . '%');
+            });
+              })
+              ->orWhere(function ($query) use ($request){
+                    return $query->whereHas('Customer', function ($Customer) use ($request){
+                        $Customer->where('customer_name', 'like', '%' . $request->search . '%');
+        });
+    });
+})
+        ->latest()->paginate(50);
+        return view ('pages.Invoices.all', compact('invoices'));
+        
     }
 
     public function new()
@@ -40,7 +57,7 @@ class InvoiceController extends ParentController
         $employees = Employee::all();
         $stockItems = StockItem::all();
         $warehouses = Warehouse::all();
-        $billTypes = BillType::all();
+        $billTypes = BillType::where('type','invoice')->get();
         $invoice_number = "";
         // $invoiceOption = $setting->InvoiceOption($invoice_number);
         Cart::session(request()->user()->id)->clear();

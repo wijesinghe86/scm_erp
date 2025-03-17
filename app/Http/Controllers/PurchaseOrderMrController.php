@@ -64,13 +64,13 @@ class PurchaseOrderMrController extends ParentController
         if ($isMpoExist) {
             $data['po_no'] = $this->generateNextNumber();
         }
-
+        //logger($request->all());
         $this->validate($request, [
             'prf_id'=>'required',
             'po_date'=>'required|date',
             'supplier_id'=>'required'
             ]);
-
+       
         $po = new MrPurchase;
         $po->po_no = $request->po_number;
         $po->prf_id = $request->prf_id;
@@ -85,7 +85,7 @@ class PurchaseOrderMrController extends ParentController
         $po->total_volume = $request->total_volume;
         $po->created_by = request()->user()->id;
         $po->save();
-
+        //dd($request->all());
         foreach($request->items as $item):
             if(!isset($item['is_selected'])){
                 continue;

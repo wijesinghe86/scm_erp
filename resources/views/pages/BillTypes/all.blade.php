@@ -17,6 +17,7 @@
                                         <td>No</td>
                                         <th>BT CODE</th>
                                         <th>Description</th>
+                                        <th>Type</th>
                                         {{-- <th>Invoice No</th> --}}
                                         <th>CREATED BY</th>
                                     </tr>
@@ -27,6 +28,7 @@
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{ $billtype->billtype_code }}</td>
                                             <td>{{ $billtype->billtype_description }}</td>
+                                            <td>{{ $billtype->type }}</td>
                                             {{-- <td>{{ $billtype->invoice_no }}</td> --}}
                                             <td>{{ $billtype->createUser ? $billtype->createUser->name : 'User not found' }}
                                             </td>

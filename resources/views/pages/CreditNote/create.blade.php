@@ -57,7 +57,7 @@
                                 <div class="form-group col-md-2">
                                     <label>Customer Code</label>
                                     <input type="text" class="form-control" name="customer_code" id="customer_code"
-                                        placeholder="invoice_no" readonly>
+                                        placeholder="customer_code" readonly>
                                 </div>
                                 <div class="form-group col-md-7">
                                     <label>Customer Name</label>

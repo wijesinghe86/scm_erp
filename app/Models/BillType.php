@@ -12,7 +12,8 @@ class BillType extends Model
         'billtype_code',
         'billtype_description',
         'invoice_no',
-        'created_by'
+        'created_by',
+        'type'
     ];
 
     public function createUser()
