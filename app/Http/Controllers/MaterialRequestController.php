@@ -53,7 +53,7 @@ class MaterialRequestController extends Controller
                 $data['mrf_no'] = $this->generateNextNumber();
             }
 
-        //dd($request->all());
+       // dd($request->all());
         $request['created_by_id'] = Auth::id();
         if ($request->button == "add") {
             return $this->addLineItem($request);

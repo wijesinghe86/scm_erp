@@ -20,7 +20,7 @@ var lightColor = getComputedStyle(document.body).getPropertyValue('--light');
     //Add active class to nav-link based on url dynamically
     //Active class can be hard coded directly in html file also as required
 
-    function addActiveClass(element) {
+    function addActiveClass(element) {      
       if (current === "") {
         //for root url
         if (element.attr('href').indexOf("index.html") !== -1) {
@@ -32,7 +32,8 @@ var lightColor = getComputedStyle(document.body).getPropertyValue('--light');
         }
       } else {
         //for other url
-        if (element.attr('href').indexOf(current) !== -1) {
+        // if (element.attr('href').indexOf(current) !== -1) {
+          if (location?.origin+location.pathname === element.attr('href')) {
           element.parents('.nav-item').last().addClass('active');
           if (element.parents('.sub-menu').length) {
             element.closest('.collapse').addClass('show');

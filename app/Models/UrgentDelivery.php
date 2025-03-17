@@ -13,4 +13,9 @@ class UrgentDelivery extends Model
     {
         return $this->hasOne(Customer::class, 'id','customer_id');
     }
+
+    public function items()
+    {
+        return $this->hasMany(UrgentDeliveryItem::class, 'delivery_order_id','id');
+    }
 }
