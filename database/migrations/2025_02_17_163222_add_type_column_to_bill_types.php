@@ -27,7 +27,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('bill_types', function (Blueprint $table) {
-            $table->string('type');
+            $table->dropColumn('type');
         });
     }
 };

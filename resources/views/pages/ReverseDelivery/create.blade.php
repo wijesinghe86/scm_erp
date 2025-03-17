@@ -65,6 +65,21 @@
                                     <input type="number" class="form-control" name="issued_qty" id="issued_qty"
                                         placeholder="Issue Qty">
                                 </div>
+                                <div style="display:none; position:absolute; top:7.5cm; bottom:-20px; left:18cm; right:20px; width: 400px;"
+                                    id="stockView">
+                                    <table class="table table-striped">
+                                        <thead style="background-color: lightgray">
+                                            <tr>
+                                                <th>Warehouse</th>
+                                                <th align="right">Avilable Qty</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="stockViewItems">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
                             </div>
                             <button type="submit" class="btn btn-success me-2" name="button" value="add">Add</button>
                             {{-- <button class="btn btn-danger">Cancel</button> --}}
@@ -131,6 +146,7 @@
 
 @push('scripts')
     <script>
+    let stockItems = <?php echo json_encode($stockItems); ?>;
         $(document).ready(function() {
             $('.item-select').select2({
                 placeholder: "Select Item",
@@ -145,8 +161,8 @@
             });
         });
     </script>
-
-    <script type="application/javascript">
+ 
+ <script type="application/javascript">
     var stockItems = '{!! $stockItems->toJson()!!}';
     stockItems = JSON.parse(stockItems);
     //console.log(grnItems);
@@ -166,7 +182,28 @@
           document.getElementById("stock_no").value = selectedItem.stock_number;
           document.getElementById("uom").value = selectedItem.unit;
 
-        }
+         
+                   
+                } 
+
+                $('#stock_item').on('change', function() {
+                let stockItemId = $(this).val();
+                let stockItem = stockItems?.find(row => row?.id == stockItemId);
+                $('#stock_no').val(stockItem?.stock_number)
+                $('#uom').val(stockItem?.unit)
+
+                $('#stockView').hide();
+
+                if (stockItem?.stocks?.length > 0) {
+                    $('#stockViewItems').find('tr').remove().end()
+                    stockItem?.stocks.forEach(element => {
+                        $('#stockViewItems').append(
+                            `<tr><td>${element?.warehouse?.warehouse_name}</td><td align="right" >${element?.qty}</td></tr>`
+                        )
+                    })
+                    $('#stockView').show();
+                }
+            })
 
       </script>
 @endpush

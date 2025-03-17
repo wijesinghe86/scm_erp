@@ -64,7 +64,7 @@ class PurchaseOrderMrController extends ParentController
         if ($isMpoExist) {
             $data['po_no'] = $this->generateNextNumber();
         }
-
+        //logger($request->all());
         $this->validate($request, [
             'prf_id'=>'required',
             'po_date'=>'required|date',

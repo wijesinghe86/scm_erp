@@ -50,6 +50,13 @@ export default function UrgentInvoiceCreate(props) {
     employee_id: null,
     warehouse_id: null,
     items: [],
+    subTotal:'',
+    vatRate:'',
+    vatAmount:'',
+    totalDiscount:'',
+    grandTotal:'',
+
+
   })
 
   const [selectedDeliverOrder, setSelectedDeliverOrder] = useState(null)
@@ -62,7 +69,6 @@ export default function UrgentInvoiceCreate(props) {
   const [warehouses, setWarehouses] = useState([])
   const [customerTerms, setCustomerTerms] = useState([])
   const [customerCreditPeriod, setCustomerCreditPeriod] = useState([])
-
   const [vatRate, setVatRate] = useState(18)
   useEffect(() => {
     if (props?.customers) {
@@ -96,6 +102,8 @@ export default function UrgentInvoiceCreate(props) {
     if (props?.vatrate) {
       setVatRate(props?.vatrate)
     }
+
+
 
   }, [props])
 
@@ -184,6 +192,7 @@ export default function UrgentInvoiceCreate(props) {
     } catch (error) {
       captureErrors(error)
     }
+
   }
 
   return (
@@ -209,7 +218,9 @@ export default function UrgentInvoiceCreate(props) {
                             unit_rate: '',
                             weight: '',
                             discount_type: '',
-                            discount_amount: ''
+                            discount_amount: '',
+                            itemTotal:''
+
                           }
                         })
                         setFormData({ ...formData, delivery_order_no: value, items: mappedItems })
@@ -358,12 +369,20 @@ export default function UrgentInvoiceCreate(props) {
                 <div className="row">
                   <div className="form-group col-md-2">
                     <label>Term</label>
-                    <select value={formData?.payment_terms} name="payment_terms" className="form-control" id="payment_terms">
+                    <select 
+                    onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          payment_terms: e.target.value,
+                        })
+                      }}
+                    value={formData?.payment_terms} name="payment_terms" className="form-control" id="payment_terms">
                       <option selected value="" disabled>Select Terms</option>
                       {customerTerms?.map(row => {
                         return (
                           <option value={row?.value}>
                             {row?.label}
+                            
                           </option>
                         )
                       })}
@@ -371,12 +390,21 @@ export default function UrgentInvoiceCreate(props) {
                   </div>
                   <div className="form-group col-md-2">
                     <label>Credit Days</label>
-                    <select value={formData?.credit_days} name="credit_days" className="form-control" id="credit_days">
+                    <select 
+                     onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          credit_days: e.target.value,
+                        })
+                      }} 
+                    value={formData?.credit_days} name="credit_days" className="form-control" id="credit_days">
                       <option selected value="" disabled>Select</option>
+                     
                       {customerCreditPeriod?.map(row => {
                         return (
                           <option value={row?.value}>
                             {row?.label}
+                           
                           </option>
                         )
                       })}
@@ -563,7 +591,7 @@ export default function UrgentInvoiceCreate(props) {
           </div>
         </div>
       </div>
-      <ToastContainer 
+      <ToastContainer
         theme='dark'
         hideProgressBar
       />
