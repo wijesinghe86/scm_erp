@@ -235,7 +235,7 @@
                 <div class="collapse" id="ui-urgent-sale">
                     <ul class="nav flex-column sub-menu">
                         @hasanyrole('Super Admin|Admin|Sales User|Sales Admin')
-                            <li class="nav-item"> <a class="nav-link"  href="{{ route('reverse_delivery.create') }}">Urgent
+                            <li class="nav-item"> <a class="nav-link"  href="{{ route('reverse_delivery.index') }}">Urgent
                                     Issuance</a>
                             </li>
                         @endhasanyrole

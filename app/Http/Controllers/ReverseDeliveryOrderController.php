@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use PDF;
+use App\Models\Stock;
 use App\Models\Customer;
 use App\Models\Employee;
 use App\Models\StockItem;
@@ -15,8 +16,11 @@ use Illuminate\Validation\ValidationException;
 
 class ReverseDeliveryOrderController extends Controller
 {
-
-
+    public function index()
+    {
+        $urgent_deliveries = UrgentDelivery::with(['items', 'get_customer', 'location'])->get();
+        return view('pages.ReverseDelivery.index', compact('urgent_deliveries'));
+    }
     public function generateNextNumber()
     {
         $count  = UrgentDelivery::get()->count();
@@ -26,10 +30,10 @@ class ReverseDeliveryOrderController extends Controller
     public function create()
    {
     $customers = Customer::get();
-    $stockItems = StockItem::get();
+    $stockItems = StockItem::with('stocks.warehouse')->get();
     $warehouses = Warehouse::get();
     $employees = Employee::get();
-    
+
     $items = session('do.items') ?? [];
     $next_number = $this->generateNextNumber();
     return view('pages.ReverseDelivery.create', compact('customers', 'stockItems', 'warehouses', 'items', 'employees', 'next_number'));
@@ -45,6 +49,7 @@ class ReverseDeliveryOrderController extends Controller
 
        $items =  session('do.items') ?? [];
        $stock_item = StockItem::find($request->stock_item);
+
 
        $items [$request->stock_item] = [
            'stock_no' => $request->stock_no,
@@ -86,8 +91,8 @@ public function store(Request $request)
                 $data['delivery_order_no'] = $this->generateNextNumber();
             }
 
-       
-        
+
+
         $request['created_by_id'] = Auth::id();
         if ($request->button == "add") {
             return $this->addLineItem($request);
@@ -98,7 +103,7 @@ public function store(Request $request)
             // 'customer_id'=>'required',
             // 'warehouse_id'=>'required',
             ]);
-       
+
 
             $items = session('do.items') ?? [];
 
@@ -118,16 +123,18 @@ public function store(Request $request)
         // $urgent_delivery->created_at = $request->justification;
         // $urgent_delivery->updated_at = $request->justification;
        // dd($request->all());
+     
         $urgent_delivery->save();
 
         foreach ($items as $item) {
+            logger('$items');
             $urgent_delivery_item = new UrgentDeliveryItem();
             $urgent_delivery_item->delivery_order_id = $urgent_delivery->id;
             $urgent_delivery_item->invoice_id = $urgent_delivery->id;
-            $urgent_delivery_item->item_id = $item['stock_no'];
+            $urgent_delivery_item->item_id = $item['stock_item_id'];
             $urgent_delivery_item->issued_qty = $item['issued_qty'];
-
-
+            // dd($request->all());
+            logger('$items');
             $urgent_delivery_item->save();
 
             $stockLog->createLog(
@@ -141,14 +148,44 @@ public function store(Request $request)
                 null,
             );
 
+
+ //stock reduce
+ $stock = Stock::where('stock_item_id', $urgent_delivery_item->item_id)
+ ->where('warehouse_id', $urgent_delivery->location_id)->first();
+ $stock->qty = $stock->qty - $item['issued_qty'];
+ $stock->save();
     }
+
     session(['do.items'=>[]]); // clear the session
     flash('Items Issued!')->success();
     return redirect()->route('reverse_delivery.create');
 
-    dd($request->all());
 
 }
+
+public function view($urgent_delivery_id)
+    {
+        $response['urgent_deliveries'] = UrgentDelivery::with(['items', 'get_customer', 'location'])->find($urgent_delivery_id);
+        $response['items'] = UrgentDeliveryItem::where('delivery_order_id', $urgent_delivery_id)->get();
+        // $response['deliveryorders'] = DeliveryOrderItem::all();
+        if ($response['urgent_deliveries'] == null) {
+            return abort(404);
+        }
+        return view('pages.ReverseDelivery.view')->with($response);
+    }
+
+// public function print($urgent_delivery_id)
+// {
+//     $urgent_delivery = UrgentDelivery::with(['Items', 'get_customer', 'location'])->find($urgent_delivery_id);
+//     // $response[''] = InvoiceItem::where('invoice_number', $invoice_id)->get();
+//     if ($urgent_delivery == null) {
+//         return abort(404);
+//     }
+
+//    // return view('pages.SalesOrder.print', compact('urgent_delivery_order'));
+//     $pdf = PDF::loadView('pages.ReverseDelivery.print', compact('urgent_delivery'))->setPaper('A4', 'portrait');
+//     return $pdf->stream('reverse_delivery.print.print');
+// }
 
         }
 

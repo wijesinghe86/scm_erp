@@ -916,14 +916,16 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::post('date_wise', [StockLocationChangeReportController::class, 'date_filter'])->name('StockLoctionChange.datewise_slc_report');
     });
 
-    Route::middleware(['role:Super Admin|Admin'])->prefix('reverse_delivery')->group(function () {
+    Route::middleware(['role:Super Admin|Admin|'])->prefix('reverse_delivery')->group(function () {
         Route::middleware(['role:Super Admin|Admin'])->get('/', [App\Http\Controllers\ReverseDeliveryOrderController::class, 'index'])->name('reverse_delivery.index');
         Route::middleware(['role:Super Admin|Admin'])->get('/create', [App\Http\Controllers\ReverseDeliveryOrderController::class, 'create'])->name('reverse_delivery.create');
         Route::middleware(['role:Super Admin|Admin'])->post('/create', [App\Http\Controllers\ReverseDeliveryOrderController::class, 'store'])->name('reverse_delivery.store');
         Route::middleware(['role:Super Admin|Admin'])->get('reverse_delivery/delete/{index}', [ReverseDeliveryOrderController::class, 'deleteSessionItem'])->name('reverse_delivery.delete_item');
+        Route::middleware(['role:Super Admin|Admin'])->get('/{urgent_delivery_id}/view', [SalesOrderController::class, 'view'])->name('reverse_delivery.view');
+        Route::middleware(['role:Super Admin|Admin'])->get('/{urgent_delivery_id}/print', [DeliveryOrderController::class, 'print'])->name('reverse_delivery.print');
     });
 
-    Route::middleware(['role:Super Admin|Admin'])->prefix('urgent_invoice')->group(function () {
+    Route::middleware(['role:Super Admin|Admin|Sales Admin'])->prefix('urgent_invoice')->group(function () {
         Route::get('/', [UrgentInvoiceController::class, 'index'])->name('urgent_invoice.index');
         Route::get('/create', [App\Http\Controllers\UrgentInvoiceController::class, 'create'])->name('urgent_invoice.create');
         Route::post('/create', [App\Http\Controllers\UrgentInvoiceController::class, 'store'])->name('urgent_invoice.store');
