@@ -120,10 +120,10 @@ public function store(Request $request)
         $urgent_delivery->driver_name = $request->driver_name;
         $urgent_delivery->nic_no = $request->nic_no;
         $urgent_delivery->created_by = request()->user()->id;
-        // $urgent_delivery->created_at = $request->justification;
+        $urgent_delivery->created_at = $request->justification;
         // $urgent_delivery->updated_at = $request->justification;
        // dd($request->all());
-     
+
         $urgent_delivery->save();
 
         foreach ($items as $item) {
@@ -174,18 +174,18 @@ public function view($urgent_delivery_id)
         return view('pages.ReverseDelivery.view')->with($response);
     }
 
-// public function print($urgent_delivery_id)
-// {
-//     $urgent_delivery = UrgentDelivery::with(['Items', 'get_customer', 'location'])->find($urgent_delivery_id);
-//     // $response[''] = InvoiceItem::where('invoice_number', $invoice_id)->get();
-//     if ($urgent_delivery == null) {
-//         return abort(404);
-//     }
+public function print($urgent_delivery_id)
+{
+    $urgent_delivery = UrgentDelivery::with(['Items', 'get_customer', 'location'])->find($urgent_delivery_id);
+    // $response[''] = InvoiceItem::where('invoice_number', $invoice_id)->get();
+    if ($urgent_delivery == null) {
+        return abort(404);
+    }
 
-//    // return view('pages.SalesOrder.print', compact('urgent_delivery_order'));
-//     $pdf = PDF::loadView('pages.ReverseDelivery.print', compact('urgent_delivery'))->setPaper('A4', 'portrait');
-//     return $pdf->stream('reverse_delivery.print.print');
-// }
+   // return view('pages.SalesOrder.print', compact('urgent_delivery_order'));
+    $pdf = PDF::loadView('pages.ReverseDelivery.print', compact('urgent_delivery'))->setPaper('A4', 'portrait');
+    return $pdf->stream('reverse_delivery.print.print');
+}
 
         }
 

@@ -53,7 +53,7 @@ class UrgentInvoiceController extends Controller
         'invoice_number'=> 'required',
          'items'=> 'required|array',
         'items.*.unit_rate'=> 'required',
-        'items.*.itemTotal'=> 'required',
+
         ]);
     // $totals = $this->calculateTotal();
 
@@ -65,7 +65,7 @@ class UrgentInvoiceController extends Controller
     //     ];
     // }
 
-    
+
 
 
         $urgentInvoice = new UrgentInvoice();
@@ -92,7 +92,7 @@ class UrgentInvoiceController extends Controller
         $urgentInvoice->save();
 
         foreach ($request->items as $item)
-           //logger($request->items);
+          // logger($request->items);
             $urgentInvoiceItems = new UrgentInvoiceItem;
             $urgentInvoiceItems->invoice_id = $item['invoice_id'];
             $urgentInvoiceItems->item_id = $item['item_id'];
@@ -101,8 +101,15 @@ class UrgentInvoiceController extends Controller
             $urgentInvoiceItems->weight = $item['weight'];
             $urgentInvoiceItems->item_discount_type = $item['discount_type'];
             $urgentInvoiceItems->item_discount_value = $item['discount_amount'];
-            $urgentInvoiceItems->item_value = $item['itemTotal'];
+            //$urgentInvoiceItems->item_value = $item['itemTotal'];
             $urgentInvoiceItems->save();
+
+
+   // session(['mr.items'=>[]]); // clear the session
+    flash('Invoice Created')->success();
+   // return redirect()->route('material_request.index');
+
+
 
 
     }
@@ -119,5 +126,5 @@ class UrgentInvoiceController extends Controller
     //     return $data;
     // }
 
-    
+
 }

@@ -27,9 +27,9 @@
                                         <th>ISSUED DATE</th>
                                         <th>ITEMS</th>
                                         <th>VIEW</th>
-                                        <th>CREATED BY</th> 
+                                        <th>CREATED BY</th>
 
-                                        
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -60,13 +60,15 @@
                                                         @endforeach
                                                     </table>
                                                 </td>
-                                            <td>{{optional($urgent_delivery->created_by)->name }} </td>
-                                            {{-- </td>  --}}
-                                            <td>
+                                                <td>
                                                 <a href="{{ route('reverse_delivery.view', $urgent_delivery->id) }}">
                                                     <i class="fa-sharp fa-solid fa-eye text-info"></i>
                                                 </a>
+                                            {{-- </td>  --}}
                                             </td>
+                                                <td>{{optional($urgent_delivery->created_by)->name }} </td>
+                                                
+                                            
                                         </tr>
                                     @endforeach
                                 </tbody>

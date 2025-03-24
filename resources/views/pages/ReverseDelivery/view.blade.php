@@ -6,7 +6,7 @@
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title"><a href="{{ route('dashboard') }}" ><i class="mdi mdi-home"></i></a>Urgent Delivery No: {{ $urgent_delivery->delivery_order_no }}</h2>
+                        <h4 class="card-title"><a href="{{ route('dashboard') }}" ><i class="mdi mdi-home"></i></a>Urgent Delivery No: {{ $urgent_deliveries->delivery_order_no }}</h2>
                             <br>
 
                              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -25,16 +25,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($urgent_delivery->items as $issued_items)
+                                    @foreach ($urgent_deliveries->items as $issued_items)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{ optional($issued_items->item)->stock_number }}</td>
                                         <td>{{ optional($issued_items->item)->description }}</td>
                                         <td>{{ optional($issued_items->item)->unit }}</td>
-                                        <td>{{ $issued_items->issued_qty }}</td>
+                                        <td>{{ optional($issued_items)->issued_qty }}</td>
+                                        <td>{{ optional($urgent_deliveries->location)->warehouse_name }}</td>
                                     </tr>
                                 @endforeach
-                                    
+
                                 </tbody>
                             </table>
                              {{-- <div style="display: flex;justify-content: flex-end; align-items: center; margin: 20px 0"> --}}

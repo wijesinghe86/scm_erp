@@ -8,6 +8,20 @@
                         <h4 class="card-title">Urgent Delivery Order</h4>
                         <form class="forms-sample" method="POST" action="{{ route('reverse_delivery.store') }}">
                             @csrf
+                            <div style="display:none; position:absolute; top:0.5cm; bottom:-20px; left:28cm; right:20px; width: 400px;"
+                                    id="stockView">
+                                    <table class="table table-striped">
+                                        <thead style="background-color: lightgray">
+                                            <tr>
+                                                <th>Warehouse</th>
+                                                <th align="right">Avilable Qty</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="stockViewItems">
+
+                                        </tbody>
+                                    </table>
+                                </div>
                             <br>
                             <div class="row">
                                     <div class="form-group col-md-2">
@@ -20,15 +34,7 @@
                                     <input type="date" class="form-control" name="issued_date" value="{{ date('Y-m-d') }}" readonly
                                         placeholder="Issued date">
                                 </div>
-                                <div class="form-group col-md-2">
-                                    <label>Location</label>
-                                    <select class="form-control item-select" name="warehouse_id" id="warehouse_id">
-                                        <option value="">Select Item</option>
-                                        @foreach ($warehouses as $warehouse)
-                                            <option value="{{ $warehouse->id }}">{{ $warehouse->warehouse_name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+
                                 </div>
                             <div class="row">
                                 <div class="form-group col-md-2">
@@ -56,20 +62,7 @@
                                     <input type="number" class="form-control" name="issued_qty" id="issued_qty"
                                         placeholder="Issue Qty">
                                 </div>
-                                <div style="display:none; position:absolute; top:7.5cm; bottom:-20px; left:18cm; right:20px; width: 400px;"
-                                    id="stockView">
-                                    <table class="table table-striped">
-                                        <thead style="background-color: lightgray">
-                                            <tr>
-                                                <th>Warehouse</th>
-                                                <th align="right">Avilable Qty</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="stockViewItems">
 
-                                        </tbody>
-                                    </table>
-                                </div>
                             </div>
                             <button type="submit" class="btn btn-success me-2" name="button" value="add">Add</button>
 
@@ -113,7 +106,15 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                
+                                <div class="form-group col-md-2">
+                                    <label>Location</label>
+                                    <select class="form-control item-select" name="warehouse_id" id="warehouse_id">
+                                        <option value="">Select Item</option>
+                                        @foreach ($warehouses as $warehouse)
+                                            <option value="{{ $warehouse->id }}">{{ $warehouse->warehouse_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
                             <div class="form-group col-md-3">
                                 <label>Issued By</label>
@@ -139,8 +140,8 @@
                         </div>
                             <button type="submit" class="btn btn-success me-2" name="button" value="Issue Items">Complete
                                </button>
-                               <a target="_blank" href="{{ route('reverse_delivery.print', ['urgent_delivery_id' => $urgent_delivery->id]) }}"
-                                type="submit" class="btn btn-secondary mr-5" name="button"> Print</a>
+                               {{-- <a target="_blank" href="{{ route('reverse_delivery.print', ['urgent_delivery_id' => $urgent_delivery->id]) }}"
+                                type="submit" class="btn btn-secondary mr-5" name="button"> Print</a> --}}
                         </form>
                     </div>
                 </div>
