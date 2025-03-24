@@ -190,11 +190,11 @@
                             <li class="nav-item"> <a class="nav-link" href="{{ route('invoices.all') }}">Invoice</a>
                             </li>
                         @endhasanyrole
-                        @hasanyrole('Super Admin|Admin|Sales Admin')
+                        {{-- @hasanyrole('Super Admin|Admin|Sales Admin')
                             <li class="nav-item"> <a class="nav-link" href="{{ route('invoices_cancel.create') }}">Invoice
                                     Cancellation</a>
                             </li>
-                        @endhasanyrole
+                        @endhasanyrole --}}
                         @hasanyrole('Super Admin|Sales User|Sales Admin')
                             <li class="nav-item"> <a class="nav-link" href="{{ route('sales_order.index') }}">Sales
                                     Order</a>
@@ -225,7 +225,7 @@
             </li>
         @endhasanyrole
         {{-- Invoice_DeliveryOrder Reverse Process --}}
-        @hasanyrole('Super Admin|Admin')
+        @hasanyrole('Super Admin|Admin|Sales User|Sales Admin|Warehouse User')
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#ui-urgent-sale" aria-expanded="false"
                     aria-controls="ui-urgent-sale">
@@ -234,8 +234,8 @@
                 </a>
                 <div class="collapse" id="ui-urgent-sale">
                     <ul class="nav flex-column sub-menu">
-                        @hasanyrole('Super Admin|Admin|Sales User|Sales Admin')
-                            <li class="nav-item"> <a class="nav-link"  href="{{ route('reverse_delivery.create') }}">Urgent
+                        @hasanyrole('Super Admin|Admin|Sales User|Sales Admin|Warehouse User')
+                            <li class="nav-item"> <a class="nav-link"  href="{{ route('reverse_delivery.index') }}">Urgent
                                     Issuance</a>
                             </li>
                         @endhasanyrole

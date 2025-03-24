@@ -12,7 +12,7 @@ class UrgentDeliveryItem extends Model
 
     public function item()
     {
-        return $this->belongsTo(StockItem::class, 'item_id', 'stock_number');
-    
+        return $this->belongsTo(StockItem::class, 'item_id', 'id');
+
     }
 }
