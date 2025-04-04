@@ -55,8 +55,8 @@ export default function UrgentInvoiceCreate(props) {
     vatAmount:'',
     totalDiscount:'',
     grandTotal:'',
-
-
+    mainDiscount: '',
+    mainDiscountType:'fixed'
   })
 
   const [selectedDeliverOrder, setSelectedDeliverOrder] = useState(null)
@@ -68,6 +68,7 @@ export default function UrgentInvoiceCreate(props) {
   const [billTypes, setBillTypes] = useState([])
   const [warehouses, setWarehouses] = useState([])
   const [customerTerms, setCustomerTerms] = useState([])
+  const [isCustomerTermsDisabled, setIsCustomerTermsDisabled] = useState(false)
   const [customerCreditPeriod, setCustomerCreditPeriod] = useState([])
   const [vatRate, setVatRate] = useState(18)
   useEffect(() => {
@@ -129,8 +130,8 @@ export default function UrgentInvoiceCreate(props) {
     const fixedUnitRate = temItems?.map(row => {
       let unit_rate = row?.unit_rate
       if (formData?.invoice_option == '1') {
-        const valRate = 18
-        const newUnitPrice = row?.unit_rate / ((100 + valRate) / 100)
+        const vatRate = 18
+        const newUnitPrice = row?.unit_rate / ((100 + vatRate) / 100)
         unit_rate = newUnitPrice ? newUnitPrice?.toFixed(2) : '';
       }
       return {
@@ -141,7 +142,7 @@ export default function UrgentInvoiceCreate(props) {
     setFormData({ ...formData, items: fixedUnitRate })
   }
 
-  const totalDiscount = useMemo(() => {
+  const totalItemListDiscount=  useMemo(() => {
     return formData?.items?.filter(row => row?.isSelected)?.reduce((acc, curr) => {
       let discount = 0;
       const itemAmount = curr?.issued_qty * curr?.unit_rate || 0
@@ -177,6 +178,19 @@ export default function UrgentInvoiceCreate(props) {
     return subTotal + vatAmount;
   }, [subTotal, vatAmount])
 
+  const totalDiscount = useMemo(() => {
+    let mainDiscountAmout = 0
+    if(formData.mainDiscountType == "percentage" ){
+        mainDiscountAmout = (netTotal * formData.mainDiscount ?? 0)/100
+    }
+    if(formData.mainDiscountType == "fixed" ){
+        mainDiscountAmout = formData.mainDiscount ??0
+    }
+    return totalItemListDiscount + mainDiscountAmout
+  }, [totalItemListDiscount,formData.mainDiscount, netTotal])
+
+
+
   const grandTotal = useMemo(() => {
     return netTotal - totalDiscount
   }, [netTotal, totalDiscount])
@@ -186,15 +200,15 @@ export default function UrgentInvoiceCreate(props) {
     const requestData = Object.assign({}, formData)
     requestData.items = [...requestData.items]?.filter(row => row?.isSelected)
 
+
     try {
       const response = await axios.post('/urgent_invoice/create', requestData)
-      window.location.href = "/urgent_invoice"
+       window.location.href = "/urgent_invoice"
     } catch (error) {
       captureErrors(error)
     }
 
   }
-
   return (
     <div className="content-wrapper">
       <div className="row">
@@ -210,6 +224,7 @@ export default function UrgentInvoiceCreate(props) {
                       onChange={event => {
                         const value = event.target.value
                         const deliveryOrder = urgentDeliveries?.find(row => String(row?.id) === value)
+                        const customer = deliveryOrder?.get_customer
                         setSelectedDeliverOrder(deliveryOrder)
                         const mappedItems = deliveryOrder?.items?.map(row => {
                           return {
@@ -223,7 +238,24 @@ export default function UrgentInvoiceCreate(props) {
 
                           }
                         })
-                        setFormData({ ...formData, delivery_order_no: value, items: mappedItems })
+
+                        if(customer?.customer_payment_terms == "cash"){
+                            setIsCustomerTermsDisabled(true)
+                        }
+                        if(customer?.customer_payment_terms !== "cash"){
+                            setIsCustomerTermsDisabled(false)
+                        }
+
+                        setFormData({
+                            ...formData,
+                            delivery_order_no: value,
+                            items: mappedItems,
+                            customer,
+                            customer_id: customer?.id,
+                            payment_terms: customer?.customer_payment_terms ?? "",
+                            credit_days: customer?.customer_payment_terms !== "cash"? customer?.customer_credit_period ?? "" : "",
+                            warehouse_id: deliveryOrder?.location_id
+                         })
                       }}
                       className="form-control do_input">
                       <option value="" selected disabled>Select</option>
@@ -340,11 +372,14 @@ export default function UrgentInvoiceCreate(props) {
                   </div>
                   <div className="form-group col-md-4">
                     <label>Customer Name</label>
+
                     <Select
                       placeholder="Select Customer"
                       options={customers}
+                      isDisabled
                       getOptionLabel={row => row?.customer_name}
                       getOptionValue={row => row?.id}
+                      value={customers?.find(row =>row?.id == formData?.customer_id)?? null}
                       onChange={(value) => {
                         setFormData({
                           ...formData,
@@ -369,7 +404,8 @@ export default function UrgentInvoiceCreate(props) {
                 <div className="row">
                   <div className="form-group col-md-2">
                     <label>Term</label>
-                    <select 
+                    <select
+                    disabled={isCustomerTermsDisabled}
                     onChange={(e) => {
                         setFormData({
                           ...formData,
@@ -382,7 +418,7 @@ export default function UrgentInvoiceCreate(props) {
                         return (
                           <option value={row?.value}>
                             {row?.label}
-                            
+
                           </option>
                         )
                       })}
@@ -390,21 +426,22 @@ export default function UrgentInvoiceCreate(props) {
                   </div>
                   <div className="form-group col-md-2">
                     <label>Credit Days</label>
-                    <select 
+                    <select
+                    disabled={isCustomerTermsDisabled}
                      onChange={(e) => {
                         setFormData({
                           ...formData,
                           credit_days: e.target.value,
                         })
-                      }} 
+                      }}
                     value={formData?.credit_days} name="credit_days" className="form-control" id="credit_days">
                       <option selected value="" disabled>Select</option>
-                     
+
                       {customerCreditPeriod?.map(row => {
                         return (
                           <option value={row?.value}>
                             {row?.label}
-                           
+
                           </option>
                         )
                       })}
@@ -447,11 +484,12 @@ export default function UrgentInvoiceCreate(props) {
                   </div>
                   <div className="form-group col-md-3">
                     <label>Warehouse</label>
-                    <Select
+                    <Select isDisabled
                       placeholder="Select Warehouse"
                       options={warehouses}
                       getOptionLabel={row => row?.warehouse_name}
                       getOptionValue={row => row?.id}
+                      value={warehouses?.find(row => row?.id == formData?.warehouse_id)?? null}
                       onChange={value => {
                         setFormData({ ...formData, warehouse_id: value?.id })
                       }}
@@ -471,7 +509,7 @@ export default function UrgentInvoiceCreate(props) {
                           <th>U/M</th>
                           <th>Issue Qty</th>
                           <th>Invoice Qty</th>
-                          <th>Unit Rate</th>
+                          <th style={{ minWidth: "500px" }} width={"500px"}>Unit Rate</th>
                           <th>Weight</th>
                           <th>Item Amount</th>
                           <th>Discount Type</th>
@@ -504,15 +542,15 @@ export default function UrgentInvoiceCreate(props) {
                               <td>{row?.item?.unit}</td>
                               <td><input class="form-control" type="number" value={row?.issued_qty} readOnly /></td>
                               <td><input class="form-control" type="number" value={row?.issued_qty} readOnly /></td>
-                              <td>
+                              <td  >
                                 <input class="form-control" type="number" value={row?.unit_rate}
                                   onChange={event => {
                                     onItemChange(index, { ...row, unit_rate: event.target.value, isSelected: true })
                                   }}
                                   onBlur={(event) => {
                                     if (formData?.invoice_option == '1') {
-                                      const valRate = 18
-                                      const newUnitPrice = event.target.value / ((100 + valRate) / 100)
+                                      const vatRate = 18
+                                      const newUnitPrice = event.target.value / ((100 + vatRate) / 100)
                                       onItemChange(index, { ...row, unit_rate: newUnitPrice ? newUnitPrice?.toFixed(2) : event.target.value })
                                     }
                                   }}

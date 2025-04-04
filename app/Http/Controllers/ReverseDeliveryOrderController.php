@@ -18,7 +18,7 @@ class ReverseDeliveryOrderController extends Controller
 {
     public function index()
     {
-        $urgent_deliveries = UrgentDelivery::with(['items', 'get_customer', 'location'])->get();
+        $urgent_deliveries = UrgentDelivery::with(['items', 'get_customer', 'location', 'created_user'])->get();
         return view('pages.ReverseDelivery.index', compact('urgent_deliveries'));
     }
     public function generateNextNumber()
@@ -100,8 +100,10 @@ public function store(Request $request)
         $this->validate($request, [
             'issue_no'=>'required',
             'issued_date'=>'required|date',
-            // 'customer_id'=>'required',
-            // 'warehouse_id'=>'required',
+            //'issued_qty'=>'required|numeric',
+            //'stock_no'=>'required',
+            'customer_id'=>'required',
+            'warehouse_id'=>'required',
             ]);
 
 
@@ -185,7 +187,10 @@ public function print($urgent_delivery_id)
    // return view('pages.SalesOrder.print', compact('urgent_delivery_order'));
     $pdf = PDF::loadView('pages.ReverseDelivery.print', compact('urgent_delivery'))->setPaper('A4', 'portrait');
     return $pdf->stream('reverse_delivery.print.print');
+
 }
+
+
 
         }
 

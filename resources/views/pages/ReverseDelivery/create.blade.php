@@ -186,30 +186,9 @@
                 }
             })
 
+            
+
     </script>
-
-//  <script type="application/javascript">
-//     var stockItems = '{!! $stockItems->toJson()!!}';
-//     stockItems = JSON.parse(stockItems);
-
-
-//         function itemOnChange(elem) {
-
-//         var selectedItem = stockItems.filter((row)=>{
-//          return row.id == elem.value;
-//           })
-
-//           if(selectedItem.length == 0){
-//             return;
-//           }
-
-//           selectedItem = selectedItem[0];
-
-//           document.getElementById("stock_no").value = selectedItem.stock_number;
-//           document.getElementById("uom").value = selectedItem.unit;
-
-//         }
-//       </script>
 @endpush
 
 @push('styles')
