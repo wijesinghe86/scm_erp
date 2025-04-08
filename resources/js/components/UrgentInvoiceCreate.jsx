@@ -507,14 +507,14 @@ export default function UrgentInvoiceCreate(props) {
                           <th>Stock No</th>
                           <th>Description</th>
                           <th>U/M</th>
-                          <th>Issue Qty</th>
-                          <th>Invoice Qty</th>
-                          <th style={{ minWidth: "500px" }} width={"500px"}>Unit Rate</th>
-                          <th>Weight</th>
-                          <th>Item Amount</th>
-                          <th>Discount Type</th>
-                          <th>Discount Amount</th>
-                          <th>Item Total</th>
+                          <th style={{ minWidth: "150px" }}>Issue Qty</th>
+                          <th style={{ minWidth: "150px" }}>Invoice Qty</th>
+                          <th style={{ minWidth: "150px" }}>Unit Rate</th>
+                          <th style={{ minWidth: "150px" }}>Weight</th>
+                          <th style={{ minWidth: "150px" }}>Item Amount</th>
+                          <th style={{ minWidth: "150px" }}>Discount Type</th>
+                          <th style={{ minWidth: "150px" }}>Discount Amount</th>
+                          <th style={{ minWidth: "150px" }}>Item Total</th>
                           <th></th>
                         </tr>
                       </thead>

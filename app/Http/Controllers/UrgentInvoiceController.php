@@ -91,7 +91,7 @@ class UrgentInvoiceController extends Controller
         // logger($totalDicountAmount);
         // logger("grandTotal");
         // logger($grandTotal);
-        return
+        //return
         $urgentInvoice = new UrgentInvoice();
         $urgentInvoice->invoice_number = $request->invoice_number;
         $urgentInvoice->invoice_date =$request->invoice_date;
