@@ -57,6 +57,8 @@
                                     <input type="text" readonly class="form-control" name="uom" id="uom"
                                         placeholder="U/M">
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="form-group col-md-2">
                                     <label>Issue Qty</label>
                                     <input type="number" class="form-control" name="issued_qty" id="issued_qty"
@@ -73,6 +75,7 @@
                             <table class="table bordered">
                                 <thead>
                                     <tr>
+                                        <th>No</th>
                                         <th>Stock No</th>
                                         <th>Description</th>
                                         <th>U/M</th>
@@ -84,6 +87,7 @@
                                     @if (is_array($items))
                                         @foreach ($items as $index => $item)
                                             <tr>
+                                                <td>{{$loop->iteration}}</td>
                                                 <td>{{ $item['stock_no'] }}</td>
                                                 <td>{{ $item['description'] }}</td>
                                                 <td>{{ $item['uom'] }}</td>
@@ -186,7 +190,7 @@
                 }
             })
 
-            
+
 
     </script>
 @endpush

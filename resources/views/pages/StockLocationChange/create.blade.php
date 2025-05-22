@@ -38,7 +38,7 @@
                                 <div class="row">
                                 <div class="form-group col-md-2">
                                     <label>From Location</label>
-                                    <select class="form-control selection" name="from_location">
+                                    <select class="form-control selection" name="from_location" id="from_location">
                                         <option value="">Select Location</option>
                                         @foreach ($warehouses as $warehouse)
                                             <option value="{{ $warehouse->id }}">
@@ -106,8 +106,8 @@
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>Issue Qty</label>
-                                    <input type="number" class="form-control" id="issue_qty" min="0" step="0.01"
-                                        placeholder="Issued Qty">
+                                    <input type="number" class="form-control" name="issue_qty" id="issue_qty" min="0" step="0.01"
+                                        placeholder="Issued Qty" >
                                 </div>
                                 {{-- <div class="form-group col-md-3">
                                     <label>Revd Qty</label>
@@ -165,7 +165,7 @@
                 });
             });
 
-           
+
 
             $('#stock_item_id').on('change', function() {
                 let stockItemId = $(this).val();
@@ -184,12 +184,14 @@
                     })
                     $('#stockView').show();
                 }
+
             })
 
             function onAddClick() {
                 let stock_item_id = $('#stock_item_id').val();
                 let issue_qty = $('#issue_qty').val();
                 let revd_qty = $('#revd_qty').val();
+                let warehouse_id = $('#from_location').val();
 
                 $.ajax({
                     url: "{{ route('stocklocationchange.addItemToTable') }}",
@@ -240,9 +242,9 @@
             $('.selection').select2({
                 placeholder: "Select",
             });
-        });   
+        });
 
-           
+
             function viewItemTable() {
                 $.ajax({
                     url: "{{ route('stocklocationchange.getItemTable') }}",

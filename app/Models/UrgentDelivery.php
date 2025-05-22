@@ -31,6 +31,6 @@ class UrgentDelivery extends Model
         return $this->hasOne(User::class, "id", "created_by");
     }
     public function urgent_invoice_items(){
-        return $this->hasMany(UrgentInvoiceItem::class,'invoice_id','id');
+        return $this->hasMany(UrgentInvoiceItem::class,'urgent_delivery_no','id');
          }
 }

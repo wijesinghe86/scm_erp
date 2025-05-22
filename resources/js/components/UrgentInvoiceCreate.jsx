@@ -45,6 +45,7 @@ export default function UrgentInvoiceCreate(props) {
     customer_id: null,
     payment_terms: '',
     credit_days: '',
+    credit_limit:'',
     po_number: '',
     ref_number: '',
     employee_id: null,
@@ -159,7 +160,7 @@ export default function UrgentInvoiceCreate(props) {
 
   const subTotal = useMemo(() => {
     return formData?.items?.filter(row => row?.isSelected).reduce((acc, curr) => {
-      return acc + curr?.issued_qty * curr?.unit_rate || 0
+      return acc + curr?.issued_qty * curr?.unit_rate - curr?.discount_amount  || 0
     }, 0)
   }, [formData?.items])
 
@@ -204,11 +205,13 @@ export default function UrgentInvoiceCreate(props) {
     try {
       const response = await axios.post('/urgent_invoice/create', requestData)
        window.location.href = "/urgent_invoice"
+       //window.location.href = "/UrgentInvoice.index"
     } catch (error) {
       captureErrors(error)
     }
 
   }
+  console.log(formData?.invoice_option);
   return (
     <div className="content-wrapper">
       <div className="row">
@@ -231,9 +234,9 @@ export default function UrgentInvoiceCreate(props) {
                             ...row,
                             isSelected: false,
                             unit_rate: '',
-                            weight: '',
+                            weight: '0',
                             discount_type: '',
-                            discount_amount: '',
+                            discount_amount: '0',
                             itemTotal:''
 
                           }
@@ -410,6 +413,7 @@ export default function UrgentInvoiceCreate(props) {
                         setFormData({
                           ...formData,
                           payment_terms: e.target.value,
+                          credit_days: '',
                         })
                       }}
                     value={formData?.payment_terms} name="payment_terms" className="form-control" id="payment_terms">
@@ -424,29 +428,38 @@ export default function UrgentInvoiceCreate(props) {
                       })}
                     </select>
                   </div>
-                  <div className="form-group col-md-2">
-                    <label>Credit Days</label>
-                    <select
-                    disabled={isCustomerTermsDisabled}
-                     onChange={(e) => {
-                        setFormData({
-                          ...formData,
-                          credit_days: e.target.value,
-                        })
-                      }}
-                    value={formData?.credit_days} name="credit_days" className="form-control" id="credit_days">
-                      <option selected value="" disabled>Select</option>
-
-                      {customerCreditPeriod?.map(row => {
-                        return (
-                          <option value={row?.value}>
-                            {row?.label}
-
-                          </option>
-                        )
-                      })}
-                    </select>
+                  {formData?.payment_terms == 'credit' ?
+                  <>
+                  <div className="form-group col-md-4">
+                    <label>Credit Limit</label>
+                    <input value={formData?.customer?.customer_credit_limit} type="text" className="form-control" placeholder="credit_limit" readOnly />
                   </div>
+                  <div className="form-group col-md-2">
+                  <label>Credit Days</label>
+                  <select
+                  disabled={isCustomerTermsDisabled}
+                   onChange={(e) => {
+                      setFormData({
+                        ...formData,
+                        credit_days: e.target.value,
+                      })
+                    }}
+                  value={formData?.credit_days} name="credit_days" className="form-control" id="credit_days">
+                    <option selected value="" disabled>Select</option>
+
+                    {customerCreditPeriod?.map(row => {
+                      return (
+                        <option value={row?.value}>
+                          {row?.label}
+
+                        </option>
+                      )
+                    })}
+                  </select>
+                </div>
+                </>
+                  :null}
+
                   <div className="form-group col-md-2">
                     <label>PO No</label>
                     <input
@@ -507,14 +520,14 @@ export default function UrgentInvoiceCreate(props) {
                           <th>Stock No</th>
                           <th>Description</th>
                           <th>U/M</th>
-                          <th>Issue Qty</th>
-                          <th>Invoice Qty</th>
-                          <th style={{ minWidth: "500px" }} width={"500px"}>Unit Rate</th>
-                          <th>Weight</th>
-                          <th>Item Amount</th>
-                          <th>Discount Type</th>
-                          <th>Discount Amount</th>
-                          <th>Item Total</th>
+                          <th style={{ minWidth: "150px" }}>Issue Qty</th>
+                          <th style={{ minWidth: "150px" }}>Invoice Qty</th>
+                          <th style={{ minWidth: "150px" }}>Unit Rate</th>
+                          <th style={{ minWidth: "150px" }}>Weight</th>
+                          <th style={{ minWidth: "150px" }}>Item Amount</th>
+                          <th style={{ minWidth: "150px" }}>Discount Type</th>
+                          <th style={{ minWidth: "150px" }}>Discount Amount</th>
+                          <th style={{ minWidth: "150px" }}>Item Total</th>
                           <th></th>
                         </tr>
                       </thead>
@@ -602,7 +615,7 @@ export default function UrgentInvoiceCreate(props) {
                   </div>
                   <div class="form-group col-sm-3 col-lg-2">
                     <label>Vat Rate</label>
-                    <input class="form-control" value={formData?.invoice_option == '0' ? '' : vatRate + "%"}
+                    <input class="form-control" value={formData?.invoice_category && formData?.invoice_option != '0' ? vatRate + "%": ''}
                       readOnly />
                   </div>
                   <div class="form-group col-sm-3 col-lg-2">

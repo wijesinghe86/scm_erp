@@ -930,5 +930,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::get('/create', [App\Http\Controllers\UrgentInvoiceController::class, 'create'])->name('urgent_invoice.create');
         Route::post('/create', [App\Http\Controllers\UrgentInvoiceController::class, 'store'])->name('urgent_invoice.store');
         Route::get('/get/invoice_no', [App\Http\Controllers\UrgentInvoiceController::class, 'generateInvoiceNumber'])->name('urgent_invoice.get.number');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{urgent_invoice_id}/view', [App\Http\Controllers\UrgentInvoiceController::class, 'view'])->name('urgent_invoice.view');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{urgent_invoice_id}/print', [App\Http\Controllers\UrgentInvoiceController::class, 'print'])->name('urgent_invoice.print');
     });
 });

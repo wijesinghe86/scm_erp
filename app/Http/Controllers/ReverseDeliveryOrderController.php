@@ -122,8 +122,7 @@ public function store(Request $request)
         $urgent_delivery->driver_name = $request->driver_name;
         $urgent_delivery->nic_no = $request->nic_no;
         $urgent_delivery->created_by = request()->user()->id;
-        $urgent_delivery->created_at = $request->justification;
-        // $urgent_delivery->updated_at = $request->justification;
+        //$urgent_delivery->updated_at = $request->justification;
        // dd($request->all());
 
         $urgent_delivery->save();
@@ -142,7 +141,7 @@ public function store(Request $request)
             $stockLog->createLog(
                 StockLogService::$URGENT_DELIVERY,
                 $urgent_delivery->location_id,
-                data_get($item, 'stock_no'),
+                data_get($item, 'stock_item_id'),
                 data_get($item, 'issued_qty'),
                 StockLogService::$DEDUCT,
                 $urgent_delivery->delivery_order_no,
