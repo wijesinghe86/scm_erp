@@ -260,7 +260,13 @@ class InvoiceController extends ParentController
 
         // return view('pages.Invoices.pdf', compact('invoices'));
 
-        $pdf = PDF::loadView('pages.Invoices.pdf', compact('invoices'));
+        $view_path = "pages.Invoices.pdf";
+       // logger(config('services.project_name'));
+        if(config('services.project_name') == "jsi_erp"){
+            $view_path = "pages.Invoices.jsi_pdf";
+           
+        }
+        $pdf = PDF::loadView("$view_path", compact('invoices'));
         $invoices->status = '123';
         $invoices->save();
         return $pdf->stream('invoice.pdf');

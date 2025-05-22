@@ -31,4 +31,6 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+
+    'project_name' => env('PROJECT_NAME', "scm_erp" ),
 ];
