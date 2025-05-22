@@ -240,7 +240,7 @@
                             </li>
                         @endhasanyrole
                         @hasanyrole('Super Admin|Admin|Sales User|Sales Admin')
-                            <li class="nav-item"> <a class="nav-link" href="{{ route('urgent_invoice.create') }}">Urgent
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('urgent_invoice.index') }}">Urgent
                                     Invoice</a>
                             </li>
                         @endhasanyrole

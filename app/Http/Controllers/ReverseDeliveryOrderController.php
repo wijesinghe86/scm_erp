@@ -18,7 +18,7 @@ class ReverseDeliveryOrderController extends Controller
 {
     public function index()
     {
-        $urgent_deliveries = UrgentDelivery::with(['items', 'get_customer', 'location'])->get();
+        $urgent_deliveries = UrgentDelivery::with(['items', 'get_customer', 'location', 'created_user'])->get();
         return view('pages.ReverseDelivery.index', compact('urgent_deliveries'));
     }
     public function generateNextNumber()
@@ -100,8 +100,10 @@ public function store(Request $request)
         $this->validate($request, [
             'issue_no'=>'required',
             'issued_date'=>'required|date',
-            // 'customer_id'=>'required',
-            // 'warehouse_id'=>'required',
+            //'issued_qty'=>'required|numeric',
+            //'stock_no'=>'required',
+            'customer_id'=>'required',
+            'warehouse_id'=>'required',
             ]);
 
 
@@ -120,8 +122,7 @@ public function store(Request $request)
         $urgent_delivery->driver_name = $request->driver_name;
         $urgent_delivery->nic_no = $request->nic_no;
         $urgent_delivery->created_by = request()->user()->id;
-        $urgent_delivery->created_at = $request->justification;
-        // $urgent_delivery->updated_at = $request->justification;
+        //$urgent_delivery->updated_at = $request->justification;
        // dd($request->all());
 
         $urgent_delivery->save();
@@ -140,7 +141,7 @@ public function store(Request $request)
             $stockLog->createLog(
                 StockLogService::$URGENT_DELIVERY,
                 $urgent_delivery->location_id,
-                data_get($item, 'stock_no'),
+                data_get($item, 'stock_item_id'),
                 data_get($item, 'issued_qty'),
                 StockLogService::$DEDUCT,
                 $urgent_delivery->delivery_order_no,
@@ -185,7 +186,10 @@ public function print($urgent_delivery_id)
    // return view('pages.SalesOrder.print', compact('urgent_delivery_order'));
     $pdf = PDF::loadView('pages.ReverseDelivery.print', compact('urgent_delivery'))->setPaper('A4', 'portrait');
     return $pdf->stream('reverse_delivery.print.print');
+
 }
+
+
 
         }
 

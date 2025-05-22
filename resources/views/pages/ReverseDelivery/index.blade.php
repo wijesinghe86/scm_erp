@@ -25,9 +25,9 @@
                                         <th>CUSTOMER NAME</th>
                                         <th>ISSUED WAREHOUSE</th>
                                         <th>ISSUED DATE</th>
-                                        <th>ITEMS</th>
+                                        {{-- <th>ITEMS</th> --}}
+                                        <th>ISSUED BY</th>
                                         <th>VIEW</th>
-                                        <th>CREATED BY</th>
 
 
                                     </tr>
@@ -40,7 +40,7 @@
                                             <td>{{$urgent_delivery->get_customer->customer_name}}</td>
                                             <td>{{ optional($urgent_delivery->location)->warehouse_name }}</td>
                                             <td>{{$urgent_delivery->issued_date }}</td>
-                                                <td>
+                                                {{-- <td>
                                                     <table class="table table-striped">
                                                         <tr>
                                                             <th scope="col" >#</th>
@@ -59,16 +59,17 @@
                                                             </tr>
                                                         @endforeach
                                                     </table>
-                                                </td>
+                                                </td> --}}
+                                                <td>{{$urgent_delivery->created_user->name }} </td>
                                                 <td>
                                                 <a href="{{ route('reverse_delivery.view', $urgent_delivery->id) }}">
                                                     <i class="fa-sharp fa-solid fa-eye text-info"></i>
                                                 </a>
                                             {{-- </td>  --}}
                                             </td>
-                                                <td>{{optional($urgent_delivery->created_by)->name }} </td>
                                                 
-                                            
+
+
                                         </tr>
                                     @endforeach
                                 </tbody>

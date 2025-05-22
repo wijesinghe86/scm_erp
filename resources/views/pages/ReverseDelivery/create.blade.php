@@ -57,6 +57,8 @@
                                     <input type="text" readonly class="form-control" name="uom" id="uom"
                                         placeholder="U/M">
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="form-group col-md-2">
                                     <label>Issue Qty</label>
                                     <input type="number" class="form-control" name="issued_qty" id="issued_qty"
@@ -73,6 +75,7 @@
                             <table class="table bordered">
                                 <thead>
                                     <tr>
+                                        <th>No</th>
                                         <th>Stock No</th>
                                         <th>Description</th>
                                         <th>U/M</th>
@@ -84,6 +87,7 @@
                                     @if (is_array($items))
                                         @foreach ($items as $index => $item)
                                             <tr>
+                                                <td>{{$loop->iteration}}</td>
                                                 <td>{{ $item['stock_no'] }}</td>
                                                 <td>{{ $item['description'] }}</td>
                                                 <td>{{ $item['uom'] }}</td>
@@ -186,30 +190,9 @@
                 }
             })
 
+
+
     </script>
-
-//  <script type="application/javascript">
-//     var stockItems = '{!! $stockItems->toJson()!!}';
-//     stockItems = JSON.parse(stockItems);
-
-
-//         function itemOnChange(elem) {
-
-//         var selectedItem = stockItems.filter((row)=>{
-//          return row.id == elem.value;
-//           })
-
-//           if(selectedItem.length == 0){
-//             return;
-//           }
-
-//           selectedItem = selectedItem[0];
-
-//           document.getElementById("stock_no").value = selectedItem.stock_number;
-//           document.getElementById("uom").value = selectedItem.unit;
-
-//         }
-//       </script>
 @endpush
 
 @push('styles')
