@@ -908,6 +908,9 @@
                     <li class="nav-item"> <a class="nav-link" href="{{ route('stockreports.index') }}"> Stock
                             Items-wise<br>Transaction
                             History </a></li>
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('CurrentOnHandBalance.index') }}"> Current 
+                                Stock Balance Report
+                                 </a></li>
                     <li class="nav-item"> <a class="nav-link"
                             href="{{ route('productionplanningandschedule.index') }}"> Stock Items Catalogue </a></li>
                     <li class="nav-item"> <a class="nav-link"
