@@ -17,7 +17,7 @@
         border: 1px solid black;
         border-collapse: collapse;
         text-align: left;
-        margin: 5;
+        margin: 0;
         padding: 0;
         font-size: 15px;
     }
@@ -25,7 +25,7 @@
 
 <body>
 
-    <table style="height: 30mm">
+    <table style="height: 20mm">
     </table>
 
     <table style="height: 20mm">
