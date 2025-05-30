@@ -76,6 +76,7 @@ use App\Http\Controllers\ManAndEquipmentSafetyController;
 use App\Http\Controllers\MiscellaneousReceivedController;
 use App\Http\Controllers\OverShortageAndDamageController;
 use App\Http\Controllers\PurchaseOrderMrApproveController;
+use App\Http\Controllers\CurrentStockOnHandReoprtController;
 use App\Http\Controllers\MaterialsReturnByCustomerController;
 use App\Http\Controllers\RawMaterialRequestApproveController;
 use App\Http\Controllers\StockLocationChangeReportController;
@@ -932,5 +933,10 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::get('/get/invoice_no', [App\Http\Controllers\UrgentInvoiceController::class, 'generateInvoiceNumber'])->name('urgent_invoice.get.number');
         Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{urgent_invoice_id}/view', [App\Http\Controllers\UrgentInvoiceController::class, 'view'])->name('urgent_invoice.view');
         Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{urgent_invoice_id}/print', [App\Http\Controllers\UrgentInvoiceController::class, 'print'])->name('urgent_invoice.print');
+    });
+
+    Route::middleware(['role:Super Admin|Admin'])->prefix('CurrentOnHandBalance')->group(function () {
+        Route::get('/', [CurrentStockOnHandReoprtController::class, 'index'])->name('CurrentOnHandBalance.index');
+        //Route::post('date_wise', [CurrentStockOnHandReoprtController::class, 'date_filter'])->name('CurrentOnHandBalance.datewise_slc_report');
     });
 });

@@ -270,8 +270,6 @@ class InvoiceController extends ParentController
         $invoices->status = '123';
         $invoices->save();
         return $pdf->stream('invoice.pdf');
-
-
     }
 
     public function storeItem(Request $request)
