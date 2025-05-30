@@ -14,8 +14,8 @@
     th,
     td {
         width: 100%;
-        /* border: 1px solid black; */
-        /* border-collapse: collapse; */
+        border: 1px solid black;
+        border-collapse: collapse;
         text-align: left;
         margin: 5;
         padding: 0;
