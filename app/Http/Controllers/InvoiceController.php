@@ -27,7 +27,7 @@ class InvoiceController extends ParentController
 {
     public function all(Request $request)
     {
-        
+
         $invoices = Invoice::with(['Customer', 'SalesStaff'])
         ->when($request->search, function($q) use ($request){
             $q->where('invoice_number', 'like', '%' . $request->search. '%')
@@ -45,7 +45,7 @@ class InvoiceController extends ParentController
 })
         ->latest()->paginate(50);
         return view ('pages.Invoices.all', compact('invoices'));
-        
+
     }
 
     public function new()
@@ -260,12 +260,16 @@ class InvoiceController extends ParentController
 
         // return view('pages.Invoices.pdf', compact('invoices'));
 
-        $pdf = PDF::loadView('pages.Invoices.pdf', compact('invoices'));
+        $view_path = "pages.Invoices.pdf";
+        logger(config('services.project_name'));
+        if(config('services.project_name') == "jsi_erp"){
+            $view_path = "pages.Invoices.jsi_pdf";
+
+        }
+        $pdf = PDF::loadView("$view_path", compact('invoices'));
         $invoices->status = '123';
         $invoices->save();
         return $pdf->stream('invoice.pdf');
-
-
     }
 
     public function storeItem(Request $request)

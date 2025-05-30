@@ -112,7 +112,7 @@
                                     <div class="form-group col-md-3">
                                         <label>Term</label>
                                         <select name="payment_terms" class="form-control" id="payment_terms">
-                                            <option selected value="" disabled>Select Terms</option>
+                                            <option selected value="" >Select Terms</option>
                                             @foreach ($customer::$PAYMENT_TERMS as $item)
                                                 <option value="{{ $item['value'] }}">
                                                     {{ $item['label'] }}
@@ -123,7 +123,7 @@
                                     <div class="form-group col-md-3">
                                         <label>Credit Days</label>
                                         <select name="credit_days" class="form-control" id="credit_days">
-                                            <option selected value="" disabled>Select</option>
+                                            <option selected value="" >Select</option>
                                             @foreach ($customer::$CREDIT_PERIODS as $item)
                                                 <option value="{{ $item['value'] }}">
                                                     {{ $item['label'] }}
@@ -180,7 +180,7 @@
                                     <input type="text" class="form-control" name="stock_no" id="stock_no"
                                         placeholder="Stock No">
                                 </div>
-                                <div class="form-group col-md-7">
+                                <div class="form-group col-md-5">
                                     <label>Description</label>
                                     <select class="form-control item-select clear-qty" name="item_id" id="item_id"
                                         onchange="getStockItem()">

@@ -76,6 +76,7 @@ use App\Http\Controllers\ManAndEquipmentSafetyController;
 use App\Http\Controllers\MiscellaneousReceivedController;
 use App\Http\Controllers\OverShortageAndDamageController;
 use App\Http\Controllers\PurchaseOrderMrApproveController;
+use App\Http\Controllers\CurrentStockOnHandReoprtController;
 use App\Http\Controllers\MaterialsReturnByCustomerController;
 use App\Http\Controllers\RawMaterialRequestApproveController;
 use App\Http\Controllers\StockLocationChangeReportController;
@@ -916,17 +917,26 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::post('date_wise', [StockLocationChangeReportController::class, 'date_filter'])->name('StockLoctionChange.datewise_slc_report');
     });
 
-    Route::middleware(['role:Super Admin|Admin'])->prefix('reverse_delivery')->group(function () {
-        Route::middleware(['role:Super Admin|Admin'])->get('/', [App\Http\Controllers\ReverseDeliveryOrderController::class, 'index'])->name('reverse_delivery.index');
-        Route::middleware(['role:Super Admin|Admin'])->get('/create', [App\Http\Controllers\ReverseDeliveryOrderController::class, 'create'])->name('reverse_delivery.create');
-        Route::middleware(['role:Super Admin|Admin'])->post('/create', [App\Http\Controllers\ReverseDeliveryOrderController::class, 'store'])->name('reverse_delivery.store');
-        Route::middleware(['role:Super Admin|Admin'])->get('reverse_delivery/delete/{index}', [ReverseDeliveryOrderController::class, 'deleteSessionItem'])->name('reverse_delivery.delete_item');
+    Route::middleware(['role:Super Admin|Admin|Warehouse User'])->prefix('reverse_delivery')->group(function () {
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/', [App\Http\Controllers\ReverseDeliveryOrderController::class, 'index'])->name('reverse_delivery.index');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/create', [App\Http\Controllers\ReverseDeliveryOrderController::class, 'create'])->name('reverse_delivery.create');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->post('/create', [App\Http\Controllers\ReverseDeliveryOrderController::class, 'store'])->name('reverse_delivery.store');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('reverse_delivery/delete/{index}', [ReverseDeliveryOrderController::class, 'deleteSessionItem'])->name('reverse_delivery.delete_item');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{urgent_delivery_id}/view', [ReverseDeliveryOrderController::class, 'view'])->name('reverse_delivery.view');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{urgent_delivery_id}/print', [ReverseDeliveryOrderController::class, 'print'])->name('reverse_delivery.print');
     });
 
-    Route::middleware(['role:Super Admin|Admin'])->prefix('urgent_invoice')->group(function () {
+    Route::middleware(['role:Super Admin|Admin|Sales Admin'])->prefix('urgent_invoice')->group(function () {
         Route::get('/', [UrgentInvoiceController::class, 'index'])->name('urgent_invoice.index');
         Route::get('/create', [App\Http\Controllers\UrgentInvoiceController::class, 'create'])->name('urgent_invoice.create');
         Route::post('/create', [App\Http\Controllers\UrgentInvoiceController::class, 'store'])->name('urgent_invoice.store');
         Route::get('/get/invoice_no', [App\Http\Controllers\UrgentInvoiceController::class, 'generateInvoiceNumber'])->name('urgent_invoice.get.number');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{urgent_invoice_id}/view', [App\Http\Controllers\UrgentInvoiceController::class, 'view'])->name('urgent_invoice.view');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{urgent_invoice_id}/print', [App\Http\Controllers\UrgentInvoiceController::class, 'print'])->name('urgent_invoice.print');
+    });
+
+    Route::middleware(['role:Super Admin|Admin'])->prefix('CurrentOnHandBalance')->group(function () {
+        Route::get('/', [CurrentStockOnHandReoprtController::class, 'index'])->name('CurrentOnHandBalance.index');
+        //Route::post('date_wise', [CurrentStockOnHandReoprtController::class, 'date_filter'])->name('CurrentOnHandBalance.datewise_slc_report');
     });
 });

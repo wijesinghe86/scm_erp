@@ -119,6 +119,14 @@ class StockLocationChangeController extends Controller
             ]
         );
 
+        $slc_items = StockLocationChangeItem::get();
+        $stock = Stock::where('stock_item_id', $slc_items->stock_item_id)->where('warehouse_id', $slc_items->from_location)->first();
+        if($request->issue_qty > $stock->qty){
+        flash()->danger('Exceeded');
+        $request->issue_qty == "";
+        logger($slc_items);
+}
+
         $items =  session('slc.items') ?? [];
 
         $is_exist = collect($items)->filter(function ($item) use ($request) {
