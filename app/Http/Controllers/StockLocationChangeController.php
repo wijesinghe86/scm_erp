@@ -49,6 +49,7 @@ class StockLocationChangeController extends Controller
     public function store(Request $request)
     {
         $items = session('slc.items') ?? [];
+        logger($items);
 
         $this->validate($request, [
             'slc_date' => 'required|date',
@@ -75,16 +76,16 @@ class StockLocationChangeController extends Controller
             $slc->remarks = $request->remarks;
             $slc->fleet_id = $request->fleet_id;
             $slc->delivered_by = $request->delivered_by;
-            $slc->save();
+            //$slc->save();
 
             foreach ($items as $key => $item) {
                 $slc_item = new StockLocationChangeItem;
                 $slc_item->slc_id = $slc->id;
                 $slc_item->from_location = $slc->from_location;
                 $slc_item->to_location = $slc->to_location;
-                $slc_item->stock_item_id = $item['stock_item_id'];
+                $slc_item->stock_item_id = $slc['stock_item_id'];
                 $slc_item->qty = $item['issue_qty'];
-                $slc_item->save();
+                //$slc_item->save();
 
                 //stock
                 // $stock_from = Stock::where('stock_item_id', $item['stock_item_id'])->where('warehouse_id', $slc->from_location)->first();
