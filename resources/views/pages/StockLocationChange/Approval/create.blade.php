@@ -58,10 +58,10 @@
                                     <tbody>
                                         @foreach ($slc->items as $index => $item)
                                             <tr>
-                                                <td>{{ $item->stock_item->stock_number }}</td>
-                                                <td>{{ $item->stock_item->description }}</td>
-                                                <td>{{ $item->stock_item->unit }}</td>
-                                                <td>{{ $item->qty }}</td>
+                                                <td>{{ optional($item->stock_item)->stock_number }}</td>
+                                                <td>{{ optional($item->stock_item)->description }}</td>
+                                                <td>{{ optional($item->stock_item)->unit }}</td>
+                                                <td>{{ $item->qty  }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -174,7 +174,7 @@
             $('.selection').select2({
                 placeholder: "Select",
             });
-        });   
+        });
 </script>
-    
+
 @endpush
