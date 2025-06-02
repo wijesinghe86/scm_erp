@@ -7,25 +7,27 @@
 <html>
 <style>
     table {
-        width: 100%;
-    }
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid black;
+            margin: 0;
+            padding: 0;
+            font-size: 15px;
+        }
 
-    table,
-    th,
-    td {
-        width: 100%;
-        /* border: 1px solid black; */
-        /* border-collapse: collapse; */
-        text-align: left;
-        margin: 5;
-        padding: 0;
-        font-size: 15px;
-    }
+        th {
+            text-align: left;
+        }
+
+        td,
+        th {
+             border: 1px solid black;
+        }
 </style>
 
 <body>
 
-    <table style="height: 30mm">
+    <table style="height: 20mm">
     </table>
 
     <table style="height: 20mm">
@@ -37,34 +39,40 @@
     <table style="height: 23mm">
         <tr>
             <td style="width: 151mm" colspan="3">
-                <div style="font-size: 16px; margin-left: 10mm;">
+                <div style="font-size: 16px; margin-left: 2mm;">
                     <div>{{ $invoices->customer->customer_name }}</div>
                     {{ $invoices->customer->customer_address_line1 }}<br>
                     {{ $invoices->customer->customer_address_line2 }}<br>
                 </div>
             </td>
-            <td style="height: 8mm; width:50mm; text-align:right;" rowspan="4">
-                <div style="font-size: 16px; margin-left: 10mm;">
+            <td style="height: 8mm; width:50mm; text-align:right;" >
+                <div style="font-size: 16px; margin-left: 2mm;">
                     <div>{{ $invoices->invoice_date }}</div>
-                    {{ $invoices->invoice_number }}<br>
-                    {{ $invoices->ref_number }}<br>
+                </div>
+                <div style="font-size: 16px; margin-left: 2mm;">
+                    <div>{{ $invoices->invoice_number }}</div>
                 </div>
             </td>
         </tr>
         <tr>
-            <td style="width: 50mm">
-                <div style="font-size: 16px; margin-left: 10mm;">
+            <td style="width: 50mm; height: 8mm;">
+                <div style="font-size: 16px; margin-left: 2mm;">
                     <div>{{ $invoices->customer->customer_vat_number }}</div>
                 </div>
             </td>
-            <td style="width: 70mm">
-                <div style="font-size: 16px; margin-left: 10mm;">
+            <td style="width: 70mm; height: 8mm;">
+                <div style="font-size: 16px; margin-left: 2mm;">
                     <div>{{ $invoices->po_number }}</div>
                 </div>
             </td>
-            <td style="width: 31mm">
-                <div style="font-size: 16px; margin-left: 10mm;">
+            <td style="width: 31mm;height: 8mm;">
+                <div style="font-size: 16px; margin-left: 2mm;">
                     <div>{{ $invoices->payment_terms }} {{ $invoices->credit_days }}</div>
+                </div>
+            </td>
+            <td style="width: 31mm;height: 8mm;">
+                <div style="font-size: 16px; margin-left: 2mm; text-align:right">
+                    <div>{{ $invoices->ref_number }}</div>
                 </div>
             </td>
         </tr>
@@ -100,27 +108,27 @@
     <table style="height: 23mm;">
         <tr>
             <td style="width: 30mm">
-                <div style="font-size: 16px; margin-left: 10mm;">
+                <div style="font-size: 16px; margin-left: 2mm;text-align:center;">
                     <div>{{ $invoices->createUser ? $invoices->createUser->name : 'User Error' }}</div>
                 </div>
             </td>
             <td style="width: 30mm">
-                <div style="font-size: 16px; margin-left: 10mm;">
+                <div style="font-size: 16px; margin-left: 2mm;text-align:center;">
                     <div>{{ $invoices->SalesStaff->employee_reg_no }}</div>
                 </div>
             </td>
             <td style="width: 80mm">
-                <div style="font-size: 16px; margin-left: 10mm; opacity: 0;">
+                <div style="font-size: 16px; margin-left: 2mm; opacity: 0;">
                     <div>blank</div>
                 </div>
             </td>
             <td style="width: 36mm">
-                <div style="font-size: 16px; margin-left: 10mm;">
+                <div style="font-size: 16px; margin-right: 2mm; text-align:right;">
                     <div>Salescode1</div>
                 </div>
             </td>
             <td style="width: 32mm">
-                <div style="font-size: 16px; margin-left: 10mm;">
+                <div style="font-size: 16px; margin-right: 2mm; text-align:right;">
                     <div>Salescode2</div>
                 </div>
             </td>
@@ -129,27 +137,27 @@
     <table style="height: 23mm;">
         <tr>
             <td style="width: 60mm">
-                <div style="font-size: 16px; margin-left: 10mm;">
+                <div style="font-size: 16px; margin-left: 2mm;text-align:center;">
                     <div>{{ $invoices->created_at }}</div>
                 </div>
             </td>
             <td style="width: 40mm">
-                <div style="font-size: 16px; margin-left: 10mm; opacity: 0;">
+                <div style="font-size: 16px; margin-left: 2mm; opacity: 0;text-align:center;">
                     <div>checked by</div>
                 </div>
             </td>
             <td style="width: 38mm">
-                <div style="font-size: 16px; margin-left: 10mm; opacity: 0;">
+                <div style="font-size: 16px; margin-left: 2mm; opacity: 0; text-align:center;">
                     <div>Approved by</div>
                 </div>
             </td>
             <td style="width: 36mm">
-                <div style="font-size: 16px; margin-left: 10mm;">
+                <div style="font-size: 16px; margin-left: 2mm;text-align:right;">
                     <div>Salescode3</div>
                 </div>
             </td>
             <td style="width: 32mm">
-                <div style="font-size: 16px; margin-left: 10mm;">
+                <div style="font-size: 16px; margin-left: 2mm;text-align:right;">
                     <div>Salescode4</div>
                 </div>
             </td>
