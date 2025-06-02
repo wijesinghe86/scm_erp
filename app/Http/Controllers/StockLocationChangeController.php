@@ -76,7 +76,7 @@ class StockLocationChangeController extends Controller
             $slc->remarks = $request->remarks;
             $slc->fleet_id = $request->fleet_id;
             $slc->delivered_by = $request->delivered_by;
-            //$slc->save();
+            $slc->save();
 
             foreach ($items as $key => $item) {
                 $slc_item = new StockLocationChangeItem;
@@ -85,7 +85,7 @@ class StockLocationChangeController extends Controller
                 $slc_item->to_location = $slc->to_location;
                 $slc_item->stock_item_id = $slc['stock_item_id'];
                 $slc_item->qty = $item['issue_qty'];
-                //$slc_item->save();
+                $slc_item->save();
 
                 //stock
                 // $stock_from = Stock::where('stock_item_id', $item['stock_item_id'])->where('warehouse_id', $slc->from_location)->first();
@@ -120,13 +120,13 @@ class StockLocationChangeController extends Controller
             ]
         );
 
-        $slc_items = StockLocationChangeItem::get();
-        $stock = Stock::where('stock_item_id', $slc_items->stock_item_id)->where('warehouse_id', $slc_items->from_location)->first();
-        if($request->issue_qty > $stock->qty){
-        flash()->danger('Exceeded');
-        $request->issue_qty == "";
-        logger($slc_items);
-}
+        // $slc_items = StockLocationChangeItem::get();
+        // $stock = Stock::where('stock_item_id', $slc_items->stock_item_id)->where('warehouse_id', $slc_items->from_location)->first();
+        // if($request->issue_qty > $stock->qty){
+        // flash()->danger('Exceeded');
+        // $request->issue_qty == "";
+        // logger($slc_items);
+// }
 
         $items =  session('slc.items') ?? [];
 
