@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use PDF;
 use Exception;
 use App\Models\Stock;
 use App\Models\Employee;
@@ -88,12 +88,12 @@ class StockLocationChangeController extends Controller
                 $slc_item->qty = $item['issue_qty'];
                 $slc_item->save();
             }
-            
+
             DB::commit();
             session(['slc.items' => []]);
             flash()->success('Stock Location Change created successfully!');
             return redirect()->route('stocklocationchange.index');
-        } 
+        }
         catch (Exception $error) {
             logger($error);
             $response['alert-danger'] = $error->getMessage();
@@ -271,4 +271,17 @@ class StockLocationChangeController extends Controller
         flash()->success('Stock Location Change Updated successfully!');
         return redirect()->route('stocklocationchange_received.index');
     }
+
+    // public function print($slc_id)
+    // {   
+    //     $slc_list = StockLocationChange::with('items','from_warehouse', 'to_warehouse', 'issuedBy', 'receivedBy')->find($slc_id)
+    //                 ->where('approved_by', '!=', 'null')
+    //                 ->where('received_by','!=', 'null')
+    //                 ->get();
+
+    //                 $pdf = PDF::loadView('pages.StockLocationChange.print', compact('$slc_list'))->setPaper('A5','landscape');
+    //                 return $pdf->stream();
+
+
+    // } 
 }

@@ -9,7 +9,7 @@
                         <br>
                         <br>
                         <h4><b>Location-wise Current Stock On Hand Report</b></h4>
-                        <form method="POST" target="_blank"  action="{{ route('') }}">
+                        <form method="POST" target="_blank"  action="{{ route('CurrentOnHandBalance.generate_stockOnHand_report') }}">
                             @csrf
                             <hr>
                             <div class="row">
@@ -23,7 +23,7 @@
                                     </select>
                                 </div>
                                 
-                                <div class="form-group col-md-2">
+                                {{-- <div class="form-group col-md-2">
                                     <label>From Date</label>
                                     <input type="date" class="form-control" name="frm_date" id="frm_date"
                                         placeholder="frm_date" required>
@@ -33,9 +33,9 @@
                                     <input type="date" class="form-control" name="to_date" id="to_date"
                                         placeholder="to_date" required>
                                 </div>
-                            </div>
+                            </div> --}}
                                 <div class="form-group col-md-4">
-                                    <button type="submit" class="btn btn-success me-2" style="position: center"> View and
+                                    <button type="submit" class="btn btn-success me-2" style="position: absolute; height:25%"> View and
                                         Print</button>
                                 </div>
                             </div>

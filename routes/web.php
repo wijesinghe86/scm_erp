@@ -491,6 +491,8 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Factory Warehouse User'])->post('/add-to-table', [StockLocationChangeController::class, 'addItemToTable'])->name('stocklocationchange.addItemToTable');
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Factory Warehouse User'])->post('/remove-from-table', [StockLocationChangeController::class, 'removeItemFromTable'])->name('stocklocationchange.removeItemFromTable');
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Factory Warehouse User'])->get('/view-table', [StockLocationChangeController::class, 'getItemTable'])->name('stocklocationchange.getItemTable');
+        //Route::middleware(['role:Super Admin|Admin|Warehouse User|Factory Warehouse User'])->get('/{slc_id}/print', [App\Http\Controllers\StockLocationChangeController::class, 'print'])->name('stocklocationchange.print');
+    
 
 
         Route::middleware(['role:Super Admin|Admin|Warehouse Admin|Factory Admin'])->get('/approvals', [StockLocationChangeController::class, 'approvalIndex'])->name('stocklocationchange_approvals.index');
@@ -891,12 +893,12 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
     });
 
     Route::middleware(['role:Super Admin|Admin'])->prefix('internal_issue')->group(function () {
-        Route::middleware(['role:Super Admin|Admin'])->get('/', [InternalIssueController::class, 'index'])->name('internal_issue.index');
-        Route::middleware(['role:Super Admin|Admin'])->get('/create', [InternalIssueController::class, 'create'])->name('internal_issue.create');
-        Route::middleware(['role:Super Admin|Admin'])->post('/create', [InternalIssueController::class, 'store'])->name('internal_issue.store');
-        Route::middleware(['role:Super Admin|Admin'])->get('internal_issue/delete/{index}', [InternalIssueController::class, 'deleteSessionItem'])->name('internal_issue.delete_item');
-        Route::middleware(['role:Super Admin|Admin'])->get('/{internal_issue}/view', [InternalIssueController::class, 'view'])->name('internal_issue.view');
-
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/', [InternalIssueController::class, 'index'])->name('internal_issue.index');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/create', [InternalIssueController::class, 'create'])->name('internal_issue.create');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->post('/create', [InternalIssueController::class, 'store'])->name('internal_issue.store');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('internal_issue/delete/{index}', [InternalIssueController::class, 'deleteSessionItem'])->name('internal_issue.delete_item');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{internal_issue}/view', [InternalIssueController::class, 'view'])->name('internal_issue.view');
+        //Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/print', [InternalIssueController::class, 'print'])->name('internal_issue.print');
         Route::middleware(['role:Super Admin|Admin '])->get('/approval', [InternalIssueController::class, 'approvalIndex'])->name('internal_issue.approvalIndex');
         Route::middleware(['role:Super Admin|Admin '])->post('{internal_issue}/approval', [InternalIssueController::class, 'approval'])->name('internal_issue.approval');
     });
@@ -937,6 +939,6 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
 
     Route::middleware(['role:Super Admin|Admin'])->prefix('CurrentOnHandBalance')->group(function () {
         Route::get('/', [CurrentStockOnHandReoprtController::class, 'index'])->name('CurrentOnHandBalance.index');
-        //Route::post('date_wise', [CurrentStockOnHandReoprtController::class, 'date_filter'])->name('CurrentOnHandBalance.datewise_slc_report');
+        Route::post('date_wise', [CurrentStockOnHandReoprtController::class, 'generate_stockOnHand_report'])->name('CurrentOnHandBalance.generate_stockOnHand_report');
     });
 });

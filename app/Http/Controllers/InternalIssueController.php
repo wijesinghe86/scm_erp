@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use PDF;
 use App\Models\Stock;
 use App\Models\StockItem;
 use App\Models\Warehouse;
@@ -179,33 +179,42 @@ public function view(InternalIssue $internalIssue)
         foreach($internal_issue->iid_items as $item)
         {
 
-            //logger($item);
-            // $stock = Stock::where('stock_item_id', data_get($item, 'stock_item_id'))
-            //             ->where('warehouse_id', '$request->issue_warehouse_id')
-            //             ->first();
-            //         $stock->qty = $stock->qty - data_get($item, 'issue_qty');
-            //         $stock->save();
-
                     $stockLog->createLog(
                             StockLogService::$INTERNAL_ISSUE,
                             $internal_issue->warehouse_id,
                             $item->stock_no,
-                            data_get($item, 'issue_qty'),
+                            $item->issue_qty,
+                            // data_get($item, 'issue_qty'),
                             StockLogService::$DEDUCT,
                             $internal_issue->iid_no,
                             $request->user()->id,
                             null,
                         );
 
-
         }
-
+        if ($request->status == "approved") {
+        foreach ($internal_issue->iid_items as $key => $item) {
+        $stocks = Stock::where('stock_item_id', '$item->stock_no')->where('warehouse_id', '$request->issue_warehouse_id')
+        ->first();
+    $stocks->qty = $stocks->qty - $item->issue_qty;
+    logger($stocks);
+    $stocks->save();
+         }
+    }
         // TODO: Restore Stock
 
-        $response['alert-success'] = 'Return Approved Successfully!';
+        $response['alert-success'] = 'IID Approved Successfully!';
 
         return redirect()->back()->with($response);
     }
+
+    // public function print()
+    // {
+    //     $internal_issues =  InternalIssue::with('iid_items')->where('is_approved', true)->get();
+
+    //     $pdf = PDF::loadView('pages.InternalIssue.print', compact('internal_issues'))->setPaper('A5','landscape');
+    //                 return $pdf->stream();
+    // }
 
     }
 

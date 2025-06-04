@@ -21,8 +21,8 @@
                                             <td>Stock Location Change Date</td>
                                             <td>From Warehouse Code</td>
                                             <td>To Warehouse Code</td>
-                                            <td>Fleet</td>
-                                            <td>Driver Name</td>
+                                            {{-- <td>Fleet</td>
+                                            <td>Driver Name</td> --}}
                                             <td>Issued By</td>
                                             <td>Issued Date</td>
                                             {{-- <td>Delivered Date</td> --}}
@@ -30,6 +30,8 @@
                                             {{-- <td>Received Date</td> --}}
                                             <td>Remarks</td>
                                             <td>Items</td>
+                                            {{-- <td>View/Print</td> --}}
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -43,8 +45,8 @@
                                                 </td>
                                                 <td>{{ optional(optional($stock_location_change)->to_warehouse)->warehouse_name }}
                                                 </td>
-                                                <td>{{ optional(optional($stock_location_change)->fleet)->fleet_registration_number}}</td>
-                                                <td>{{ $stock_location_change->delivered_by }}</td>
+                                                {{-- <td>{{ optional(optional($stock_location_change)->fleet)->fleet_registration_number}}</td>
+                                                <td>{{ $stock_location_change->delivered_by }}</td> --}}
                                                 <td>{{ optional(optional($stock_location_change)->issuedBy)->employee_fullname }}
                                                 </td>
                                                 <td>{{ $stock_location_change->issued_date }}</td>
@@ -52,7 +54,7 @@
                                                 {{-- <td>{{ $stock_location_change->receivedBy->employee_fullname }}</td> --}}
                                                 {{-- <td>{{ $stock_location_change->received_date }}</td> --}}
                                                 <td>{{ $stock_location_change->remarks }}</td>
-                                                
+
                                                 <td>
                                                     <table class="table table-striped">
                                                         <tr>
@@ -73,6 +75,11 @@
                                                         @endforeach
                                                     </table>
                                                 </td>
+                                                {{-- <td> 
+                                                    <a href="{{ route('stocklocationchange.print', $slc->id) }}">
+                                                        <i class="fa-sharp fa-solid fa-print"></i>
+                                                    </a>
+                                                </td> --}}
 
                                             </tr>
                                         @endforeach

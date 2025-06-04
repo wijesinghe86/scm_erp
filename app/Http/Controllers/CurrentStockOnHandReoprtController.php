@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use PDF;
 use App\Models\Stock;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
@@ -13,25 +13,29 @@ class CurrentStockOnHandReoprtController extends Controller
     {
         $warehouse_lists = Warehouse::all();
         $stock_bal = Stock::with('item','warehouse')->get();
-        return view('pages.Reports.StockOnHandReport.index', compact('warehouse_lists', 'stock_item_lists', 'stock_log'));
+        return view('pages.Reports.StockOnHandReport.index', compact('warehouse_lists', 'stock_bal'));
     }
 
-    // public function generate_history_report(Request $request)
-    // {
-    //     $request->validate([
-    //         'warehouse_name' => 'required',
-    //         'frm_date' => 'required',
-    //         'to_date' => 'required',
-    //     ]);
+    public function generate_stockOnHand_report(Request $request)
+    {
+        $request->validate([
+            'warehouse_name' => 'required',
+            // 'frm_date' => 'required',
+            // 'to_date' => 'required',
+        ]);
 
-    //     logger($request->all());
+       
+        $warehouses = Warehouse::find($request->warehouse_name);
+        $stocks = Stock::with('item', 'warehouse')->where('warehouse_id', $request->warehouse_name)
+            ->where('qty', ">", '0')
+            ->get();
 
-    //     $warehouses = Warehouse::find($request->warehouse_name);
-    //     $stockBal = Stock::with('item', 'warehouse')->where('warehouse_id', $request->$warehouse->id)
-    //         ->whereDate('created_at', ">=", $request->frm_date)
-    //         ->whereDate('created_at', "<=", $request->to_date)
-    //         ->where('location',  $request->warehouse_name)
+            logger($stocks);
 
-    //         ->get();
-    // }
+            $pdf = PDF::loadView('pages.Reports.StockOnHandReport.CurrentStockBalance', compact('warehouses', 'stocks'))->setPaper('A4','landscape');
+            return $pdf->stream();
+
+}
+
+
 }
