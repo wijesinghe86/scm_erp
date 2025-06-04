@@ -5,7 +5,7 @@
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Internal Raw Material Issuance</h4>
+                        <h4 class="card-title">Internal Material Issuance</h4>
                         <form class="forms-sample" method="POST" action="{{ route('internal_issue.store') }}">
                             @csrf
                             <br>

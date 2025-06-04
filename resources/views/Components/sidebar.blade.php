@@ -365,7 +365,7 @@
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#ui-iid" aria-expanded="false"
                     aria-controls="ui-iid">
-                    <span class="menu-title">S Location Production</span>
+                    <span class="menu-title">MRO Issue & Return</span>
                     {{-- <i class="menu-arrow"></i> --}}
                     <i class="mdi mdi-contacts menu-icon"></i>
                 </a>
@@ -376,10 +376,10 @@
                                     Issue Entry</a></li>
                         @endhasanyrole
 
-                        @hasanyrole('Super Admin|Admin')
+                        {{-- @hasanyrole('Super Admin|Admin')
                             <li class="nav-item"> <a class="nav-link" href="{{ route('Sfgrn.index') }}">Finished Goods
                                     Entry</a></li>
-                        @endhasanyrole
+                        @endhasanyrole --}}
                     </ul>
                 </div>
             </li>
