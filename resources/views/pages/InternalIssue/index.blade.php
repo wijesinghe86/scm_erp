@@ -6,7 +6,7 @@
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4>Internal Issue Raw Materials Status</h2>
+                        <h4>Internal Issue Materials Status</h2>
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                 <a href="{{ route('internal_issue.create') }}"
                                     class="btn btn-success float-end mb-2"> Add New </a>
@@ -21,8 +21,8 @@
                                             <td>IID No</td>
                                             {{-- <td>Warehouse</td> --}}
                                             <td>Items</td>
-                                            <td>Total Issued Qty</td>
-                                            <td>Total Issued Weight</td>
+                                            {{-- <td>Total Issued Qty</td>
+                                            <td>Total Issued Weight</td> --}}
                                             <td>Created_by</td>
                                             <td>Action</td>
                                             <td>Status</td>
@@ -57,11 +57,11 @@
                                                     </table>
                                                 </td>
                                                 </td>
-                                                <td>{{ $internalissue->total_issued_qty }}</td>
-                                                <td>{{ $internalissue->total_issued_weight }}Kg</td>
+                                                {{-- <td>{{ $internalissue->total_issued_qty }}</td>
+                                                <td>{{ $internalissue->total_issued_weight }}Kg</td> --}}
                                                 <td>{{ $internalissue->createUser ? $internalissue->createUser->name : 'User not found' }}
                                                 </td>
-                                                <td align="right">
+                                                <td align="center">
                                                     <a class="h4"
                                                         href="{{ route('internal_issue.view', $internalissue->id) }}">
                                                         <i class="fa-sharp fa-solid fa-eye"></i>

@@ -85,6 +85,9 @@
                         <a href="{{ route('internal_issue.index') }}">
                             <button class="btn btn-light">Back</button>
                         </a>
+                        {{-- <a href="{{ route('internal_issue.print') }}">
+                            <button class="btn btn-light">Print</button>
+                        </a> --}}
                     </div>
                 </div>
             </div>
