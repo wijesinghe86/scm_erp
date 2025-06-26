@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use App\Models\MrfPrfItem;
-
 use App\Models\MrfPrfMain;
 use Illuminate\Http\Request;
 use App\Models\MaterialRequest;
@@ -86,6 +86,20 @@ class MrfPrfController extends ParentController
     flash()->success("Purchase Request created");
     return redirect()->route('mrfprf.index');
 }
+
+public function print($pr_id)
+    {
+        $pr_list =MrfPrfMain::find($pr_id);
+
+        if ($pr_list == null) {
+            return abort(404);
+        }
+
+        $pdf = PDF::loadView('pages.mrfprf.print', compact('pr_list'))->setPaper('A5','landscape');
+        return $pdf->stream('pr_list.pdf');
+
+    }
+
 
 
 }

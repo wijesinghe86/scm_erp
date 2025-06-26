@@ -97,11 +97,13 @@ class RawMaterialIssueForProductionController extends Controller
                 $rmi_item->remarks = $item['remarks'];
                 $rmi_item->save();
 
+
+               
                 $stockLog->createLog(
                     StockLogService::$RAWMATERIAL_ISSUE,
                     $request->warehouse_code,
                     $item['issued_item_no'],
-                    $item['semi_product_qty'],
+                    collect($items)->sum('semi_product_qty'),
                     StockLogService::$DEDUCT,
                     $rmi->rmi_no,
                     $request->user()->id,
@@ -114,7 +116,7 @@ class RawMaterialIssueForProductionController extends Controller
                     ->where('warehouse_id', $semiProduct->semi_production->warehouse_id)
                     ->first();
                 if ($stock) {
-                    $stock->qty = $stock->qty - $item['semi_product_qty'];
+                    $stock->qty = $stock->qty - collect($items)->sum('semi_product_qty');
                     $stock->save();
                 }
             }

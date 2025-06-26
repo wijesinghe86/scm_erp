@@ -23,34 +23,32 @@
                                             <td>Item</td>
                                             <td>U/M</td>
                                             <td>Quantity</td>
-                                            <td>Created By</td>
                                             <td>Status</td>
                                             <td>Approved By</td>
                                             <td>Approved Date</td>
                                             <td>Remark</td>
-                                            <td>Action</td>
+                                            {{-- <td>Action</td> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($list as $item)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ optional(optional($item)->purchase_order)->po_no }}</td>
-                                                <td>{{ optional(optional($item)->purchase_order->purchase_request_id)->mrfprf_no }}</td>
-                                                <td>{{ optional(optional($item)->item)->stock_number }}</td>
-                                                <td>{{ optional(optional($item)->item)->description }}</td>
-                                                <td>{{ optional(optional($item)->item)->unit }}</td>
+                                                <td>{{ optional(optional($item->purchase_order))->po_no }}</td>
+                                                <td>{{ optional(optional($item->purchase_order)->purchase_request_id)->mrfprf_no }}</td>
+                                                <td>{{ optional(optional($item->item))->stock_number }}</td>
+                                                <td>{{ optional(optional($item->item))->description }}</td>
+                                                <td>{{ optional(optional($item->item))->unit }}</td>
                                                 <td>{{ $item->po_qty }}</td>
-                                               <td>{{ $item->purchase_order->createUser->name }}</td>
                                                 <td>{{ $item->approval_status }}</td>
-                                                <td>{{ optional(optional($item)->approvedBy)->name }}</td>
+                                                <td>{{ optional(optional($item->approvedBy))->name }}</td>
                                                 <td>{{ $item->approval_status_changed_at }}</td>
                                                 <td>{{ $item->remark }}</td>
-                                                <td>
+                                                {{-- <td>
                                                 <a href="{{ route('purchase_order_approve.view', $item->id) }}">
                                                     <i class="fa-sharp fa-solid fa-eye text-info"></i>
                                                 </a>
-                                            </td>
+                                            </td> --}}
                                             </tr>
                                         @endforeach
                                     </tbody>

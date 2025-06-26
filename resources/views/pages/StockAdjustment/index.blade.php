@@ -26,6 +26,7 @@
                                         <td>Approved Date</td>
                                         <td>Status</td>
                                         <td>Action</td>
+                                        <td>Print</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -44,6 +45,12 @@
                                                 <a
                                                     href="{{ route('stockadjustment.approvalIndex', $stockadjustment->id) }}">
                                                     <i class="mdi mdi-eye text-dark"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('stockadjustment.print',['stock_adjustment_id'=> $stockadjustment->id]) }}">
+
+                                                    <i class="fa-sharp fa-solid fa-print"></i>
                                                 </a>
                                             </td>
 
