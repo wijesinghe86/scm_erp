@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Models\StockItem;
@@ -161,6 +162,19 @@ class MaterialRequestController extends Controller
      session(['mr.items'=>$items]);
      return  redirect()->back()->withInput();
  }
+
+ public function print($mr_id)
+    {
+        $mr_list =MaterialRequest::find($mr_id);
+
+        if ($mr_list == null) {
+            return abort(404);
+        }
+
+        $pdf = PDF::loadView('pages.MaterialRequest.print', compact('mr_list'))->setPaper('A5','landscape');
+        return $pdf->stream();
+        
+    }
 
     }
 

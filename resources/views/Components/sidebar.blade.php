@@ -80,7 +80,7 @@
                             <li class="nav-item"> <a class="nav-link" href="{{ route('locationshelfdesign.index') }}">Location
                                     Shelf Design</a></li>
                         @endhasanyrole
-                        @hasanyrole('Super Admin')
+                        @hasanyrole('Super Admin|Admin')
                             <li class="nav-item"> <a class="nav-link" href="{{ route('users.index') }}">Users</a></li>
                         @endhasanyrole
                         {{-- <li class="nav-item"> <a class="nav-link" href="">Users</a></li> --}}
@@ -525,6 +525,9 @@
             <li class="nav-item"> <a class="nav-link" href="{{ route('finished_goods_approval.index') }}">Finished
                     Goods Inspect</a></li>
         @endhasanyrole
+        @hasanyrole('Super Admin|Admin|Factory Warehouse User|Warehouse User|Warehouse Admin|Factory Admin')
+            <li class="nav-item"> <a class="nav-link" href="{{ route('damage_return.create') }}">Damage Return</a></li>
+        @endhasanyrole
         {{-- @hasanyrole('Super Admin|Admin|Production User')
     <li class="nav-item"> <a class="nav-link" href="{{ route('finishedgoods.index') }}">Finished
             Goods</a></li>
@@ -908,7 +911,7 @@
                     <li class="nav-item"> <a class="nav-link" href="{{ route('stockreports.index') }}"> Stock
                             Items-wise<br>Transaction
                             History </a></li>
-                            <li class="nav-item"> <a class="nav-link" href="{{ route('CurrentOnHandBalance.index') }}"> Current 
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('CurrentOnHandBalance.index') }}"> Current
                                 Stock Balance Report
                                  </a></li>
                     <li class="nav-item"> <a class="nav-link"

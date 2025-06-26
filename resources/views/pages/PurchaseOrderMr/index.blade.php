@@ -20,6 +20,7 @@
                                     <td>PO No</td>
                                     <td>Items</td>
                                     <td>Created By</td>
+                                    <td>Print</td>
                                     {{-- <td>Action</td> --}}
                                 </tr>
                             </thead>
@@ -51,6 +52,12 @@
                                             </table>
                                         </td>
                                     <td>{{ $list->createUser ? $list->createUser->name : 'User not found' }}</td>
+                                    <td>
+                                        <a href="{{ route('purchase_order_mr.print',['po_id'=> $list->id]) }}">
+
+                                            <i class="fa-sharp fa-solid fa-print"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

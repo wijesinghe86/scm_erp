@@ -18,9 +18,11 @@
                                     <tr>
                                         <td>No</td>
                                         <td>MRF Date</td>
+                                        <td>Required Date</td>
                                         <td>MRF No</td>
                                         <td>Items</td>
                                         <td>Created_by</td>
+                                        <td>Print</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -28,6 +30,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $materialrequest->mrf_date }}</td>
+                                            <td>{{$materialrequest->required_date}}
                                             <td>{{ $materialrequest->mrf_no }}</td>
                                             <td>
                                                 <table class="table table-striped">
@@ -51,6 +54,12 @@
                                             </td>
                                             </td>
                                             <td>{{ $materialrequest->createUser ? $materialrequest->createUser->name : 'User not found' }}
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('material_request.print',['mr_id'=> $materialrequest->id]) }}">
+
+                                                    <i class="fa-sharp fa-solid fa-print"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach

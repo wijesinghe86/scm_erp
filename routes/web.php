@@ -31,6 +31,7 @@ use App\Http\Controllers\SalesOrderController;
 use App\Http\Controllers\StockReportController;
 use App\Http\Controllers\StorageAreaController;
 use App\Http\Controllers\TaxCreationController;
+use App\Http\Controllers\DamageReturnController;
 use App\Http\Controllers\CreditLimitLogContrller;
 use App\Http\Controllers\DeliveryOrderController;
 use App\Http\Controllers\FinishedGoodsController;
@@ -198,7 +199,8 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
 
         Route::middleware(['role:Super Admin|Admin|Warehouse Admin|Factory Admin'])->get('/approval/{stock_adjustment}', [StockAdjustmentController::class, 'approvalIndex'])->name('stockadjustment.approvalIndex');
         Route::middleware(['role:Super Admin|Admin|Warehouse Admin|Factory Admin'])->post('/approval/{stock_adjustment}', [StockAdjustmentController::class, 'approval'])->name('stockadjustment.approval');
-    });
+    }); Route::middleware(['role:Super Admin|Admin|Warehouse User|Factory Warehouse User'])->get('/{stock_adjustment_id}/print', [App\Http\Controllers\StockAdjustmentController::class, 'print'])->name('stockadjustment.print');
+
 
     /* .....CREATING ROUTE FOR Location Bay Design ....... */
     Route::prefix('locationbaydesign')->group(function () {
@@ -421,7 +423,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Sales User'])->get('/get/total', [InvoiceController::class, 'getInvoiceTotal'])->name('invoices.get.total');
         Route::middleware(['role:Super Admin|Admin|Sales User'])->get('/get/invoice_no', [InvoiceController::class, 'generateInvoiceNumber'])->name('invoices.get.number');
     });
-    Route::middleware(['role:Super Admin|Admin|Sales User'])->prefix('invoices')->group(function () {
+    Route::middleware(['role:Super Admin|Admin'])->prefix('invoices')->group(function () {
         Route::get('/create', [InvoiceCancelController::class, 'create'])->name('invoices_cancel.create');
         Route::get('/store', [InvoiceCancelController::class, 'store'])->name('invoices_cancel.store');
         Route::post('/getInvoiceDetails', [InvoiceCancelController::class, 'getInvDetails'])->name('invoices_cancel.getInvoiceDetails');
@@ -449,6 +451,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
 
         Route::middleware(['role:Super Admin|Admin|Warehouse Admin'])->get('/approval', [ReturnController::class, 'approvalIndex'])->name('returns.approvalIndex');
         Route::middleware(['role:Super Admin|Admin|Warehouse Admin'])->post('{invoice_return}/approval', [ReturnController::class, 'approval'])->name('returns.approval');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User|Factory Warehouse User'])->get('/{return_id}/print', [App\Http\Controllers\ReturnController::class, 'print'])->name('returns.print');
     });
 
     // Inventory Control
@@ -491,8 +494,8 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Factory Warehouse User'])->post('/add-to-table', [StockLocationChangeController::class, 'addItemToTable'])->name('stocklocationchange.addItemToTable');
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Factory Warehouse User'])->post('/remove-from-table', [StockLocationChangeController::class, 'removeItemFromTable'])->name('stocklocationchange.removeItemFromTable');
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Factory Warehouse User'])->get('/view-table', [StockLocationChangeController::class, 'getItemTable'])->name('stocklocationchange.getItemTable');
-        //Route::middleware(['role:Super Admin|Admin|Warehouse User|Factory Warehouse User'])->get('/{slc_id}/print', [App\Http\Controllers\StockLocationChangeController::class, 'print'])->name('stocklocationchange.print');
-    
+        Route::middleware(['role:Super Admin|Admin|Warehouse User|Factory Warehouse User'])->get('/{slc_id}/print', [App\Http\Controllers\StockLocationChangeController::class, 'print'])->name('stocklocationchange.print');
+
 
 
         Route::middleware(['role:Super Admin|Admin|Warehouse Admin|Factory Admin'])->get('/approvals', [StockLocationChangeController::class, 'approvalIndex'])->name('stocklocationchange_approvals.index');
@@ -509,6 +512,8 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Factory Warehouse User|Production User|Production Admin'])->get('/create', [App\Http\Controllers\MaterialRequestController::class, 'create'])->name('material_request.create');
         Route::middleware(['role:Super Admin|Admin|Factory Warehouse User|Production User|Production Admin'])->post('/create', [App\Http\Controllers\MaterialRequestController::class, 'store'])->name('material_request.store');
         Route::middleware(['role:Super Admin|Admin|Factory Admin|Factory Warehouse User|Production Admin'])->get('material_request/delete/{index}', [MaterialRequestController::class, 'deleteSessionItem'])->name('material_request.delete_item');
+        Route::middleware(['role:Super Admin|Admin|Factory Admin|Factory Warehouse User|Production Admin'])->get('/{mr_id}/print', [App\Http\Controllers\MaterialRequestController::class, 'print'])->name('material_request.print');
+
     });
 
     Route::middleware(['role:Super Admin|Admin|Production User|Production Admin'])->prefix('raw_material_request')->group(function () {
@@ -794,6 +799,9 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Procurement User'])->get('/create', [App\Http\Controllers\MrfPrfController::class, 'create'])->name('mrfprf.create');
         Route::middleware(['role:Super Admin|Admin|Procurement User'])->post('/create', [App\Http\Controllers\MrfPrfController::class, 'store'])->name('mrfprf.store');
         Route::middleware(['role:Super Admin|Admin|Procurement User'])->get('/get-items', [App\Http\Controllers\MrfPrfController::class, 'getMrfItems'])->name('mrfprf.getMrfItems');
+        Route::middleware(['role:Super Admin|Admin|Procurement User'])->get('/{pr_id}/print', [App\Http\Controllers\MrfPrfController::class, 'print'])->name('mrfprf.print');
+
+
     });
 
     Route::middleware(['role:Super Admin|Admin|Factory Warehouse User|Factory Admin|Production Admin'])->prefix('material-request-approve')->group(function () {
@@ -808,6 +816,8 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Procurement User'])->get('/create', [App\Http\Controllers\PurchaseOrderMrController::class, 'create'])->name('purchase_order_mr.create');
         Route::middleware(['role:Super Admin|Admin|Procurement User'])->post('/create', [App\Http\Controllers\PurchaseOrderMrController::class, 'store'])->name('purchase_order_mr.store');
         Route::middleware(['role:Super Admin|Admin|Procurement User'])->get('/get-items', [App\Http\Controllers\PurchaseOrderMrController::class, 'getMrfPrfItems'])->name('purchase_order_mr.getMrfPrfItems');
+        Route::middleware(['role:Super Admin|Admin|Procurement User'])->get('/{po_id}/print', [App\Http\Controllers\PurchaseOrderMrController::class, 'print'])->name('purchase_order_mr.print');
+
     });
     // This belongs to modal
     Route::middleware(['role:Super Admin|Admin|Production Admin|Production User'])->prefix('raw-material-code-assign')->group(function () {
@@ -823,7 +833,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
 
     Route::prefix('users')->group(function () {
         //Only for needed routes
-        Route::middleware('role:Super Admin')->group(function () {
+        Route::middleware('role:Super Admin|Admin')->group(function () {
             Route::get('/', [UserController::class, 'index'])->name('users.index');
             Route::get('/create', [UserController::class, 'new'])->name('users.new');
             Route::post('/store', [UserController::class, 'store'])->name('users.store');
@@ -940,5 +950,12 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
     Route::middleware(['role:Super Admin|Admin'])->prefix('CurrentOnHandBalance')->group(function () {
         Route::get('/', [CurrentStockOnHandReoprtController::class, 'index'])->name('CurrentOnHandBalance.index');
         Route::post('date_wise', [CurrentStockOnHandReoprtController::class, 'generate_stockOnHand_report'])->name('CurrentOnHandBalance.generate_stockOnHand_report');
+    });
+
+    Route::middleware(['role:Super Admin|Admin|Factory Warehouse User|Warehouse User|Warehouse Admin|Factory Admin'])->prefix('damage_return')->group(function () {
+        Route::get('/', [DamageReturnController::class, 'index'])->name('damage_return.index');
+        Route::get('/create', [DamageReturnController::class, 'create'])->name('damage_return.create');
+        Route::post('/create', [DamageReturnController::class, 'store'])->name('damage_return.store');
+       // Route::post('/get-stock', [DamageReturnController::class, 'getStock'])->name('damage_return.stock');
     });
 });

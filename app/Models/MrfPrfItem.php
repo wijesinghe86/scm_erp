@@ -38,6 +38,11 @@ public function mrf_prf()
         return $this->hasOne(MaterialRequest::class,'id','mr_id');
     }
 
+    public function prf_items()
+    {
+        return $this->hasMany(MrPurchaseItem::class, 'item_id', 'stock_item_id' );
+    }
+
 
 }
 

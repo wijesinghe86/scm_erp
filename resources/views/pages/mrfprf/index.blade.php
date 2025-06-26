@@ -21,6 +21,7 @@
                                     <td>Items</td>
                                     <td>Created By</td>
                                     <td>MR No</td>
+                                    <td>Print</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,16 +46,22 @@
                                                 <td>{{ $prItems->item->description }}</td>
                                                 <td>{{ $prItems->item->unit }}</td>
                                                 <td>{{ $prItems->prfqty }}</td>
-                                                
-                                                
+
+
                                             </tr>
-                                            
+
                                         @endforeach
                                         </table>
                                     </td>
 
                                     <td>{{ $list->createUser ? $list->createUser->name : 'User not found' }}</td>
                                     <td>{{ $prItems->material_request->mrf_no }}</td>
+                                    <td>
+                                        <a href="{{ route('mrfprf.print',['pr_id'=> $list->id]) }}">
+
+                                            <i class="fa-sharp fa-solid fa-print"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

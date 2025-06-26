@@ -27,6 +27,7 @@ class StockLogService
     public static $ADD = "add";
     public static $DEDUCT = "deduct";
     public static $URGENT_DELIVERY = "urgent_delivery";
+    public static $DAMAGE_RETURN = "damage_return";
 
     public function createLog(
         $event,

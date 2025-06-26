@@ -21,7 +21,7 @@
                                             <td>MR No</td>
                                             <td>Item</td>
                                             <td>Quantity</td>
-                                            <td>Created By</td> 
+                                            <td>Created By</td>
                                             <td>Status</td>
                                             <td>Approved By</td>
                                             <td>Approved Date</td>
@@ -36,13 +36,13 @@
                                                 <td>{{ optional(optional($item)->material_request)->mrf_no }}</td>
                                                 <td>{{ optional(optional($item)->item)->description }}</td>
                                                 <td>{{ $item->prfqty }}</td>
-                                               <td>{{ $item->mrf_prf->createUser->name }}</td> 
+                                               <td>{{ optional(optional($item->mrf_prf)->createUser)->name }}</td>
                                                 <td>{{ $item->approval_status }}</td>
                                                 <td>{{ optional(optional($item)->approvedBy)->name }}</td>
                                                 <td>{{ $item->approval_status_changed_at }}</td>
-                                                <td>{{ $item->remark }}</td>  
+                                                <td>{{ $item->remark }}</td>
                                             </tr>
-                                        @endforeach 
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

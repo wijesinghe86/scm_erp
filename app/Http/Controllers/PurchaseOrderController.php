@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-
+use PDF;
 use App\Models\Customer;
+use App\Models\MrPurchase;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use App\Models\PurchaseOrder;
@@ -75,4 +76,6 @@ class PurchaseOrderController extends Controller
                 ->get();
         return view('pages.PurchaseOrder.prf_table',compact('lists'));
     }
+
+    
 }
