@@ -86,8 +86,12 @@
                                 </tr> --}}
                             </tbody>
                         </table>
+                        <br>
                         <a href="{{ route('returns.all') }}">
-                            <button class="btn btn-light">Back</button>
+                            <button class="btn btn-success">Back</button>
+                        </a>
+                        <a href="{{ route('returns.print' ,['return_id'=> $invoice_return->id]) }}">
+                            <button class="btn btn-success">Print</button>
                         </a>
                     </div>
                 </div>

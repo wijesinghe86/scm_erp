@@ -42,7 +42,9 @@
                                     <thead>
                                         <tr>
                                             <td>From Stock Number</td>
+                                            <td>From Description</td>
                                             <td>Transfer To Stock Number</td>
+                                            <td>Transfer To Description</td>
                                             <td>Quantity</td>
                                             <td>Weight</td>
                                             <td>From Warehouse</td>
@@ -54,7 +56,9 @@
                                         @foreach ($stock_adjustment->items as $index => $item)
                                             <tr>
                                                 <td>{{ optional(optional($item)->from_stock_item)->stock_number }}</td>
+                                                <td>{{ optional(optional($item)->from_stock_item)->description }}</td>
                                                 <td>{{ optional(optional($item)->to_stock_item)->stock_number }}</td>
+                                                <td>{{ optional(optional($item)->to_stock_item)->description }}</td>
                                                 <td>{{ $item->qty }}</td>
                                                 <td>{{ $item->weight }}</td>
                                                 <td>{{ optional(optional($item)->fromWarehouse)->warehouse_name }}</td>

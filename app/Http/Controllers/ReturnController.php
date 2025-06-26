@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use PDF;
 use Exception;
 use App\Models\Stock;
 use App\Models\Invoice;
@@ -168,5 +168,15 @@ class ReturnController extends Controller
         $response['alert-success'] = 'Return Approved Successfully!';
 
         return redirect()->back()->with($response);
+    }
+
+    public function print($return_id)
+    {
+        $mrs_list =InvoiceReturn::find($return_id);
+
+        // $stock_adjustmet_items = StockAdjustmentItem::with(['fromWarehouse', 'from_stock_item'])->find($stock_adjustment_id);
+
+        $pdf = PDF::loadView('pages.Returns.print', compact('mrs_list'))->setPaper('A5','landscape');
+        return $pdf->stream();
     }
 }

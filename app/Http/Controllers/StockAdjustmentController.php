@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use Exception;
 use App\Models\Stock;
 use App\Models\Employee;
@@ -128,8 +129,10 @@ class StockAdjustmentController extends Controller
             'to_warehouse_name' => optional($to_warehouse)->warehouse_name,
             'from_stock_id' => $request->from_stock_id,
             'from_stock_item_stock_number' => optional($from_stock_item)->stock_number,
+            'from_stock_item_description' => optional($from_stock_item)->description,
             'to_stock_id' => $request->to_stock_id,
             'to_stock_item_stock_number' => $request->type == "transfer" ? optional($to_stock_item)->stock_number : "",
+            'to_stock_item_description' => $request->type == "transfer" ? optional($to_stock_item)->description : "",
             'weight' => $request->weight,
             'qty' => $request->qty,
             'justification' => $request->justification,
@@ -253,5 +256,15 @@ class StockAdjustmentController extends Controller
 
         flash()->success("Stock Adjustment updated successfully!");
         return redirect()->route('stockadjustment.index');
+    }
+
+    public function print($stock_adjustment_id)
+    {
+        $stock_adjustment_list = StockAdjustment::find($stock_adjustment_id);
+
+        // $stock_adjustmet_items = StockAdjustmentItem::with(['fromWarehouse', 'from_stock_item'])->find($stock_adjustment_id);
+
+        $pdf = PDF::loadView('pages.StockAdjustment.print', compact('stock_adjustment_list'))->setPaper('A5','landscape');
+        return $pdf->stream();
     }
 }

@@ -3,7 +3,9 @@
         <thead>
             <tr>
                 <td>From Stock Number</td>
+                <td>From Description</td>
                 <td>Transfer To Stock Number</td>
+                <td>Transfer To Description</td>
                 <td>Quantity</td>
                 <td>Weight</td>
                 <td>From Warehouse</td>
@@ -16,7 +18,9 @@
             @foreach ($items as $index => $item)
                 <tr>
                     <td>{{ $item['from_stock_item_stock_number'] }}</td>
+                    <td>{{ $item['from_stock_item_description'] }}</td>
                     <td>{{ $item['to_stock_item_stock_number'] }}</td>
+                    <td>{{ $item['to_stock_item_description'] }}</td>
                     <td>{{ $item['qty'] }}</td>
                     <td>{{ $item['weight'] }}</td>
                     <td>{{ $item['from_warehouse_name'] }}</td>

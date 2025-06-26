@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use PDF;
 use App\Models\Customer;
 use App\Models\Supplier;
 use App\Models\MrfPrfItem;
@@ -38,10 +38,13 @@ class PurchaseOrderMrController extends ParentController
         }])
         ->whereHas('items', function ($q) {
 
-        return $q->where('approval_status', 'approved');
+        return $q->where('approval_status', 'approved')
+        ->doesntHave('prf_items');
          })
-         ->doesntHave('po_items')->get();
-         
+
+        // ->doesntHave('po_items')
+        ->get();
+
          $suppliers = Supplier::get();
          $customers = Customer::get();
          $mr_purchase = new MrPurchase;
@@ -70,7 +73,7 @@ class PurchaseOrderMrController extends ParentController
             'po_date'=>'required|date',
             'supplier_id'=>'required'
             ]);
-       
+
         $po = new MrPurchase;
         $po->po_no = $request->po_number;
         $po->prf_id = $request->prf_id;
@@ -103,6 +106,19 @@ class PurchaseOrderMrController extends ParentController
 
         flash("PO created successfully")->success();
         return redirect()->route('purchase_order_mr.index');
+
+    }
+
+    public function print($po_id)
+    {
+        $po_list =MrPurchase::find($po_id);
+
+        if ($po_list == null) {
+            return abort(404);
+        }
+
+        $pdf = PDF::loadView('pages.PurchaseOrderMr.print', compact('po_list'))->setPaper('A5','landscape');
+        return $pdf->stream();
 
     }
 

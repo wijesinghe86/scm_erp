@@ -272,16 +272,16 @@ class StockLocationChangeController extends Controller
         return redirect()->route('stocklocationchange_received.index');
     }
 
-    // public function print($slc_id)
-    // {   
-    //     $slc_list = StockLocationChange::with('items','from_warehouse', 'to_warehouse', 'issuedBy', 'receivedBy')->find($slc_id)
-    //                 ->where('approved_by', '!=', 'null')
-    //                 ->where('received_by','!=', 'null')
-    //                 ->get();
+    public function print($slc_id)
+    {
+        $slc_list =StockLocationChange::find($slc_id);
 
-    //                 $pdf = PDF::loadView('pages.StockLocationChange.print', compact('$slc_list'))->setPaper('A5','landscape');
-    //                 return $pdf->stream();
+        if ($slc_id == null) {
+            return abort(404);
+        }
 
+        $pdf = PDF::loadView('pages.StockLocationChange.print', compact('slc_list'))->setPaper('A5','landscape');
+        return $pdf->stream();
 
-    // } 
+    }
 }
