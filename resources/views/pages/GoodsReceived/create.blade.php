@@ -132,7 +132,7 @@
                                         placeholder="Verified Date">
                                 </div>
                             </div>
-                            
+
                             <button type="submit" class="btn btn-success me-2">Complete Goods Received Note</button>
                         </form>
                     </div>
@@ -173,6 +173,18 @@
 
                 });
             });
+
+    function onChangeQty(e,index){
+    const qty = e.value;
+    const remainingQty = $(`#remaining_qty-${index}`).val();
+    if(parseInt(qty) > parseInt(remainingQty))
+    {
+
+        $(`#qty-${index}`).val(remainingQty);
+        alert('Quantity cannot be greater than remaining qty');
+        return
+    }
+}
         </script>
     @endpush
 

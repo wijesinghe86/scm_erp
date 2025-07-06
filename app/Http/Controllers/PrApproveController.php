@@ -56,7 +56,7 @@ class PrApproveController extends ParentController
             if ($item['approval_status'] != null) {
                 $purchase_request_item->save();
             }
-        }
+        };
         flash()->success("Purchase Request approval updated");
         return redirect()->back();
     }

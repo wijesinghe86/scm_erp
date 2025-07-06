@@ -25,7 +25,7 @@ class MrPurchase extends Model
 
     public function items()
     {
-        return $this->hasMany(MrPurchaseItem::class, 'po_id', 'id' );
+        return $this->hasMany(MrPurchaseItem::class,'po_id', 'id');
     }
 
     public function purchase_request_id()
@@ -38,7 +38,7 @@ class MrPurchase extends Model
        return $this->hasMany(GoodsReceivedItem::class, 'po_id', 'id' );
     }
 
-    
 
-    
+
+
 }

@@ -584,6 +584,8 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User'])->post('/create', [App\Http\Controllers\GoodsReceivedController::class, 'store'])->name('goodsreceived.store');
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User'])->get('/get-items', [App\Http\Controllers\GoodsReceivedController::class, 'getPoItems'])->name('goodsreceived.getPoItems');
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User'])->get('/get-list', [App\Http\Controllers\GoodsReceivedController::class, 'getGrnList'])->name('goodsreceived.getGrnList');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin|Factory Warehouse User'])->get('/{grn_id}/print', [App\Http\Controllers\GoodsReceivedController::class, 'print'])->name('goodsreceived.print');
+
     });
 
     Route::middleware(['role:Super Admin|Admin'])->prefix('MaterialsReturnByCustomer')->group(function () {
@@ -956,6 +958,8 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::get('/', [DamageReturnController::class, 'index'])->name('damage_return.index');
         Route::get('/create', [DamageReturnController::class, 'create'])->name('damage_return.create');
         Route::post('/create', [DamageReturnController::class, 'store'])->name('damage_return.store');
+        Route::get('/{dr_id}/print', [DamageReturnController::class, 'print'])->name('damage_return.print');
        // Route::post('/get-stock', [DamageReturnController::class, 'getStock'])->name('damage_return.stock');
     });
+
 });

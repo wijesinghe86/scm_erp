@@ -33,7 +33,7 @@
                                 <a href="{{ route('invoices.new') }}" class="btn btn-success mb-2 float-end mb-2"> Add new
                                 </a>
                             </div>
-                        
+
                             <div class="content table-responsive table-full-width"> </div>
                             <table class="table table-bordered">
 
@@ -81,7 +81,7 @@
                                             <td>
                                                 <a href="{{ route('invoices.cancel', $invoice->id) }}">
 
-                                                    <i class="fa-solid fa-rectangle-xmark text-danger" onclick="return confirm('Do you want to cancel this Invoice?')"></i>
+                                                    <i class="fa-solid fa-rectangle-xmark text-danger" onclick="return confirm('Do you want to cancel this Delivery Order?')"></i>
                                                 </a>
                                             </td>
                                         </tr>

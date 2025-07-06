@@ -9,6 +9,7 @@ use App\Models\MrfPrfMain;
 use App\Models\MrPurchase;
 use Illuminate\Http\Request;
 use App\Models\MrPurchaseItem;
+use Illuminate\Validation\ValidationException;
 
 
 class PurchaseOrderMrController extends ParentController
@@ -28,21 +29,19 @@ class PurchaseOrderMrController extends ParentController
     public function getMrfPrfItems(Request $request){
         $lists =  MrfPrfItem::with('item')
                 ->where('prf_id',$request->prf_id)
+                ->where('remaining_qty', '>', 0)
                 ->get();
         return view('pages.PurchaseOrderMr.prfmrf_table',compact('lists'));
     }
 
     public function create(){
          $mrfprf_list = MrfPrfMain::with(['items'=> function ($item) {
-            return $item->where('approval_status', 'approved');
+             $item->where('approval_status', 'approved')->where('remaining_qty', '>', 0);
         }])
         ->whereHas('items', function ($q) {
 
-        return $q->where('approval_status', 'approved')
-        ->doesntHave('prf_items');
-         })
-
-        // ->doesntHave('po_items')
+         $q->where('approval_status', 'approved')->where('remaining_qty', '>', 0);
+    })
         ->get();
 
          $suppliers = Supplier::get();
@@ -90,20 +89,24 @@ class PurchaseOrderMrController extends ParentController
         $po->save();
         //dd($request->all());
         foreach($request->items as $item):
-            if(!isset($item['is_selected'])){
+            if(!isset($item['is_selected']))
+            {
                 continue;
             }
             $po_item = new MrPurchaseItem;
             $po_item->item_id = $item['item_id'];
             $po_item->po_qty = $item['po_qty'];
+            $po_item->remaining_qty = $item['po_qty'];
             $po_item->weight = $item['weight'];
             $po_item->po_id = $po->id;
             $po_item->prf_id = $po->prf_id;
             $po_item->unit_price = $item['Unit Price'];
             $po_item->item_value = $item['Value'];
             $po_item->save();
+            $prf_item= MrfPrfItem::where('stock_item_id',$item['item_id'])->where('prf_id', $po->prf_id)->first();
+            $prf_item->remaining_qty  = $prf_item->remaining_qty  - $item['po_qty'];
+            $prf_item->save();
         endforeach;
-
         flash("PO created successfully")->success();
         return redirect()->route('purchase_order_mr.index');
 
