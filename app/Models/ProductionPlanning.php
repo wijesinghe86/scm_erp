@@ -24,4 +24,5 @@ class ProductionPlanning extends Model
     {
         return $this->hasMany(JobOrder::class, 'pps_no', 'id');
     }
+    
 }

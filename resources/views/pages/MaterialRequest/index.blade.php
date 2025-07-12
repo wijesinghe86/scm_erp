@@ -22,6 +22,7 @@
                                         <td>MRF No</td>
                                         <td>Items</td>
                                         <td>Created_by</td>
+                                        <td>Verify</td>
                                         <td>Print</td>
                                     </tr>
                                 </thead>
@@ -54,6 +55,12 @@
                                             </td>
                                             </td>
                                             <td>{{ $materialrequest->createUser ? $materialrequest->createUser->name : 'User not found' }}
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('material_request.verify',['mr_id'=> $materialrequest->id]) }}">
+
+                                                    <i class="fa-sharp fa-solid fa-print"></i>
+                                                </a>
                                             </td>
                                             <td>
                                                 <a href="{{ route('material_request.print',['mr_id'=> $materialrequest->id]) }}">

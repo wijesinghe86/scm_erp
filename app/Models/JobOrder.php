@@ -30,4 +30,9 @@ class JobOrder extends Model
     {
         return $this->hasMany(JobOrderItem::class,'job_order_id','id');
     }
+
+    public function raw_mat_request()
+    {
+        return $this->hasMany(RawMaterialRequest::class, 'job_order_no', 'id');
+    }
 }

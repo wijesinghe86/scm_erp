@@ -23,11 +23,7 @@
                                     <input type="date" class="form-control" name="po_date"
                                         placeholder="PO Date">
                                 </div>
-                                {{-- <div class="form-group col-md-2">
-                                    <label>Intended Delivery Date</label>
-                                    <input type="date" class="form-control" name="po_delivery_date"
-                                        placeholder="Purchase Order Date">
-                                </div> --}}
+
                                 <div class="form-group col-md-6">
                                     <label>Supplier Name</label>
                                     <select class="form-control sup-select" name="supplier_id" placeholder="Select Supplier" >
@@ -87,7 +83,7 @@
                                     <br>
                                    <div class="form-group col-md-3">
                                         <label>Total PO Value</label>
-                                        <input type="number" class="form-control" name="po_value" id="po_value"
+                                        <input type="number" class="form-control" name="po_value" id="po_value" value="0"
                                             placeholder="PO Value" readonly>
 
                                     </div>
@@ -131,10 +127,19 @@
     function onChangeQty(e,index){
     const qty = e.value;
     const price = $(`#price-${index}`).val();
+    const remainingQty = $(`#remaining_qty-${index}`).val();
+    if  (parseInt(qty) > parseInt(remainingQty))
+    {
+
+        $(`#qty-${index}`).val(remainingQty);
+        alert('Quantity cannot be greater than remaining qty');
+        return
+    }
     console.log({qty});
     console.log({price});
     $(`#total-${index}`).val(qty*price);
-    // $('#total-'+index)
+    // const poValue = $(`#po_value`).val()
+    // $(`#po_value`).val(poValue=poValue+(qty*price));
     }
 
 
@@ -144,6 +149,8 @@
     console.log({qty});
     console.log({price});
     $(`#total-${index}`).val(qty*price);
+    // const poValue = $(`#po_value`).val()
+    // $(`#po_value`).val(poValue=poValue+(qty*price));
     }
 
     function povalue(index){

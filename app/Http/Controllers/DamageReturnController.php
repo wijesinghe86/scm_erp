@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use PDF;
 use Exception;
 use App\Models\Stock;
 use App\Models\StockItem;
@@ -19,7 +19,8 @@ class DamageReturnController extends Controller
 {
     public function index()
     {
-        return view('pages.DamageReturn.index');
+        $damage_returns = DamageReturn::with(['ori_items','dmg_items', 'location', 'createdBy'])->get();
+        return view('pages.DamageReturn.index', compact('damage_returns'));
     }
 
     public function generateNextNumber()
@@ -85,7 +86,7 @@ if ($isDrExist) {
         logger('$stockLog');
 
         //Stock
-        $stock= Stock::where('stock_item_id',$request->stock_id)->where('warehouse_id',$request->warehouse)->first();
+        $stock= Stock::where('stock_item_id',$request->dmg_stock_id)->where('warehouse_id',$request->warehouse)->first();
         if(!$stock){
             throw ValidationException::withMessages(['item'=> "Stock Not found"]);
         }
@@ -107,6 +108,20 @@ if ($isDrExist) {
          flash()->success($e->getMessage());
         return redirect()->back();
        }
+
+    }
+
+    public function print($dr_id)
+    {
+        $delivery_orders = DeliveryOrder::get();
+        $dr_list =DamageReturn::find($dr_id);
+
+        if ($dr_list == null) {
+            return abort(404);
+        }
+
+        $pdf = PDF::loadView('pages.DamageReturn.print', compact('delivery_orders', 'dr_list'))->setPaper('A5','landscape');
+        return $pdf->stream();
 
     }
 

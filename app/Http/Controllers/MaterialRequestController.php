@@ -163,6 +163,12 @@ class MaterialRequestController extends Controller
      return  redirect()->back()->withInput();
  }
 
+ public function verify($mr_id)
+ {
+    $mr_items = MaterialRequestItem::with(['item', 'materialRequest'])->find($mr_id);
+    return view ('pages.MaterialRequest.verify', compact('mr_items'));
+ }
+
  public function print($mr_id)
     {
         $mr_list =MaterialRequest::find($mr_id);
@@ -173,7 +179,7 @@ class MaterialRequestController extends Controller
 
         $pdf = PDF::loadView('pages.MaterialRequest.print', compact('mr_list'))->setPaper('A5','landscape');
         return $pdf->stream();
-        
+
     }
 
     }

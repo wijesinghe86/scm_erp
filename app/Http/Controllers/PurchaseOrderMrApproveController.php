@@ -15,7 +15,7 @@ class PurchaseOrderMrApproveController extends ParentController
     {
         //$list = MrPurchaseItem::where('po_id', '>=', '14')->get();
         $list = MrPurchaseItem::where('approval_status', '!=', "pending")->latest()->get();
-        return view('pages.PurchaseOrderMr.PurchaseOrderMrApprove.index', compact('list'));
+        return view ('pages.PurchaseOrderMr.PurchaseOrderMrApprove.index', compact('list'));
     }
 
     public function create()

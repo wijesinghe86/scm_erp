@@ -15,11 +15,35 @@ use Illuminate\Validation\ValidationException;
 class OpenningBalanceController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $openingBalance = OpBalance::get();
-        return view ('pages.OpBal.index', compact('openingBalance'));
+        $openingBalance = OpBalance::with(['items', 'location', 'createdBy'])
+            ->when($request->search, function ($q) use ($request) {
+                $q->where('ref_no', 'like', '%' . $request->search . '%')
+                    ->orwhere('date', 'like', '%' . $request->search . '%')
+                    ->orwhere('stock_id', 'like', '%' . $request->search . '%')
+                    ->orWhere(function ($qr) use ($request) {
+                        return $qr->whereHas('createdBy', function ($createdBy) use ($request) {
+                            $createdBy->where('name', 'like', '%' . $request->search . '%');
+                        });
+                    })
+                    ->orWhere(function ($qr) use ($request) {
+                        return $qr->whereHas('location', function ($location) use ($request) {
+                            $location->where('warehouse_name', 'like', '%' . $request->search . '%');
+                        });
+                    })
+                    ->orWhere(function ($query) use ($request) {
+                        return $query->whereHas('items', function ($items) use ($request) {
+                            $items->where('description', 'like', '%' . $request->search . '%');
+                        });
+                    });
+            })
+            ->latest()->paginate(50);
+        return view('pages.OpBal.index', compact('openingBalance'));
     }
+        // $openingBalance = OpBalance::get();
+        // return view ('pages.OpBal.index', compact('openingBalance'));
+
     public function create(Request $request)
     {
         // logger($request->all());

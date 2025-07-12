@@ -13,10 +13,32 @@ use App\Models\DeliveryOrderItem;
 
 class SalesOrderController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
 
-        $response['invoices'] = Invoice::all();
-        return view('pages.SalesOrder.index')->with($response);
+        {
+
+            $invoices = Invoice::with(['Customer', 'createUser'])
+            ->when($request->search, function($q) use ($request){
+                $q->where('invoice_number', 'like', '%' . $request->search. '%')
+                ->orwhere('payment_terms', 'like', '%' . $request->search. '%')
+                ->orWhere(function ($qr) use ($request){
+                    return $qr->whereHas('createUser', function ($createUser) use ($request){
+                    $createUser->where('name', 'like', '%' . $request->search . '%');
+                });
+                  })
+                  ->orWhere(function ($query) use ($request){
+                        return $query->whereHas('Customer', function ($Customer) use ($request){
+                            $Customer->where('customer_name', 'like', '%' . $request->search . '%');
+            });
+        });
+    })
+            ->latest()->paginate(50);
+            return view ('pages.SalesOrder.index', compact('invoices'));
+
+        }
+
+        // $response['invoices'] = Invoice::all();
+        // return view('pages.SalesOrder.index')->with($response);
 
     }
 

@@ -16,14 +16,14 @@
                                         placeholder="MRF date">
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <label>MRF No</label>
-                                    <input type="text" class="form-control" name="mrf_no" placeholder="MRF No"
-                                        value="{{ $next_number }}" readonly>
-                                </div>
-                                <div class="form-group col-md-3">
                                     <label>Required Date</label>
                                     <input type="date" class="form-control" name="required_date"
                                         value="{{ old('required_date') }}" id="required_date">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>MRF No</label>
+                                    <input type="text" class="form-control" name="mrf_no" placeholder="MRF No"
+                                        value="{{ $next_number }}" readonly>
                                 </div>
                             </div>
                             <div class="row">

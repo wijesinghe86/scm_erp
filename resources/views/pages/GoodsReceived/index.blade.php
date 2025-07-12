@@ -23,6 +23,7 @@
                                         <td>GRN Date</td>
                                         {{-- <td>Description</td> --}}
                                        <td>Created By</td>
+                                       <td>Print</td>
                                     </tr>
                                 </tr>
                             </thead>
@@ -31,12 +32,17 @@
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{ $goodsreceived->supplierDetails->supplier_name}}</td>
-                                    <td>{{ $goodsreceived->poDetails->po_no}}</td>
+                                    <td>{{ optional($goodsreceived->poDetails)->po_no}}</td>
                                     <td>{{ $goodsreceived->grn_no }}</td>
                                     <td>{{ $goodsreceived->grn_date}}</td>
                                     {{-- <td>{{ $goodsreceived->grnItems->item->description }} --}}
                                     <td>{{ $goodsreceived->createUser ? $goodsreceived->createUser->name : 'User not found' }}</td>
+                                    <td>
+                                        <a href="{{ route('goodsreceived.print',['grn_id'=> $goodsreceived->id]) }}">
 
+                                            <i class="fa-sharp fa-solid fa-print"></i>
+                                        </a>
+                                    </td>
 
                                 </tr>
                                 @endforeach
