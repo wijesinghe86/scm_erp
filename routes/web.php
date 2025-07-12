@@ -513,6 +513,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Factory Warehouse User|Production User|Production Admin'])->post('/create', [App\Http\Controllers\MaterialRequestController::class, 'store'])->name('material_request.store');
         Route::middleware(['role:Super Admin|Admin|Factory Admin|Factory Warehouse User|Production Admin'])->get('material_request/delete/{index}', [MaterialRequestController::class, 'deleteSessionItem'])->name('material_request.delete_item');
         Route::middleware(['role:Super Admin|Admin|Factory Admin|Factory Warehouse User|Production Admin'])->get('/{mr_id}/print', [App\Http\Controllers\MaterialRequestController::class, 'print'])->name('material_request.print');
+        Route::middleware(['role:Super Admin|Admin|Factory Admin|Factory Warehouse User|Production Admin'])->get('/{mr_id}/verify', [App\Http\Controllers\MaterialRequestController::class, 'verify'])->name('material_request.verify');
 
     });
 
@@ -940,13 +941,13 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{urgent_delivery_id}/print', [ReverseDeliveryOrderController::class, 'print'])->name('reverse_delivery.print');
     });
 
-    Route::middleware(['role:Super Admin|Admin|Sales Admin'])->prefix('urgent_invoice')->group(function () {
+    Route::middleware(['role:Super Admin|Admin|Sales Admin|Sales User'])->prefix('urgent_invoice')->group(function () {
         Route::get('/', [UrgentInvoiceController::class, 'index'])->name('urgent_invoice.index');
         Route::get('/create', [App\Http\Controllers\UrgentInvoiceController::class, 'create'])->name('urgent_invoice.create');
         Route::post('/create', [App\Http\Controllers\UrgentInvoiceController::class, 'store'])->name('urgent_invoice.store');
         Route::get('/get/invoice_no', [App\Http\Controllers\UrgentInvoiceController::class, 'generateInvoiceNumber'])->name('urgent_invoice.get.number');
-        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{urgent_invoice_id}/view', [App\Http\Controllers\UrgentInvoiceController::class, 'view'])->name('urgent_invoice.view');
-        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{urgent_invoice_id}/print', [App\Http\Controllers\UrgentInvoiceController::class, 'print'])->name('urgent_invoice.print');
+        Route::get('/{urgent_invoice_id}/view', [App\Http\Controllers\UrgentInvoiceController::class, 'view'])->name('urgent_invoice.view');
+        Route::get('/{urgent_invoice_id}/print', [App\Http\Controllers\UrgentInvoiceController::class, 'print'])->name('urgent_invoice.print');
     });
 
     Route::middleware(['role:Super Admin|Admin'])->prefix('CurrentOnHandBalance')->group(function () {
