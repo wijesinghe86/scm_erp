@@ -8,7 +8,7 @@
                         <div class="header">
                             <div style="margin-bottom: 20px;" class="row">
                                 <div class="col-md-8">
-                                    <h4 class="title"><a href="{{ route('dashboard') }}"><i class="mdi mdi-home"></i></a>Urgent Delivery Order List</h4>
+                                    <h4 class="title"><a href="{{ route('dashboard') }}"><i class="mdi mdi-home"></i></a>Reverse Delivery Order List</h4>
                                 </div>
                                 <div class="col-md-4" style="display:flex;justify-content: flex-end;">
                                     <a href="{{ route('reverse_delivery.create') }}"
@@ -67,7 +67,7 @@
                                                 </a>
                                             {{-- </td>  --}}
                                             </td>
-                                                
+
 
 
                                         </tr>
