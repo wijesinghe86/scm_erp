@@ -5,7 +5,7 @@
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Urgent Delivery Order</h4>
+                        <h4 class="card-title">Reverse Delivery Order</h4>
                         <form class="forms-sample" method="POST" action="{{ route('reverse_delivery.store') }}">
                             @csrf
                             <div style="display:none; position:absolute; top:0.5cm; bottom:-20px; left:28cm; right:20px; width: 400px;"
