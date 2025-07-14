@@ -218,7 +218,7 @@ export default function UrgentInvoiceCreate(props) {
         <div className="col-12 grid-margin stretch-card">
           <div className="card">
             <div className="card-body">
-              <h4 className="card-title">Urgent Invoice</h4>
+              <h4 className="card-title">Reverse Invoice</h4>
               <div>
                 <div className="row">
                   <div className="form-group col-md-2">
