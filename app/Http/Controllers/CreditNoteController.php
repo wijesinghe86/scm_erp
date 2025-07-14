@@ -12,12 +12,37 @@ use App\Models\BalanceOrderItem;
 use App\Models\DeliveryOrderItem;
 use App\Models\InvoiceReturnItem;
 use App\Models\credit_note_item_table;
+use Illuminate\Validation\ValidationException;
 
 class CreditNoteController extends Controller
 {
-    public function index()
-    {   $creditNotes = Creditnote::with(['items', 'invoice'])->get();
-        return view ('pages.CreditNote.index', compact('creditNotes'));
+    public function index(Request $request)
+    {
+        $creditNotes = Creditnote::with(['customer', 'invoice', 'createuser'])
+            ->when($request->search, function($q) use ($request){
+                $q->where('credit_note_no', 'like', '%' . $request->search. '%')
+                // ->orwhere('payment_terms', 'like', '%' . $request->search. '%')
+                ->orWhere(function ($qr) use ($request){
+                    return $qr->whereHas('invoice', function ($invoice) use ($request){
+                    $invoice->where('invoice_number', 'like', '%' . $request->search . '%');
+                });
+                  })
+                  ->orWhere(function ($qr) use ($request){
+                    return $qr->whereHas('createuser', function ($createuser) use ($request){
+                    $createuser->where('name', 'like', '%' . $request->search . '%');
+                });
+                  })
+                  ->orWhere(function ($query) use ($request){
+                        return $query->whereHas('customer', function ($customer) use ($request){
+                            $customer->where('customer_name', 'like', '%' . $request->search . '%');
+            });
+        });
+    })
+            ->latest()->paginate(50);
+            return view ('pages.CreditNote.index', compact('creditNotes'));
+
+        // $creditNotes = Creditnote::with(['items', 'invoice'])->get();
+        // return view ('pages.CreditNote.index', compact('creditNotes'));
     }
     public function generateNextNumber()
     {   $count  = Creditnote::get()->count();

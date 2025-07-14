@@ -80,10 +80,11 @@ class MrfPrfController extends ParentController
             $mrfprf_item->prfqty = $row['qty'];
             $mrfprf_item->mr_id = $request->mr_id;
             $mrfprf_item->prf_id = $mrfprf->id;
+            $mrfprf_item->remaining_qty = $row['qty'];
             $mrfprf_item->save();
     }
 
-    flash()->success("Purchase Request created");
+    flash()->success("Procurement Request created");
     return redirect()->route('mrfprf.index');
 }
 

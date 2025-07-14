@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use App\Models\Stock;
 use App\Models\Employee;
 use App\Models\Supplier;
@@ -32,6 +33,7 @@ class GoodsReceivedController extends Controller
     {
         $lists = MrPurchaseItem::with('item')
             ->where('po_id', $request->po_id)
+            ->where('remaining_qty', '>', 0)
             ->get();
         return view('pages.GoodsReceived.po_table', compact('lists'));
     }
@@ -42,12 +44,13 @@ class GoodsReceivedController extends Controller
         $suppliers = Supplier::get();
         $employees = Employee::get();
         $po_list = MrPurchase::with(['get_supplier', 'items'=> function ($item) {
-            return $item->where('approval_status', 'approved');
+            return $item->where('approval_status', 'approved')->where('remaining_qty', '>', 0);;
         }])
         ->whereHas('items', function ($q) {
-        return $q->where('approval_status', 'approved');
+        return $q->where('approval_status', 'approved')->where('remaining_qty', '>', 0);;
          })
-        ->doesntHave('grn_items')->get();
+        // ->doesntHave('grn_items')
+        ->get();
         $goods = new GoodsReceived;
         $next_number = $this->generateNextNumber();
         return view('pages.GoodsReceived.create', compact('warehouses', 'suppliers', 'employees', 'po_list', 'next_number'));
@@ -107,6 +110,10 @@ class GoodsReceivedController extends Controller
             $grn_item->expiry_date = $item['expiry_date'];
             $grn_item->po_id = $grn->po_id;
             $grn_item->save();
+            $po_item= MrPurchaseItem::where('item_id',$item['item_id'])->where('po_id', $grn->po_id)->first();
+            $po_item->remaining_qty  = $po_item->remaining_qty  - $item['rec_qty'];
+            $po_item->save();
+
 
             $stockLog->createLog(
                 StockLogService::$GOODS_RECCEIVED,
@@ -151,5 +158,18 @@ class GoodsReceivedController extends Controller
                 return $q->where('warehouse', $request->warehouse);
             });;
         return $grn_data;
+    }
+
+    public function print($grn_id)
+    {
+        $grn_list=GoodsReceived::find($grn_id);
+
+        if ($grn_list == null) {
+            return abort(404);
+        }
+
+        $pdf = PDF::loadView('pages.GoodsReceived.print', compact('grn_list'))->setPaper('A5','landscape');
+        return $pdf->stream();
+
     }
 }

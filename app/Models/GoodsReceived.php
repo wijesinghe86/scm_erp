@@ -18,6 +18,15 @@ class GoodsReceived extends Model
 {
     return $this->hasOne(User::class,'id','created_by');
 }
+public function receivedBy()
+{
+    return $this->hasOne(Employee::class,'id','received_by');
+}
+
+public function inspectedBy()
+{
+    return $this->hasOne(Employee::class,'id','inspected_by');
+}
 public function supplierDetails()
 {
     return $this->hasOne(Supplier::class,'id','supplier_id');
@@ -29,7 +38,7 @@ public function poDetails()
 
 public function grnItems()
 {
-    return $this->hasMany(GoodsReceivedItem::class,'id','grn_id');
+    return $this->hasMany(GoodsReceivedItem::class,'grn_id','id');
 }
 
 }

@@ -39,6 +39,7 @@ class JobOrderCreationController extends Controller
             ->whereHas('items', function ($q) {
                 return $q->where('approval_status', 'approved');
             })
+        ->whereDoesntHave('job_orders')
             ->get();
 
         $plants = PlantRegistration::get();

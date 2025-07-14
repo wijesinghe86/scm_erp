@@ -29,23 +29,22 @@ class InvoiceController extends ParentController
     {
 
         $invoices = Invoice::with(['Customer', 'SalesStaff'])
-        ->when($request->search, function($q) use ($request){
-            $q->where('invoice_number', 'like', '%' . $request->search. '%')
-            ->orwhere('payment_terms', 'like', '%' . $request->search. '%')
-            ->orWhere(function ($qr) use ($request){
-                return $qr->whereHas('SalesStaff', function ($SalesStaff) use ($request){
-                $SalesStaff->where('employee_name_with_intial', 'like', '%' . $request->search . '%');
-            });
-              })
-              ->orWhere(function ($query) use ($request){
-                    return $query->whereHas('Customer', function ($Customer) use ($request){
-                        $Customer->where('customer_name', 'like', '%' . $request->search . '%');
-        });
-    });
-})
-        ->latest()->paginate(50);
-        return view ('pages.Invoices.all', compact('invoices'));
-
+            ->when($request->search, function ($q) use ($request) {
+                $q->where('invoice_number', 'like', '%' . $request->search . '%')
+                    ->orwhere('payment_terms', 'like', '%' . $request->search . '%')
+                    ->orWhere(function ($qr) use ($request) {
+                        return $qr->whereHas('SalesStaff', function ($SalesStaff) use ($request) {
+                            $SalesStaff->where('employee_name_with_intial', 'like', '%' . $request->search . '%');
+                        });
+                    })
+                    ->orWhere(function ($query) use ($request) {
+                        return $query->whereHas('Customer', function ($Customer) use ($request) {
+                            $Customer->where('customer_name', 'like', '%' . $request->search . '%');
+                        });
+                    });
+            })
+            ->latest()->paginate(50);
+        return view('pages.Invoices.all', compact('invoices'));
     }
 
     public function new()
@@ -57,7 +56,7 @@ class InvoiceController extends ParentController
         $employees = Employee::all();
         $stockItems = StockItem::all();
         $warehouses = Warehouse::all();
-        $billTypes = BillType::where('type','invoice')->get();
+        $billTypes = BillType::where('type', 'invoice')->get();
         $invoice_number = "";
         // $invoiceOption = $setting->InvoiceOption($invoice_number);
         Cart::session(request()->user()->id)->clear();
@@ -69,7 +68,7 @@ class InvoiceController extends ParentController
     {
         $invocieCategoryId = data_get($request, 'invoice_category');
         $billType = BillType::find($invocieCategoryId);
-        $invoice_count = Invoice::where('category',$billType->id)->count();
+        $invoice_count = Invoice::where('category', $billType->id)->count();
         $prefix = $billType->billtype_code;
 
         return $prefix . sprintf('%06d', $invoice_count + 1);
@@ -129,7 +128,7 @@ class InvoiceController extends ParentController
 
             $request['category'] = $request->invoice_category;
             $request['type'] = $request->invoice_type;
-            $request['option'] =$request->invoice_option;
+            $request['option'] = $request->invoice_option;
             $data = $request->all();
 
             $billing = (new Invoice)->calculateTotal(
@@ -165,7 +164,7 @@ class InvoiceController extends ParentController
             $items =  Cart::session(request()->user()->id)->getContent();
             foreach ($items as $key => $item) {
                 InvoiceItem::create([
-                    'invoice_id'=>$invoice->id,
+                    'invoice_id' => $invoice->id,
                     'invoice_number' => $invoice->invoice_number,
                     'item_id' => $item->id,
                     'stock_no' => $item->attributes->stock_no,
@@ -236,8 +235,7 @@ class InvoiceController extends ParentController
         $invoices->cancelled_by = request()->user()->name;
         $invoices->save();
         return redirect()->route('invoices.all')->with($response);
-
-}
+    }
 
     public function preview($invoice_id)
     {
@@ -262,9 +260,8 @@ class InvoiceController extends ParentController
 
         $view_path = "pages.Invoices.pdf";
         logger(config('services.project_name'));
-        if(config('services.project_name') == "jsi_erp"){
+        if (config('services.project_name') == "jsi_erp") {
             $view_path = "pages.Invoices.jsi_pdf";
-
         }
         $pdf = PDF::loadView("$view_path", compact('invoices'));
         $invoices->status = '123';

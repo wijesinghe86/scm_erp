@@ -39,6 +39,7 @@ class RawMaterialRequestController extends Controller
             ->whereHas('items', function ($q) {
                 return $q->where('approval_status', 'approved');
             })
+            ->whereDoesntHave('raw_mat_request')
             ->get();
         $stock_items = StockItem::with('stocks')->get();
         return view('pages.RawMaterialRequest.create', compact('employees', 'next_number', 'job_orders', 'stock_items'));

@@ -18,7 +18,7 @@ class SfgrnController extends Controller
     // public function generateNextNumber()
     // {
     //     $count  = FinishGood::get()->count();
-    //     return "FGRN" . sprintf('%06d', $count + 1);
+    //     return "SFG" . sprintf('%06d', $count + 1);
     // }
 
     public function create()

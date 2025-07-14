@@ -22,6 +22,7 @@
                                 <div class="form-group col-md-3">
                                 <label>Reference No</label>
                                 <select class="form-control ref-select" name="reference_no" id="reference_no">
+                                    <option value="">Select</option>
                                     @foreach ($delivery_orders as $delivery_order)
                                         <option value="{{ $delivery_order->id }}">{{ $delivery_order->delivery_order_no }}
                                         </option>
@@ -31,6 +32,7 @@
                                 <div class="form-group col-md-3">
                                     <label>Warehouse</label>
                                     <select class="form-control warehouse-select" name="warehouse" id="warehouse">
+                                        <option value="">Select</option>
                                         @foreach ($warehouses as $warehouse)
                                             <option value="{{ $warehouse->id }}">{{ $warehouse->warehouse_name }}
                                             </option>
@@ -84,7 +86,7 @@
                                 </div>
                                 <div class="form-group col-md-5">
                                     <label>Description</label>
-                                    <select style="width: 100%;" class="form-control item-select" name="stock_id" id="stock_id" onchange="itemOnChange(this)">
+                                    <select style="width: 100%;" class="form-control item-select" name="dmg_stock_id" id="dmg_stock_id" onchange="itemOnChange(this)">
                                         <option value="">Select Item</option>
                                         @foreach ($stock_items as $stock_item)
                                             <option value="{{ $stock_item->id }}">{{ $stock_item->description }}
