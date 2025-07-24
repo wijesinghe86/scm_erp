@@ -201,12 +201,16 @@ class UrgentInvoiceController extends Controller
         if ($request->invoice_option == '2') {
             $excludeVat = $this->getSubTotal($request) / ((100 + $this->vatRate) / 100);
             return $excludeVat * ($this->vatRate / 100);
+
         }
         return $this->getSubTotal($request) * ($this->vatRate / 100);
     }
 
     public function getNetTotal($request)
     {
+        if ($request->invoice_option == '2') {
+            return $this->getSubTotal($request);
+        }
         return $this->getSubTotal($request) + $this->getVatAmount($request);
     }
 

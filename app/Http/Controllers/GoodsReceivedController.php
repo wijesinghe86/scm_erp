@@ -111,7 +111,7 @@ class GoodsReceivedController extends Controller
             $grn_item->po_id = $grn->po_id;
             $grn_item->save();
             $po_item= MrPurchaseItem::where('item_id',$item['item_id'])->where('po_id', $grn->po_id)->first();
-            $po_item->remaining_qty  = $po_item->remaining_qty  - $item['rec_qty'];
+            $po_item->remaining_qty  = $po_item->remaining_qty - $item['rec_qty'];
             $po_item->save();
 
 

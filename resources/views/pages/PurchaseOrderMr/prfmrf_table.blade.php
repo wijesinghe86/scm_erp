@@ -25,9 +25,9 @@
                 <td>{{ $row->item->stock_number }}</td>
                 <td>{{ $row->item->description }}</td>
                 <td>{{ $row->item->unit }}</td>
-                <td>{{ $row->prfqty }}</td>
+                <td style="width: 10mm" >{{ $row->prfqty }}</td>
                 <td><input class="form-control" type="number" value="{{ $row->remaining_qty }}" id="remaining_qty-{{ $index }}" readonly></td>
-                <td>
+                <td style="width: 10mm">
                     {{-- <input id="qty-{{ $index }}" onkeyup="qtyfunc(this)" class="form-control" name="items[{{ $index }}][po_qty]" type="number"
                         value="{{ $row->prfqty }}"> --}}
                         <input oninput="onChangeQty(this,{{ $index }})" class="form-control" id="qty-{{ $index }}"
@@ -53,8 +53,11 @@
         @endforeach
     </tbody>
     {{-- <tfoot>
-        <td colspan="8">Total Value</td>
-        <td id="total"></td>
+        <tr>
+            <td colspan="9" class="text-end"><strong>Total PO Value</strong></td>
+            <td><input type="number" class="form-control" id="table_po_value" value="0" readonly></td>
+            <td></td>
+        </tr>
     </tfoot> --}}
 </table>
 </div>
@@ -62,41 +65,21 @@
 
 
 {{-- <script>
-    var total = document.getElementById("total");
-    var netPrice = document.getElementsByClassName("netPrice");
-
-    function totalresult()
-    {
-        var cal = 0;
-        for(let i = 0; i < netPrice.lenght; i++){
-        cal += parseInt(netprice[i].innerText);
+function updateTotalPOValue() {
+    let total = 0;
+    $("input[id^='total-']").each(function() {
+        let val = parseFloat($(this).val());
+        if (!isNaN(val)) total += val;
+    });
+    $('#table_po_value').val(total);
+    // Also update the main form's PO Value field if it exists
+    if ($('#po_value').length) {
+        $('#po_value').val(total);
     }
-    total.innerText = cal;
-    // $('#total').val(cal)
-
-    }
- function quantityfunc(q){
-    // console.log(q.value);
-    //console.log(q.parentElement.parentElement.children[6].children[0].value);
-    var priceValue = q.parentElement.parentElement.children[6].children[0].value;
-    q.parentElement.parentElement.children[8].innerHTML = q.value * priceValue;
-    totalresult();
-
-        // console.log(netprice[i].innerHTML)
-    }
-
-    // console.log(cal)
-    // console.log(q.value * priceValue);
-
-
-
- function pricefunc(p){
-    var quantityvalue = p.parentElement.parentElement.children[5].children[0].value;
-    p.parentElement.parentElement.children[8].innerHTML = p.value * quantityvalue;
-    totalresult();
- }
-
-    </script> --}}
+}
+$(document).on('input', "input[id^='total-']", updateTotalPOValue);
+$(document).ready(updateTotalPOValue);
+</script> --}}
 
 
 

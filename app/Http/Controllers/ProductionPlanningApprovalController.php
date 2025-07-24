@@ -9,10 +9,38 @@ use Illuminate\Validation\ValidationException;
 
 class ProductionPlanningApprovalController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $list = ProductionPlaningItem::where('approval_status', '!=', "pending")->latest()->get();
-        return view('pages.ProductionPlanningAndScheduleApproval.index', compact('list'));
+        $list = ProductionPlaningItem::with(['production_planing', 'demand_forecasting', 'stock_item', 'createdBy'])
+                //           ->when($request->search, function($q) use ($request){
+                //             $q->where('approval_status', 'like', '%' . $request->search . '%')
+
+                //             ->orWhere(function ($qr) use ($request){
+                //                 return $qr->whereHas('production_planing', function ($production_planing) use ($request){
+                //                 $production_planing->where('pps_no', 'like', '%' . $request->search . '%');
+                //             });
+                //               })
+                //               ->orWhere(function ($qr) use ($request){
+                //                 return $qr->whereHas('demand_forecasting', function ($demand_forecasting) use ($request){
+                //                 $demand_forecasting->where('df_no', 'like', '%' . $request->search . '%');
+                //             });
+                //               })
+                //               ->orWhere(function ($query) use ($request){
+                //                 return $query->whereHas('stock_item', function ($customer) use ($request){
+                //                     $customer->where('description', 'like', '%' . $request->search . '%');
+                //     });
+                // })
+
+                // ->orWhere(function ($qr) use ($request){
+                //     return $qr->whereHas('createdBy', function ($createdBy) use ($request){
+                //     $createdBy->where('name', 'like', '%' . $request->search . '%');
+                // });
+                //   });
+                // })
+                          ->latest()
+                          ->paginate(50);
+                          return view('pages.ProductionPlanningAndScheduleApproval.index', compact('list'));
+
     }
 
     public function create()

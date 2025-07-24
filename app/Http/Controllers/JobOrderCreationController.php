@@ -24,10 +24,32 @@ class JobOrderCreationController extends Controller
         return $first_letter . sprintf('%06d', $job_order_count + 1);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $job_orders = JobOrder::get();
-        return view('pages.JobOrderCreation.index',compact('job_orders'));
+        $job_orders = JobOrder::with(['plant', 'items.stock_item'])
+                          ->when($request->search, function($q) use ($request){
+                            $q->where('job_order_no', 'like', '%' . $request->search . '%')
+                            ->orwhere('df_no', 'like', '%' . $request->search . '%')
+                            ->orwhere('jo_date', 'like', '%' . $request->search . '%')
+                            ->orWhere(function ($qr) use ($request){
+                                return $qr->whereHas('plant', function ($plant) use ($request){
+                                $plant->where('plant_number', 'like', '%' . $request->search . '%');
+                            });
+                              })
+                              ->orWhere(function ($query) use ($request){
+                                return $query->whereHas('items.stock_item', function ($customer) use ($request){
+                                    $customer->where('stock_number', 'like', '%' . $request->search . '%');
+                    });
+                });
+
+                })
+
+                          ->latest()
+                          ->paginate(25);
+                          return view('pages.JobOrderCreation.index', compact('job_orders'));
+
+        // $job_orders = JobOrder::get();
+        // return view('pages.JobOrderCreation.index',compact('job_orders'));
     }
 
     public function create()

@@ -104,7 +104,7 @@ class PurchaseOrderMrController extends ParentController
             $po_item->item_value = $item['Value'];
             $po_item->save();
             $prf_item= MrfPrfItem::where('stock_item_id',$item['item_id'])->where('prf_id', $po->prf_id)->first();
-            $prf_item->remaining_qty  = $prf_item->remaining_qty  - $item['po_qty'];
+            $prf_item->remaining_qty  = $prf_item->remaining_qty - $item['po_qty'];
             $prf_item->save();
         endforeach;
         flash("PO created successfully")->success();

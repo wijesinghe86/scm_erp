@@ -12,10 +12,31 @@ use App\Models\RawMaterialSerialCode;
 
 class RawMaterialsSerialCodeAssigningController extends ParentController
 {
-    public function index()
+    public function index(Request $request)
     {
-        $list = RawMaterialSerialCode::get();
-         return view('pages.RawMaterialsSerialCodeAssigning.index', compact('list'));
+        $list = RawMaterialSerialCode::with(['grn', 'item'])
+        ->when($request->search, function($q) use ($request){
+          $q->where('serial_no', 'like', '%' . $request->search . '%')
+          ->orWhere(function ($qr) use ($request){
+          return $qr->whereHas('grn', function ($grn) use ($request){
+          $grn->where('grn_no', 'like', '%' . $request->search . '%');
+          });
+            })
+
+    ->orWhere(function ($query) use ($request){
+    return $query->whereHas('item', function ($item) use ($request){
+        $item->where('stock_number', 'like', '%' . $request->search . '%');
+});
+});
+
+})
+
+        ->latest()
+        ->paginate(25);
+        return view('pages.RawMaterialsSerialCodeAssigning.index', compact('list'));
+
+        // $list = RawMaterialSerialCode::get();
+        //  return view('pages.RawMaterialsSerialCodeAssigning.index', compact('list'));
      }
 
      public function create()
