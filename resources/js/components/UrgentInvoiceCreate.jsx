@@ -176,7 +176,8 @@ export default function UrgentInvoiceCreate(props) {
   }, [formData, subTotal])
 
   const netTotal = useMemo(() => {
-    return subTotal + vatAmount;
+    return subTotal;
+    // return subTotal + vatAmount;
   }, [subTotal, vatAmount])
 
   const totalDiscount = useMemo(() => {

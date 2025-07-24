@@ -81,12 +81,12 @@
                             </div>
                                     <div class="items_table"></div>
                                     <br>
-                                   <div class="form-group col-md-3">
+                                   {{-- <div class="form-group col-md-3">
                                         <label>Total PO Value</label>
                                         <input type="number" class="form-control" name="po_value" id="po_value" value="0"
                                             placeholder="PO Value" readonly>
 
-                                    </div>
+                                    </div> --}}
                                     <button type="submit" class="btn btn-success me-2">Complete Purchase Order</button>
                         </form>
                     </div>
@@ -155,7 +155,7 @@
 
     function povalue(index){
         var tot = 0;
-            tot = tot +  $(`#total-${index}`).val();
+            tot = tot +  $(`#total-${index}`).val(qty*price);
             $('#po_value').val(tot);
 
     }

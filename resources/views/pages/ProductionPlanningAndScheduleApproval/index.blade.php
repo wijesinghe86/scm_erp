@@ -8,6 +8,24 @@
                     <div class="card-body">
                         <h4><a href="{{ route('dashboard') }}"><i class="mdi mdi-home"></i></a>Production Planning And
                             Schedule Approval Registry</h2>
+                            <br>
+                            <br>
+                            <div class ="container">
+                                <div class="row m-2">
+                                    <form action="" class="col-9">
+                                        <div class="form-group">
+                                            <input type="text" name="search" id="" class="form-control"
+                                                placeholder="Search by PPS No / PPS Date / DF No / Stock Number "
+                                                value="{{ request('search') }}">
+                                        </div>
+                                        <button class="btn btn-primary">Search</button>
+                                        <a href="{{ route('production_planning_and_schedule_approval.index') }}">
+                                            <button class="btn btn-primary" type="button">Reset</button>
+                                        </a>
+                                    </form>
+                                    <br>
+                                    <br>
+                                    <br>
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                 <a href="{{ route('production_planning_and_schedule_approval.create') }}"
                                     class="btn btn-success float-end mb-2">
@@ -44,6 +62,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                {{$list->links('pagination::bootstrap-5')  }}
                             </div>
                     </div>
                 </div>
@@ -52,10 +71,10 @@
     </div>
 @endsection
 
-@push('scripts')
+{{-- @push('scripts')
     <script>
-        // $(document).ready(function() {
-        //     $('#pps_table').DataTable();
-        // });
+        $(document).ready(function() {
+            $('#pps_table').DataTable();
+        });
     </script>
-@endpush
+@endpush --}}

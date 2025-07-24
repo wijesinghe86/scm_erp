@@ -25,10 +25,30 @@ class RawMaterialIssueForProductionController extends Controller
         return "RMI" . sprintf('%06d', $count + 1);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $list = RawMaterialIssueItem::get();
+        $list = RawMaterialIssueItem::with(['raw_material_issue', 'raw_material_request_item'])
+        ->when($request->search, function($q) use ($request){
+          $q->where('semi_product_serial_no', 'like', '%' . $request->search . '%')
+          ->orWhere(function ($qr) use ($request){
+              return $qr->whereHas('raw_material_issue', function ($issue) use ($request){
+              $issue->where('rmi_no', 'like', '%' . $request->search . '%');
+          });
+            })
+            ->orWhere(function ($query) use ($request){
+              return $query->whereHas('raw_material_request_item.stock_item', function ($reqitem) use ($request){
+                  $reqitem->where('stock_number', 'like', '%' . $request->search . '%');
+  });
+});
+
+})
+
+        ->latest()
+        ->paginate(25);
         return view('pages.RawMaterialIssueForProduction.index', compact('list'));
+
+        // $list = RawMaterialIssueItem::get();
+        // return view('pages.RawMaterialIssueForProduction.index', compact('list'));
     }
 
     public function create()
@@ -98,7 +118,7 @@ class RawMaterialIssueForProductionController extends Controller
                 $rmi_item->save();
 
 
-               
+
                 $stockLog->createLog(
                     StockLogService::$RAWMATERIAL_ISSUE,
                     $request->warehouse_code,

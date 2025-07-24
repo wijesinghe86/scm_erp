@@ -24,10 +24,31 @@ class RawMaterialReceivedController extends Controller
         return "MRC" . sprintf('%06d', $count + 1);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $list = RawMaterialReceived::get();
+        $list = RawMaterialReceived::with(['items'])
+        ->when($request->search, function($q) use ($request){
+          $q->where('rma_no', 'like', '%' . $request->search . '%')
+          ->orwhere('rmi_no', 'like', '%' . $request->search . '%')
+          ->orWhere(function ($qr) use ($request){
+              return $qr->whereHas('items.stock_item', function ($item) use ($request){
+              $item->where('stock_number', 'like', '%' . $request->search . '%');
+          });
+            })
+            ->orWhere(function ($query) use ($request){
+              return $query->whereHas('items', function ($reqitem) use ($request){
+                  $reqitem->where('serial_no', 'like', '%' . $request->search . '%');
+  });
+});
+
+})
+
+        ->latest()
+        ->paginate(25);
         return view('pages.RawMaterialReceivedForProduction.index', compact('list'));
+
+        // $list = RawMaterialReceived::get();
+        // return view('pages.RawMaterialReceivedForProduction.index', compact('list'));
     }
 
     public function create()
