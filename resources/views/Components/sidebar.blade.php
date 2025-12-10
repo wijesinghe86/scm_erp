@@ -244,6 +244,11 @@
                                     Invoice</a>
                             </li>
                         @endhasanyrole
+                        @hasanyrole('Super Admin|Admin|Sales User|Sales Admin')
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('reverse_returns.new') }}">Reverse
+                                    Return</a>
+                            </li>
+                        @endhasanyrole
                     </ul>
                 </div>
             </li>

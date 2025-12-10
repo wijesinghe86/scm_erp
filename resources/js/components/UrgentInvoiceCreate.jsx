@@ -233,7 +233,7 @@ export default function UrgentInvoiceCreate(props) {
                         const mappedItems = deliveryOrder?.items?.map(row => {
                           return {
                             ...row,
-                            isSelected: false,
+                            isSelected: true,
                             unit_rate: '',
                             weight: '0',
                             discount_type: '',
@@ -517,7 +517,7 @@ export default function UrgentInvoiceCreate(props) {
                     <table class="table bordered form-group">
                       <thead>
                         <tr>
-                          <th></th>
+
                           <th>Stock No</th>
                           <th>Description</th>
                           <th>U/M</th>
@@ -545,12 +545,7 @@ export default function UrgentInvoiceCreate(props) {
                           const itemTotal = itemAmount - discount || 0
                           return (
                             <tr>
-                              <td><input type="checkbox"
-                                checked={row?.isSelected}
-                                onChange={() => {
-                                  onItemChange(index, { ...row, isSelected: !row?.isSelected })
-                                }}
-                              /></td>
+                              
                               <td>{row?.item?.stock_number}</td>
                               <td>{row?.item?.description}</td>
                               <td>{row?.item?.unit}</td>

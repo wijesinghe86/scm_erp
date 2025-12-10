@@ -132,6 +132,9 @@ class UrgentInvoiceController extends Controller
             $urgentInvoice->created_by = request()->user()->id;
             $urgentInvoice->save();
 
+            $urgent_delivery = new UrgentDelivery();
+            $urgent_delivery->ininvoice_id = $urgentInvoice->id;
+
 
             foreach ($request->items as $item) {
 
@@ -270,5 +273,18 @@ class UrgentInvoiceController extends Controller
     //     return $data;
     // }
 
+    public function getByCustomerId(Request $request)
+    {
+        $customer_id = $request->customer_id;
+
+        $urgent_invoices = UrgentInvoice::with('delivery_order.items')
+        ->where('customer_id', $customer_id)
+        ->where('is_returned', false)
+        ->get();
+
+        return [
+            'urgent_invoices'=>$urgent_invoices,
+        ];
+    }
 
 }

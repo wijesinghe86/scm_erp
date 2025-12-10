@@ -77,6 +77,7 @@ use App\Http\Controllers\ManAndEquipmentSafetyController;
 use App\Http\Controllers\MiscellaneousReceivedController;
 use App\Http\Controllers\OverShortageAndDamageController;
 use App\Http\Controllers\PurchaseOrderMrApproveController;
+use App\Http\Controllers\ReverseLogisticsReturnController;
 use App\Http\Controllers\CurrentStockOnHandReoprtController;
 use App\Http\Controllers\MaterialsReturnByCustomerController;
 use App\Http\Controllers\RawMaterialRequestApproveController;
@@ -946,6 +947,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::get('/create', [App\Http\Controllers\UrgentInvoiceController::class, 'create'])->name('urgent_invoice.create');
         Route::post('/create', [App\Http\Controllers\UrgentInvoiceController::class, 'store'])->name('urgent_invoice.store');
         Route::get('/get/invoice_no', [App\Http\Controllers\UrgentInvoiceController::class, 'generateInvoiceNumber'])->name('urgent_invoice.get.number');
+        Route::get('/get/by_customer_id', [App\Http\Controllers\UrgentInvoiceController::class, 'getByCustomerId'])->name('urgent_invoice.get.byCustmer');
         Route::get('/{urgent_invoice_id}/view', [App\Http\Controllers\UrgentInvoiceController::class, 'view'])->name('urgent_invoice.view');
         Route::get('/{urgent_invoice_id}/print', [App\Http\Controllers\UrgentInvoiceController::class, 'print'])->name('urgent_invoice.print');
     });
@@ -963,4 +965,10 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
        // Route::post('/get-stock', [DamageReturnController::class, 'getStock'])->name('damage_return.stock');
     });
 
+    Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin'])->prefix('reverse_returns')->group(function () {
+       Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin'])->get('/', [ReverseLogisticsReturnController::class, 'index'])->name('reverse_returns.index');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/new', [ReverseLogisticsReturnController::class, 'new'])->name('reverse_returns.new');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->post('/new', [ReverseLogisticsReturnController::class, 'store'])->name('reverse_returns.store');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{invoice_return}/view', [ReverseLogisticsReturnController::class, 'view'])->name('reverse_returns.view');
+    });
 });
