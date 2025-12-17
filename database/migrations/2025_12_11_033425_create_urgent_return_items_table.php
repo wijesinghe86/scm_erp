@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('location_id')->nullable();
             $table->string('delivery_order_item_id')->nullable();
             $table->string('stock_no')->nullable();
-            $table->string('return_reason')->nullable();
             $table->string('description')->nullable();
             $table->string('uom')->nullable();
             $table->string('quantity')->nullable();

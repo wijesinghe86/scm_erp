@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class urgent_return extends Model
+class UrgentReturn extends Model
 {
     use HasFactory;
 }

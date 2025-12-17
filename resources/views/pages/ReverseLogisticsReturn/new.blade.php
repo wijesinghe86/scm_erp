@@ -2,6 +2,6 @@
 @section('content')
     <div id="urgentInvoiceReturnCreate"   
     data-customers="{{$customers}}"
-    data-customers="{{$warehouses}}"
+    data-warehouses="{{$warehouses}}"
     >Loading</div>
 @endsection
