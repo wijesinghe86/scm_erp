@@ -245,8 +245,19 @@
                             </li>
                         @endhasanyrole
                         @hasanyrole('Super Admin|Admin|Sales User|Sales Admin')
-                            <li class="nav-item"> <a class="nav-link" href="{{ route('reverse_returns.new') }}">Reverse
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('reverse_returns.index') }}">Reverse
                                     Return</a>
+                            </li>
+                        @endhasanyrole
+                        @hasanyrole('Super Admin|Admin|Sales User|Sales Admin')
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('reverse_returns.approvalIndex') }}">Approved Reverse
+                    <br>Returns
+                </a>
+            </li>
+            @endhasanyrole
+            @hasanyrole('Super Admin|Admin|Executive User')
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('reverse_credit_note.create') }}">Reverse Credit
+                                    Note</a>
                             </li>
                         @endhasanyrole
                     </ul>

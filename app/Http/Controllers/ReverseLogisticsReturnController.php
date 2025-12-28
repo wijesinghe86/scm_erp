@@ -1,21 +1,27 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use PDF;
+use App\Models\Stock;
 use App\Models\Customer;
 use App\Models\Warehouse;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\UrgentDeliveryItem;
 use App\Models\UrgentReturn;
-use App\Models\UrgentReturnItem;
-use Illuminate\Support\Facades\DB;
-use App\Models\UrgentDelivery;
+use Illuminate\Http\Request;
 use App\Models\UrgentInvoice;
+use App\Models\UrgentDelivery;
+use App\Models\UrgentReturnItem;
+use App\Services\StockLogService;
+use App\Models\UrgentDeliveryItem;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class ReverseLogisticsReturnController extends Controller
 {
-
+public function index()
+{
+$urgent_return = UrgentReturn::get();
+return view('pages.ReverseLogisticsReturn.index', compact('urgent_return'));
+}
     public function generateInvoiceNumber()
     {
         $invoice_count = UrgentReturn::count();
@@ -92,4 +98,59 @@ class ReverseLogisticsReturnController extends Controller
             logger($e->getMessage());
         }
     }
+
+    public function view(UrgentReturn $urgent_returns)
+    {
+        return view('pages.ReverseLogisticsReturn.view', compact('urgent_returns'));
+    }
+
+    public function approvalIndex()
+    {
+        $urgent_return =  UrgentReturn::where('is_approved', true)->get();
+        return view('pages.Returns.approval', compact('urgent_return'));
+    }
+
+    public function approval(Request $request, UrgentReturn $urgent_returns)
+    {
+        $stockLog = new StockLogService;
+
+        $urgent_returns->is_approved = true;
+        $urgent_returns->approved_by = request()->user()->id;
+        $urgent_returns->save();
+
+        foreach($urgent_returns->items as $item)
+        {
+            //logger($item);
+            $stock = Stock::where('stock_item_id', data_get($item, 'item_id'))
+                        ->where('warehouse_id', data_get($item, 'location_id'))
+                        ->first();
+                    $stock->qty = $stock->qty + data_get($item, 'quantity');
+                    $stock->save();
+
+                    $stockLog->createLog(
+                            StockLogService::$REVERSE_RETURN,
+                            data_get($item, 'location_id'),
+                            data_get($item, 'item_id'),
+                            data_get($item, 'quantity'),
+                            StockLogService::$ADD,
+                            $urgent_returns->return_no,
+                            $request->user()->id,
+                            null,
+                        );
+
+}
+$response['alert-success'] = 'Return Approved Successfully!';
+
+return redirect()->back()->with($response);
+}
+public function print($return_id)
+    {
+        $rmrs_list =UrgentReturn::find($return_id);
+
+        // $stock_adjustmet_items = StockAdjustmentItem::with(['fromWarehouse', 'from_stock_item'])->find($stock_adjustment_id);
+
+        $pdf = PDF::loadView('pages.ReverseLogisticsReturn.print', compact('rmrs_list'))->setPaper('A5','landscape');
+        return $pdf->stream();
+    }
+
 }

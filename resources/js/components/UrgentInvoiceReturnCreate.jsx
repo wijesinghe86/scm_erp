@@ -61,7 +61,7 @@ export default function UrgentInvoiceReturnCreate(props) {
         try {
             const response = await axios.post('/reverse_returns/new', requestData)
             //TODO:uncomment when the UrgentInvoiceReturn list component is created
-            // window.location.href = "/reverse_returns"
+             window.location.href = "/reverse_returns"
         } catch (error) {
             captureErrors(error)
         }
