@@ -132,6 +132,9 @@ class UrgentInvoiceController extends Controller
             $urgentInvoice->created_by = request()->user()->id;
             $urgentInvoice->save();
 
+            $urgent_delivery = new UrgentDelivery();
+            $urgent_delivery->ininvoice_id = $urgentInvoice->id;
+
 
             foreach ($request->items as $item) {
 
@@ -148,14 +151,9 @@ class UrgentInvoiceController extends Controller
                 $urgentInvoiceItems->item_value = $item['unit_rate'] * $item['issued_qty'] - $item['discount_amount'];
                 $urgentInvoiceItems->urgent_delivery_no = $request->delivery_order_no;
                 $urgentInvoiceItems->save();
-
-
-
             }
 
             DB::commit();
-
-
         } catch (Exception $error) {
             logger($error);
             DB::rollback();
@@ -201,7 +199,6 @@ class UrgentInvoiceController extends Controller
         if ($request->invoice_option == '2') {
             $excludeVat = $this->getSubTotal($request) / ((100 + $this->vatRate) / 100);
             return $excludeVat * ($this->vatRate / 100);
-
         }
         return $this->getSubTotal($request) * ($this->vatRate / 100);
     }
@@ -270,5 +267,17 @@ class UrgentInvoiceController extends Controller
     //     return $data;
     // }
 
+    public function getByCustomerId(Request $request)
+    {
+        $customer_id = $request->customer_id;
 
+        $urgent_invoices = UrgentInvoice::with(['items.item', 'delivery_order.items.item', 'delivery_order.location'])
+            ->where('customer_id', $customer_id)
+            ->where('is_returned', false)
+            ->get();
+
+        return [
+            'urgent_invoices' => $urgent_invoices,
+        ];
+    }
 }

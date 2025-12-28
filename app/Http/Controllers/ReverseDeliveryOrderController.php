@@ -141,6 +141,7 @@ public function store(Request $request)
             $urgent_delivery_item->invoice_id = $urgent_delivery->id;
             $urgent_delivery_item->item_id = $item['stock_item_id'];
             $urgent_delivery_item->issued_qty = $item['issued_qty'];
+             $urgent_delivery_item->remaining_qty = $item['issued_qty'];
             // dd($request->all());
             logger('$items');
             $urgent_delivery_item->save();

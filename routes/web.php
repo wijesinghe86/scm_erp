@@ -59,6 +59,7 @@ use App\Http\Controllers\LocationBayDesigncontroller;
 use App\Http\Controllers\LocationRowDesignController;
 use App\Http\Controllers\PlantRegistrationController;
 use App\Http\Controllers\ProductionWastageController;
+use App\Http\Controllers\ReverseCreditNoteController;
 use App\Http\Controllers\BalanceOrderReportController;
 use App\Http\Controllers\CreditNoteApprovalController;
 use App\Http\Controllers\LocationRackDesignController;
@@ -77,6 +78,7 @@ use App\Http\Controllers\ManAndEquipmentSafetyController;
 use App\Http\Controllers\MiscellaneousReceivedController;
 use App\Http\Controllers\OverShortageAndDamageController;
 use App\Http\Controllers\PurchaseOrderMrApproveController;
+use App\Http\Controllers\ReverseLogisticsReturnController;
 use App\Http\Controllers\CurrentStockOnHandReoprtController;
 use App\Http\Controllers\MaterialsReturnByCustomerController;
 use App\Http\Controllers\RawMaterialRequestApproveController;
@@ -946,6 +948,7 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::get('/create', [App\Http\Controllers\UrgentInvoiceController::class, 'create'])->name('urgent_invoice.create');
         Route::post('/create', [App\Http\Controllers\UrgentInvoiceController::class, 'store'])->name('urgent_invoice.store');
         Route::get('/get/invoice_no', [App\Http\Controllers\UrgentInvoiceController::class, 'generateInvoiceNumber'])->name('urgent_invoice.get.number');
+        Route::get('/get/by_customer_id', [App\Http\Controllers\UrgentInvoiceController::class, 'getByCustomerId'])->name('urgent_invoice.get.byCustmer');
         Route::get('/{urgent_invoice_id}/view', [App\Http\Controllers\UrgentInvoiceController::class, 'view'])->name('urgent_invoice.view');
         Route::get('/{urgent_invoice_id}/print', [App\Http\Controllers\UrgentInvoiceController::class, 'print'])->name('urgent_invoice.print');
     });
@@ -963,4 +966,23 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
        // Route::post('/get-stock', [DamageReturnController::class, 'getStock'])->name('damage_return.stock');
     });
 
+    Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin'])->prefix('reverse_returns')->group(function () {
+       Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin'])->get('/', [ReverseLogisticsReturnController::class, 'index'])->name('reverse_returns.index');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/new', [ReverseLogisticsReturnController::class, 'new'])->name('reverse_returns.new');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->post('/new', [ReverseLogisticsReturnController::class, 'store'])->name('reverse_returns.store');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{urgent_returns}/view', [ReverseLogisticsReturnController::class, 'view'])->name('reverse_returns.view');
+
+        Route::middleware(['role:Super Admin|Admin|Warehouse Admin'])->get('/approval', [ReverseLogisticsReturnController::class, 'approvalIndex'])->name('reverse_returns.approvalIndex');
+        Route::middleware(['role:Super Admin|Admin|Warehouse Admin'])->post('{urgent_returns}/approval', [ReverseLogisticsReturnController::class, 'approval'])->name('reverse_returns.approval');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User|Factory Warehouse User'])->get('/{return_id}/print', [ReverseLogisticsReturnController::class, 'print'])->name('reverse_returns.print');
+    });
+
+    Route::prefix('reverse_credit_note')->group(function () {
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/', [ReverseCreditNoteController::class, 'index'])->name('reverse_credit_note.index');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/create', [ReverseCreditNoteController::class, 'create'])->name('reverse_credit_note.create');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->post('/store', [ReverseCreditNoteController::class, 'store'])->name('reverse_credit_note.store');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->post('/getInvoiceDetails', [ReverseCreditNoteController::class, 'getInvDetails'])->name('reverse_credit_note.getInvoiceDetails');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/getReturnItems', [App\Http\Controllers\CreditNoteController::class, 'getReturn'])->name('reverse_credit_note.getReturnItems');
+       
+    });
 });
