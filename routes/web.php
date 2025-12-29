@@ -985,4 +985,5 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/getReturnItems', [App\Http\Controllers\CreditNoteController::class, 'getReturn'])->name('reverse_credit_note.getReturnItems');
        
     });
+   
 });
