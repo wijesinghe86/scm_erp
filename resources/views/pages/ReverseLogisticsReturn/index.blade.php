@@ -40,8 +40,12 @@
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$urgent_returns->return_no }}</td>
-                                            <td>{{$urgent_returns->invoice_id}}</td>
-                                            <td>{{$urgent_returns->delivery_order_id }}</td> 
+                                            <td>{{$urgent_returns->get_invoice->invoice_date }}</td>
+                                            <td>{{$urgent_returns->get_invoice->invoice_number}}</td>
+                                            <td>{{$urgent_returns->deliveryOrder->delivery_order_no }}</td> 
+                                            <td>{{$urgent_returns->location->warehouse_name}}</td>
+                                            <th>{{date("Y-m-d", strtotime($urgent_returns->created_at))}}</th>
+                                            <th>{{$urgent_returns->approvedBy ? $urgent_returns->approvedBy->name : 'Not Approved'}}</th>
                                             <td align="right">
                                                     <a class="h4"
                                                         href="{{ route('reverse_returns.view', $urgent_returns->id ) }}">
