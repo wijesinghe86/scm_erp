@@ -16,7 +16,7 @@
                     aria-controls="ui-master">
                     <span class="menu-title">Master</span>
                     <!-- <i class="menu-arrow"></i> -->
-                    <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+                    <i class="mdi mdi-star menu-icon"></i>
                 </a>
                 <div class="collapse" id="ui-master">
                     <ul class="nav flex-column sub-menu">
@@ -95,7 +95,7 @@
                 <a class="nav-link" data-bs-toggle="collapse" href="#mr-request" aria-expanded="false"
                     aria-controls="mr-request">
                     <span class="menu-title">Material Request</span>
-                    <i class="mdi mdi-contacts menu-icon"></i>
+                    <i class="mdi mdi-palette-swatch menu-icon"></i>
                 </a>
                 <div class="collapse" id="mr-request">
                     <ul class="nav flex-column sub-menu">
@@ -130,7 +130,7 @@
                     aria-controls="ui-procurement">
                     <span class="menu-title">Procurement</span>
                     {{-- <i class="fa-solid fa-scale-balanced"></i> --}}
-                    <i class="mdi mdi-contacts menu-icon"></i>
+                    <i class="mdi mdi-cart-arrow-down menu-icon"></i>
                 </a>
                 <div class="collapse" id="ui-procurement">
                     <ul class="nav flex-column sub-menu">
@@ -174,7 +174,7 @@
                     aria-controls="ui-sale">
                     <span class="menu-title">Sales and Marketing</span>
                     {{-- <i class="menu-arrow"></i> --}}
-                    <i class="mdi mdi-contacts menu-icon"></i>
+                    <i class="mdi mdi-sale menu-icon"></i>
                 </a>
                 <div class="collapse" id="ui-sale">
                     <ul class="nav flex-column sub-menu">
@@ -230,7 +230,7 @@
                 <a class="nav-link" data-bs-toggle="collapse" href="#ui-urgent-sale" aria-expanded="false"
                     aria-controls="ui-urgent-sale">
                     <span class="menu-title">Reverse Logistics</span>
-                    <i class="mdi mdi-contacts menu-icon"></i>
+                    <i class="mdi mdi-truck-delivery menu-icon"></i>
                 </a>
                 <div class="collapse" id="ui-urgent-sale">
                     <ul class="nav flex-column sub-menu">
@@ -244,6 +244,22 @@
                                     Invoice</a>
                             </li>
                         @endhasanyrole
+                        @hasanyrole('Super Admin|Admin|Sales User|Sales Admin')
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('reverse_returns.index') }}">Reverse
+                                    Return</a>
+                            </li>
+                        @endhasanyrole
+                        @hasanyrole('Super Admin|Admin|Sales User|Sales Admin')
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('reverse_returns.approvalIndex') }}">Approved Reverse
+                    <br>Returns
+                </a>
+            </li>
+            @endhasanyrole
+            @hasanyrole('Super Admin|Admin|Executive User')
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('reverse_credit_note.create') }}">Reverse Credit
+                                    Note</a>
+                            </li>
+                        @endhasanyrole
                     </ul>
                 </div>
             </li>
@@ -255,7 +271,7 @@
                     aria-controls="ui-df">
                     <span class="menu-title">Demand Forecasting</span>
                     {{-- <i class="menu-arrow"></i> --}}
-                    <i class="mdi mdi-contacts menu-icon"></i>
+                    <i class="mdi mdi-trending-up menu-icon"></i>
                 </a>
                 <div class="collapse" id="ui-df">
                     <ul class="nav flex-column sub-menu">
@@ -280,7 +296,7 @@
                     aria-controls="ui-pps">
                     <span class="menu-title">Production Planning and <br> Scheduling</span>
                     {{-- <i class="menu-arrow"></i> --}}
-                    <i class="mdi mdi-contacts menu-icon"></i>
+                    <i class="mdi mdi-clipboard-edit menu-icon"></i>
                 </a>
                 <div class="collapse" id="ui-pps">
                     <ul class="nav flex-column sub-menu">
@@ -367,7 +383,7 @@
                     aria-controls="ui-iid">
                     <span class="menu-title">MRO Issue & Return</span>
                     {{-- <i class="menu-arrow"></i> --}}
-                    <i class="mdi mdi-contacts menu-icon"></i>
+                    <i class="mdi mdi-cash-refund menu-icon"></i>
                 </a>
                 <div class="collapse" id="ui-iid">
                     <ul class="nav flex-column sub-menu">
@@ -393,7 +409,7 @@
                     aria-controls="ui-inv">
                     <span class="menu-title">Inventory Management</span>
                     {{-- <i class="menu-arrow"></i> --}}
-                    <i class="mdi mdi-contacts menu-icon"></i>
+                    <i class="mdi mdi-factory menu-icon"></i>
                 </a>
                 <div class="collapse" id="ui-inv">
                     <ul class="nav flex-column sub-menu">
@@ -453,7 +469,7 @@
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-inv" aria-expanded="false" aria-controls="ui-inv">
                 <span class="menu-title">Warehouse</span>
                 {{-- <i class="menu-arrow"></i> --}}
-                <i class="mdi mdi-contacts menu-icon"></i>
+                <i class="mdi mdi-warehouse menu-icon"></i>
             </a>
             <div class="collapse" id="ui-inv">
                 <ul class="nav flex-column sub-menu">
@@ -554,7 +570,7 @@
                 aria-controls="ui-plan">
                 <span class="menu-title">Planning / Layout Design</span>
                 {{-- <i class="menu-arrow"></i> --}}
-                <i class="mdi mdi-contacts menu-icon"></i>
+                <i class="mdi mdi-cogs menu-icon"></i>
             </a>
             <div class="collapse" id="ui-plan">
                 <ul class="nav flex-column sub-menu">
@@ -573,7 +589,7 @@
                 aria-controls="ui-safe">
                 <span class="menu-title">Safety Criteria </span>
                 {{-- <i class="menu-arrow"></i> --}}
-                <i class="mdi mdi-contacts menu-icon"></i>
+                <i class="mdi mdi-charity menu-icon"></i>
             </a>
             <div class="collapse" id="ui-safe">
                 <ul class="nav flex-column sub-menu">

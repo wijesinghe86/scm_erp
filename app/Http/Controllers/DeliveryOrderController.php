@@ -41,6 +41,7 @@ class DeliveryOrderController extends ParentController
                                         $customer->where('customer_name', 'like', '%' . $request->search . '%');
                         });
                     });
+                    
                 })
 
                           ->latest()

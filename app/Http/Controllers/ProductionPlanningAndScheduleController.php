@@ -16,10 +16,29 @@ use Illuminate\Validation\ValidationException;
 
 class ProductionPlanningAndScheduleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $productionplanningandschedules = ProductionPlanning::get();
-        return view('pages.ProductionPlanningAndSchedule.index', compact('productionplanningandschedules'));
+        $productionplanningandschedules = ProductionPlanning::with(['demand_forecasting', 'items.stock_item'])
+                          ->when($request->search, function($q) use ($request){
+                            $q->where('pps_no', 'like', '%' . $request->search . '%')
+                            ->orwhere('pps_date', 'like', '%' . $request->search . '%')
+                            ->orWhere(function ($qr) use ($request){
+                                return $qr->whereHas('demand_forecasting', function ($demand_forecasting) use ($request){
+                                $demand_forecasting->where('df_no', 'like', '%' . $request->search . '%');
+                            });
+                              })
+                              ->orWhere(function ($query) use ($request){
+                                return $query->whereHas('items.stock_item', function ($customer) use ($request){
+                                    $customer->where('stock_number', 'like', '%' . $request->search . '%');
+                    });
+                });
+
+                })
+
+                          ->latest()
+                          ->paginate(50);
+                          return view('pages.ProductionPlanningAndSchedule.index', compact('productionplanningandschedules'));
+
     }
 
     public function create()

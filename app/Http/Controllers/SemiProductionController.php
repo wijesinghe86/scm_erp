@@ -21,9 +21,30 @@ class SemiProductionController extends Controller
 {
     public function index(Request $request)
     {
-        //$semi_productions = SemiProduction::get();
-        $semi_productions = SemiProduction::latest()->paginate(2);
+        $semi_productions = SemiProduction::with(['semi_product_items', 'semi_product_items.semi_product_stock_item'])
+        ->when($request->search, function($q) use ($request){
+          $q->where('semi_pro_No', 'like', '%' . $request->search . '%')
+          ->orwhere('grn_no', 'like', '%' . $request->search . '%')
+          ->orwhere('semi_pro_Date', 'like', '%' . $request->search . '%')
+          ->orWhere(function ($qr) use ($request){
+              return $qr->whereHas('semi_product_items', function ($semi_product_items) use ($request){
+              $semi_product_items->where('semi_pro_serial_no', 'like', '%' . $request->search . '%');
+          });
+            })
+            ->orWhere(function ($query) use ($request){
+              return $query->whereHas('semi_product_items.semi_product_stock_item', function ($semiitem) use ($request){
+                  $semiitem->where('stock_number', 'like', '%' . $request->search . '%');
+  });
+});
+
+})
+
+        ->latest()
+        ->paginate(25);
         return view('pages.SemiProduction.index', compact('semi_productions'));
+
+        // $semi_productions = SemiProduction::get();
+        // return view('pages.SemiProduction.index', compact('semi_productions'));
     }
     public function generateNextNumber()
     {

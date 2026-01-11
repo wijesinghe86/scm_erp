@@ -8,10 +8,32 @@ use Illuminate\Http\Request;
 
 class JobOrderApprovalController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $list = JobOrderItem::where('approval_status','!=', "pending")->latest()->get();
+        $list = JobOrderItem::with(['job_order', 'items.stock_item'])
+        ->when($request->search, function($q) use ($request){
+          $q->where('job_order_no', 'like', '%' . $request->search . '%')
+          ->orwhere('df_no', 'like', '%' . $request->search . '%')
+          ->orwhere('jo_date', 'like', '%' . $request->search . '%')
+          ->orWhere(function ($qr) use ($request){
+              return $qr->whereHas('plant', function ($plant) use ($request){
+              $plant->where('plant_number', 'like', '%' . $request->search . '%');
+          });
+            })
+            ->orWhere(function ($query) use ($request){
+              return $query->whereHas('items.stock_item', function ($customer) use ($request){
+                  $customer->where('stock_number', 'like', '%' . $request->search . '%');
+  });
+});
+
+})
+
+        ->latest()
+        ->paginate(25);
         return view('pages.JobOrderApproval.index', compact('list'));
+
+        // $list = JobOrderItem::where('approval_status','!=', "pending")->latest()->get();
+        // return view('pages.JobOrderApproval.index', compact('list'));
     }
 
     public function create()

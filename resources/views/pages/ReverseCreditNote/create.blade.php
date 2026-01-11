@@ -7,7 +7,7 @@
                     <div class="card-body">
                         <h1 style="color:grey" class="card-title">Credit Note</h1>
                        
-                        <form class="forms-sample" method="POST" action="{{ route('credit_note.store') }}">
+                        <form class="forms-sample" method="POST" action="">
                             @csrf
                             <br>
                             <br>
@@ -17,9 +17,9 @@
                                     <select class="form-control invoice-select" name="invoice_no" id="invoice_no"
                                         onchange="invoiceOnChange(this)">
                                         <option value="" selected>Select Invoice</option>
-                                        @foreach ($invoices as $invoice)
-                                            <option value="{{ $invoice->id }}">
-                                                {{ $invoice->invoice_number }}
+                                        @foreach ($urgent_invoices as $urgent_invoice)
+                                            <option value="{{ $urgent_invoice->id }}">
+                                                {{ $urgent_invoice->invoice_number }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -30,9 +30,9 @@
                                         placeholder="invoice_date" readonly>
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <label>Credit Note No</label>
+                                    <label>Reverse Credit Note No</label>
                                     <input type="text" class="form-control" name="credit_note_no"
-                                        placeholder="credit_note_no" value="{{$next_number}}" readonly>
+                                        placeholder="credit_note_no" value="" readonly>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>Credit Note Date</label>
@@ -75,57 +75,27 @@
                             <div class="row">
                                  {{-- @if (count($mrs) >0)  --}}
                                 <div class="form-group col-md-2 ">
-                                    <label>MRS No</label>
+                                    <label>RMRS No</label>
                                     <select class="form-control invoice-select mrs_input" name="reference_no" id="mrs_no">
                                         <option value="" selected>Select</option>
-                                        @foreach ($mrs as $return)
+                                        @foreach ($rmrs as $return)
                                             <option value="{{ $return->id }}">
                                                 {{ $return->return_no }}
                                             </option>
                                         @endforeach
                                     </select>
-                                </div>    
-                                {{-- @endif  --}}
-                                
-                                 {{-- @if (count($deliveryOrders) >0)  --}}
-                                <div class="form-group col-md-2 ">
-                                    <label>D/O No</label>
-                                    <select class="form-control invoice-select do_input" name="reference_no" id="delivery_no">
-                                        <option value="" selected>Select</option>
-                                        @foreach ($deliveryOrders as $delivery)
-                                            <option value="{{ $delivery->id }}">
-                                                {{ $delivery->delivery_order_no }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                              {{-- @endif  --}}
-                                
-                             {{-- @if (count($balanceOrders) >0)  --}}
-                                <div class="form-group col-md-2 ">
-                                   <label>B/O No</label>
-                                    <select class="form-control invoice-select bo_input" name="reference_no" id="bal_no">
-                                        <option value="" selected>Select</option>
-                                        @foreach ($balanceOrders as $balances)
-                                            <option value="{{ $balances->id }}">
-                                                {{ $balances->balance_order_no }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                {{-- @endif --}}
+                                </div>                                         
                                 </div>
                                 <button type="button" style="background-color: blue"  id="resetBtn" >Reset</button>
                                 <input type="hidden" name="reference_type" id="reference_type" />
                                 <hr>
-                            <div class="items_table"></div>
+                           
                             <div class="return_items_table" ></div>
-                            <div class="balance_items_table" ></div>
                             <br>
                             <br>
 
                             <button type="submit" class="btn btn-success me-2">Complete</button>
-                            <a href="{{ route('credit_note.index') }}" class="btn btn-danger">Go to Credit Note Registry</a>
+                            <a href="{{ route('reverse_credit_note.index') }}" class="btn btn-danger">Go to Credit Note Registry</a>
                         </form>
                     </div>
                 </div>
@@ -137,67 +107,37 @@
 
 @push('scripts')
     <script>
+       
         $(document).ready(function() {
             // alert("ss");
-            $('.items_table');
-        });
-        $(".do_input").change(function() {
-            var id = $(this).val();
-            // alert("Handler for .change() called." + id);
-        $('#mrs_no').attr('disabled', true)
-        $('#bal_no').attr('disabled', true)
-        $('#reference_type').val('DO')
-
-            $(".items_table").load('/credit_note/getNonIssues?delivery_order_no=' + id, function() {
-
-            });
-        });
-
-        $(document).ready(function() {
-            // alert("ss");
-            $('.return_items_table');
+            $('.return_items_table'); 
         });
         $(".mrs_input").change(function() {
             var id = $(this).val();
-            // alert("Handler for .change() called." + id);
+            alert("Handler for .change() called." + id);
             // disaable or hide d/o and b/o when selecting mrs no
-            $('#delivery_no').attr('disabled', true)
-            $('#bal_no').attr('disabled', true)
             $('#reference_type').val('MRS')
-            $(".return_items_table").load('/credit_note/getReturnItems?return_id=' + id, function() {
+            $(".return_items_table").load('/reverse_credit_note/getReturnItems?return_id=' + id, function() {
         
             });
         });
     $('#resetBtn').on('click', function(){
-        $('#delivery_no').attr('disabled', false)
+       
         $('#mrs_no').attr('disabled', false)
-        $('#bal_no').attr('disabled', false)
+       
         clearTables()
     })
 
 
     function clearTables(){
-        $(".items_table").empty() //clear item table
+      
         $(".return_items_table").empty() //clear item table
-        $(".balance_items_table").empty() //clear item table
+     
 
     }
 
-        $(document).ready(function() {
-            // alert("ss");
-            $('.balance_items_table');
-        });
-        $(".bo_input").change(function() {
-            var id = $(this).val();
-            // alert("Handler for .change() called." + id);
-            $('#mrs_no').attr('disabled', true)
-            $('#delivery_no').attr('disabled', true)
-            $('#reference_type').val('BO')
-            $(".balance_items_table").load('/credit_note/getBalanceOrders?balance_order_id=' + id, function() {
-
-            });
-        });
-        let invoices = <?php echo json_encode($invoices); ?>;
+       
+        let urgent_invoices = <?php echo json_encode($urgent_invoices); ?>;
 
         $(document).ready(function() {
             //console.log(invoices);
@@ -208,7 +148,7 @@
 //get customer details, MRS No, D/O No and B/O when selecting Invoice No
         function invoiceOnChange(elem) {
 
-            var selectedInvoice = invoices.filter((row) => {
+            var selectedInvoice = urgent_invoices.filter((row) => {
                 return row.id == elem.value;
             })
 
@@ -220,7 +160,7 @@
             clearTables() // clear all item tables when change the invoice number
             
             $.ajax({
-                url: "{{ route('creditnote.getInvoiceDetails') }}",
+                url: "{{ route('reverse_credit_note.getInvoiceDetails') }}",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -238,20 +178,7 @@
                             $('#mrs_no').append('<option  value="' + element.id +
                                 '">' + element?.return_no + '</option>');
                         })
-
-                        $('#delivery_no').find('option').remove().end()
-                        $('#delivery_no').append('<option selected disabled>Select Item</option>');
-                        response?.deliveryOrders?.forEach(element => {
-                            $('#delivery_no').append('<option  value="' + element.id +
-                                '">' + element?.delivery_order_no + '</option>');
-                        })
-
-                        $('#bal_no').find('option').remove().end()
-                        $('#bal_no').append('<option selected disabled>Select Item</option>');
-                        response?.balanceOrders?.forEach(element => {
-                            $('#bal_no').append('<option  value="' + element.id +
-                                '">' + element?.balance_order_no + '</option>');
-                        })
+                       
                 }
 
             });

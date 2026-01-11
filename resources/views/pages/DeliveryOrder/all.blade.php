@@ -10,7 +10,6 @@
                                 <div class="col-md-8">
                                     <h4 class="title"><a href="{{ route('dashboard') }}"><i class="mdi mdi-home"></i></a>All
                                         Delivery Order List</h4>
-                                    {{-- <p class="category">This displays all active invoices in the system</p> --}}
                                 </div>
                                 <br>
                                 <br>

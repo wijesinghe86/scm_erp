@@ -14,4 +14,5 @@ class UrgentInvoiceItem extends Model
         return $this->belongsTo(StockItem::class, 'item_id', 'id');
 
     }
+    
 }

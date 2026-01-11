@@ -83,9 +83,18 @@ class UrgentInvoice extends Model
         return $this->hasOne(Employee::class, 'id', 'sales_employee_id');
     }
 
+    public function delivery_order()
+    {
+        return $this->hasOne(UrgentDelivery::class, 'id', 'delivery_order_id');
+    }
+
     public function get_delivery()
     {
         return $this->hasOne(UrgentDelivery::class, 'id', 'delivery_order_id');
+    }
+    public function Customer()
+    {
+        return $this->hasOne(Customer::class, 'id', 'customer_id');
     }
 
 }

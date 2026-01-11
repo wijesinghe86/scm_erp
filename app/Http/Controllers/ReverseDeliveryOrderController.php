@@ -85,11 +85,17 @@ public function deleteSessionItem($index)
 public function store(Request $request)
     {
         $stockLog = new StockLogService;
+        
+        $issue_no_to_use = $request->issue_no;
+        $isMrfExist = UrgentDelivery::where('delivery_order_no', $issue_no_to_use)->first();
+        if ($isMrfExist) {
+            $issue_no_to_use = $this->generateNextNumber();
+        }
 
-        $isMrfExist = UrgentDelivery::where('delivery_order_no', $request->issue_no)->first();
-            if ($isMrfExist) {
-                $data['delivery_order_no'] = $this->generateNextNumber();
-            }
+        // $isMrfExist = UrgentDelivery::where('delivery_order_no', $request->issue_no)->first();
+        //     if ($isMrfExist) {
+        //         $data['delivery_order_no'] = $this->generateNextNumber();
+        //     }
 
 
 
@@ -115,7 +121,8 @@ public function store(Request $request)
 
         $urgent_delivery = new UrgentDelivery();
         $urgent_delivery->customer_id = $request->customer_id;
-        $urgent_delivery->delivery_order_no	= $request->issue_no;
+        $urgent_delivery->delivery_order_no = $issue_no_to_use;
+        // $urgent_delivery->delivery_order_no	= $request->issue_no;
         $urgent_delivery->issued_date = $request->issued_date;
         $urgent_delivery->location_id = $request->warehouse_id;
         $urgent_delivery->vehicle_no = $request->vehicle_no;
@@ -134,6 +141,7 @@ public function store(Request $request)
             $urgent_delivery_item->invoice_id = $urgent_delivery->id;
             $urgent_delivery_item->item_id = $item['stock_item_id'];
             $urgent_delivery_item->issued_qty = $item['issued_qty'];
+             $urgent_delivery_item->remaining_qty = $item['issued_qty'];
             // dd($request->all());
             logger('$items');
             $urgent_delivery_item->save();
