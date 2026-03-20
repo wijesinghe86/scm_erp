@@ -31,6 +31,7 @@ class Customer extends Model
         'customer_contact_person_email',
         'customer_status',
         'br_image',
+        'customer_tin_no',
         'created_by',
         'updated_by',
         'deleted_by'

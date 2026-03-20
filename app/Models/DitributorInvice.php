@@ -7,14 +7,14 @@ use App\Models\BillType;
 use App\Models\Customer;
 use App\Models\Employee;
 use App\Models\Creditnote;
-use App\Models\InvoiceItem;
 use App\Models\DeliveryOrder;
-use App\Models\DeliveryOrderItem;
+use App\Models\DitributorInviceItem;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Invoice extends Model
+
+class DitributorInvice extends Model
 {
     use HasFactory;
     protected $fillable =
@@ -22,6 +22,10 @@ class Invoice extends Model
         'customer_id',
         'invoice_number',
         'invoice_date',
+        'date_of_delivery',
+        'place_of_supply',
+        'additional_information',
+        'organization_id',
         'employee_id',
         'ref_number',
         'po_number',
@@ -29,21 +33,20 @@ class Invoice extends Model
         'category',
         'type',
         'option',
+        'credit_days',
         // 'item_count',
         'sub_total',
         'vat_rate',
         'vat_amount',
         'discount_type',
-        "discount_amount",
+        'discount_amount',
+        'discount',
         'net_total',
         'grand_total',
+        'grand_total_inword',
         'status',
-        'created_by',
-        'credit_days',
-        'cancel_status',
-        'cancelled_by',
-        'cancel_date'
-
+        'created_by'
+        
     ];
 
     public function getInvoiceTypeNameAttribute()
@@ -115,7 +118,7 @@ class Invoice extends Model
 
     public function Items()
     {
-        return $this->hasMany(InvoiceItem::class, 'invoice_id', 'id');
+        return $this->hasMany(DitributorInviceItem::class, 'invoice_id', 'id');
     }
 
     
@@ -155,7 +158,6 @@ class Invoice extends Model
         });
 
         $total_item_discount = $items->sum('attributes.item_discount_amount');
-
 
         $vatRate = 18; //TODO: need to make it dynamic later
         //    $subtotal = $items->sum('total');
@@ -205,6 +207,11 @@ class Invoice extends Model
     {
         return $this->hasMany(DeliveryOrder::class, 'invoice_number', 'invoice_number');  
     }
+
+    public function organization()
+{
+    return $this->belongsTo(Organization::class, 'organization_id');
+}
 
 
 }

@@ -44,8 +44,7 @@
                                         </td>
                                         <td>
                                             <button class="btn btn-primary "
-                                                onclick="addToCart({ $item },{ $key })">Add
-                                                To Cart</button>
+                                                onclick="addToCart({ $item },{ $key })">Add To Cart</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -170,7 +169,7 @@
                 cart
             }
             $.ajax({
-                url: "{{ route('balanceorder.delivery_order_create', $balance_order->id) }}",
+                url: "{{ route('distributor_balanceOrder.delivery_order_create', $balance_order->id) }}",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },

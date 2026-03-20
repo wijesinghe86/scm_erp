@@ -22,6 +22,11 @@
                                 </div>
                             </div>
                             <div class="row">
+                            <div class="form-group col-md-3">
+                                    <label for="">Cutomer Tin No *</label>
+                                    <input type="text" class="form-control" 
+                                        placeholder="Tin No"  value="{{ $customers->customer_tin_no }}" name="customer_tin_no" >
+                                </div>
                                 <div class="form-group col-md-4">
                                     <label>Vat Number*</label>
                                     <input type="text" class="form-control" name="customer_vat_number"

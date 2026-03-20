@@ -10,7 +10,7 @@
                             <div style="margin-bottom: 20px;" class="row">
                                 <div class="col-md-8">
                                     <h4 class="card-title"><a href="{{ route('dashboard') }}"><i
-                                                class="mdi mdi-home"></i></a>Credit Note Regsitry</h2>
+                                                class="mdi mdi-home"></i></a>Less Credit Note Regsitry</h2>
                                         <br>
                                         <div class ="container">
                                             <div class="row m-2">
@@ -23,16 +23,13 @@
                                                     </div>
                                                     <div class="form-group col-md-4">
                                                         <button class="btn btn-primary">Search</button>
-                                                        <a href="{{ route('credit_note.index') }}">
+                                                        <a href="{{ route('less_credit_note.index') }}">
                                                             <button class="btn btn-primary" type="button">Reset</button>
                                                         </a>
                                                 </form>
                                             </div>
 
-                                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                                <a href="{{ route('credit_note.create') }}"
-                                                    class="btn btn-success mb-2 float-end mb-2"> Add new </a>
-                                            </div>
+                                        
                                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                                 <a href="{{ route('less_credit_note.create') }}"
                                                     class="btn btn-success mb-2 float-end mb-2"> Add new Less </a>
