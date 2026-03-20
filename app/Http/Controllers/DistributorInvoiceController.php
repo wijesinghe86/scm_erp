@@ -87,14 +87,15 @@ class DistributorInvoiceController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            // 'po_number' => 'required',
             'invoice_date' => 'required',
-            // 'ref_number' => 'required',
+            'payment_terms'=>'required',
             'customer_id' => 'required',
             'employee_id' => 'required',
             'organization_id'=> 'required',
             'date_of_delivery'=> 'required',
             'place_of_supply'=> 'required',
+            'quantity'=>'required',
+            'weight'=>'required',
             'grand_total_inword'=> 'required',
         ]);
 
