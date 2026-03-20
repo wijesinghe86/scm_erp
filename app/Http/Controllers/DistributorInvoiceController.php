@@ -191,7 +191,7 @@ class DistributorInvoiceController extends Controller
                 $delivery_order->save();
 
                 foreach ($items as $item) {
-                    $invoice_item = DitributorInvice::where('id', $item['id'])->first();
+                    $invoice_item = DitributorInviceItem::where('id', $item['id'])->first();
                     $invoice_item->status = "created";
                     $invoice_item->save();
 
