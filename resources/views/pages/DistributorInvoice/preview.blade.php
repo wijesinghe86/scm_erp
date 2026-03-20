@@ -19,7 +19,7 @@
                     </div>
 
                     <div class="title">
-                        <h1>TAX INVOICE</h1>
+                        <h1>{{$invoices->getInvoiceTypeNameAttribute()}} </h1>
                     </div>
                 </div>
 
@@ -128,7 +128,7 @@
                     </div> -->
                 </div>
 
-            </div>
+            
 
             <!-- ACTION BUTTONS -->
             <div style="display: flex;justify-content: flex-end; align-items: center; margin: 20px 0">
