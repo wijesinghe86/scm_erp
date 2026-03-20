@@ -81,6 +81,9 @@
                                     Shelf Design</a></li>
                         @endhasanyrole
                         @hasanyrole('Super Admin|Admin')
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('organization.index') }}">Organizations</a></li>
+                        @endhasanyrole
+                        @hasanyrole('Super Admin|Admin')
                             <li class="nav-item"> <a class="nav-link" href="{{ route('users.index') }}">Users</a></li>
                         @endhasanyrole
                         {{-- <li class="nav-item"> <a class="nav-link" href="">Users</a></li> --}}
@@ -206,6 +209,11 @@
                             </li>
                         @endhasanyrole
                         @hasanyrole('Super Admin|Admin|Executive User')
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('less_credit_note.index') }}"> Less Credit
+                                    Note</a>
+                            </li>
+                        @endhasanyrole
+                        @hasanyrole('Super Admin|Admin|Executive User')
                             <li class="nav-item"> <a class="nav-link"
                                     href="{{ route('credit_note_approval.index') }}">Credit Note Approve</a>
                             </li>
@@ -220,6 +228,18 @@
                                     Log</a>
                             </li>
                         @endhasanyrole
+                        @hasanyrole('Super Admin|Admin|Sales User|Sales Admin')
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('distributor_invoices.index') }}">New Invoice</a>
+                            </li>
+                        @endhasanyrole
+                        @hasanyrole('Super Admin|Admin|Sales User|Sales Admin')
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('distributor_deliveryorders.index') }}">New Delivery Order</a>
+                            </li>
+                        @endhasanyrole 
+                        @hasanyrole('Super Admin|Admin|Sales User|Sales Admin')
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('distributor_balanceOrder.index') }}">New Balance Order</a>
+                            </li>
+                        @endhasanyrole 
                     </ul>
                 </div>
             </li>

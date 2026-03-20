@@ -15,6 +15,19 @@ return new class extends Migration
     {
         Schema::create('urgent_credit_notes', function (Blueprint $table) {
             $table->id();
+            $table->string('credit_note_no')->nullable();
+            $table->date('credit_note_date')->nullable();
+            $table->string('invoice_no')->nullable();
+            $table->string('customer_code')->nullable();
+            $table->date('hand_chit_date')->nullable();
+            $table->string('less_invoice_no')->nullable();
+            $table->string('reference_no')->nullable();
+            $table->string('reference_type')->nullable();
+            $table->decimal('grand_total', 15,2)->nullable();
+            $table->decimal('less_amount', 15,2)->default(0);
+            $table->decimal('less_invoice_amount', 15,2)->default(0);
+            $table->string('status')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
         });
     }

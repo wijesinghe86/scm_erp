@@ -9,20 +9,25 @@
                         <form class="forms-sample" method="POST" action="{{ route('customer.store') }}">
                             @csrf
                             <div class="row">
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-2">
                                     <label>Customer Code</label>
                                     <input type="text" class="form-control" name="customer_code"
                                         placeholder="Customer Code" value="{{ $next_number }}" readonly>
                                 </div>
-                                <div class="form-group col-md-5">
+                                <div class="form-group col-md-4">
                                     <label>Customer Name *</label>
                                     <input type="text" class="form-control" name="customer_name"
                                         placeholder="Customer Name">
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-3">
                                     <label for="">Business Registration Number *</label>
                                     <input type="text" class="form-control" id=""
                                         placeholder="Business Registration Number" name="business_registration_number">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="">Cutomer Tin No *</label>
+                                    <input type="text" class="form-control" id=""
+                                        placeholder="Tin No" name="customer_tin_no">
                                 </div>
                             </div>
                             <div class="row">
