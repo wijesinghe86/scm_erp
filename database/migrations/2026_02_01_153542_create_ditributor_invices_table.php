@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('ditributor_invices', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('customer_id')->nullable();
-            $table->string('invoice_number')->nullable();
+            $table->string('invoice_number')->unique();
             $table->date('invoice_date')->nullable();
             $table->date('date_of_delivery')->nullable();
             $table->string('place_of_supply')->nullable();

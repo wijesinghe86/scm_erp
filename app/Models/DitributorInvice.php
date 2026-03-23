@@ -213,5 +213,44 @@ class DitributorInvice extends Model
     return $this->belongsTo(Organization::class, 'organization_id');
 }
 
+public function getFormattedInvoiceDateAttribute()
+{
+    return \Carbon\Carbon::parse($this->invoice_date)->format('m/d/Y');
+}
 
+// New Invoice No generation start here 21.03.2026
+public static function generateInvoiceNumber($request)
+{
+    $organization = Organization::find($request->organization_id);
+    $orgCode = strtoupper($organization?->organization_code ?? 'ORG');
+
+    $date = \Carbon\Carbon::parse($request->invoice_date);
+    $datePart = $date->format('yM'); // still shown in invoice
+
+    // Prefix based on type
+    $typePrefix = match ((int)$request->invoice_type) {
+        1 => 'IN',
+        2 => 'TI',
+        default => 'OT'
+    };
+
+    // 🔥 IMPORTANT: base WITHOUT date (no reset)
+    $base = "{$orgCode}_{$typePrefix}";
+
+    // 🔒 Lock
+    $lastInvoice = self::where('invoice_number', 'like', "%{$base}%")
+        ->lockForUpdate()
+        ->orderBy('id', 'desc')
+        ->first();
+
+    if ($lastInvoice) {
+        $lastSeq = (int) substr($lastInvoice->invoice_number, -6);
+        $nextSeq = $lastSeq + 1;
+    } else {
+        $nextSeq = 1;
+    }
+
+    // ✅ Date only for display, NOT for sequence
+    return "{$datePart}_{$orgCode}_{$typePrefix}_" . sprintf('%06d', $nextSeq);
+}
 }
