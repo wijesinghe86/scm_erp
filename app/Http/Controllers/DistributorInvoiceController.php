@@ -64,19 +64,19 @@ class DistributorInvoiceController extends Controller
 
         return view('pages.DistributorInvoice.create', compact('customer', 'vatRates', 'customers', 'employees', 'stockItems', 'warehouses', 'billTypes', 'setting', 'invoice_number', 'organizations'));
     }
-
     public function generateInvoiceNumber(Request $request)
     {
-        $invocieCategoryId = data_get($request, 'invoice_category');
-        $billType = BillType::find($invocieCategoryId);
-        $invoice_count = DitributorInvice::where('category', $billType->id)->count();
-        $prefix1 = $billType->billtype_code;
-        // $orgCode = data_get($request, 'organization_id');
-        // $code = Organization::find( $orgCode);
-        
-        return $prefix1 .  sprintf('%06d', $invoice_count + 1);    
-
+        return DitributorInvice::generateInvoiceNumber($request);
     }
+    // public function generateInvoiceNumber(Request $request)
+    // {
+    //     $invocieCategoryId = data_get($request, 'invoice_category');
+    //     $billType = BillType::find($invocieCategoryId);
+    //     $invoice_count = DitributorInvice::where('category', $billType->id)->count();
+    //     $prefix1 = $billType->billtype_code;
+       
+    //     return $prefix1 .  sprintf('%06d', $invoice_count + 1);
+    // }
 
     public function generateDeliveryOrderNumber()
     {
@@ -94,14 +94,14 @@ class DistributorInvoiceController extends Controller
             'organization_id'=> 'required',
             'date_of_delivery'=> 'required',
             'place_of_supply'=> 'required',
-            'quantity'=>'required',
-            'weight'=>'required',
             'grand_total_inword'=> 'required',
         ]);
 
         try {
             DB::beginTransaction();
-
+            // New Invoice No starts here
+            //Remove this.... $request['invoice_number'] = DitributorInvice::generateInvoiceNumber($request);
+            // New Invoice No ends here
             $customerObject = new Customer;
             $customer = Customer::find($request->customer_id);
             $subTotal = Cart::session(request()->user()->id)->getSubTotal();
@@ -149,13 +149,36 @@ class DistributorInvoiceController extends Controller
             }
 
             // TODO::USE ON THE DUPLICATION
-            $isInvoiceNumberTaken = DitributorInvice::where('invoice_number',  $data['invoice_number'])->first();
-            if ($isInvoiceNumberTaken) {
-                $data['invoice_number'] = $this->generateInvoiceNumber($request);
+            // $isInvoiceNumberTaken = DitributorInvice::where('invoice_number',  $data['invoice_number'])->first();
+            // if ($isInvoiceNumberTaken) {
+            //     $data['invoice_number'] = $this->generateInvoiceNumber($request);
+            //  Remove this.....}
+
+// This is new code for new invoice number ....start
+            $maxRetries = 5;
+            $attempt = 0;
+
+do {
+    // 🔑 Generate inside loop
+    $invoiceNumber = DitributorInvice::generateInvoiceNumber($request);
+    $data['invoice_number'] = $invoiceNumber;
+
+    try {
+        $invoice = DitributorInvice::create($data);
+        break; // ✅ success
+    } catch (\Illuminate\Database\QueryException $e) {
+        if ($e->getCode() == 23000) { // duplicate
+            $attempt++;
+            if ($attempt >= $maxRetries) {
+                throw new Exception("Invoice number generation failed. Try again.");
             }
+        } else {
+            throw $e;
+        }
+    }
 
-
-            $invoice = DitributorInvice::create($data);
+} while ($attempt < $maxRetries);
+// end .......
             $items =  Cart::session(request()->user()->id)->getContent();
             logger($invoice);
             logger($items);

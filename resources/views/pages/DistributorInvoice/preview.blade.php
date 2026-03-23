@@ -36,7 +36,7 @@
                         <table>
                             <tr>
                                 <td>Date</td>
-                                <td>{{ $invoices->invoice_date }}</td>
+                                <td>{{ $invoices->formatted_invoice_date }}</td>
                             </tr>
                             <tr>
                                 <td>Invoice No</td>
