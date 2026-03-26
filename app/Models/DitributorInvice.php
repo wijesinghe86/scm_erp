@@ -53,7 +53,7 @@ class DitributorInvice extends Model
     {
         switch ($this->type) {
             case 1:
-                return 'Non Tax Invoice';
+                return 'Invoice';
                 break;
             case 2:
                 return 'Tax Invoice';
@@ -235,7 +235,7 @@ public static function generateInvoiceNumber($request)
     };
 
     // 🔥 IMPORTANT: base WITHOUT date (no reset)
-    $base = "{$orgCode}_{$typePrefix}";
+    $base = "{$orgCode}{$typePrefix}";
 
     // 🔒 Lock
     $lastInvoice = self::where('invoice_number', 'like', "%{$base}%")
@@ -251,6 +251,6 @@ public static function generateInvoiceNumber($request)
     }
 
     // ✅ Date only for display, NOT for sequence
-    return "{$datePart}_{$orgCode}_{$typePrefix}_" . sprintf('%06d', $nextSeq);
+    return "{$datePart}_{$orgCode}{$typePrefix}_" . sprintf('%06d', $nextSeq);
 }
 }

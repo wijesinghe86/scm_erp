@@ -91,7 +91,7 @@ class DistributorInvoiceController extends Controller
             'payment_terms'=>'required',
             'customer_id' => 'required',
             'employee_id' => 'required',
-            'organization_id'=> 'required',
+            'organization_id'=> 'required|exists:organizations,id' ,
             'date_of_delivery'=> 'required',
             'place_of_supply'=> 'required',
             'grand_total_inword'=> 'required',

@@ -10,6 +10,7 @@
 <html>
 <head>
 <meta charset="utf-8">
+
 <table class="header-table">
     <tr>
         <!-- LOGO -->
@@ -32,15 +33,15 @@
         </td>
     </tr>
 </table>
-<title>Tax Invoice</title>
+<!-- <title>Tax Invoice</title> -->
 
 <style>
     @page {
     size: A4;
-    margin-top: 0.5in;
+    margin-top: 0.4in;
     margin-bottom: 0.2in;
-    margin-left: 1in;
-    margin-right: 0.5in;
+    margin-left: 0.5in;
+    margin-right: 0.2in;
 }
 .header-table {
     width: 100%;
@@ -75,7 +76,7 @@
 .company-name {
     text-align: left;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 28px;
+    font-size: 25px;
     font-weight: bold;
     font-style: italic;
     letter-spacing: 1px;
@@ -84,7 +85,7 @@
 
 }
 .company-info {
-    width: 30%;
+    width: 40%;
     text-align: left;
     font-size: 11px;
     line-height: 1.4;
@@ -100,7 +101,12 @@ body {
     table {
         width: 100%;
         border-collapse: collapse;
+        table-layout: fixed;
     }
+    td, th {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
 
     td, th {
         
@@ -130,9 +136,48 @@ body {
         padding: 5px;
     }
 
-    .spacer {
+    /* .spacer {
         height: 10px;
-    }
+    } */
+    .items-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #000; /* outer border */
+    font-size: 12px;
+   
+}
+.items-table td {
+    white-space: nowrap;
+    font-size: 12px;
+}
+
+/* HEADER - FULL GRID */
+.items-table thead th {
+    border: 1px solid #000;
+    padding: 6px;
+    text-align: center;
+    font-size: 10px;
+}
+
+/* BODY - ONLY VERTICAL LINES */
+.items-table tbody td {
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    border-top: none;
+    border-bottom: none;
+    padding: 6px;
+}
+
+/* Ensure last column right border shows */
+.items-table tbody td:last-child {
+    border-right: 1px solid #000;
+}
+
+/* Ensure first column left border */
+.items-table tbody td:first-child {
+    border-left: 1px solid #000;
+}
+
 
 </style>
 </head>
@@ -140,7 +185,7 @@ body {
 <body>
 
     {{-- TITLE --}}
-    <div class="title-box">{{$invoices->getInvoiceTypeNameAttribute()}} </div>
+    <div class="title-box">{{strtoupper($invoices->getInvoiceTypeNameAttribute())}} </div>
 
     <div class="spacer"></div>
 
@@ -193,34 +238,46 @@ body {
     <div class="spacer"></div>
 
     {{-- ITEMS TABLE --}}
-    <table>
+    <table class="items-table">
         <thead>
             <tr>
-                <th width="5%">No</th>
-                <!-- <th width="10%">Reference</th> -->
-                <th width="60%">Description of Goods</th>
-                <th width="5%" class="text-center">Quantity</th>
-                <th width="15%" class="text-center">Unit Price</th>
-                <th width="15%" class="text-right">Amount(Rs.)</th>
+                <th width="4%">No</th>
+                <th width="42%">Description of Goods</th>
+                <th width="6%">U/M</th>
+                <th width="7%" class="text-center">Ord Qty</th>
+                <th width="9%" class="text-left">Unit Rate</th>
+                <th width="12%" class="text-left">Item Amount(Rs)</th>
+                <th width="8%" class="text-left">Item Dicount %</th>
+                @if($invoices->type == 2)
+                <th width="12%" class="text-left">Ex.of VAT Amount(Rs)</th>
+                @else
+                <th width="12%" class="text-right">Amount(Rs)</th>
             </tr>
+            @endif
         </thead>
 
         <tbody>
             @foreach($invoices->items  as $key => $item)
             <tr>
-                <td>{{ $key + 1 }}</td>
-                <!-- <td>{{ $item->stock_no }}</td> -->
-                <td>{{ $item->description }}</td>
+                <td class="text-left">{{ $key + 1 }}</td>
+                <td class="text-left">{{ $item->description }}</td>
+                <td class="text-left">{{ $item->uom }}</td>
                 <td class="text-center">{{ $item->quantity }}</td>
                 <td class="text-right">{{ number_format($item->unit_price,2) }}</td>
                 <td class="text-right">{{ number_format($item->sub_total,2) }}</td>
+                <td class="text-center">{{ number_format($item->item_discount_percentage) }}</td>
+                <td class="text-right">{{ number_format($item->total,2) }}</td>
+
             </tr>
             @endforeach
 
             {{-- EMPTY ROWS to match design --}}
-            @for($i = count($invoices->items); $i < 10; $i++)
+            @for($i = count($invoices->items); $i < 12; $i++)
             <tr>
                 <td>&nbsp;</td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -233,13 +290,13 @@ body {
     {{-- TOTALS --}}
     <table>
         <tr>
-            <td colspan="4"><strong>Total Value of Supply:</strong></td>
+            <td colspan="5"><strong>Total Value of Supply:</strong></td>
             <td class="text-right">{{ number_format($invoices->sub_total,2) }}</td>
         </tr>
         
         @if($invoices->type == 2)
 <tr>
-    <td colspan="4">
+    <td colspan="5">
         <strong>VAT Amount (Total Value of Supply @ 18%)</strong>
     </td>
     <td class="text-right">
@@ -248,10 +305,15 @@ body {
 </tr>
 @endif
         </tr>
+        @if($invoices->type == 2)
         <tr>
-            <td colspan="4"><strong>Grand Total</strong></td>
+            <td colspan="5"><strong>Grand Total with VAT</strong></td>
+            <td class="text-right">{{ number_format($invoices->grand_total,2) }}</td>
+            @else
+            <td colspan="5"><strong>Grand Total</strong></td>
             <td class="text-right">{{ number_format($invoices->grand_total,2) }}</td>
         </tr>
+        @endif
     </table>
 
     <div class="spacer"></div>
@@ -266,7 +328,10 @@ body {
         </tr>
         <tr>
             <td>
-                <strong>Mode of Payment:</strong> {{ $invoices->payment_terms }}
+                <strong>Mode of Payment:</strong> {{ $invoices->payment_terms }} | 
+                <!-- <strong>Prepared by:</strong>{{ $invoices->createUser ? $invoices->createUser->name : 'User Error'}} | 
+                <strong>Sales Code:</strong> {{ $invoices->SalesStaff->employee_epf_no }} | 
+                <strong>Date|Time:</strong>{{ $invoices->created_at }} | -->
             </td>
         </tr>
     </table>
