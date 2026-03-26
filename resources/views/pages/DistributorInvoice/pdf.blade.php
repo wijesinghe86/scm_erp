@@ -202,7 +202,8 @@ body {
 
         <tr>
             <td>
-                <strong>Supplier’s Details</strong><br>
+            <div style="text-align: center;">
+                <strong>Supplier’s Details</strong></div>
                 <strong>Supplier’s TIN:</strong>{{ $invoices->organization->organization_tin_no ?? '' }}<br>
                 <strong>Supplier’s Name:</strong> {{ $invoices->organization->organization_name ?? '' }}<br>
                 <strong>Address:</strong> {{ $invoices->organization->organization_address_line1 ?? '' }}<br><br>
@@ -210,7 +211,8 @@ body {
             </td>
 
             <td>
-                <strong>Purchaser’s Details</strong><br>
+            <div style="text-align: center;">
+                <strong>Purchaser’s Details</strong></div>
                 <strong>Purchaser’s TIN:</strong> {{ $invoices->customer->customer_tin_no ?? '' }}<br>
                 <strong>Purchaser’s Name:</strong> {{ $invoices->customer->customer_name ?? '' }}<br>
                 <strong>Address:</strong> {{ $invoices->customer->customer_address_line1 ?? '' }}<br><br>
@@ -307,7 +309,7 @@ body {
         </tr>
         @if($invoices->type == 2)
         <tr>
-            <td colspan="5"><strong>Grand Total with VAT</strong></td>
+            <td colspan="5"><strong>Total Amount including VAT</strong></td>
             <td class="text-right">{{ number_format($invoices->grand_total,2) }}</td>
             @else
             <td colspan="5"><strong>Grand Total</strong></td>
@@ -328,7 +330,7 @@ body {
         </tr>
         <tr>
             <td>
-                <strong>Mode of Payment:</strong> {{ $invoices->payment_terms }} | 
+                <strong>Mode of Payment:</strong> {{ $invoices->payment_terms }} 
                 <!-- <strong>Prepared by:</strong>{{ $invoices->createUser ? $invoices->createUser->name : 'User Error'}} | 
                 <strong>Sales Code:</strong> {{ $invoices->SalesStaff->employee_epf_no }} | 
                 <strong>Date|Time:</strong>{{ $invoices->created_at }} | -->
