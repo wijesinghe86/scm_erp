@@ -76,7 +76,7 @@
                                         <label>Invoice Type</label>
                                         <select class="form-control" name="invoice_type" id="invoice_type">
                                             <option value="">Select</option>
-                                            <option value="1">Non-Tax Invoice</option>
+                                            <option value="1">Invoice</option>
                                             <option value="2">Tax Invoice</option>
                                             <option value="3">Suspended Tax Invoice</option>
                                         </select>
