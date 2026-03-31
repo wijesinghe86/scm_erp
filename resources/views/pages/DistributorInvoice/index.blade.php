@@ -74,7 +74,7 @@
                                                 <a href="">
                                                     <i class="fa-sharp fa-solid fa-trash text-danger"></i>
                                                 </a>
-                                                <a href="">
+                                                <a href="{{ route('distributor_invoices.print', $invoice->id) }}">
                                                     <i class="fa-sharp fa-solid fa-print"></i>
                                                 </a>
                                             </td>
