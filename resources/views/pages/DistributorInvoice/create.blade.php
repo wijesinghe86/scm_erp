@@ -129,15 +129,20 @@
                                         </select>
                                     </div>
                                     {{-- Customer Selection End here --}}
-                                    <div class="form-group col-md-3">
-                                        <label>Customer VAT Number</label>
+                                    <div class="form-group col-md-2">
+                                        <label>Customer VAT No</label>
                                         <input type="text" class="form-control" id="cus_vat_no" name="cus_vat_no"
                                             placeholder="Customer VAT Number" disabled>
                                     </div>
-                                    <div class="form-group col-md-3">
-                                        <label>Customer TIN Number</label>
+                                    <div class="form-group col-md-2">
+                                        <label>Customer TIN No</label>
                                         <input type="text" class="form-control" id="cus_tin_no" name="cus_tin_no"
                                             placeholder="Customer TIN Number" disabled>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label>Customer Phone No</label>
+                                        <input type="text" class="form-control" id="cus_phone_no" name="cus_phone_no"
+                                            placeholder="Customer Phone Number" disabled>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -689,10 +694,42 @@
             data: data,
             success: function(response) {
                 customerData = response;
+                 // 🔥 Check missing fields FIRST
+                 if (
+    !response.customer_mobile_number ||
+    !response.customer_vat_number ||
+    !response.customer_tin_no
+) {
+    Swal.fire({
+        title: 'Incomplete Customer Data',
+        text: 'Phone, VAT or TIN is missing.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Edit Customer',   // ✅ Custom button
+        cancelButtonText: 'New Invoice',    // ✅ Custom button
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // 👉 Edit Customer
+             window.location.href = "{{ route('customer.index') }}";
+           
+        } else {
+            // 👉 Go to Invoice list
+            window.location.href = "{{ route('distributor_invoices.create') }}";
+        }
+    });
+
+    return;
+}
+
+            // ✅ Continue normal flow
+
                 $('#cus_code').val(response.customer_code);
                 $('#cus_address').val(response.customer_address_line1);
                 $('#cus_vat_no').val(response.customer_vat_number);
                 $('#cus_tin_no').val(response.customer_tin_no);
+                $('#cus_phone_no').val(response.customer_mobile_number);
+           
                 if (response?.customer_payment_terms == '{{ $customer::$PAYMENT_TERM_CREDIT }}') {
                     $("#payment_terms").find(':not(:selected)').prop('disabled', false);
                     $('#customer_credit_limit_wrapper').css('display', 'block')

@@ -96,6 +96,7 @@ class DistributorInvoiceController extends Controller
             'place_of_supply'=> 'required',
             'grand_total_inword'=> 'required',
         ]);
+ 
 
         try {
             DB::beginTransaction();
@@ -104,6 +105,7 @@ class DistributorInvoiceController extends Controller
             // New Invoice No ends here
             $customerObject = new Customer;
             $customer = Customer::find($request->customer_id);
+            
             $subTotal = Cart::session(request()->user()->id)->getSubTotal();
             if (
                 $customer && $customer->customer_payment_terms == $customerObject::$PAYMENT_TERM_CREDIT &&
@@ -227,6 +229,7 @@ do {
                     $delivery_order_item->description  = data_get($item, 'description');
                     $delivery_order_item->unit_price  = data_get($item, 'unit_price');
                     $delivery_order_item->discount_amount  = data_get($item, 'item_discount_amount');
+                    $delivery_order_item->discount_percentage  = data_get($item,'item_discount_percentage');
                     $delivery_order_item->qty  = data_get($item, 'quantity');
                     $delivery_order_item->created_by = $request['created_by'];
                     $delivery_order_item->uom  = data_get($item, 'uom');
@@ -285,7 +288,7 @@ do {
         //     $view_path = "pages.Invoices.jsi_pdf";
        
         // }
-        $pdf = PDF::loadView("pages.DistributorInvoice.pdf", compact('invoices'))->setPaper('A4', 'portrait');
+        $pdf = PDF::loadView("pages.DistributorInvoice.pdf", compact('invoices'))->setPaper('letter', 'portrait');
         $invoices->status = 'printed';
         $invoices->save();
         return $pdf->stream('invoice.pdf');

@@ -11,7 +11,6 @@
                                 <a href="{{ route('customer.create') }}" class="btn btn-success float-end mb-2"> Add New </a>
                                 <a href="{{ route('customer.deleted') }}" class="btn btn-danger float-end mb-2"> Delete </a>
                                 <a href="{{ route('customer.print') }}" target="blank" class="btn btn-primary mb-2"> Print </a>
-
                             </div>
                             <div class="table-responsive">
                                 <table class="table bordered form-group">
@@ -56,7 +55,7 @@
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
                                                    <a href="{{ route('customer.delete', $customer->id) }}" >
-                                                   {{-- <a href="javascript:void(0)" class="ml-3" onclick="delconf('{{ route('customer.delete', $customer->id) }}')"> --}}
+                                                   <!-- <a href="javascript:void(0)" class="ml-3" onclick="delconf('{{ route('customer.delete', $customer->id) }}')" -->
                                                     <i class="fa-solid fa-trash-can text-danger"></i>
                                                 </a>
 

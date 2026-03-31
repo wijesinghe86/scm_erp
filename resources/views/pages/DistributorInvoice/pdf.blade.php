@@ -177,8 +177,38 @@ body {
 .items-table tbody td:first-child {
     border-left: 1px solid #000;
 }
+.totals-table-final {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0; /* 🔥 REMOVE SPACE */
+}
 
+.totals-table-final td {
+    padding: 6px;
+}
 
+/* LEFT WHITE SPACE (NO LINES AT ALL) */
+.totals-table-final .blank {
+    width: 60%;
+    border: none !important; /* 🔥 REMOVE ALL LINES */
+    border-left: 1px solid #000 !important; /* ✅ ONLY LEFT BORDER */
+
+}
+
+/* LABEL COLUMN */
+.totals-table-final .label {
+    width: 25%;
+    border: 1px solid #000;
+    text-align: left;
+    font-weight: bold;
+}
+
+/* VALUE COLUMN */
+.totals-table-final .value {
+    width: 15%;
+    border: 1px solid #000;
+    text-align: right;
+}
 </style>
 </head>
 
@@ -205,17 +235,18 @@ body {
             <div style="text-align: center;">
                 <strong>Supplier’s Details</strong></div>
                 <strong>Supplier’s TIN:</strong>{{ $invoices->organization->organization_tin_no ?? '' }}<br>
-                <strong>Supplier’s Name:</strong> {{ $invoices->organization->organization_name ?? '' }}<br>
-                <strong>Address:</strong> {{ $invoices->organization->organization_address_line1 ?? '' }}<br><br>
+                <strong>Supplier’s Name:</strong> {{ strtoupper ($invoices->organization->organization_name ?? '') }}<br>
+                <strong>Address:</strong> {{  strtoupper ($invoices->organization->organization_address_line1 ?? '') }}<br><br>
                 <strong>Telephone No:</strong> {{ $invoices->organization->organization_phone_number ?? '' }}
             </td>
 
             <td>
             <div style="text-align: center;">
                 <strong>Purchaser’s Details</strong></div>
-                <strong>Purchaser’s TIN:</strong> {{ $invoices->customer->customer_tin_no ?? '' }}<br>
-                <strong>Purchaser’s Name:</strong> {{ $invoices->customer->customer_name ?? '' }}<br>
-                <strong>Address:</strong> {{ $invoices->customer->customer_address_line1 ?? '' }}<br><br>
+                <strong>Purchaser’s TIN:</strong> {{ $invoices->customer->customer_tin_no ?? '' }} <br>
+                <strong>Purchaser’s VAT No:</strong> {{ $invoices->customer->customer_vat_number ?? '' }}<br>
+                <strong>Purchaser’s Name:</strong> {{ strtoupper($invoices->customer->customer_name ?? '' )}}<br>
+                <strong>Address:</strong> {{ strtoupper($invoices->customer->customer_address_line1 ?? '') }}<br><br>
                 <strong>Telephone No:</strong> {{ $invoices->customer->customer_phone ?? '' }}
             </td>
         </tr>
@@ -274,7 +305,7 @@ body {
             @endforeach
 
             {{-- EMPTY ROWS to match design --}}
-            @for($i = count($invoices->items); $i < 12; $i++)
+            @for($i = count($invoices->items); $i < 10; $i++)
             <tr>
                 <td>&nbsp;</td>
                 <td></td>
@@ -290,54 +321,51 @@ body {
     </table>
 
     {{-- TOTALS --}}
-    <table>
-        <tr>
-            <td colspan="5"><strong>Total Value of Supply:</strong></td>
-            <td class="text-right">{{ number_format($invoices->sub_total,2) }}</td>
-        </tr>
-        
-        @if($invoices->type == 2)
-<tr>
-    <td colspan="5">
-        <strong>VAT Amount (Total Value of Supply @ 18%)</strong>
-    </td>
-    <td class="text-right">
-        {{ number_format($invoices->vat_amount, 2) }}
-    </td>
-</tr>
-@endif
-        </tr>
-        @if($invoices->type == 2)
-        <tr>
-            <td colspan="5"><strong>Total Amount including VAT</strong></td>
-            <td class="text-right">{{ number_format($invoices->grand_total,2) }}</td>
-            @else
-            <td colspan="5"><strong>Grand Total</strong></td>
-            <td class="text-right">{{ number_format($invoices->grand_total,2) }}</td>
-        </tr>
-        @endif
-    </table>
+    <table class="totals-table-final">
+    <tr>
+        <td class="blank" rowspan="{{ $invoices->type == 2 ? 3 : 2 }}"><strong>Note:</strong><br>
+        CHEQUES TO BE DRAWN IN FAVOUR OF “JANATHA STEELS” AND CROSSED “A/C PAYEE ONLY”</td>
+        <td class="label">Total Value of Supply</td>
+        <td class="value">{{ number_format($invoices->sub_total, 2) }}</td>
+    </tr>
 
-    <div class="spacer"></div>
+    @if($invoices->type == 2)
+    <tr>
+        <td class="label">VAT Amount (18%)</td>
+        <td class="value">{{ number_format($invoices->vat_amount, 2) }}</td>
+    </tr>
+    @endif
+
+    <tr>
+        <td class="label">
+            {{ $invoices->type == 2 ? 'Total Amount including VAT' : 'Grand Total' }}
+        </td>
+        <td class="value">
+            <strong>{{ number_format($invoices->grand_total, 2) }}</strong>
+        </td>
+    </tr>
+</table>
+
+    <!-- <div class="spacer"></div> -->
 
     {{-- FOOTER --}}
     <table>
         <tr>
             <td>
-                <strong>Total Amount in words:</strong><br>
-                {{ $invoices->grand_total_inword }}
+                <strong>Total Amount in words:</strong>{{ $invoices->grand_total_inword }}
+              
             </td>
         </tr>
         <tr>
             <td>
-                <strong>Mode of Payment:</strong> {{ $invoices->payment_terms }} 
-                <!-- <strong>Prepared by:</strong>{{ $invoices->createUser ? $invoices->createUser->name : 'User Error'}} | 
+                <strong>Mode of Payment:</strong> {{ $invoices->payment_terms }} {{$invoices->credit_days}}
+                <strong>Prepared by:</strong>{{ $invoices->createUser ? $invoices->createUser->name : 'User Error'}} | 
                 <strong>Sales Code:</strong> {{ $invoices->SalesStaff->employee_epf_no }} | 
-                <strong>Date|Time:</strong>{{ $invoices->created_at }} | -->
+                <strong>Date|Time:</strong>{{ $invoices->created_at }} 
             </td>
         </tr>
     </table>
-    <table>
+    <!-- <table>
         <head>
             <tr>
                 <td>Prepared by:</td>
@@ -353,7 +381,7 @@ body {
 
             </tr>
         </tbody>
-    </table>
+    </table> -->
 
 </body>
 </html>

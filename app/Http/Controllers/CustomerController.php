@@ -190,6 +190,7 @@ if(
     public function getData(Request $request)
     {
         $customers = Customer::find($request->customer_id);
-        return $customers;
-    }
+        return response()->json($customers);
 }
+    }
+

@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
-use Cart;
 use App\Models\BillType;
-use App\Models\Customer;
-use App\Models\Employee;
 use App\Models\Creditnote;
+use App\Models\Customer;
 use App\Models\DeliveryOrder;
 use App\Models\DitributorInviceItem;
-use Illuminate\Foundation\Auth\User;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Employee;
+use Cart;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\DB;
 
 
 class DitributorInvice extends Model
@@ -38,6 +39,8 @@ class DitributorInvice extends Model
         'sub_total',
         'vat_rate',
         'vat_amount',
+        'item_discount_percentage',
+        'item_discount_amount',
         'discount_type',
         'discount_amount',
         'discount',
@@ -162,7 +165,7 @@ class DitributorInvice extends Model
         $vatRate = 18; //TODO: need to make it dynamic later
         //    $subtotal = $items->sum('total');
         $subtotal = Cart::session(request()->user()->id)->getSubTotal() - $total_item_discount;
-        $vat = $subtotal * ($vatRate / 100);
+        $vat = round($subtotal * ($vatRate / 100));
         $exclude_vat = 0;
 
         if ($option == "None" || $option == 0 || $option == "0") {
@@ -173,18 +176,18 @@ class DitributorInvice extends Model
 
         if ($option == "Option B" || $option == 2 || $option == "2") {
             $exclude_vat = $subtotal / ((100 + $vatRate) / 100);
-            $vat = $exclude_vat * ($vatRate / 100);
+            $vat = round($exclude_vat * ($vatRate / 100));
             $total = $subtotal;
         }
         if ($exclude_vat > 0) {
             $total = $subtotal;
         } else {
-            $total = $subtotal + $vat;
+            $total = round($subtotal + $vat);
         }
 
         $discount  = $this->calculateDiscount($total, $discount_type, $discount_value);
         $netTotal = $total;
-        $grandTotal = $netTotal  - (float) $discount;
+        $grandTotal = round($netTotal  - (float) $discount);
 
         return [
             "items" => $items,
@@ -225,32 +228,32 @@ public static function generateInvoiceNumber($request)
     $orgCode = strtoupper($organization?->organization_code ?? 'ORG');
 
     $date = \Carbon\Carbon::parse($request->invoice_date);
-    $datePart = $date->format('yM'); // still shown in invoice
+    $datePart = strtoupper($date->format('yM'));
 
-    // Prefix based on type
     $typePrefix = match ((int)$request->invoice_type) {
         1 => 'IN',
         2 => 'TI',
-        default => 'OT'
+        default => 'IN',
     };
 
-    // 🔥 IMPORTANT: base WITHOUT date (no reset)
+    // ✅ base WITHOUT date
     $base = "{$orgCode}{$typePrefix}";
 
-    // 🔒 Lock
-    $lastInvoice = self::where('invoice_number', 'like', "%{$base}%")
+  
+    // 🔒 Lock ONLY relevant rows safely
+    $lastInvoice = self::where('organization_id', $request->organization_id)
+        ->where('type', $request->invoice_type)
         ->lockForUpdate()
         ->orderBy('id', 'desc')
         ->first();
 
     if ($lastInvoice) {
-        $lastSeq = (int) substr($lastInvoice->invoice_number, -6);
+        $lastSeq = (int) substr($lastInvoice->invoice_number, -5);
         $nextSeq = $lastSeq + 1;
     } else {
         $nextSeq = 1;
     }
 
-    // ✅ Date only for display, NOT for sequence
-    return "{$datePart}_{$orgCode}{$typePrefix}_" . sprintf('%06d', $nextSeq);
+    return "{$datePart}_{$base}_" . sprintf('%05d', $nextSeq);
 }
 }
