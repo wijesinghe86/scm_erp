@@ -15,6 +15,17 @@ return new class extends Migration
     {
         Schema::create('urgent_credit_note_items', function (Blueprint $table) {
             $table->id();
+            $table->string('credit_note_no')->nullable();
+            $table->string('stock_no')->nullable();
+            $table->decimal('credit_qty', 15,2)->nullable();
+            $table->decimal('unit_rate', 15,2)->nullable();
+            $table->decimal('sales_value', 15,2)->nullable();
+            $table->decimal('vat_amount', 15,2)->nullable();
+            $table->decimal('total_sales_value', 15,2)->nullable();
+            $table->string('status')->nullable();
+            $table->string('remarks')->nullable();
+            $table->unsignedBigInteger('status_updated_by')->nullable();
+            $table->dateTime('status_updated_date_time')->nullable();
             $table->timestamps();
         });
     }

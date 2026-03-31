@@ -44,8 +44,7 @@
                                         </td>
                                         <td>
                                             <button class="btn btn-primary "
-                                                onclick="addToCart({ $item },{ $key })">Add
-                                                To Cart</button>
+                                            onclick='addToCart(@json($item), {{ $key }})'>Add To Cart</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -89,26 +88,26 @@
 
         function addToCart(item, index) {
             var location_id = $(`#location_id-${index}`).val();
-            var qunantity = $(`#newQuantity-${index}`).val();
+            var quantity = $(`#newQuantity-${index}`).val();
             let mappedData = {
                 ...item,
                 location_id,
-                qty: qunantity,
-                sub_total: parseFloat(item.unit_price) * parseFloat(qunantity),
-                total: parseFloat(item.unit_price) * parseFloat(qunantity),
+                qty: quantity,
+                sub_total: parseFloat(item.unit_price) * parseFloat(quantity),
+                total: parseFloat(item.unit_price) * parseFloat(quantity),
             }
 
             const quantitySum = cart.filter(row => row?.id == item?.id).reduce((acc, curr) => {
                 return acc + parseFloat(curr.qty)
             }, 0)
-            if (qunantity == 0) {
+            if (quantity == 0) {
                 return
             }
-            if ((parseFloat(quantitySum) + parseFloat(qunantity)) > item?.qty) {
+            if ((parseFloat(quantitySum) + parseFloat(quantity)) > item?.qty) {
                 return alert("Quantity is grater than availanble quantity")
             }
 
-            $(`#newQuantity-${index}`).val(item?.qty - (parseFloat(quantitySum) + parseFloat(qunantity)))
+            $(`#newQuantity-${index}`).val(item?.qty - (parseFloat(quantitySum) + parseFloat(quantity)))
 
             const filteredItem = cart.filter(row => row?.location_id == location_id && row?.stock_no == item?.stock_no)
 
@@ -117,9 +116,9 @@
                 let indexOf = cart.findIndex(row => row?.location_id == location_id && row?.stock_no == item?.stock_no)
                 let newItem = {
                     ...cartItem,
-                    qty: parseFloat(cartItem.qty) + parseFloat(qunantity),
-                    sub_total: parseFloat(cartItem.unit_price) * (parseFloat(cartItem.qty) + parseFloat(qunantity)),
-                    total: parseFloat(cartItem.unit_price) * (parseFloat(cartItem.qty) + parseFloat(qunantity)),
+                    qty: parseFloat(cartItem.qty) + parseFloat(quantity),
+                    sub_total: parseFloat(cartItem.unit_price) * (parseFloat(cartItem.qty) + parseFloat(quantity)),
+                    total: parseFloat(cartItem.unit_price) * (parseFloat(cartItem.qty) + parseFloat(quantity)),
                 }
                 cart.splice(indexOf, 1, newItem)
                 renderData()
@@ -170,7 +169,7 @@
                 cart
             }
             $.ajax({
-                url: "{{ route('balanceorder.delivery_order_create', $balance_order->id) }}",
+                url: "{{ route('distributor_balanceOrder.delivery_order_create', $balance_order->id) }}",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },

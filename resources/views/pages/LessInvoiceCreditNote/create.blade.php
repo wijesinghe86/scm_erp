@@ -7,7 +7,7 @@
                     <div class="card-body">
                         <h1 style="color:grey" class="card-title">Credit Note</h1>
                        
-                        <form class="forms-sample" method="POST" action="">
+                        <form class="forms-sample" method="POST" action="{{ route('less_credit_note.store')}}">
                             @csrf
                             <br>
                             <br>
@@ -17,9 +17,9 @@
                                     <select class="form-control invoice-select" name="invoice_no" id="invoice_no"
                                         onchange="invoiceOnChange(this)">
                                         <option value="" selected>Select Invoice</option>
-                                        @foreach ($urgent_invoices as $urgent_invoice)
-                                            <option value="{{ $urgent_invoice->id }}">
-                                                {{ $urgent_invoice->invoice_number }}
+                                        @foreach ($invoices as $invoice)
+                                            <option value="{{ $invoice->id }}">
+                                                {{ $invoice->invoice_number }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -29,10 +29,10 @@
                                     <input type="date" class="form-control" name="invoice_date" id="invoice_date"
                                         placeholder="invoice_date" readonly>
                                 </div>
-                                <div class="form-group col-md-3">
-                                    <label>Reverse Credit Note No</label>
+                                <div class="form-group col-md-2">
+                                    <label>Credit Note No</label>
                                     <input type="text" class="form-control" name="credit_note_no"
-                                        placeholder="credit_note_no" value="" readonly>
+                                        placeholder="credit_note_no" value="{{$next_number}}" readonly>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>Credit Note Date</label>
@@ -50,6 +50,21 @@
                                     <label>Less Invoice No</label>
                                     <input type="text" class="form-control" name="less_invoice_no"
                                         placeholder="less_invoice_no">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>Less Amount</label>
+                                    <input type="decimal" class="form-control" name="less_amount" id="less_amount"
+                                        placeholder="less_amount">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Invoice Amount</label>
+                                    <input type="decimal" class="form-control" name="invoice_amount" id="invoice_amount"
+                                        placeholder="invoice_amount" readonly>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>Less Invoice Amount</label>
+                                    <input type="decimal" class="form-control" name="less_invoice_amount" id="less_invoice_amount"
+                                        placeholder="less_invoice_amount">
                                 </div>
                             </div>
                             <hr>
@@ -69,33 +84,15 @@
                                     <input type="text" class="form-control" name="vat_no" id="vat_no"
                                         placeholder="vat_no" readonly>
                                 </div>
-                            </div>
-                            <hr>
-                            <p style="color:gray"> Select the Reference Document </p>
-                            <div class="row">
-                                 {{-- @if (count($mrs) >0)  --}}
-                                <div class="form-group col-md-2 ">
-                                    <label>RMRS No</label>
-                                    <select class="form-control invoice-select mrs_input" name="reference_no" id="mrs_no">
-                                        <option value="" selected>Select</option>
-                                        @foreach ($rmrs as $return)
-                                            <option value="{{ $return->id }}">
-                                                {{ $return->return_no }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>                                         
-                                </div>
-                                <button type="button" style="background-color: blue"  id="resetBtn" >Reset</button>
-                                <input type="hidden" name="reference_type" id="reference_type" /> 
-                                <hr>
-                           
-                            <div class="return_items_table" ></div>
-                            <br>
-                            <br>
+                                <!-- <div class="form-group col-md-3">
+                                    <label>Invoice Amount</label>
+                                    <input type="text" class="form-control" name="invoice_amount" id="invoice_amount"
+                                        placeholder="invoice_amount" readonly>
+                                </div> -->
+                            </div>                           
 
                             <button type="submit" class="btn btn-success me-2">Complete</button>
-                            <a href="{{ route('reverse_credit_note.index') }}" class="btn btn-danger">Go to Credit Note Registry</a>
+                            <a href="{{ route('credit_note.index') }}" class="btn btn-danger">Go to Credit Note Registry</a>
                         </form>
                     </div>
                 </div>
@@ -107,36 +104,7 @@
 
 @push('scripts')
     <script>
-       
-        $(document).ready(function() {
-            // alert("ss");
-            $('.return_items_table'); 
-        });
-        $(".mrs_input").change(function() {
-            var id = $(this).val();
-           alert("Handler for .change() called." + id);
-            // disaable or hide d/o and b/o when selecting mrs no
-            $('#reference_type').val('MRS')
-            $(".return_items_table").load('/reverse_credit_note/getReturnItems?return_id=' + id, function() {
-        
-            });
-        });
-    $('#resetBtn').on('click', function(){
-       
-        $('#mrs_no').attr('disabled', false)
-       
-        clearTables()
-    })
-
-
-    function clearTables(){
-      
-        $(".return_items_table").empty() //clear item table
-     
-
-    }
-
-        let urgent_invoices = <?php echo json_encode($urgent_invoices); ?>;
+        let invoices = <?php echo json_encode($invoices); ?>;
 
         $(document).ready(function() {
             //console.log(invoices);
@@ -144,10 +112,10 @@
                 placeholder: "Select",
             });
         });
-//get customer details, MRS No, D/O No and B/O when selecting Invoice No
+
         function invoiceOnChange(elem) {
 
-            var selectedInvoice = urgent_invoices.filter((row) => {
+            var selectedInvoice = invoices.filter((row) => {
                 return row.id == elem.value;
             })
 
@@ -156,40 +124,25 @@
             }
 
             selectedInvoice = selectedInvoice[0];
-            clearTables() // clear all item tables when change the invoice number
-            
-            $.ajax({
-                url: "{{ route('reverse_credit_note.getInvoiceDetails') }}",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                type: "POST",
-                data: {
-                    invoice_number: selectedInvoice?.invoice_number,
-                    invoice_id: selectedInvoice?.id,
-                },
-                success: function(response) {
-                    console.log(response)
-
-                    $('#mrs_no').find('option').remove().end()
-                        $('#mrs_no').append('<option selected disabled>Select Item</option>');
-                        response?.mrs?.forEach(element => {
-                            $('#mrs_no').append('<option  value="' + element.id +
-                                '">' + element?.return_no + '</option>');
-                        })
-                       
-                }
-
-            });
+           
 
             document.getElementById("invoice_date").value = selectedInvoice.invoice_date;
             document.getElementById("customer_code").value = selectedInvoice.customer.customer_code;
             document.getElementById("customer_name").value = selectedInvoice.customer.customer_name;
+            document.getElementById("invoice_amount").value = selectedInvoice.grand_total;
             document.getElementById("vat_no").value = selectedInvoice.customer.customer_vat_number;
-            document.getElementById("invOption").value = selectedInvoice.customer.customer_vat_number;
+
         }
 
-        
+            $('#less_amount').on('input', function() {
+
+            let amount = $(this).val();
+            let invamount = $('#invoice_amount').val();
+
+            let newinv = parseFloat(invamount) - parseFloat(amount) 
+            $('#less_invoice_amount').val(newinv)
+
+}) 
 
 
     </script>

@@ -2,19 +2,20 @@
 
 namespace App\Models;
 
-use Cart;
 use App\Models\BillType;
-use App\Models\Customer;
-use App\Models\Employee;
 use App\Models\Creditnote;
-use App\Models\InvoiceItem;
+use App\Models\Customer;
 use App\Models\DeliveryOrder;
-use App\Models\DeliveryOrderItem;
-use Illuminate\Foundation\Auth\User;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\DitributorInviceItem;
+use App\Models\Employee;
+use Cart;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\DB;
 
-class Invoice extends Model
+
+class DitributorInvice extends Model
 {
     use HasFactory;
     protected $fillable =
@@ -22,6 +23,10 @@ class Invoice extends Model
         'customer_id',
         'invoice_number',
         'invoice_date',
+        'date_of_delivery',
+        'place_of_supply',
+        'additional_information',
+        'organization_id',
         'employee_id',
         'ref_number',
         'po_number',
@@ -29,28 +34,29 @@ class Invoice extends Model
         'category',
         'type',
         'option',
+        'credit_days',
         // 'item_count',
         'sub_total',
         'vat_rate',
         'vat_amount',
+        'item_discount_percentage',
+        'item_discount_amount',
         'discount_type',
-        "discount_amount",
+        'discount_amount',
+        'discount',
         'net_total',
         'grand_total',
+        'grand_total_inword',
         'status',
-        'created_by',
-        'credit_days',
-        'cancel_status',
-        'cancelled_by',
-        'cancel_date'
-
+        'created_by'
+        
     ];
 
     public function getInvoiceTypeNameAttribute()
     {
         switch ($this->type) {
             case 1:
-                return 'Non Tax Invoice';
+                return 'Invoice';
                 break;
             case 2:
                 return 'Tax Invoice';
@@ -115,7 +121,7 @@ class Invoice extends Model
 
     public function Items()
     {
-        return $this->hasMany(InvoiceItem::class, 'invoice_id', 'id');
+        return $this->hasMany(DitributorInviceItem::class, 'invoice_id', 'id');
     }
 
     
@@ -156,11 +162,10 @@ class Invoice extends Model
 
         $total_item_discount = $items->sum('attributes.item_discount_amount');
 
-
         $vatRate = 18; //TODO: need to make it dynamic later
         //    $subtotal = $items->sum('total');
         $subtotal = Cart::session(request()->user()->id)->getSubTotal() - $total_item_discount;
-        $vat = $subtotal * ($vatRate / 100);
+        $vat = round($subtotal * ($vatRate / 100));
         $exclude_vat = 0;
 
         if ($option == "None" || $option == 0 || $option == "0") {
@@ -171,18 +176,18 @@ class Invoice extends Model
 
         if ($option == "Option B" || $option == 2 || $option == "2") {
             $exclude_vat = $subtotal / ((100 + $vatRate) / 100);
-            $vat = $exclude_vat * ($vatRate / 100);
+            $vat = round($exclude_vat * ($vatRate / 100));
             $total = $subtotal;
         }
         if ($exclude_vat > 0) {
             $total = $subtotal;
         } else {
-            $total = $subtotal + $vat;
+            $total = round($subtotal + $vat);
         }
 
         $discount  = $this->calculateDiscount($total, $discount_type, $discount_value);
         $netTotal = $total;
-        $grandTotal = $netTotal  - (float) $discount;
+        $grandTotal = round($netTotal  - (float) $discount);
 
         return [
             "items" => $items,
@@ -206,5 +211,49 @@ class Invoice extends Model
         return $this->hasMany(DeliveryOrder::class, 'invoice_number', 'invoice_number');  
     }
 
+    public function organization()
+{
+    return $this->belongsTo(Organization::class, 'organization_id');
+}
 
+public function getFormattedInvoiceDateAttribute()
+{
+    return \Carbon\Carbon::parse($this->invoice_date)->format('m/d/Y');
+}
+
+// New Invoice No generation start here 21.03.2026
+public static function generateInvoiceNumber($request)
+{
+    $organization = Organization::find($request->organization_id);
+    $orgCode = strtoupper($organization?->organization_code ?? 'ORG');
+
+    $date = \Carbon\Carbon::parse($request->invoice_date);
+    $datePart = strtoupper($date->format('yM'));
+
+    $typePrefix = match ((int)$request->invoice_type) {
+        1 => 'IN',
+        2 => 'TI',
+        default => 'IN',
+    };
+
+    // ✅ base WITHOUT date
+    $base = "{$orgCode}{$typePrefix}";
+
+  
+    // 🔒 Lock ONLY relevant rows safely
+    $lastInvoice = self::where('organization_id', $request->organization_id)
+        ->where('type', $request->invoice_type)
+        ->lockForUpdate()
+        ->orderBy('id', 'desc')
+        ->first();
+
+    if ($lastInvoice) {
+        $lastSeq = (int) substr($lastInvoice->invoice_number, -5);
+        $nextSeq = $lastSeq + 1;
+    } else {
+        $nextSeq = 1;
+    }
+
+    return "{$datePart}_{$base}_" . sprintf('%05d', $nextSeq);
+}
 }

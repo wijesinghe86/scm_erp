@@ -47,11 +47,11 @@
                                                 @foreach ($creditNote->items as $creditItem)
                                                             <tr>
                                                                 <td>{{$loop->iteration}}</td>
-                                                                <td>{{ $creditItem->stockItems->stock_number }}</td>
-                                                                <td>{{ $creditItem->stockItems->description }}</td>
-                                                                <td>{{ $creditItem->stockItems->unit }}</td>
-                                                                <td>{{ $creditItem->credit_qty }}</td>
-                                                                <td>{{ $creditItem->status }}</td>
+                                                                <td>{{ optional($creditItem->stockItems)->stock_number }}</td>
+                                                                <td>{{ optional($creditItem->stockItems)->description }}</td>
+                                                                <td>{{ optional($creditItem->stockItems)->unit }}</td>
+                                                                <td>{{ optional($creditItem)->credit_qty }}</td>
+                                                                <td>{{ optional($creditItem)->status }}</td>
                                                                
                                                             </tr>
                                                             @endforeach

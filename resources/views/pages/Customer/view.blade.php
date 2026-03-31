@@ -21,14 +21,18 @@
                             </div>
 
                             <div class="row">
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <label for="">Business Registration Number :</label>
                                     <span>{{$customers->business_registration_number}}</span>
                                 </div>
 
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <label>Vat Number :</label>
                                     <span>{{$customers->customer_vat_number}}</span>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>TIN Number :</label>
+                                    <span>{{$customers->customer_tin_no}}</span>
                                 </div>
                             </div>
                             <div class="row">

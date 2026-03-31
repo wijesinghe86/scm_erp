@@ -52,10 +52,7 @@
                                                         <i class="fa-sharp fa-solid fa-eye"></i>
                                                     </a>
                                                 </td>
-                                           
-
-
-
+                                        
                                            
                                             </td>
 

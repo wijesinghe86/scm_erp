@@ -47,6 +47,7 @@ class CustomerController extends ParentController
         $this->validate($request, [
             'customer_code' => 'required',
             'customer_name' => 'required',
+            'customer_tin_no'=>'required',
             'customer_type_of_customer' => 'required',
             'customer_vat_number'=>'required',
             'customer_payment_terms' => 'required',
@@ -189,6 +190,7 @@ if(
     public function getData(Request $request)
     {
         $customers = Customer::find($request->customer_id);
-        return $customers;
-    }
+        return response()->json($customers);
 }
+    }
+

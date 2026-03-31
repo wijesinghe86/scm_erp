@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Creditnote;
-use App\Models\credit_note_item_table;
 use Illuminate\Http\Request;
+use App\Models\credit_note_item_table;
+use Illuminate\Validation\ValidationException;
 
 class CreditNoteApprovalController extends Controller
 {
