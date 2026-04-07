@@ -44,7 +44,7 @@
                                         </td>
                                         <td>
                                             <button class="btn btn-primary "
-                                            onclick='addToCart(@json($item), {{ $key }})'>Add To Cart</button>
+                                            onclick="addToCart(@json($item), {{ $key }})">Add To Cart</button>
                                         </td>
                                     </tr>
                                 @endforeach
