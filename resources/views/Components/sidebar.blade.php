@@ -269,7 +269,7 @@
             </li>
             @endhasanyrole
             @hasanyrole('Super Admin|Admin|Executive User')
-                            <li class="nav-item"> <a class="nav-link" href="{{ route('reverse_credit_note.create') }}">Reverse Credit
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('reverse_credit_note.index') }}">Reverse Credit
                                     Note</a>
                             </li>
                         @endhasanyrole
