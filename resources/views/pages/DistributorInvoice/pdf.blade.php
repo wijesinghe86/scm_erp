@@ -19,6 +19,7 @@
         </td>
 
         <!-- COMPANY NAME -->
+       
         <td class="company-cell">
             <div class="company-name">
                 {{ strtoupper($invoices->organization->organization_name ?? 'YOUR COMPANY NAME') }}
@@ -31,6 +32,7 @@
             <div><strong>Email:</strong> {{ $invoices->organization->organization_email ?? '' }}</div>
             <div><strong>Web:</strong> {{ $invoices->organization->remarks ?? '' }}</div>
         </td>
+       
     </tr>
 </table>
 <!-- <title>Tax Invoice</title> -->
@@ -47,6 +49,7 @@
     width: 100%;
     border: none;
     margin-bottom: 5px;
+   
 }
 
 .header-table td {
@@ -58,11 +61,13 @@
     width: 15%;
     text-align: left;
     border: #000;
+    visibility: hidden;
 }
 
 .company-cell {
     width: 55%;
     text-align: center;
+    visibility: hidden;
 }
 
 .logo {
@@ -89,6 +94,8 @@
     text-align: left;
     font-size: 11px;
     line-height: 1.4;
+    visibility: hidden;
+    
 }
 
    
@@ -144,6 +151,7 @@ body {
     border-collapse: collapse;
     border: 1px solid #000; /* outer border */
     font-size: 12px;
+    visibility: hidden;
    
 }
 .items-table td {
@@ -209,6 +217,11 @@ body {
     border: 1px solid #000;
     text-align: right;
 }
+
+.supplier{
+
+    visibility: hidden;
+}
 </style>
 </head>
 
@@ -223,15 +236,15 @@ body {
     <table>
         <tr>
             <td width="50%">
-                <strong>Date of Invoice:</strong> {{ $invoices->formatted_invoice_date }}
+                <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> {{ $invoices->formatted_invoice_date }}
             </td>
             <td width="50%">
-                <strong>Invoice No:</strong> {{ $invoices->invoice_number }}
+                <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> {{ $invoices->invoice_number }}
             </td>
         </tr>
 
         <tr>
-            <td>
+            <td class="supplier">
             <div style="text-align: center;">
                 <strong>Supplier’s Details</strong></div>
                 <strong>Supplier’s TIN:</strong>{{ $invoices->organization->organization_tin_no ?? '' }}<br>
@@ -242,27 +255,27 @@ body {
 
             <td>
             <div style="text-align: center;">
-                <strong>Purchaser’s Details</strong></div>
-                <strong>Purchaser’s TIN:</strong> {{ $invoices->customer->customer_tin_no ?? '' }} <br>
-                <strong>Purchaser’s VAT No:</strong> {{ $invoices->customer->customer_vat_number ?? '' }}<br>
-                <strong>Purchaser’s Name:</strong> {{ strtoupper($invoices->customer->customer_name ?? '' )}}<br>
-                <strong>Address:</strong> {{ strtoupper($invoices->customer->customer_address_line1 ?? '') }}<br><br>
-                <strong>Telephone No:</strong> {{ $invoices->customer->customer_phone ?? '' }}
+                <strong></strong></div>
+                <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> {{ $invoices->customer->customer_tin_no ?? '' }} <br>
+                <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> {{ $invoices->customer->customer_vat_number ?? '' }}<br>
+                <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> {{ strtoupper($invoices->customer->customer_name ?? '' )}}<br>
+                <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> {{ strtoupper($invoices->customer->customer_address_line1 ?? '') }}<br><br>
+                <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> {{ $invoices->customer->customer_phone ?? '' }}
             </td>
         </tr>
 
         <tr>
             <td>
-                <strong>Date of Delivery:</strong> {{ \Carbon\Carbon::parse($invoices->invoice_date)->format('m/d/Y')  }}
+                <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> {{ \Carbon\Carbon::parse($invoices->invoice_date)->format('m/d/Y')  }}
             </td>
             <td>
-                <strong>Place of Supply:</strong> {{ $invoices->place_of_supply }}
+                <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> {{ $invoices->place_of_supply }}
             </td>
         </tr>
 
         <tr>
             <td colspan="2">
-                <strong>Additional Information if any:</strong><br>
+                <strong></strong><br>
                 {{ $invoices->additional_information }}
             </td>
         </tr>
@@ -323,8 +336,8 @@ body {
     {{-- TOTALS --}}
     <table class="totals-table-final">
     <tr>
-        <td class="blank" rowspan="{{ $invoices->type == 2 ? 3 : 2 }}"><strong>Note:</strong><br>
-        CHEQUES TO BE DRAWN IN FAVOUR OF “JANATHA STEELS” AND CROSSED “A/C PAYEE ONLY”</td>
+        <td class="blank" rowspan="{{ $invoices->type == 2 ? 3 : 2 }}"><strong></strong><br>
+        </td>
         <td class="label">Total Value of Supply</td>
         <td class="value">{{ number_format($invoices->sub_total, 2) }}</td>
     </tr>

@@ -12,10 +12,12 @@ class UrgentReturnItem extends Model
     use HasFactory;
     public function stock_item()
     {
-        return $this->hasOne(StockItem::class, 'id', 'item_id');
+        return $this->belongsTo(StockItem::class, 'item_id');
+        // return $this->hasOne(StockItem::class, 'id', 'item_id');
     }
     public function material_return()
     {
-        return $this->hasOne(UrgentReturn::class, 'id', 'return_id');
+        return $this->belongsTo(UrgentReturn::class, 'return_id');
+        // return $this->hasOne(UrgentReturn::class, 'id', 'return_id');
     }
 }

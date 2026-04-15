@@ -94,15 +94,25 @@ class ReverseCreditNoteController extends Controller
         }
     
 }
-    public function getReturn(Request $request)
-    {
-        $rmrs_list = UrgentReturnItem::with(['stock_item', 'material_return.get_invoice'])
-                    ->where('return_id', $request->return_id)
-                    ->get(); 
-        dd($request->return_id);
-        dd(UrgentReturnItem::where('return_id', $request->return_id)->get());
-        return view('pages.ReverseCreditNote.returnitems', compact('rmrs_list'));
-    }
+    public function getReturn(Request $request){
+    // {
+    //     $rmrs_list = UrgentReturnItem::with(['stock_item', 'material_return.get_invoice'])
+    //                 ->where('return_id', $request->return_id)
+    //                 ->get(); 
+    //                 logger($rmrs_list->pluck('stock_item.stock_number'));
+    //     return view('pages.ReverseCreditNote.returnitems', compact('rmrs_list'));
+    // }
+   
+    $rmrs_list = UrgentReturnItem::with(['stock_item', 'material_return.get_invoice'])
+        ->where('return_id', $request->return_id)
+        ->get()
+        ->map(function ($item) {
+            $item->option = optional($item->material_return->get_invoice)->option;
+            return $item;
+        });
+
+    return view('pages.ReverseCreditNote.returnitems', compact('rmrs_list'));
+}
     
     public function store(Request $request){
 
