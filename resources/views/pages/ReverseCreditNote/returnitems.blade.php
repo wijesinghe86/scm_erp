@@ -1,6 +1,6 @@
 <div class="table-responsive">
     <table class="table bordered form-group">
-<table class="table bordered">
+
     <thead>
         <tr>
             <th></th>
@@ -65,7 +65,8 @@
             $(document).ready(function() {
                 mrsList?.map((row,index) =>{
                     const value = row?.quantity
-                    const option = row?.material_return?.get_invoice?.option
+                    const option = row?.option
+                    // const option = row?.material_return?.get_invoice?.option
                     const itemTotal = parseFloat(value) * parseFloat(row?.unit_price);
                 const {salesValue, total, vatAmount} = calculateAmounts(option, itemTotal)
 
@@ -79,22 +80,40 @@
 
 
 
-            function onCreditQtyChange(id) {
-                const index = mrsList?.findIndex(row => row.id == id)
-                const mrsData = mrsList?.find(row => row.id == id)
+            // function onCreditQtyChange(id) {
+            //     const index = mrsList?.findIndex(row => row.id == id)
+            //     const mrsData = mrsList?.find(row => row.id == id)
 
 
-                const value = $(`#items${index}creditQty`).val()
-                const option = mrsData?.material_return?.get_invoice?.option
-                const itemTotal = parseFloat(value) * parseFloat(mrsData?.unit_price);
-                const {salesValue, total, vatAmount} = calculateAmounts(option, itemTotal)
+            //     const value = $(`#items${index}creditQty`).val()
+            //     const option = mrsData?.material_return?.get_invoice?.option
+            //     const itemTotal = parseFloat(value) * parseFloat(mrsData?.unit_price);
+            //     const {salesValue, total, vatAmount} = calculateAmounts(option, itemTotal)
 
 
-                $(`#items${index}saleValue`).val(salesValue)
-                $(`#items${index}vatAmount`).val(vatAmount)
-                $(`#items${index}totalValue`).val(total)
-                getGrandTotal()
-            }
+            //     $(`#items${index}saleValue`).val(salesValue)
+            //     $(`#items${index}vatAmount`).val(vatAmount)
+            //     $(`#items${index}totalValue`).val(total)
+            //     getGrandTotal()
+            // }
+    function onCreditQtyChange(id) {
+    const index = mrsList?.findIndex(row => row.id == id)
+    const mrsData = mrsList?.find(row => row.id == id)
+
+    const value = $(`#items${index}creditQty`).val()
+
+    const option = mrsData?.option   // ✅ FIXED
+
+    const itemTotal = parseFloat(value) * parseFloat(mrsData?.unit_price);
+
+    const {salesValue, total, vatAmount} = calculateAmounts(option, itemTotal)
+
+    $(`#items${index}saleValue`).val(salesValue)
+    $(`#items${index}vatAmount`).val(vatAmount)
+    $(`#items${index}totalValue`).val(total)
+
+    getGrandTotal()
+}
 
             function calculateAmounts(option, itemTotal){
                 let salesValue = 0;
