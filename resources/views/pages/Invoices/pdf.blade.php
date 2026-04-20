@@ -57,7 +57,7 @@
             <td style="height: 8mm; width:19mm">Vat No</td>
             <td style="height: 8mm; width:24mm; text-align:center;">{{ $invoices->customer->customer_vat_number }}</td>
             <td style="height: 8mm; width:30mm; opacity: 0;">Date</td>
-            <td style="height: 8mm; width:27mm:; text-align:right;">{{ $invoices->invoice_date }}</td>
+            <td style="height: 8mm; width:27mm; text-align:right;">{{ $invoices->invoice_date }}</td>
         </tr>
         <tr>
             <td style="height: 8mm; width:19mm; opacity: 0;">Terms</td>
