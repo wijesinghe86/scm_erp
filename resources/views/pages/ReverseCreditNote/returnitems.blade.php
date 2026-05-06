@@ -22,7 +22,7 @@
             <tr>
                 <td><input type="checkbox" name="items[{{ $index }}][is_selected]" /></td>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $row->stock_item->stock_number }}</td>
+                        <td>{{ opional($row->stock_item)->stock_number }}</td>
                         <td>{{ $row->stock_item->description }}</td>
                         <td>{{ $row->stock_item->unit }}</td>
                         <td>{{ $row->quantity }}</td>
@@ -61,9 +61,10 @@
         </div>
 
         <script>
-            let mrsList = <?php echo json_encode($rmrs_list ?? []); ?>;
+            window.mrsList = <?php echo json_encode($rmrs_list ?? []); ?>;
+           
             $(document).ready(function() {
-                mrsList?.map((row,index) =>{
+                rmrsList?.map((row,index) =>{
                     const value = row?.quantity
                     const option = row?.option
                     // const option = row?.material_return?.get_invoice?.option
@@ -96,23 +97,52 @@
             //     $(`#items${index}totalValue`).val(total)
             //     getGrandTotal()
             // }
-    function onCreditQtyChange(id) {
-    const index = mrsList?.findIndex(row => row.id == id)
-    const mrsData = mrsList?.find(row => row.id == id)
+            function onCreditQtyChange(id) {
 
-    const value = $(`#items${index}creditQty`).val()
+// 🔹 Find index safely
+const index = window.mrsList.findIndex(row => row.id == id);
 
-    const option = mrsData?.option   // ✅ FIXED
+if (index === -1) {
+    console.error("Item not found for ID:", id);
+    return;
+}
 
-    const itemTotal = parseFloat(value) * parseFloat(mrsData?.unit_price);
+// 🔹 Get correct item
+const mrsData = window.mrsList[index];
 
-    const {salesValue, total, vatAmount} = calculateAmounts(option, itemTotal)
+// 🔹 Get entered quantity
+let value = parseFloat($(`#items${index}creditQty`).val());
 
-    $(`#items${index}saleValue`).val(salesValue)
-    $(`#items${index}vatAmount`).val(vatAmount)
-    $(`#items${index}totalValue`).val(total)
+if (isNaN(value) || value < 0) {
+    value = 0;
+}
 
-    getGrandTotal()
+// 🔹 Prevent exceeding max qty
+const maxQty = parseFloat(mrsData.quantity);
+if (value > maxQty) {
+    value = maxQty;
+    $(`#items${index}creditQty`).val(maxQty);
+}
+
+// 🔹 Get unit price safely
+const unitPrice = parseFloat(mrsData.unit_price) || 0;
+
+// 🔹 Calculate total
+const itemTotal = value * unitPrice;
+
+// 🔹 Get option (IMPORTANT)
+const option = mrsData.option ?? 0;
+
+// 🔹 Calculate amounts
+const { salesValue, total, vatAmount } = calculateAmounts(option, itemTotal);
+
+// 🔹 Update fields
+$(`#items${index}saleValue`).val(salesValue);
+$(`#items${index}vatAmount`).val(vatAmount);
+$(`#items${index}totalValue`).val(total);
+
+// 🔹 Update grand total
+getGrandTotal();
 }
 
             function calculateAmounts(option, itemTotal){

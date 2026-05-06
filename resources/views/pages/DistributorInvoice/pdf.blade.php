@@ -1,4 +1,4 @@
-```blade
+
 @php
     $debug = true; // turn OFF after alignment
 @endphp
@@ -27,12 +27,12 @@ body {
 }
 
 /* ================= DEBUG ================= */
-.guide {
+/* .guide {
     position: absolute;
     border: 1px dashed red;
     font-size: 7px;
     color: red;
-}
+} */
 .guide span {
     position: absolute;
     top: -10px;
@@ -45,18 +45,19 @@ body {
 /* ================= HEADER ================= */
 .tax-label {
     position:absolute;
-    top:22mm;
+    top:29mm;
     left:82mm;
     width:41mm;
     height:8mm;
     text-align:center;
     font-weight:bold;
+    text-transform: uppercase;
 }
 
 /* DATE */
 .date {
     position:absolute;
-    top:32mm;
+    top:39mm;
     left:15mm;
     width:86mm;
 }
@@ -64,7 +65,7 @@ body {
 /* INVOICE NO */
 .invoice-no {
     position:absolute;
-    top:32mm;
+    top:39mm;
     left:127mm;
     width:76mm;
 }
@@ -72,15 +73,16 @@ body {
 /* ================= SUPPLIER ================= */
 .supplier {
     position:absolute;
-    top:41mm;
+    top:48mm;
     left:15mm;
     width:86mm;
+    visibility: hidden;
 }
 
 /* ================= CUSTOMER ================= */
 .customer {
     position:absolute;
-    top:41mm;
+    top:48mm;
     left:122mm;
     width:81mm;
 }
@@ -88,14 +90,14 @@ body {
 /* ================= DELIVERY ================= */
 .delivery-date {
     position:absolute;
-    top:74mm;
+    top:80mm;
     left:29mm;
     width:72mm;
 }
 
 .place-supply {
     position:absolute;
-    top:74mm;
+    top:80mm;
     left:131mm;
     width:73mm;
 }
@@ -103,7 +105,7 @@ body {
 /* ================= ADDITIONAL ================= */
 .additional {
     position:absolute;
-    top:83mm;
+    top:90mm;
     left:47mm;
     width:157mm;
     height:8mm;
@@ -116,9 +118,9 @@ body {
 }
 
 /* columns */
-.col-ref   { position:absolute; left:0mm; width:9mm; }
-.col-desc  { position:absolute; left:9mm; width:83mm; }
-.col-uom   { position:absolute; left:92mm; width:10mm; text-align:center;}
+.col-ref   { position:absolute; left:6.35mm; width:9mm; }
+.col-desc  { position:absolute; left:13mm; width:83mm; }
+.col-uom   { position:absolute; left:96mm; width:10mm; text-align:center;}
 .col-qty   { position:absolute; left:102mm; width:12mm; text-align:center;}
 .col-rate  { position:absolute; left:114mm; width:20mm; text-align:right;}
 .col-item  { position:absolute; left:134mm; width:30mm; text-align:right;}
@@ -126,36 +128,48 @@ body {
 .col-total { position:absolute; left:174.5mm; width:30mm; text-align:right;}
 
 /* ================= TOTAL ================= */
-.total-box {
-    position:absolute;
-    top:220mm;
-    left:134mm;
-    width:70mm;
+.total-label {
+    position: absolute;
+    left: 135mm;
+    width: 40mm;
+    font-size: 10px;
+}
+
+.total-value {
+    position: absolute;
+    left: 175mm;
+    width: 25mm;
+    text-align: right;
+    font-size: 10px;
+}
+
+.bold {
+    font-weight: bold;
 }
 
 /* ================= FOOTER ================= */
 .amount-words {
     position:absolute;
-    top:228mm;
-    left:30mm;
+    top:235mm;
+    left:32mm;
     width:104mm;
 }
 
 .payment {
     position:absolute;
-    top:235.5mm;
+    top:242.5mm;
     left:30mm;
 }
 
 .user {
     position:absolute;
-    top:243mm;
+    top:250mm;
     left:23mm;
 }
 
 .sales {
     position:absolute;
-    top:243mm;
+    top:250mm;
     left:6.8mm;
 }
 .duplicate-label {
@@ -189,7 +203,7 @@ body {
     @endif
 
     {{-- TAX LABEL --}}
-    <div class="tax-label">TAX INVOICE</div>
+    <div class="tax-label">{{ $invoices->getInvoiceTypeNameAttribute() }}</div>
 
     {{-- DATE --}}
     <div class="date">{{ $invoices->formatted_invoice_date }}</div>
@@ -220,7 +234,7 @@ body {
 
     {{-- ITEMS --}}
     @foreach($invoices->items as $i => $item)
-        <div class="row" style="top: {{ 103.5 + ($i * 8) }}mm;">
+        <div class="row" style="top: {{ 110.5 + ($i * 8) }}mm;">
             <div class="col-ref">{{ $i+1 }}</div>
             <div class="col-desc">{{ $item->description }}</div>
             <div class="col-uom">{{ $item->uom }}</div>
@@ -233,18 +247,46 @@ body {
     @endforeach
 
     {{-- TOTAL --}}
-    <div class="total-box">
-        {{ number_format($invoices->grand_total,2) }}
+    @if($invoices->type == 2)
+
+    <div class="total-label" style="top:220mm;">Total Value of Supply</div>
+    <div class="total-value" style="top:220mm;">
+        {{ number_format($invoices->sub_total, 2) }}
     </div>
+
+    <div class="total-label" style="top:228mm;">VAT Amount (18%)</div>
+    <div class="total-value" style="top:228mm;">
+        {{ number_format($invoices->vat_amount, 2) }}
+    </div>
+
+    <div class="total-label bold" style="top:236mm;">Total Amount including VAT</div>
+    <div class="total-value bold" style="top:236mm;">
+        {{ number_format($invoices->grand_total, 2) }}
+    </div>
+
+@else
+
+    <div class="total-label bold" style="top:230mm;">Grand Total</div>
+    <div class="total-value bold" style="top:230mm;">
+        {{ number_format($invoices->grand_total, 2) }}
+    </div>
+
+@endif
+    <!-- <div class="total-box">
+        {{ number_format($invoices->grand_total,2) }}
+    </div> -->
 
     {{-- FOOTER --}}
     <div class="amount-words">{{ $invoices->grand_total_inword }}</div>
     <div class="payment">{{ $invoices->payment_terms }} &nbsp;&nbsp;{{($invoices->credit_days)}}</div>
-    <div class="user">{{ $invoices->createUser->name ?? '' }}</div>
-    <div class="sales">{{ $invoices->SalesStaff->employee_epf_no ?? '' }}</div>
+    <div class="user">{{ $invoices->createUser->name ?? '' }}|{{$invoices->created_at}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    {{ $invoices->SalesStaff->employee_epf_no ?? '' }}   
+    </div>
+    
+    
 
 </div>
 
 </body>
 </html>
-```
+

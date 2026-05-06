@@ -116,9 +116,21 @@
         console.log("MRS selected:", id);
         // disaable or hide d/o and b/o when selecting mrs no
         $('#reference_type').val('MRS')
-        $(".return_items_table").load('/reverse_credit_note/getReturnItems?return_id=' + id, function() {
-
-        });
+        $(".return_items_table").html("");
+        $.ajax({
+    url: "/reverse_credit_note/getReturnItems",
+    type: "GET",
+    data: {
+        return_id: id
+    },
+    success: function(response) {
+        $(".return_items_table").html(response);
+    },
+    error: function(xhr) {
+        console.error("ERROR:", xhr.responseText);
+        alert("Failed to load items");
+    }
+});
     });
     $('#resetBtn').on('click', function() {
 
