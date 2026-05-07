@@ -191,7 +191,7 @@
 
                 // Populate MRS dropdown
                 $('#mrs_no').empty().append('<option selected disabled>Select RMRS</option>');
-
+                
                 response.mrs.forEach(function(item) {
                     $('#mrs_no').append(
                         `<option value="${item.id}">${item.return_no}</option>`
