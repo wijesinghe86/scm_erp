@@ -1,6 +1,6 @@
 <div class="table-responsive">
     <table class="table bordered form-group">
-
+<table class="table bordered">
     <thead>
         <tr>
             <th></th>
@@ -18,11 +18,11 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($rmrs_list as $index => $row)
+        @foreach ($mrs_list as $index => $row)
             <tr>
                 <td><input type="checkbox" name="items[{{ $index }}][is_selected]" /></td>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ opional($row->stock_item)->stock_number }}</td>
+                        <td>{{ $row->stock_item->stock_number }}</td>
                         <td>{{ $row->stock_item->description }}</td>
                         <td>{{ $row->stock_item->unit }}</td>
                         <td>{{ $row->quantity }}</td>
@@ -61,13 +61,11 @@
         </div>
 
         <script>
-            window.mrsList = <?php echo json_encode($rmrs_list ?? []); ?>;
-           
+            let mrsList = <?php echo json_encode($mrs_list ?? []); ?>;
             $(document).ready(function() {
-                rmrsList?.map((row,index) =>{
+                mrsList?.map((row,index) =>{
                     const value = row?.quantity
-                    const option = row?.option
-                    // const option = row?.material_return?.get_invoice?.option
+                    const option = row?.material_return?.get_invoice?.option
                     const itemTotal = parseFloat(value) * parseFloat(row?.unit_price);
                 const {salesValue, total, vatAmount} = calculateAmounts(option, itemTotal)
 
@@ -81,69 +79,22 @@
 
 
 
-            // function onCreditQtyChange(id) {
-            //     const index = mrsList?.findIndex(row => row.id == id)
-            //     const mrsData = mrsList?.find(row => row.id == id)
-
-
-            //     const value = $(`#items${index}creditQty`).val()
-            //     const option = mrsData?.material_return?.get_invoice?.option
-            //     const itemTotal = parseFloat(value) * parseFloat(mrsData?.unit_price);
-            //     const {salesValue, total, vatAmount} = calculateAmounts(option, itemTotal)
-
-
-            //     $(`#items${index}saleValue`).val(salesValue)
-            //     $(`#items${index}vatAmount`).val(vatAmount)
-            //     $(`#items${index}totalValue`).val(total)
-            //     getGrandTotal()
-            // }
             function onCreditQtyChange(id) {
+                const index = mrsList?.findIndex(row => row.id == id)
+                const mrsData = mrsList?.find(row => row.id == id)
 
-// 🔹 Find index safely
-const index = window.mrsList.findIndex(row => row.id == id);
 
-if (index === -1) {
-    console.error("Item not found for ID:", id);
-    return;
-}
+                const value = $(`#items${index}creditQty`).val()
+                const option = mrsData?.material_return?.get_invoice?.option
+                const itemTotal = parseFloat(value) * parseFloat(mrsData?.unit_price);
+                const {salesValue, total, vatAmount} = calculateAmounts(option, itemTotal)
 
-// 🔹 Get correct item
-const mrsData = window.mrsList[index];
 
-// 🔹 Get entered quantity
-let value = parseFloat($(`#items${index}creditQty`).val());
-
-if (isNaN(value) || value < 0) {
-    value = 0;
-}
-
-// 🔹 Prevent exceeding max qty
-const maxQty = parseFloat(mrsData.quantity);
-if (value > maxQty) {
-    value = maxQty;
-    $(`#items${index}creditQty`).val(maxQty);
-}
-
-// 🔹 Get unit price safely
-const unitPrice = parseFloat(mrsData.unit_price) || 0;
-
-// 🔹 Calculate total
-const itemTotal = value * unitPrice;
-
-// 🔹 Get option (IMPORTANT)
-const option = mrsData.option ?? 0;
-
-// 🔹 Calculate amounts
-const { salesValue, total, vatAmount } = calculateAmounts(option, itemTotal);
-
-// 🔹 Update fields
-$(`#items${index}saleValue`).val(salesValue);
-$(`#items${index}vatAmount`).val(vatAmount);
-$(`#items${index}totalValue`).val(total);
-
-// 🔹 Update grand total
-getGrandTotal();
-}
+                $(`#items${index}saleValue`).val(salesValue)
+                $(`#items${index}vatAmount`).val(vatAmount)
+                $(`#items${index}totalValue`).val(total)
+                getGrandTotal()
+            }
 
             function calculateAmounts(option, itemTotal){
                 let salesValue = 0;

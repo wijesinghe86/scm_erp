@@ -20,14 +20,14 @@ class UrgentReturn extends Model
 
     public function get_invoice()
     {
-        return $this->belongsTo(UrgentInvoice::class, "invoice_id");
-        // return $this->hasOne(UrgentInvoice::class, "id", "invoice_id");
+        
+        return $this->hasOne(UrgentInvoice::class, "id", "invoice_id");
     }
 
     public function deliveryOrder()
     {
-        return $this->belongsTo(UrgentDelivery::class, "delivery_order_id");
-        // return $this->hasOne(UrgentDelivery::class, "id", "delivery_order_id");
+       
+        return $this->hasOne(UrgentDelivery::class, "id", "delivery_order_id");
     }
 
     public function location()

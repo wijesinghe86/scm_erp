@@ -45,7 +45,7 @@ body {
 /* ================= HEADER ================= */
 .tax-label {
     position:absolute;
-    top:29mm;
+    top:32mm;
     left:82mm;
     width:41mm;
     height:8mm;
@@ -57,7 +57,7 @@ body {
 /* DATE */
 .date {
     position:absolute;
-    top:39mm;
+    top:42mm;
     left:15mm;
     width:86mm;
 }
@@ -65,7 +65,7 @@ body {
 /* INVOICE NO */
 .invoice-no {
     position:absolute;
-    top:39mm;
+    top:42mm;
     left:127mm;
     width:76mm;
 }
@@ -82,7 +82,7 @@ body {
 /* ================= CUSTOMER ================= */
 .customer {
     position:absolute;
-    top:48mm;
+    top:52mm;
     left:122mm;
     width:81mm;
 }
@@ -90,14 +90,14 @@ body {
 /* ================= DELIVERY ================= */
 .delivery-date {
     position:absolute;
-    top:80mm;
+    top:83mm;
     left:29mm;
     width:72mm;
 }
 
 .place-supply {
     position:absolute;
-    top:80mm;
+    top:83mm;
     left:131mm;
     width:73mm;
 }
@@ -105,7 +105,7 @@ body {
 /* ================= ADDITIONAL ================= */
 .additional {
     position:absolute;
-    top:90mm;
+    top:92mm;
     left:47mm;
     width:157mm;
     height:8mm;
@@ -118,10 +118,10 @@ body {
 }
 
 /* columns */
-.col-ref   { position:absolute; left:6.35mm; width:9mm; }
+.col-ref   { position:absolute; left:5.35mm; width:9mm; }
 .col-desc  { position:absolute; left:13mm; width:83mm; }
-.col-uom   { position:absolute; left:96mm; width:10mm; text-align:center;}
-.col-qty   { position:absolute; left:102mm; width:12mm; text-align:center;}
+.col-uom   { position:absolute; left:92mm; width:10mm; text-align:left;}
+.col-qty   { position:absolute; left:101mm; width:12mm; text-align:center;}
 .col-rate  { position:absolute; left:114mm; width:20mm; text-align:right;}
 .col-item  { position:absolute; left:134mm; width:30mm; text-align:right;}
 .col-disc  { position:absolute; left:164mm; width:10mm; text-align:center;}
@@ -220,9 +220,14 @@ body {
 
     {{-- CUSTOMER --}}
     <div class="customer">
+        {{ $invoices->customer->customer_tin_no }}<br>
         {{ $invoices->customer->customer_name }}<br>
         {{ $invoices->customer->customer_address_line1 }}<br>
-        {{ $invoices->customer->customer_tin_no }}
+        <br>
+        {{ $invoices->customer->customer_mobile_number }}<br>
+        {{ $invoices->customer->customer_email }}
+
+        
     </div>
 
     {{-- DELIVERY --}}
@@ -249,8 +254,8 @@ body {
     {{-- TOTAL --}}
     @if($invoices->type == 2)
 
-    <div class="total-label" style="top:220mm;">Total Value of Supply</div>
-    <div class="total-value" style="top:220mm;">
+    <div class="total-label" style="top:224mm;">Total Value of Supply</div>
+    <div class="total-value" style="top:224mm;">
         {{ number_format($invoices->sub_total, 2) }}
     </div>
 
@@ -279,7 +284,7 @@ body {
     {{-- FOOTER --}}
     <div class="amount-words">{{ $invoices->grand_total_inword }}</div>
     <div class="payment">{{ $invoices->payment_terms }} &nbsp;&nbsp;{{($invoices->credit_days)}}</div>
-    <div class="user">{{ $invoices->createUser->name ?? '' }}|{{$invoices->created_at}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="user">{{ $invoices->createUser->name ?? '' }}&nbsp;|&nbsp;{{$invoices->created_at->format('H:i:s')}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     {{ $invoices->SalesStaff->employee_epf_no ?? '' }}   
     </div>
     
