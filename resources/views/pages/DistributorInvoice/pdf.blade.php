@@ -17,7 +17,7 @@
 body {
     margin: 0;
     font-family: DejaVu Sans, sans-serif;
-    font-size: 10px;
+    font-size: 11px;
 }
 
 .sheet {
@@ -51,6 +51,7 @@ body {
     height:8mm;
     text-align:center;
     font-weight:bold;
+    font-size:14px;
     text-transform: uppercase;
 }
 
@@ -60,6 +61,8 @@ body {
     top:42mm;
     left:15mm;
     width:86mm;
+    font-size: 13px;
+    font-weight:bold;
 }
 
 /* INVOICE NO */
@@ -68,6 +71,8 @@ body {
     top:42mm;
     left:127mm;
     width:76mm;
+    font-size: 13px;
+    font-weight:bold;
 }
 
 /* ================= SUPPLIER ================= */
@@ -114,14 +119,14 @@ body {
 /* ================= ITEMS ================= */
 .row {
     position:absolute;
-    height:8mm;
+    height:5.2mm;
 }
 
 /* columns */
 .col-ref   { position:absolute; left:5.35mm; width:9mm; }
 .col-desc  { position:absolute; left:13mm; width:83mm; }
-.col-uom   { position:absolute; left:92mm; width:10mm; text-align:left;}
-.col-qty   { position:absolute; left:101mm; width:12mm; text-align:center;}
+.col-uom   { position:absolute; left:94.5mm; width:10mm; text-align:left;}
+.col-qty   { position:absolute; left:103mm; width:12mm; text-align:center;}
 .col-rate  { position:absolute; left:114mm; width:20mm; text-align:right;}
 .col-item  { position:absolute; left:134mm; width:30mm; text-align:right;}
 .col-disc  { position:absolute; left:164mm; width:10mm; text-align:center;}
@@ -132,7 +137,7 @@ body {
     position: absolute;
     left: 135mm;
     width: 40mm;
-    font-size: 10px;
+    font-size: 11px;
 }
 
 .total-value {
@@ -140,7 +145,7 @@ body {
     left: 175mm;
     width: 25mm;
     text-align: right;
-    font-size: 10px;
+    font-size: 11px;
 }
 
 .bold {
@@ -224,9 +229,8 @@ body {
         {{ $invoices->customer->customer_name }}<br>
         {{ $invoices->customer->customer_address_line1 }}<br>
         <br>
-        {{ $invoices->customer->customer_mobile_number }}<br>
-        {{ $invoices->customer->customer_email }}
-
+        {{ $invoices->customer->customer_email }}<br>
+        {{ $invoices->customer->customer_mobile_number }}
         
     </div>
 
@@ -239,7 +243,7 @@ body {
 
     {{-- ITEMS --}}
     @foreach($invoices->items as $i => $item)
-        <div class="row" style="top: {{ 110.5 + ($i * 8) }}mm;">
+        <div class="row" style="top: {{ 110.5 + ($i * 5.2) }}mm;">
             <div class="col-ref">{{ $i+1 }}</div>
             <div class="col-desc">{{ $item->description }}</div>
             <div class="col-uom">{{ $item->uom }}</div>
@@ -254,24 +258,24 @@ body {
     {{-- TOTAL --}}
     @if($invoices->type == 2)
 
-    <div class="total-label" style="top:224mm;">Total Value of Supply</div>
-    <div class="total-value" style="top:224mm;">
+    <div class="total-label" style="top:228mm;">Total Value of Supply</div>
+    <div class="total-value bold" style="top:228mm;">
         {{ number_format($invoices->sub_total, 2) }}
     </div>
 
-    <div class="total-label" style="top:228mm;">VAT Amount (18%)</div>
-    <div class="total-value" style="top:228mm;">
+    <div class="total-label" style="top:233mm;">VAT Amount (18%)</div>
+    <div class="total-value bold" style="top:233mm;">
         {{ number_format($invoices->vat_amount, 2) }}
     </div>
 
-    <div class="total-label bold" style="top:236mm;">Total Amount including VAT</div>
-    <div class="total-value bold" style="top:236mm;">
+    <div class="total-label" style="top:238mm;">Total Amount including VAT</div>
+    <div class="total-value bold" style="top:238mm;">
         {{ number_format($invoices->grand_total, 2) }}
     </div>
 
 @else
 
-    <div class="total-label bold" style="top:230mm;">Grand Total</div>
+    <div class="total-label" style="top:230mm;">Grand Total</div>
     <div class="total-value bold" style="top:230mm;">
         {{ number_format($invoices->grand_total, 2) }}
     </div>
@@ -285,7 +289,7 @@ body {
     <div class="amount-words">{{ $invoices->grand_total_inword }}</div>
     <div class="payment">{{ $invoices->payment_terms }} &nbsp;&nbsp;{{($invoices->credit_days)}}</div>
     <div class="user">{{ $invoices->createUser->name ?? '' }}&nbsp;|&nbsp;{{$invoices->created_at->format('H:i:s')}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    {{ $invoices->SalesStaff->employee_epf_no ?? '' }}   
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $invoices->SalesStaff->employee_epf_no ?? '' }}   
     </div>
     
     
