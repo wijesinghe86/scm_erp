@@ -165,7 +165,7 @@ class DitributorInvice extends Model
         $vatRate = 18; //TODO: need to make it dynamic later
         //    $subtotal = $items->sum('total');
         $subtotal = Cart::session(request()->user()->id)->getSubTotal() - $total_item_discount;
-        $vat = round($subtotal * ($vatRate / 100));
+        $vat = ($subtotal * ($vatRate / 100));
         $exclude_vat = 0;
 
         if ($option == "None" || $option == 0 || $option == "0") {
@@ -176,18 +176,18 @@ class DitributorInvice extends Model
 
         if ($option == "Option B" || $option == 2 || $option == "2") {
             $exclude_vat = $subtotal / ((100 + $vatRate) / 100);
-            $vat = round($exclude_vat * ($vatRate / 100));
+            $vat = ($exclude_vat * ($vatRate / 100));
             $total = $subtotal;
         }
         if ($exclude_vat > 0) {
             $total = $subtotal;
         } else {
-            $total = round($subtotal + $vat);
+            $total = ($subtotal + $vat);
         }
 
         $discount  = $this->calculateDiscount($total, $discount_type, $discount_value);
         $netTotal = $total;
-        $grandTotal = round($netTotal  - (float) $discount);
+        $grandTotal = ($netTotal  - (float) $discount);
 
         return [
             "items" => $items,
