@@ -15,7 +15,7 @@
                                         <table class="table table-bordered" id="tbl_finishedgoods">
                                             <thead>
                                                 <tr>
-                                                    <td></td>
+                                                    <td>NO</td>
                                                     <td>STOCK NO</td>
                                                     <td>DESCRIPTION</td>
                                                     <td>U/M</td>
@@ -43,7 +43,8 @@
                                                         
                                                     @endphp
                                                     <tr>
-                                                        <td>{{ $key + 1 }}</td>
+                                                        <!-- <td>{{ $key + 1 }}</td> -->
+                                                        <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $item->stock_no }}</td>
                                                         <td>{{ $item->description }}</td>
                                                         <td>{{ $item->uom }}</td>

@@ -13,6 +13,7 @@
         <tbody>
             @foreach ($invoiceitems as $index => $row)
                 <tr>
+
                     <td><input type="checkbox" name="items[{{ $index }}][is_selected]"></td>
                     <td>{{ $row->stock_no }}</td>
                     <td>{{ $row->description }}</td>

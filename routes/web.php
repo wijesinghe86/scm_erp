@@ -74,6 +74,7 @@ use App\Http\Controllers\ReverseCreditNoteController;
 use App\Http\Controllers\ReverseDeliveryOrderController;
 use App\Http\Controllers\ReverseLogisticsReturnController;
 use App\Http\Controllers\SalesOrderController;
+use App\Http\Controllers\SalesOrderNewController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SemiFinishedGoodsSerialCodeAssigningController;
 use App\Http\Controllers\SemiProductionController;
@@ -859,6 +860,11 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('sales_order', [SalesOrderController::class, 'index'])->name('sales_order.index');
         Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/{invoice_id}/view', [SalesOrderController::class, 'view'])->name('sales_order.view');
         Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/{invoice_id}/print', [SalesOrderController::class, 'print'])->name('sales_order.print');
+    });
+    Route::prefix('sales_order_new')->group(function () {
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('sales_order_new', [SalesOrderNewController::class, 'index'])->name('sales_order_new.index');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/{invoice_id}/view', [SalesOrderNewController::class, 'view'])->name('sales_order_new.view');
+        Route::middleware(['role:Super Admin|Admin|Sales User|Sales Admin'])->get('/{invoice_id}/print', [SalesOrderNewController::class, 'print'])->name('sales_order_new.print');
     });
 
     Route::prefix('credit_note')->group(function () {
