@@ -203,6 +203,11 @@
                                     Order</a>
                             </li>
                         @endhasanyrole
+                        @hasanyrole('Super Admin|Sales User|Sales Admin')
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('sales_order_new.index') }}">New Sales
+                                    Order</a>
+                            </li>
+                        @endhasanyrole
                         @hasanyrole('Super Admin|Admin|Executive User')
                             <li class="nav-item"> <a class="nav-link" href="{{ route('credit_note.index') }}">Credit
                                     Note</a>

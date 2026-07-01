@@ -41,16 +41,16 @@
         </tr>
         <tr>
             <td>
-                <div style="margin-left: 75px; text-align:left;">{{ $delivery_order->invoice->invoice_date }}</div>
+                <div style="margin-left: 75px; text-align:left;">{{optional(optional($delivery_order)->invoice)->invoice_date }}</div>
             </td>
             <td>
-                <div style="margin-left: 20px; text-align:left;">{{ $delivery_order->invoice->invoice_number }}</div>
+                <div style="margin-left: 20px; text-align:left;">{{ optional(optional($delivery_order)->invoice)->invoice_number }}</div>
             </td>
             <td>
                 <div style="margin-left: 20px; text-align:right;">{{ $delivery_order->delivery_order_no }}</div>
             </td>
             <td>
-                <div style="margin-left: 20px; text-align:right;">{{ $delivery_order->location->warehouse_name }}</div>
+                <div style="margin-left: 20px; text-align:right;">{{ optional(optional($delivery_order)->location)->warehouse_name }}</div>
             </td>
         </tr>
         
@@ -85,16 +85,16 @@
     <table>
         <tr>
             <td style="width:100%"></td>
-            <td style="width:50mm; text-align:right;" >{{ $item->issued->name }}</td>
+            <td style="width:50mm; text-align:right;" >{{ optional(optional($item)->issued)->name }}</td>
             <td style="width:30mm; text-align:right;" >{{ date('Y-m-d H:i:s', strtotime($item->created_at)) }}</td>
         </tr>
     </table>
     <table>
 <tr>
 <th style="text-align: left; width:2.8cm;"> Sales Executive:</th>
-<td style= "text-align:left; width:10cm; ">{{ $delivery_order->invoice->SalesStaff->employee_fullname }} | {{ $delivery_order->invoice->SalesStaff->employee_reg_no }}</td>
+<td style= "text-align:left; width:10cm; ">{{ optional(optional(optional($delivery_order)->invoice)->SalesStaff)->employee_fullname }} | {{ optional(optional(optional($delivery_order)->invoice)->SalesStaff)->employee_reg_no }}</td>
 <th style="text-align: left;"> Inv.Ref.No:</th>
-<td style= "text-align:left; width:10cm;">{{ $delivery_order->invoice->ref_number}}</td>
+<td style= "text-align:left; width:10cm;">{{ optional(optional($delivery_order)->invoice)->ref_number}}</td>
 </tr>
 </table>
 </body>

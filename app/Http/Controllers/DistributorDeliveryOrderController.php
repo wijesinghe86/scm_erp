@@ -220,17 +220,17 @@ class DistributorDeliveryOrderController extends Controller
 
    public function print($delivery_order_id)
    {
-       $delivery_order = DistributorDeliveryOrder::with(['items', 'customer','location'])->find($delivery_order_id);
-       $delivery_order->driver_name ='oK';
+       $delivery_order = DistributorDeliveryOrder::with(['items', 'customer','location','invoice'])->find($delivery_order_id);
+    //    $delivery_order->driver_name ='oK';
        $delivery_order->save();
        // $response[''] = InvoiceItem::where('invoice_number', $invoice_id)->get();
        if ($delivery_order == null) {
            return abort(404);
        }
-       elseif($delivery_order->driver_name ='oK')
-       {
+    //    elseif($delivery_order->driver_name ='oK')
+    //    {
 
-       }
+    //    }
 
        $pdf = PDF::loadView('pages.DistributorDeliverOrder.pdf', compact('delivery_order'));
        return $pdf->stream('delivery_order.pdf');
