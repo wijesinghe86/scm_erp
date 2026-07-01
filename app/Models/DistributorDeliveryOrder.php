@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Creditnote;
 use App\Models\Customer;
 use App\Models\DitributorDeliverOrderItem;
+use App\Models\DitributorInvice;
 use App\Models\Warehouse;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,11 +15,8 @@ class DistributorDeliveryOrder extends Model
     use HasFactory;
     protected $fillable = [
         'customer_id',
-        'customer_name',
-        'customer_code',
         'delivery_order_no',
-        'invoice_id',
-        'invoice_no',
+        'invoice_number',
         'invoice_date',
         'issued_date',
         'location_id',
@@ -64,7 +62,7 @@ class DistributorDeliveryOrder extends Model
 
     public function invoice()
     {
-        return $this->hasOne(Invoice::class, 'invoice_number', 'invoice_number');
+        return $this->hasOne(DitributorInvice::class, 'invoice_number', 'invoice_number');
     }
 
 

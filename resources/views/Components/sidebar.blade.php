@@ -203,6 +203,11 @@
                                     Order</a>
                             </li>
                         @endhasanyrole
+                        @hasanyrole('Super Admin|Sales User|Sales Admin')
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('sales_order_new.index') }}">New Sales
+                                    Order</a>
+                            </li>
+                        @endhasanyrole
                         @hasanyrole('Super Admin|Admin|Executive User')
                             <li class="nav-item"> <a class="nav-link" href="{{ route('credit_note.index') }}">Credit
                                     Note</a>
@@ -433,7 +438,7 @@
 
                         <li class="nav-item"> <a class="nav-link" href="{{ route('goodsreceived.index') }}">Goods
                                 Received</a></li>
-                                @hasanyrole('Super Admin|Admin|Sales User|Sales Admin')
+                                @hasanyrole('Super Admin|Admin|Warehouse User|Sales User|Sales Admin')
                             <li class="nav-item"> <a class="nav-link" href="{{ route('distributor_deliveryorders.index') }}">New Delivery Order</a>
                             </li>
                         @endhasanyrole 
@@ -511,11 +516,11 @@
                         <li class="nav-item"> <a class="nav-link" href="{{ route('goodsreceived.index') }}">Goods
                                 Received</a></li>
                     @endhasanyrole
-                    @hasanyrole('Super Admin|Admin|Sales User|Sales Admin')
+                    @hasanyrole('Super Admin|Admin|Warehouse User|Sales User|Sales Admin')
                             <li class="nav-item"> <a class="nav-link" href="{{ route('distributor_deliveryorders.index') }}">New Delivery Order</a>
                             </li>
                         @endhasanyrole 
-                        @hasanyrole('Super Admin|Admin|Sales User|Sales Admin')
+                        @hasanyrole('Super Admin|Admin|Warehouse User|Sales User|Sales Admin')
                             <li class="nav-item"> <a class="nav-link" href="{{ route('distributor_balanceOrder.index') }}">New Balance Order</a>
                             </li>
                         @endhasanyrole 

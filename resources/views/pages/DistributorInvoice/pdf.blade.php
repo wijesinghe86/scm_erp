@@ -289,7 +289,7 @@ body {
     <div class="amount-words">{{ $invoices->grand_total_inword }}</div>
     <div class="payment">{{ $invoices->payment_terms }} &nbsp;&nbsp;{{($invoices->credit_days)}}</div>
     <div class="user">{{ $invoices->createUser->name ?? '' }}&nbsp;|&nbsp;{{$invoices->created_at->format('H:i:s')}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $invoices->SalesStaff->employee_epf_no ?? '' }}   
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $invoices->SalesStaff->employee_reg_no ?? '' }}   
     </div>
     
     

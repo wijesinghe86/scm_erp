@@ -10,15 +10,19 @@
                         <form class="forms-sample" method="POST" action="{{ route('employee.update',$employees->id) }}">
                             @csrf
                             <div class="row">
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <label>Employee Fullname</label>
                                     <input type="text" class="form-control" name="employee_fullname"
                                         placeholder="Employee Fullname" value="{{$employees->employee_fullname}}">
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <label>Employee Name with Initials</label>
                                     <input type="text" class="form-control" name="employee_name_with_intial"
                                         placeholder="Employee Name with Initials" value="{{$employees->employee_name_with_intial}}">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>EPF No</label>
+                                    <input type="text" class="form-control" name="employee_epf_no" placeholder="EPF No" value="{{$employees->employee_epf_no}}">
                                 </div>
                             </div>
                             <div class="row">
