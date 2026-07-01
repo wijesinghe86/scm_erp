@@ -274,6 +274,7 @@ do {
 
     public function print($invoice_id)
     {
+        
         $invoices = DitributorInvice::with(['Items', 'Customer'])->find($invoice_id);
         // $response[''] = InvoiceItem::where('invoice_number', $invoice_id)->get();
         if ($invoices == null) {

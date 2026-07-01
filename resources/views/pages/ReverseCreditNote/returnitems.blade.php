@@ -18,7 +18,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($rmrs_list as $index => $row)
+        @foreach ($mrs_list as $index => $row)
             <tr>
                 <td><input type="checkbox" name="items[{{ $index }}][is_selected]" /></td>
                         <td>{{ $loop->iteration }}</td>
@@ -61,7 +61,7 @@
         </div>
 
         <script>
-            let mrsList = <?php echo json_encode($rmrs_list ?? []); ?>;
+            let mrsList = <?php echo json_encode($mrs_list ?? []); ?>;
             $(document).ready(function() {
                 mrsList?.map((row,index) =>{
                     const value = row?.quantity

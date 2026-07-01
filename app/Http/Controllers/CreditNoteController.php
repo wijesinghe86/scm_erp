@@ -45,7 +45,8 @@ class CreditNoteController extends Controller
         // return view ('pages.CreditNote.index', compact('creditNotes'));
     }
     public function generateNextNumber()
-    {   $count  = Creditnote::get()->count();
+    {   
+        $count  = Creditnote::get()->count();
         return "JTF-CN" . sprintf('%06d', $count + 1);
     }
 

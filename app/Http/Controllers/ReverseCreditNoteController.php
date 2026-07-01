@@ -42,12 +42,14 @@ class ReverseCreditNoteController extends Controller
         // return view ('pages.CreditNote.index', compact('creditNotes'));
     }
     public function generateNextNumber()
-    {   $count  = UrgentCreditNote::get()->count();
+    {   
+        $count  = UrgentCreditNote::get()->count();
         return "JTF-RCN" . sprintf('%06d', $count + 1);
     }
 
     public function create(Request $request)
-    {   $urgent_invoices = UrgentInvoice::with(['customer'])
+    {   
+        $urgent_invoices = UrgentInvoice::with(['customer'])
         ->get();
         $rmrs = []; //not loading mrs no without selecting invoice
         //$creditNote = new Creditnote();
@@ -76,7 +78,7 @@ class ReverseCreditNoteController extends Controller
             }
     
             // Get MRS (returns)
-            $rmrs = UrgentReturn::where('invoice_id', $invoice->id)->get();
+            $mrs = UrgentReturn::where('invoice_id', $request->invoice_id)->get();
     
             return response()->json([
                 'invoice_date' => $invoice->invoice_date,
@@ -85,7 +87,7 @@ class ReverseCreditNoteController extends Controller
                     'customer_name' => $invoice->customer->customer_name,
                     'vat_no' => $invoice->customer->customer_vat_number,
                 ],
-                'mrs' => $rmrs
+                'mrs' => $mrs
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -94,14 +96,14 @@ class ReverseCreditNoteController extends Controller
         }
     
 }
-    public function getReturn(Request $request)
-    {
-        $rmrs_list = UrgentReturnItem::with(['stock_item', 'material_return.get_invoice'])
+    public function getReturn(Request $request){
+        
+        $mrs_list = UrgentReturnItem::with(['stock_item', 'material_return.get_invoice'])
                     ->where('return_id', $request->return_id)
-                    ->get(); 
-        dd($request->return_id);
-        dd(UrgentReturnItem::where('return_id', $request->return_id)->get());
-        return view('pages.ReverseCreditNote.returnitems', compact('rmrs_list'));
+                    ->get();
+        return view('pages.ReverseCreditNote.returnitems', compact('mrs_list'));
+  
+    
     }
     
     public function store(Request $request){
