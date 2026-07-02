@@ -65,9 +65,9 @@
                 <td style="width:13mm">{{ $item->stock_no }}</td>
                 <td style="width:95mm">{{ $item->description }}</td>
                 <td style="width:15mm">{{ $item->uom }}</td>
-                <td style="width:25mm">{{ $item->qty }}</td>
-                <td style="width:25mm">{{ $item->issued_qty }}</td>
-                <td style="width:25mm">{{ $item->available_qty }}</td>
+                <td style="width:25mm">{{ fmod($item->qty, 1) == 0 ? number_format($item->qty, 0) : number_format($item->qty, 2) }}</td>
+                <td style="width:25mm">{{ fmod($item->issued_qty, 1) == 0 ? number_format($item->issued_qty, 0) : number_format($item->issued_qty, 2) }}</td>
+                <td style="width:25mm">{{ fmod($item->available_qty, 1) == 0 ? number_format($item->available_qty, 0) : number_format($item->available_qty, 2) }}</td>
             </tr>
         @endforeach
     </table>

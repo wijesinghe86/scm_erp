@@ -25,7 +25,7 @@ class DistributorBalanceOrder extends Model
 
     public function invoice()
     {
-        return $this->hasOne(DitributorInvice::class, 'invoice_number', 'invoice_number');
+        return $this->belongsTo(DitributorInvice::class, 'invoice_number', 'invoice_number');
     }
 
     public function items()

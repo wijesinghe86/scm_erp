@@ -1,15 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-use PDF;
-use Exception;
 use App\Http\Controllers\Controller;
 use App\Models\DistributorBalanceOrder;
 use App\Models\DistributorDeliveryOrder;
 use App\Models\DitributorDeliverOrderItem;
+use App\Models\DitributorInvice;
 use App\Models\Warehouse;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class DistributorBalanceOrderController extends Controller
 {
@@ -35,6 +36,12 @@ class DistributorBalanceOrderController extends Controller
 
     public function deliveryOrderCreate(Request $request, DistributorBalanceOrder $balance_order)
     {
+        logger('Balance Order Invoice Number: ' . $balance_order->invoice_number);
+
+logger(
+    DitributorInvice::where('invoice_number', $balance_order->invoice_number)->first()
+);
+       
         logger(collect($request->cart)->groupBy('location_id'));
         logger($balance_order);
 
@@ -47,9 +54,10 @@ class DistributorBalanceOrderController extends Controller
                 $delivery_order->invoice_number = $balance_order->invoice_number;
                 $delivery_order->delivery_order_no = $delivery_order->generateDeliveryOrderNumber();
                 $delivery_order->location_id = $location_id;
+                logger($balance_order->invoice);
                 $delivery_order->customer_id = $balance_order->invoice->customer_id;
                 $delivery_order->invoice_date = $balance_order->invoice_date;
-                $delivery_order->balance_order_id = $delivery_order->id;
+                $delivery_order->balance_order_id =  $balance_order->id;
                 $delivery_order->created_by = request()->user()->id;
                 $delivery_order->save();
 
@@ -68,6 +76,8 @@ class DistributorBalanceOrderController extends Controller
                     $delivery_order_item->sub_total  = data_get($item, 'sub_total');
                     $delivery_order_item->total  = data_get($item, 'total');
                     $delivery_order_item->save();
+
+                    
                 }
             }
             DB::commit();
