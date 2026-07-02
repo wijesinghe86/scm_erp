@@ -79,7 +79,7 @@
                 <td style="width: 19mm;">{{ $item->stock_no }}</td>
                 <td style="width: 60mm;">{{ $item->description }}</td>
                 <td style="width: 15mm;">{{ $item->uom }}</td>
-                <td style="width: 20mm;">{{ $item->qty }}</td>
+                <td style="width: 20mm;">{{ fmod($item->qty, 1) == 0 ? number_format($item->qty, 0) : number_format($item->qty, 2) }}</td>
             </tr>
         @endforeach
     </table>

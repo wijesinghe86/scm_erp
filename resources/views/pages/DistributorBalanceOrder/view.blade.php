@@ -52,7 +52,7 @@
                                         <td>{{ $item->stock_no }}</td>
                                         <td>{{ $item->description }}</td>
                                         <td>{{ $item->uom }}</td>
-                                        <td>{{ $item->qty }}</td>
+                                        <td>{{ fmod($item->qty, 1) == 0 ? number_format($item->qty, 0) : number_format($item->qty, 2) }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -64,9 +64,9 @@
                                                     <td>{{ $item->stock_no }}</td>
                                                     <td>{{ $item->description }}</td>
                                                     <td>{{ $item->uom }}</td>
-                                                    <td>{{ $item->qty }}</td>
-                                                    <td>{{ $item->issued_qty }}</td>
-                                                    <td>{{ $item->available_qty }}</td>
+                                                    <td>{{ fmod($item->qty, 1) == 0 ? number_format($item->qty, 0) : number_format($item->qty, 2) }}</td>
+                                                    <td>{{ fmod($item->issued_qty, 1) == 0 ? number_format($item->issued_qty, 0) : number_format($item->issued_qty, 2) }}</td>
+                                                    <td>{{ fmod($item->available_qty, 1) == 0 ? number_format($item->available_qty, 0) : number_format($item->available_qty, 2) }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
