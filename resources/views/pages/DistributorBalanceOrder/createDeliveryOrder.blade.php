@@ -26,10 +26,10 @@
                                         <td>{{ $item->stock_no }}</td>
                                         <td>{{ $item->description }}</td>
                                         <td>{{ $item->uom }}</td>
-                                        <td>{{ $item->qty }}</td>
+                                        <td>{{ fmod($item->qty, 1) == 0 ? number_format($item->qty, 0) : number_format($item->qty, 2) }}</td>
                                         <td>
                                             <input type="number" id="newQuantity-{{ $key }}" class="form-control"
-                                                value="{{ $item->qty }}" name="items[{{ $item->id }}][qty]"
+                                            value="{{ fmod($item->qty, 1) == 0 ? number_format($item->qty, 0) : number_format($item->qty, 2) }}" name="items[{{ $item->id }}][qty]"
                                                 placeholder="Quantity">
                                         </td>
                                         <td>
@@ -43,8 +43,12 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <button class="btn btn-primary "
-                                            onclick="addToCart(@json($item), {{ $key }})">Add To Cart</button>
+                                        <button
+    type="button"
+    class="btn btn-primary"
+    onclick='addToCart(@json($item),{{ $key }})'>
+    Add To Cart
+</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -87,8 +91,11 @@
         let cart = [];
 
         function addToCart(item, index) {
+            console.log ("Clicked");
+            console.log(item);
             var location_id = $(`#location_id-${index}`).val();
             var quantity = $(`#newQuantity-${index}`).val();
+            console.log(location_id, quantity, item.unit_price);
             let mappedData = {
                 ...item,
                 location_id,
@@ -162,9 +169,11 @@
         }
 
         function onSubmit() {
+            console.log("Create Delivery Order clicked");
             if (cart?.length == 0) {
                 return alert("No items selected in cart")
             }
+            console.log(cart);
             let data = {
                 cart
             }
@@ -177,7 +186,13 @@
                 data: data,
                 success: function(response) {
                     window.location.href = response
-                }
+                },
+
+        error: function(xhr) {
+        console.log(xhr);
+        console.log(xhr.responseText);
+        alert("Something went wrong.");
+    }
             });
         }
     </script>
