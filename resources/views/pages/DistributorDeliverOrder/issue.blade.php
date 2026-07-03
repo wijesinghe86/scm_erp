@@ -48,19 +48,20 @@
                                                         <td>{{ $item->stock_no }}</td>
                                                         <td>{{ $item->description }}</td>
                                                         <td>{{ $item->uom }}</td>
-                                                        <td>{{ fmod($item->qty, 1) == 0 ? number_format($item->qty, 0) : number_format($item->qty, 2) }}</td>
-                                                        <td>{{ fmod($item->available_qty, 1) == 0 ? number_format($item->available_qty, 0) : number_format($item->available_qty, 2) }}</td>
+                                                        <td>{{ $item->qty}}</td>
+                                                        <td>{{ $item->available_qty}}</td>
                                                         <td>
                                                             <input type="number" class="form-control"
                                                                 name="items[{{ $item->id }}][issue_quantity]"
-                                                                value="{{ fmod($item->qty, 1) == 0 ? number_format($item->qty, 0) : number_format($item->qty, 2) }}">
+                                                                value="{{ $item->qty }}" placeholder="Issue Quantity">
                                                             <input style="display:none" value="{{ $stock }}"
                                                                 name="items[{{ $item->id }}][available_stock]" />
-                                                            <input style="display:none"  value="{{ fmod($item->qty, 1) == 0 ? number_format($item->qty, 0) : number_format($item->qty, 2) }}"
+                                                            <input style="display:none" value="{{ $item->qty }}"
                                                                 name="items[{{ $item->id }}][order_qty]" />
                                                             <input style="display:none" value="{{ $key + 1 }}"
                                                                 name="items[{{ $item->id }}][index]" />
                                                         </td>
+                                                            
                                                         <td>{{ $stock }}</td>
                                                     </tr>
                                                 @endforeach
