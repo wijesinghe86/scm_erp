@@ -26,10 +26,10 @@
                                         <td>{{ $item->stock_no }}</td>
                                         <td>{{ $item->description }}</td>
                                         <td>{{ $item->uom }}</td>
-                                        <td>{{ fmod($item->qty, 1) == 0 ? number_format($item->qty, 0) : number_format($item->qty, 2) }}</td>
+                                        <td>{{ $item->qty}}</td>
                                         <td>
                                             <input type="number" id="newQuantity-{{ $key }}" class="form-control"
-                                            value="{{ fmod($item->qty, 1) == 0 ? number_format($item->qty, 0) : number_format($item->qty, 2) }}" name="items[{{ $item->id }}][qty]"
+                                            value="$item->qty" name="items[{{ $item->id }}][qty]"
                                                 placeholder="Quantity">
                                         </td>
                                         <td>
