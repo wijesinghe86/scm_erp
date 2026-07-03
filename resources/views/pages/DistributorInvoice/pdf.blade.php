@@ -168,7 +168,7 @@ body {
 
 .user {
     position:absolute;
-    top:250mm;
+    top:246mm;
     left:23mm;
 }
 
