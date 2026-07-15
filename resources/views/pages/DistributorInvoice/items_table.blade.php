@@ -31,7 +31,7 @@
                     <td>{{ money($item->attributes->total) }}</td>
                     <td>{{ $item->attributes->warehouse_name }}</td>
                     <td align="right">
-                        <a onclick="removeFromCart({ $item })" class="h4 cursor-pointer"
+                        <a onclick="removeFromCart({{ $item }})" class="h4 cursor-pointer"
                             style="cursor: pointer;">
                             <i class="mdi mdi-delete text-danger"></i>
                         </a>

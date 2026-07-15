@@ -20,6 +20,7 @@ use App\Http\Controllers\DispatchController;
 use App\Http\Controllers\DistributorBalanceOrderController;
 use App\Http\Controllers\DistributorDeliveryOrderController;
 use App\Http\Controllers\DistributorInvoiceController;
+use App\Http\Controllers\DistributorReturnController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EquipmentRegistrationController;
 use App\Http\Controllers\FinishedGoodsApprovalController;
@@ -462,6 +463,16 @@ Route::middleware(['auth', 'custom.auth'])->group(function () {
         Route::middleware(['role:Super Admin|Admin|Warehouse User|Factory Warehouse User'])->get('/{return_id}/print', [App\Http\Controllers\ReturnController::class, 'print'])->name('returns.print');
     });
 
+    Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin'])->prefix('distributor_returns')->group(function () {
+        Route::middleware(['role:Super Admin|Admin|Warehouse User|Warehouse Admin'])->get('/', [DistributorReturnController::class, 'index'])->name('distributor_returns.index');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/create', [DistributorReturnController::class, 'create'])->name('distributor_returns.create');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->post('/create', [DistributorReturnController::class, 'store'])->name('distributor_returns.store');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User'])->get('/{invoice_return}/view', [DistributorReturnController::class, 'view'])->name('distributor_returns.view');
+
+        Route::middleware(['role:Super Admin|Admin|Warehouse Admin'])->get('/approval', [DistributorReturnController::class, 'approvalIndex'])->name('distributor_returns.approvalIndex');
+        Route::middleware(['role:Super Admin|Admin|Warehouse Admin'])->post('{invoice_return}/approval', [DistributorReturnController::class, 'approval'])->name('distributor_returns.approval');
+        Route::middleware(['role:Super Admin|Admin|Warehouse User|Factory Warehouse User'])->get('/{return_id}/print', [App\Http\Controllers\DistributorReturnController::class, 'print'])->name('distributor_returns.print');
+    });
     // Inventory Control
     /* .....CREATING ROUTE FOR Openning Balance Entry ....... */
     Route::middleware(['role:Super Admin|Admin|Factory Warehouse User|Warehouse User|Warehouse Admin|Factory Admin'])->prefix('obentry')->group(function () {
