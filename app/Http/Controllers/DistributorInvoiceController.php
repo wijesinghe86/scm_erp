@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use Cart;
 use App\Http\Controllers\Controller;
 use App\Models\BillType;
 use App\Models\Customer;
@@ -15,7 +17,6 @@ use App\Models\Stock;
 use App\Models\StockItem;
 use App\Models\TaxCreation;
 use App\Models\Warehouse;
-use Cart;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

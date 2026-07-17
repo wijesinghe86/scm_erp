@@ -453,6 +453,8 @@
                                 Order</a></li>
                         <li class="nav-item"> <a class="nav-link" href="{{ route('returns.all') }}">Customer Return</a>
                         </li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('distributor_returns.index') }}">New Customer Return</a>
+                        </li>
             </li>
             <li class="nav-item"> <a class="nav-link" href="{{ route('returns.approvalIndex') }}">Approved Customer
                     <br>Returns
@@ -535,6 +537,10 @@
                     @endhasanyrole
                     @hasanyrole('Super Admin|Admin|Warehouse User')
                         <li class="nav-item"> <a class="nav-link" href="{{ route('returns.all') }}">Customer Return</a></li>
+            </li>
+        @endhasanyrole
+        @hasanyrole('Super Admin|Admin|Warehouse User')
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('distributor_returns.index') }}">New Customer Return</a></li>
             </li>
         @endhasanyrole
         @hasanyrole('Super Admin|Admin|Warehouse Admin')

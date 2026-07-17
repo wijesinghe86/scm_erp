@@ -33,7 +33,7 @@
                                         <select class="form-control" name="organization_id" id="organization_id" onchange="getOrganization()">
                                             <option selected disabled>Select Organization</option>
                                             @foreach ($organizations as $org)
-                                            <option value="{{ $org->id }}">{{ $org->organization_name }}</option>
+                                            <option value="{{ $org->id }}"  {{ $org->id == 1 ? 'selected' : '' }}> {{ $org->organization_name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -218,7 +218,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Date of Delivery</label>
-                                        <input type="date" class="form-control" name="date_of_delivery" id="date_of_delivery">
+                                        <input type="date" class="form-control" name="date_of_delivery" id="date_of_delivery"  value="{{ now()->format('Y-m-d') }}">
 
                                     </div>
                                     <div class="form-group col-md-2">
@@ -450,6 +450,8 @@
 
 @push('scripts')
 <script>
+
+
     const invoiceCategories = <?php echo json_encode($billTypes); ?>;
     $(document).ready(function() {
         let invoiceType = $('#invoice_type').val();
@@ -655,9 +657,11 @@
     }
 
     function getOrganization() {
+        console.log($('#organization_id').val());
         var organization_id = $('#organization_id').val();
         var data = {
             organization_id: organization_id
+            
         };
         $.ajax({
             url: "{{ route('organization.get.data') }}",
@@ -667,7 +671,8 @@
             type: "GET",
             data: data,
             success: function(response) {
-                OrganizationData = response;
+                console.log(response);
+                // OrganizationData = response;
                 $('#organization_code').val(response.organization_code);
                 $('#organization_tin_no').val(response.organization_tin_no);
                 $('#organization_address_line1').val(response.organization_address_line1);
@@ -677,6 +682,10 @@
             }
         });
     }
+
+    $(document).ready(function () {
+    getOrganization();
+});
 
 
     // get the Customer Details from Customer Table
@@ -987,7 +996,12 @@
         return inWords(num).replace(/\s+/g, ' ').trim();
 
     }
+
+    $('#place_of_supply').val('Colombo');
+
 </script>
+
+
 @endpush
 
 @push('styles')
