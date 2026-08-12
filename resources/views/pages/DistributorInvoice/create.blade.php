@@ -474,7 +474,7 @@
             return
         }
         if (invoiceType == 2) {
-            $('#invoice_option').val(3)
+            $('#invoice_option').val(1)
             $("#invoice_option").find(':not(:selected)').prop('disabled', true);
             const invoiceCategory = invoiceCategories?.find(row => ['GTI', 'ITI'].includes(row?.billtype_code))
             if (invoiceCategory) {

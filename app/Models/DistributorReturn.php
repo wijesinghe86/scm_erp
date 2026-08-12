@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\DistributorReturnItem;
 use App\Models\DitributorInvice;
-use App\Models\InvoiceReturn;
 use App\Models\Warehouse;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
